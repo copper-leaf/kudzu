@@ -1,0 +1,30 @@
+plugins {
+    id "java"
+    id "org.jetbrains.kotlin.jvm" version "1.2.51"
+}
+
+group = "com.eden"
+version = "0.1.0"
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7"
+
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.1.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.1.0"
+    testCompile "io.strikt:strikt-core:0.9.0"
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_6
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.6"
+}
+test {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+    }
+}
