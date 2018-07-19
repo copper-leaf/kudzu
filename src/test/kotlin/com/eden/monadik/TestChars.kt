@@ -1,7 +1,14 @@
 package com.eden.monadik
 
+import com.eden.monadik.parser.CharInParser
+import com.eden.monadik.parser.CharNotInParser
+import com.eden.monadik.parser.CharParser
+import com.eden.monadik.parser.DigitParser
+import com.eden.monadik.parser.LetterParser
+import com.eden.monadik.parser.WhitespaceParser
 import org.junit.jupiter.api.Test
 import strikt.api.expect
+import strikt.assertions.isNull
 
 class TestChars {
 
@@ -17,6 +24,7 @@ class TestChars {
         expected = """(CharNode: 'a')"""
 
         expect(output).parsedCorrectly(expected)
+        expect(output!!.first.children).isNull() // terminals have no children
     }
 
     @Test
@@ -131,6 +139,20 @@ class TestChars {
         input = "1"
         output = underTest.test(input)
         expect(output).parsedIncorrectly()
+    }
+
+    @Test
+    fun testNamedCharNode() {
+        var input: String
+        var output: Pair<Node, ParserContext>?
+        var expected: String
+        val underTest = CharParser(name = "charNode")
+
+        input = "a"
+        output = underTest.test(input)
+        expected = """(CharNode:charNode: 'a')"""
+
+        expect(output).parsedCorrectly(expected)
     }
 
 }

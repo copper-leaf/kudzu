@@ -1,4 +1,9 @@
-package com.eden.monadik
+package com.eden.monadik.parser
+
+import com.eden.monadik.Node
+import com.eden.monadik.NodeContext
+import com.eden.monadik.Parser
+import com.eden.monadik.ParserContext
 
 class MaybeNode(val node: Node?, name: String, context: NodeContext) : Node(name, context) {
     override fun printAst(currentIndent: Int): String {

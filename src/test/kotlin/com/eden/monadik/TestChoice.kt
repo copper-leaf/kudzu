@@ -1,7 +1,13 @@
 package com.eden.monadik
 
+import com.eden.monadik.parser.ChoiceParser
+import com.eden.monadik.parser.DigitParser
+import com.eden.monadik.parser.LetterParser
+import com.eden.monadik.parser.ManyParser
 import org.junit.jupiter.api.Test
 import strikt.api.expect
+import strikt.assertions.hasSize
+import strikt.assertions.isNotNull
 
 class TestChoice {
 
@@ -23,6 +29,7 @@ class TestChoice {
             )
         """
         expect(output).parsedCorrectly(expected)
+        expect(output!!.first.children).isNotNull().hasSize(1)
 
         input = "a"
         output = underTest.test(input)
@@ -32,6 +39,7 @@ class TestChoice {
             )
         """
         expect(output).parsedCorrectly(expected)
+        expect(output!!.first.children).isNotNull().hasSize(1)
 
         input = " "
         output = underTest.test(input)
@@ -78,6 +86,36 @@ class TestChoice {
               (ChoiceNode:
                 (CharNode: 'd')
               )
+            )
+        """
+        expect(output).parsedCorrectly(expected)
+    }
+
+    @Test
+    fun testNamedChoiceNode() {
+        var input: String
+        var output: Pair<Node, ParserContext>?
+        var expected: String
+        val underTest = ChoiceParser(
+                DigitParser(name = "digit"),
+                LetterParser(name = "letter"),
+                name = "choice"
+        )
+
+        input = "1"
+        output = underTest.test(input)
+        expected = """
+            (ChoiceNode:choice:
+              (CharNode:digit: '1')
+            )
+        """
+        expect(output).parsedCorrectly(expected)
+
+        input = "a"
+        output = underTest.test(input)
+        expected = """
+            (ChoiceNode:choice:
+              (CharNode:letter: 'a')
             )
         """
         expect(output).parsedCorrectly(expected)

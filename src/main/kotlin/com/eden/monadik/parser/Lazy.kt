@@ -1,4 +1,8 @@
-package com.eden.monadik
+package com.eden.monadik.parser
+
+import com.eden.monadik.Node
+import com.eden.monadik.Parser
+import com.eden.monadik.ParserContext
 
 class LazyParser(name: String = "") : Parser(name) {
 

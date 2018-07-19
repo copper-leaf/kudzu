@@ -1,7 +1,14 @@
 package com.eden.monadik
 
+import com.eden.monadik.parser.AtLeastParser
+import com.eden.monadik.parser.AtMostParser
+import com.eden.monadik.parser.CharParser
+import com.eden.monadik.parser.DigitParser
+import com.eden.monadik.parser.ManyParser
 import org.junit.jupiter.api.Test
 import strikt.api.expect
+import strikt.assertions.hasSize
+import strikt.assertions.isNotNull
 
 class TestManys {
 
@@ -23,6 +30,7 @@ class TestManys {
             )
         """
         expect(output).parsedCorrectly(expected)
+        expect(output!!.first.children).isNotNull().hasSize(4)
     }
 
     @Test
@@ -151,6 +159,29 @@ class TestManys {
         input = "12345 asdf"
         output = underTest.test(input)
         expect(output).parsedIncorrectly()
+    }
+
+    @Test
+    fun testNamedManyNode() {
+        var input: String
+        var output: Pair<Node, ParserContext>?
+        var expected: String
+        val underTest = ManyParser(
+                DigitParser(name = "digit"),
+                name = "many"
+        )
+
+        input = "1234"
+        output = underTest.test(input)
+        expected = """
+            (ManyNode:many:
+              (CharNode:digit: '1')
+              (CharNode:digit: '2')
+              (CharNode:digit: '3')
+              (CharNode:digit: '4')
+            )
+        """
+        expect(output).parsedCorrectly(expected)
     }
 
 }

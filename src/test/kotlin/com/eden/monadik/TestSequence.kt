@@ -1,7 +1,14 @@
 package com.eden.monadik
 
+import com.eden.monadik.parser.AtLeastParser
+import com.eden.monadik.parser.DigitParser
+import com.eden.monadik.parser.LetterParser
+import com.eden.monadik.parser.SequenceParser
+import com.eden.monadik.parser.WhitespaceParser
 import org.junit.jupiter.api.Test
 import strikt.api.expect
+import strikt.assertions.hasSize
+import strikt.assertions.isNotNull
 
 class TestSequence {
 
@@ -28,6 +35,7 @@ class TestSequence {
             )
         """
         expect(output).parsedCorrectly(expected)
+        expect(output!!.first.children).isNotNull().hasSize(4)
     }
 
     @Test
@@ -128,6 +136,32 @@ class TestSequence {
         input = "1234 asdf 12345"
         output = underTest.test(input, true)
         expect(output).parsedIncorrectly()
+    }
+
+    @Test
+    fun testNamedSequenceNode() {
+        var input: String
+        var output: Pair<Node, ParserContext>?
+        var expected: String
+        val underTest = SequenceParser(
+                DigitParser(name = "digit1"),
+                DigitParser(name = "digit2"),
+                DigitParser(name = "digit3"),
+                DigitParser(name = "digit4"),
+                name = "sequence"
+        )
+
+        input = "1234"
+        output = underTest.test(input)
+        expected = """
+            (SequenceNode:sequence:
+              (CharNode:digit1: '1')
+              (CharNode:digit2: '2')
+              (CharNode:digit3: '3')
+              (CharNode:digit4: '4')
+            )
+        """
+        expect(output).parsedCorrectly(expected)
     }
 
 }

@@ -1,5 +1,10 @@
 package com.eden.monadik
 
+import com.eden.monadik.parser.ChoiceParser
+import com.eden.monadik.parser.ManyParser
+import com.eden.monadik.parser.SequenceParser
+import com.eden.monadik.parser.WhitespaceParser
+import com.eden.monadik.parser.WordParser
 import org.junit.jupiter.api.Test
 import strikt.api.expect
 import strikt.assertions.isEqualTo
