@@ -8,13 +8,13 @@ class TestChars {
     @Test
     fun testCharParser() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = CharParser()
 
         input = "a"
         output = underTest.test(input)
-        expected = """(CharNode: a)"""
+        expected = """(CharNode: 'a')"""
 
         expect(output).parsedCorrectly(expected)
     }
@@ -22,18 +22,18 @@ class TestChars {
     @Test
     fun testCharInParser() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = CharInParser('a', 'b')
 
         input = "a"
         output = underTest.test(input)
-        expected = """(CharNode: a)"""
+        expected = """(CharNode: 'a')"""
         expect(output).parsedCorrectly(expected)
 
         input = "b"
         output = underTest.test(input)
-        expected = """(CharNode: b)"""
+        expected = """(CharNode: 'b')"""
         expect(output).parsedCorrectly(expected)
 
         input = "c"
@@ -44,7 +44,7 @@ class TestChars {
     @Test
     fun testCharNotInParser() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = CharNotInParser('a', 'b')
 
@@ -57,7 +57,7 @@ class TestChars {
         expect(output).parsedIncorrectly()
 
         input = "c"
-        expected = """(CharNode: c)"""
+        expected = """(CharNode: 'c')"""
         output = underTest.test(input)
         expect(output).parsedCorrectly(expected)
     }
@@ -65,23 +65,23 @@ class TestChars {
     @Test
     fun testWhitespaceParser() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = WhitespaceParser()
 
         input = " "
         output = underTest.test(input)
-        expected = "(CharNode:  )"
+        expected = "(CharNode: ' ')"
         expect(output).parsedCorrectly(expected)
 
         input = "\n"
         output = underTest.test(input)
-        expected = "(CharNode: \n)"
+        expected = "(CharNode: '\n')"
         expect(output).parsedCorrectly(expected)
 
         input = "\t"
         output = underTest.test(input)
-        expected = "(CharNode: \t)"
+        expected = "(CharNode: '\t')"
         expect(output).parsedCorrectly(expected)
 
         input = "a"
@@ -92,18 +92,18 @@ class TestChars {
     @Test
     fun testDigitParser() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = DigitParser()
 
         input = "0"
         output = underTest.test(input)
-        expected = "(CharNode: 0)"
+        expected = "(CharNode: '0')"
         expect(output).parsedCorrectly(expected)
 
         input = "1"
         output = underTest.test(input)
-        expected = "(CharNode: 1)"
+        expected = "(CharNode: '1')"
         expect(output).parsedCorrectly(expected)
 
         input = "a"
@@ -114,18 +114,18 @@ class TestChars {
     @Test
     fun testLetterParser() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = LetterParser()
 
         input = "a"
         output = underTest.test(input)
-        expected = "(CharNode: a)"
+        expected = "(CharNode: 'a')"
         expect(output).parsedCorrectly(expected)
 
         input = "b"
         output = underTest.test(input)
-        expected = "(CharNode: b)"
+        expected = "(CharNode: 'b')"
         expect(output).parsedCorrectly(expected)
 
         input = "1"

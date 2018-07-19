@@ -8,7 +8,7 @@ class TestModeratelyComplexGrammars {
     @Test
     fun testClogParser() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = getClogParser()
 
@@ -18,60 +18,60 @@ class TestModeratelyComplexGrammars {
             (ManyNode:
               (ChoiceNode:
                 (ManyNode:
-                  (CharNode: a)
-                  (CharNode: s)
-                  (CharNode: d)
-                  (CharNode: f)
-                  (CharNode: ,)
-                  (CharNode:  )
-                  (CharNode: a)
-                  (CharNode: s)
-                  (CharNode: d)
-                  (CharNode: f)
-                  (CharNode:  )
+                  (CharNode: 'a')
+                  (CharNode: 's')
+                  (CharNode: 'd')
+                  (CharNode: 'f')
+                  (CharNode: ',')
+                  (CharNode: ' ')
+                  (CharNode: 'a')
+                  (CharNode: 's')
+                  (CharNode: 'd')
+                  (CharNode: 'f')
+                  (CharNode: ' ')
                 )
               )
               (ChoiceNode:
                 (SequenceNode:
-                  (CharNode: {)
+                  (CharNode: '{')
                   (ManyNode:
-                    (CharNode: t)
-                    (CharNode: h)
-                    (CharNode: i)
-                    (CharNode: s)
-                    (CharNode:  )
-                    (CharNode: i)
-                    (CharNode: s)
-                    (CharNode:  )
-                    (CharNode: m)
-                    (CharNode: y)
-                    (CharNode:  )
-                    (CharNode: m)
-                    (CharNode: e)
-                    (CharNode: s)
-                    (CharNode: s)
-                    (CharNode: a)
-                    (CharNode: g)
-                    (CharNode: e)
+                    (CharNode: 't')
+                    (CharNode: 'h')
+                    (CharNode: 'i')
+                    (CharNode: 's')
+                    (CharNode: ' ')
+                    (CharNode: 'i')
+                    (CharNode: 's')
+                    (CharNode: ' ')
+                    (CharNode: 'm')
+                    (CharNode: 'y')
+                    (CharNode: ' ')
+                    (CharNode: 'm')
+                    (CharNode: 'e')
+                    (CharNode: 's')
+                    (CharNode: 's')
+                    (CharNode: 'a')
+                    (CharNode: 'g')
+                    (CharNode: 'e')
                   )
-                  (CharNode: })
+                  (CharNode: '}')
                 )
               )
               (ChoiceNode:
                 (ManyNode:
-                  (CharNode:  )
-                  (CharNode: a)
-                  (CharNode: s)
-                  (CharNode: d)
-                  (CharNode: f)
-                  (CharNode: a)
-                  (CharNode: s)
-                  (CharNode: d)
-                  (CharNode: f)
-                  (CharNode: a)
-                  (CharNode: s)
-                  (CharNode: d)
-                  (CharNode: f)
+                  (CharNode: ' ')
+                  (CharNode: 'a')
+                  (CharNode: 's')
+                  (CharNode: 'd')
+                  (CharNode: 'f')
+                  (CharNode: 'a')
+                  (CharNode: 's')
+                  (CharNode: 'd')
+                  (CharNode: 'f')
+                  (CharNode: 'a')
+                  (CharNode: 's')
+                  (CharNode: 'd')
+                  (CharNode: 'f')
                 )
               )
             )
@@ -82,7 +82,7 @@ class TestModeratelyComplexGrammars {
     @Test
     fun testArithmeticParser() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = getArithmeticParser()
 
@@ -95,7 +95,7 @@ class TestModeratelyComplexGrammars {
                   (MaybeNode: (empty))
                   (ChoiceNode:
                     (ManyNode:
-                      (CharNode: 1)
+                      (CharNode: '1')
                     )
                   )
                 )
@@ -106,95 +106,95 @@ class TestModeratelyComplexGrammars {
               (ManyNode:
                 (SequenceNode:
                   (ChoiceNode:
-                    (CharNode: +)
+                    (CharNode: '+')
                   )
                   (SequenceNode:
                     (SequenceNode:
                       (MaybeNode: (empty))
                       (ChoiceNode:
                         (SequenceNode:
-                          (CharNode: ()
+                          (CharNode: '(')
                           (SequenceNode:
                             (SequenceNode:
                               (SequenceNode:
                                 (MaybeNode:
-                                  (CharNode: -)
+                                  (CharNode: '-')
                                 )
                                 (ChoiceNode:
                                   (ManyNode:
-                                    (CharNode: 2)
+                                    (CharNode: '2')
                                   )
                                 )
                               )
                               (ManyNode:
                                 (SequenceNode:
                                   (ChoiceNode:
-                                    (CharNode: *)
+                                    (CharNode: '*')
                                   )
                                   (SequenceNode:
                                     (MaybeNode: (empty))
                                     (ChoiceNode:
                                       (ManyNode:
-                                        (CharNode: 3)
+                                        (CharNode: '3')
                                       )
                                     )
                                   )
                                 )
                                 (SequenceNode:
                                   (ChoiceNode:
-                                    (CharNode: *)
+                                    (CharNode: '*')
                                   )
                                   (SequenceNode:
                                     (MaybeNode: (empty))
                                     (ChoiceNode:
                                       (ManyNode:
-                                        (CharNode: 4)
+                                        (CharNode: '4')
                                       )
                                     )
                                   )
                                 )
                                 (SequenceNode:
                                   (ChoiceNode:
-                                    (CharNode: *)
+                                    (CharNode: '*')
                                   )
                                   (SequenceNode:
                                     (MaybeNode: (empty))
                                     (ChoiceNode:
                                       (ManyNode:
-                                        (CharNode: 5)
+                                        (CharNode: '5')
                                       )
                                     )
                                   )
                                 )
                                 (SequenceNode:
                                   (ChoiceNode:
-                                    (CharNode: *)
+                                    (CharNode: '*')
                                   )
                                   (SequenceNode:
                                     (MaybeNode: (empty))
                                     (ChoiceNode:
                                       (SequenceNode:
-                                        (CharNode: ()
+                                        (CharNode: '(')
                                         (SequenceNode:
                                           (SequenceNode:
                                             (SequenceNode:
                                               (MaybeNode: (empty))
                                               (ChoiceNode:
                                                 (ManyNode:
-                                                  (CharNode: 6)
+                                                  (CharNode: '6')
                                                 )
                                               )
                                             )
                                             (ManyNode:
                                               (SequenceNode:
                                                 (ChoiceNode:
-                                                  (CharNode: /)
+                                                  (CharNode: '/')
                                                 )
                                                 (SequenceNode:
                                                   (MaybeNode: (empty))
                                                   (ChoiceNode:
                                                     (ManyNode:
-                                                      (CharNode: 7)
+                                                      (CharNode: '7')
                                                     )
                                                   )
                                                 )
@@ -205,7 +205,7 @@ class TestModeratelyComplexGrammars {
 
                                           )
                                         )
-                                        (CharNode: ))
+                                        (CharNode: ')')
                                       )
                                     )
                                   )
@@ -215,34 +215,34 @@ class TestModeratelyComplexGrammars {
                             (ManyNode:
                               (SequenceNode:
                                 (ChoiceNode:
-                                  (CharNode: -)
+                                  (CharNode: '-')
                                 )
                                 (SequenceNode:
                                   (SequenceNode:
                                     (MaybeNode: (empty))
                                     (ChoiceNode:
                                       (SequenceNode:
-                                        (CharNode: ()
+                                        (CharNode: '(')
                                         (SequenceNode:
                                           (SequenceNode:
                                             (SequenceNode:
                                               (MaybeNode: (empty))
                                               (ChoiceNode:
                                                 (ManyNode:
-                                                  (CharNode: 8)
+                                                  (CharNode: '8')
                                                 )
                                               )
                                             )
                                             (ManyNode:
                                               (SequenceNode:
                                                 (ChoiceNode:
-                                                  (CharNode: /)
+                                                  (CharNode: '/')
                                                 )
                                                 (SequenceNode:
                                                   (MaybeNode: (empty))
                                                   (ChoiceNode:
                                                     (ManyNode:
-                                                      (CharNode: 9)
+                                                      (CharNode: '9')
                                                     )
                                                   )
                                                 )
@@ -253,7 +253,7 @@ class TestModeratelyComplexGrammars {
 
                                           )
                                         )
-                                        (CharNode: ))
+                                        (CharNode: ')')
                                       )
                                     )
                                   )
@@ -264,7 +264,7 @@ class TestModeratelyComplexGrammars {
                               )
                             )
                           )
-                          (CharNode: ))
+                          (CharNode: ')')
                         )
                       )
                     )
@@ -282,7 +282,7 @@ class TestModeratelyComplexGrammars {
     @Test
     fun testClogExpressionParser() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = getClogExpressionParser()
 
@@ -292,25 +292,25 @@ class TestModeratelyComplexGrammars {
         (ManyNode:
           (ChoiceNode:
             (ManyNode:
-              (CharNode: y)
-              (CharNode: o)
-              (CharNode: u)
-              (CharNode: h)
-              (CharNode: a)
-              (CharNode: v)
-              (CharNode: e)
+              (CharNode: 'y')
+              (CharNode: 'o')
+              (CharNode: 'u')
+              (CharNode: 'h')
+              (CharNode: 'a')
+              (CharNode: 'v')
+              (CharNode: 'e')
             )
           )
           (ChoiceNode:
             (SequenceNode:
-              (CharNode: {)
+              (CharNode: '{')
               (SequenceNode:
                 (SequenceNode:
                   (SequenceNode:
                     (MaybeNode: (empty))
                     (ChoiceNode:
                       (ManyNode:
-                        (CharNode: 1)
+                        (CharNode: '1')
                       )
                     )
                   )
@@ -321,36 +321,36 @@ class TestModeratelyComplexGrammars {
                 (ManyNode:
                   (SequenceNode:
                     (ChoiceNode:
-                      (CharNode: +)
+                      (CharNode: '+')
                     )
                     (SequenceNode:
                       (SequenceNode:
                         (MaybeNode: (empty))
                         (ChoiceNode:
                           (SequenceNode:
-                            (CharNode: ()
+                            (CharNode: '(')
                             (SequenceNode:
                               (SequenceNode:
                                 (SequenceNode:
                                   (MaybeNode:
-                                    (CharNode: -)
+                                    (CharNode: '-')
                                   )
                                   (ChoiceNode:
                                     (ManyNode:
-                                      (CharNode: 2)
+                                      (CharNode: '2')
                                     )
                                   )
                                 )
                                 (ManyNode:
                                   (SequenceNode:
                                     (ChoiceNode:
-                                      (CharNode: *)
+                                      (CharNode: '*')
                                     )
                                     (SequenceNode:
                                       (MaybeNode: (empty))
                                       (ChoiceNode:
                                         (ManyNode:
-                                          (CharNode: 3)
+                                          (CharNode: '3')
                                         )
                                       )
                                     )
@@ -361,7 +361,7 @@ class TestModeratelyComplexGrammars {
 
                               )
                             )
-                            (CharNode: ))
+                            (CharNode: ')')
                           )
                         )
                       )
@@ -372,19 +372,19 @@ class TestModeratelyComplexGrammars {
                   )
                 )
               )
-              (CharNode: })
+              (CharNode: '}')
             )
           )
           (ChoiceNode:
             (ManyNode:
-              (CharNode: m)
-              (CharNode: e)
-              (CharNode: s)
-              (CharNode: s)
-              (CharNode: a)
-              (CharNode: g)
-              (CharNode: e)
-              (CharNode: s)
+              (CharNode: 'm')
+              (CharNode: 'e')
+              (CharNode: 's')
+              (CharNode: 's')
+              (CharNode: 'a')
+              (CharNode: 'g')
+              (CharNode: 'e')
+              (CharNode: 's')
             )
           )
         )

@@ -1,9 +1,9 @@
 package com.eden.monadik
 
-class LazyParser : Parser() {
+class LazyParser(name: String = "") : Parser(name) {
 
     lateinit var parser: Parser
 
-    override fun parse(input: ParsingContext): Pair<Node, ParsingContext> = parser.parse(input)
+    override fun parse(input: ParserContext): Pair<Node, ParserContext> = parser.parse(input)
 
 }

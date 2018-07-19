@@ -8,7 +8,7 @@ class TestSequence {
     @Test
     fun testSequenceOfCharParser() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = SequenceParser(
                 DigitParser(),
@@ -21,10 +21,10 @@ class TestSequence {
         output = underTest.test(input)
         expected = """
             (SequenceNode:
-              (CharNode: 1)
-              (CharNode: 2)
-              (CharNode: 3)
-              (CharNode: 4)
+              (CharNode: '1')
+              (CharNode: '2')
+              (CharNode: '3')
+              (CharNode: '4')
             )
         """
         expect(output).parsedCorrectly(expected)
@@ -33,7 +33,7 @@ class TestSequence {
     @Test
     fun testSequenceOfManysParser() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = SequenceParser(
                 AtLeastParser(1, DigitParser()),
@@ -46,19 +46,19 @@ class TestSequence {
         expected = """
             (SequenceNode:
               (ManyNode:
-                (CharNode: 1)
-                (CharNode: 2)
-                (CharNode: 3)
-                (CharNode: 4)
+                (CharNode: '1')
+                (CharNode: '2')
+                (CharNode: '3')
+                (CharNode: '4')
               )
               (ManyNode:
-                (CharNode:  )
+                (CharNode: ' ')
               )
               (ManyNode:
-                (CharNode: a)
-                (CharNode: s)
-                (CharNode: d)
-                (CharNode: f)
+                (CharNode: 'a')
+                (CharNode: 's')
+                (CharNode: 'd')
+                (CharNode: 'f')
               )
             )
         """
@@ -68,7 +68,7 @@ class TestSequence {
     @Test
     fun testSequenceOfManysParserSkippingWhitespace() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = SequenceParser(
                 AtLeastParser(1, DigitParser()),
@@ -82,31 +82,31 @@ class TestSequence {
         expected = """
             (SequenceNode:
               (ManyNode:
-                (CharNode: 1)
-                (CharNode: 2)
-                (CharNode: 3)
-                (CharNode: 4)
+                (CharNode: '1')
+                (CharNode: '2')
+                (CharNode: '3')
+                (CharNode: '4')
               )
               (ManyNode:
-                (CharNode: a)
-                (CharNode: s)
-                (CharNode: d)
-                (CharNode: f)
+                (CharNode: 'a')
+                (CharNode: 's')
+                (CharNode: 'd')
+                (CharNode: 'f')
               )
               (ManyNode:
-                (CharNode: 1)
-                (CharNode: 2)
-                (CharNode: 3)
-                (CharNode: 4)
-                (CharNode: 5)
+                (CharNode: '1')
+                (CharNode: '2')
+                (CharNode: '3')
+                (CharNode: '4')
+                (CharNode: '5')
               )
               (ManyNode:
-                (CharNode: q)
-                (CharNode: w)
-                (CharNode: e)
-                (CharNode: r)
-                (CharNode: t)
-                (CharNode: y)
+                (CharNode: 'q')
+                (CharNode: 'w')
+                (CharNode: 'e')
+                (CharNode: 'r')
+                (CharNode: 't')
+                (CharNode: 'y')
               )
             )
         """
@@ -116,7 +116,7 @@ class TestSequence {
     @Test
     fun testSequenceCannotGetNext() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = SequenceParser(
                 AtLeastParser(1, DigitParser()),

@@ -8,7 +8,7 @@ class TestMaybe {
     @Test
     fun testMaybeOfCharParsers() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = MaybeParser(
                 DigitParser()
@@ -18,7 +18,7 @@ class TestMaybe {
         output = underTest.test(input)
         expected = """
             (MaybeNode:
-              (CharNode: 1)
+              (CharNode: '1')
             )
         """
         expect(output).parsedCorrectly(expected)

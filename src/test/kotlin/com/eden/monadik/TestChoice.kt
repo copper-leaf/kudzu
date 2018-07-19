@@ -8,7 +8,7 @@ class TestChoice {
     @Test
     fun testChoiceOfCharParsers() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = ChoiceParser(
                 DigitParser(),
@@ -19,7 +19,7 @@ class TestChoice {
         output = underTest.test(input)
         expected = """
             (ChoiceNode:
-              (CharNode: 1)
+              (CharNode: '1')
             )
         """
         expect(output).parsedCorrectly(expected)
@@ -28,7 +28,7 @@ class TestChoice {
         output = underTest.test(input)
         expected = """
             (ChoiceNode:
-              (CharNode: a)
+              (CharNode: 'a')
             )
         """
         expect(output).parsedCorrectly(expected)
@@ -41,7 +41,7 @@ class TestChoice {
     @Test
     fun testManyMultiCharChoice() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = ManyParser(
                 ChoiceParser(
@@ -55,28 +55,28 @@ class TestChoice {
         expected = """
             (ManyNode:
               (ChoiceNode:
-                (CharNode: 1)
+                (CharNode: '1')
               )
               (ChoiceNode:
-                (CharNode: a)
+                (CharNode: 'a')
               )
               (ChoiceNode:
-                (CharNode: 2)
+                (CharNode: '2')
               )
               (ChoiceNode:
-                (CharNode: b)
+                (CharNode: 'b')
               )
               (ChoiceNode:
-                (CharNode: 3)
+                (CharNode: '3')
               )
               (ChoiceNode:
-                (CharNode: c)
+                (CharNode: 'c')
               )
               (ChoiceNode:
-                (CharNode: 4)
+                (CharNode: '4')
               )
               (ChoiceNode:
-                (CharNode: d)
+                (CharNode: 'd')
               )
             )
         """

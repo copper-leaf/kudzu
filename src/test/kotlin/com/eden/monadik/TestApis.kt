@@ -2,7 +2,7 @@ package com.eden.monadik
 
 import strikt.api.Assertion
 
-fun Assertion<Pair<Node, ParsingContext>?>.parsedCorrectly(expected: String, allowRemaining: Boolean = false): Assertion<Pair<Node, ParsingContext>?> =
+fun Assertion<Pair<Node, ParserContext>?>.parsedCorrectly(expected: String, allowRemaining: Boolean = false): Assertion<Pair<Node, ParserContext>?> =
         assert("parsedCorrectly") {
             if(subject == null) fail(
                     message = "Subject cannot be null",
@@ -28,7 +28,7 @@ fun Assertion<Pair<Node, ParsingContext>?>.parsedCorrectly(expected: String, all
             }
         }
 
-fun Assertion<Pair<Node, ParsingContext>?>.parsedIncorrectly(): Assertion<Pair<Node, ParsingContext>?> =
+fun Assertion<Pair<Node, ParserContext>?>.parsedIncorrectly(): Assertion<Pair<Node, ParserContext>?> =
         assert("parsedIncorrectly") {
             if(subject == null) pass()
             else when(subject!!.second.isNotEmpty()) {

@@ -8,7 +8,7 @@ class TestWord {
     @Test
     fun testWordParser() {
         var input: String
-        var output: Pair<Node, ParsingContext>?
+        var output: Pair<Node, ParserContext>?
         var expected: String
         val underTest = WordParser("kotlin")
 
