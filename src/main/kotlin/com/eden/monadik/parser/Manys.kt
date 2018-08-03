@@ -2,11 +2,12 @@ package com.eden.monadik.parser
 
 import com.eden.monadik.Node
 import com.eden.monadik.NodeContext
+import com.eden.monadik.NonTerminalNode
 import com.eden.monadik.Parser
 import com.eden.monadik.ParserContext
 import com.eden.monadik.ParserException
 
-class ManyNode(private val nodeList: List<Node>, name: String, context: NodeContext) : Node(name, context) {
+class ManyNode(private val nodeList: List<Node>, name: String, context: NodeContext) : NonTerminalNode(name, context) {
     override fun printAst(currentIndent: Int): String {
         return "${indent(currentIndent)}(ManyNode$nodeName:\n" +
                 nodeList.map { it.printAst(currentIndent + 2) }.joinToString(separator = "\n") +
@@ -14,8 +15,10 @@ class ManyNode(private val nodeList: List<Node>, name: String, context: NodeCont
                 "${indent(currentIndent)})"
     }
 
-    override val children: List<Node>?
+    override val children: List<Node>
         get() = nodeList
+
+
 }
 
 class ManyParser(private val parser: Parser, name: String = "") : Parser(name) {

@@ -5,11 +5,15 @@ import com.eden.monadik.NodeContext
 import com.eden.monadik.Parser
 import com.eden.monadik.ParserContext
 import com.eden.monadik.ParserException
+import com.eden.monadik.TerminalNode
 
-class CharNode(private val char: Char, name: String, context: NodeContext) : Node(name, context) {
+class CharNode(private val char: Char, name: String, context: NodeContext) : TerminalNode(name, context) {
     override fun printAst(currentIndent: Int): String {
         return "${indent(currentIndent)}(CharNode$nodeName: '$char')"
     }
+
+    override val text: String
+        get() = "$char"
 }
 
 class CharParser(name: String = "") : Parser(name) {

@@ -1,10 +1,12 @@
-package com.eden.monadik
+package com.eden.monadik.parser
 
-import com.eden.monadik.parser.ChoiceParser
-import com.eden.monadik.parser.ManyParser
-import com.eden.monadik.parser.SequenceParser
-import com.eden.monadik.parser.WhitespaceParser
-import com.eden.monadik.parser.WordParser
+import com.eden.monadik.Node
+import com.eden.monadik.NonTerminalNode
+import com.eden.monadik.ParserContext
+import com.eden.monadik.isNonTerminal
+import com.eden.monadik.node
+import com.eden.monadik.parsedCorrectly
+import com.eden.monadik.withChildren
 import org.junit.jupiter.api.Test
 import strikt.api.expect
 import strikt.assertions.isEqualTo
@@ -34,12 +36,15 @@ class TestSourcePosition {
               (WordNode: two)
             )
         """
-        expect(output).parsedCorrectly(expected)
+        expect(output)
+                .parsedCorrectly(expected)
+                .node()
+                    .isNonTerminal()
 
         expect(output!!.first.context.toString())              .isEqualTo("NodeContext(ParserContext(1:1) to ParserContext(2:4))")
-        expect(output!!.first.children!![0].context.toString()).isEqualTo("NodeContext(ParserContext(1:1) to ParserContext(1:4))")
-        expect(output!!.first.children!![1].context.toString()).isEqualTo("NodeContext(ParserContext(1:4) to ParserContext(2:1))")
-        expect(output!!.first.children!![2].context.toString()).isEqualTo("NodeContext(ParserContext(2:1) to ParserContext(2:4))")
+        expect((output.first as NonTerminalNode).children[0].context.toString()).isEqualTo("NodeContext(ParserContext(1:1) to ParserContext(1:4))")
+        expect((output.first as NonTerminalNode).children[1].context.toString()).isEqualTo("NodeContext(ParserContext(1:4) to ParserContext(2:1))")
+        expect((output.first as NonTerminalNode).children[2].context.toString()).isEqualTo("NodeContext(ParserContext(2:1) to ParserContext(2:4))")
     }
 
     @Test
@@ -61,10 +66,13 @@ class TestSourcePosition {
             )
         """
         expect(output).parsedCorrectly(expected)
+                .node()
+                .isNonTerminal()
+                .withChildren(2)
 
         expect(output!!.first.context.toString())              .isEqualTo("NodeContext(ParserContext(1:1) to ParserContext(2:4))")
-        expect(output!!.first.children!![0].context.toString()).isEqualTo("NodeContext(ParserContext(1:1) to ParserContext(1:4))")
-        expect(output!!.first.children!![1].context.toString()).isEqualTo("NodeContext(ParserContext(1:4) to ParserContext(2:4))")
+        expect((output.first as NonTerminalNode).children[0].context.toString()).isEqualTo("NodeContext(ParserContext(1:1) to ParserContext(1:4))")
+        expect((output.first as NonTerminalNode).children[1].context.toString()).isEqualTo("NodeContext(ParserContext(1:4) to ParserContext(2:4))")
     }
 
     @Test

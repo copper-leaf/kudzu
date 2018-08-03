@@ -1,13 +1,14 @@
-package com.eden.monadik
+package com.eden.monadik.parser
 
-import com.eden.monadik.parser.ChoiceParser
-import com.eden.monadik.parser.DigitParser
-import com.eden.monadik.parser.LetterParser
-import com.eden.monadik.parser.ManyParser
+import com.eden.monadik.Node
+import com.eden.monadik.ParserContext
+import com.eden.monadik.isNonTerminal
+import com.eden.monadik.node
+import com.eden.monadik.parsedCorrectly
+import com.eden.monadik.parsedIncorrectly
+import com.eden.monadik.withChildren
 import org.junit.jupiter.api.Test
 import strikt.api.expect
-import strikt.assertions.hasSize
-import strikt.assertions.isNotNull
 
 class TestChoice {
 
@@ -28,8 +29,11 @@ class TestChoice {
               (CharNode: '1')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(output!!.first.children).isNotNull().hasSize(1)
+        expect(output)
+                .parsedCorrectly(expected)
+                .node()
+                    .isNonTerminal()
+                    .withChildren(1)
 
         input = "a"
         output = underTest.test(input)
@@ -38,8 +42,11 @@ class TestChoice {
               (CharNode: 'a')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(output!!.first.children).isNotNull().hasSize(1)
+        expect(output)
+                .parsedCorrectly(expected)
+                .node()
+                    .isNonTerminal()
+                    .withChildren(1)
 
         input = " "
         output = underTest.test(input)

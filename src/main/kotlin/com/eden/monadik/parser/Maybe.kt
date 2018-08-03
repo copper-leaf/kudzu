@@ -2,10 +2,11 @@ package com.eden.monadik.parser
 
 import com.eden.monadik.Node
 import com.eden.monadik.NodeContext
+import com.eden.monadik.NonTerminalNode
 import com.eden.monadik.Parser
 import com.eden.monadik.ParserContext
 
-class MaybeNode(val node: Node?, name: String, context: NodeContext) : Node(name, context) {
+class MaybeNode(val node: Node?, name: String, context: NodeContext) : NonTerminalNode(name, context) {
     override fun printAst(currentIndent: Int): String {
         if (node != null) {
             return "${indent(currentIndent)}(MaybeNode$nodeName:\n" +
@@ -18,8 +19,8 @@ class MaybeNode(val node: Node?, name: String, context: NodeContext) : Node(name
         }
     }
 
-    override val children: List<Node>?
-        get() = if(node != null) listOf(node) else null
+    override val children: List<Node>
+        get() = if(node != null) listOf(node) else emptyList()
 }
 
 class MaybeParser(val parser: Parser, name: String = "") : Parser(name) {

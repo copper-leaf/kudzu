@@ -5,11 +5,15 @@ import com.eden.monadik.NodeContext
 import com.eden.monadik.Parser
 import com.eden.monadik.ParserContext
 import com.eden.monadik.ParserException
+import com.eden.monadik.TerminalNode
 
-class WordNode(private val word: String, name: String, context: NodeContext) : Node(name, context) {
+class WordNode(private val word: String, name: String, context: NodeContext) : TerminalNode(name, context) {
     override fun printAst(currentIndent: Int): String {
         return "${indent(currentIndent)}(WordNode$nodeName: $word)"
     }
+
+    override val text: String
+        get() = word
 }
 
 class WordParser(val expected: String, name: String = "") : Parser(name) {

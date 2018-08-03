@@ -1,8 +1,13 @@
-package com.eden.monadik
+package com.eden.monadik.parser
 
-import com.eden.monadik.parser.WordParser
+import com.eden.monadik.Node
+import com.eden.monadik.ParserContext
+import com.eden.monadik.node
+import com.eden.monadik.parsedCorrectly
+import com.eden.monadik.parsedIncorrectly
 import org.junit.jupiter.api.Test
 import strikt.api.expect
+import strikt.assertions.isEqualTo
 
 class TestWord {
 
@@ -18,7 +23,11 @@ class TestWord {
         expected = """
             (WordNode: kotlin)
         """
-        expect(output).parsedCorrectly(expected)
+        expect(output)
+                .parsedCorrectly(expected)
+                .node()
+                .map { this!!.text }
+                .isEqualTo("kotlin")
 
         input = "java"
         output = underTest.test(input)
@@ -37,7 +46,11 @@ class TestWord {
         expected = """
             (WordNode:word: kotlin)
         """
-        expect(output).parsedCorrectly(expected)
+        expect(output)
+                .parsedCorrectly(expected)
+                .node()
+                .map { this!!.text }
+                .isEqualTo("kotlin")
 
         input = "java"
         output = underTest.test(input)

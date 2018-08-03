@@ -1,14 +1,14 @@
-package com.eden.monadik
+package com.eden.monadik.parser
 
-import com.eden.monadik.parser.AtLeastParser
-import com.eden.monadik.parser.DigitParser
-import com.eden.monadik.parser.LetterParser
-import com.eden.monadik.parser.SequenceParser
-import com.eden.monadik.parser.WhitespaceParser
+import com.eden.monadik.Node
+import com.eden.monadik.ParserContext
+import com.eden.monadik.isNonTerminal
+import com.eden.monadik.node
+import com.eden.monadik.parsedCorrectly
+import com.eden.monadik.parsedIncorrectly
+import com.eden.monadik.withChildren
 import org.junit.jupiter.api.Test
 import strikt.api.expect
-import strikt.assertions.hasSize
-import strikt.assertions.isNotNull
 
 class TestSequence {
 
@@ -35,7 +35,10 @@ class TestSequence {
             )
         """
         expect(output).parsedCorrectly(expected)
-        expect(output!!.first.children).isNotNull().hasSize(4)
+        expect(output).parsedCorrectly(expected)
+                .node()
+                .isNonTerminal()
+                .withChildren(4)
     }
 
     @Test

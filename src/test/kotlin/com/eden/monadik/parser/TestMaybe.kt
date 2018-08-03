@@ -1,12 +1,13 @@
-package com.eden.monadik
+package com.eden.monadik.parser
 
-import com.eden.monadik.parser.DigitParser
-import com.eden.monadik.parser.MaybeParser
+import com.eden.monadik.Node
+import com.eden.monadik.ParserContext
+import com.eden.monadik.isNonTerminal
+import com.eden.monadik.node
+import com.eden.monadik.parsedCorrectly
+import com.eden.monadik.withChildren
 import org.junit.jupiter.api.Test
 import strikt.api.expect
-import strikt.assertions.hasSize
-import strikt.assertions.isNotNull
-import strikt.assertions.isNull
 
 class TestMaybe {
 
@@ -27,15 +28,20 @@ class TestMaybe {
             )
         """
         expect(output).parsedCorrectly(expected)
-        expect(output!!.first.children).isNotNull().hasSize(1)
+                .node()
+                .isNonTerminal()
+                .withChildren(1)
 
         input = "a"
         output = underTest.test(input)
         expected = """
             (MaybeNode: (empty))
         """
-        expect(output).parsedCorrectly(expected, true)
-        expect(output!!.first.children).isNull()
+        expect(output)
+                .parsedCorrectly(expected, true)
+                .node()
+                .isNonTerminal()
+                .withChildren(0)
     }
 
     @Test

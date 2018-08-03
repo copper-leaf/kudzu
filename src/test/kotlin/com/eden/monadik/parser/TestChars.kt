@@ -1,14 +1,12 @@
-package com.eden.monadik
+package com.eden.monadik.parser
 
-import com.eden.monadik.parser.CharInParser
-import com.eden.monadik.parser.CharNotInParser
-import com.eden.monadik.parser.CharParser
-import com.eden.monadik.parser.DigitParser
-import com.eden.monadik.parser.LetterParser
-import com.eden.monadik.parser.WhitespaceParser
+import com.eden.monadik.Node
+import com.eden.monadik.ParserContext
+import com.eden.monadik.parsedCorrectly
+import com.eden.monadik.parsedIncorrectly
 import org.junit.jupiter.api.Test
 import strikt.api.expect
-import strikt.assertions.isNull
+import strikt.assertions.isEqualTo
 
 class TestChars {
 
@@ -24,7 +22,7 @@ class TestChars {
         expected = """(CharNode: 'a')"""
 
         expect(output).parsedCorrectly(expected)
-        expect(output!!.first.children).isNull() // terminals have no children
+        expect(output!!.first.text).isEqualTo("a")
     }
 
     @Test
@@ -38,11 +36,13 @@ class TestChars {
         output = underTest.test(input)
         expected = """(CharNode: 'a')"""
         expect(output).parsedCorrectly(expected)
+        expect(output!!.first.text).isEqualTo("a")
 
         input = "b"
         output = underTest.test(input)
         expected = """(CharNode: 'b')"""
         expect(output).parsedCorrectly(expected)
+        expect(output!!.first.text).isEqualTo("b")
 
         input = "c"
         output = underTest.test(input)

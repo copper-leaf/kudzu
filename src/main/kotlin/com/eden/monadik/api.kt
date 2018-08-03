@@ -1,5 +1,7 @@
 package com.eden.monadik
 
+import kotlin.reflect.KClass
+
 // Exceptions
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -90,15 +92,14 @@ data class NodeContext(val startContext: ParserContext, val endContext: ParserCo
     }
 }
 
-// Parser and Node base classes
+interface VisitorContext
+
+// Parser, Node, and Visitor base classes
 //----------------------------------------------------------------------------------------------------------------------
 
 abstract class Node(val name: String, val context: NodeContext) {
 
-    open val children: List<Node>?
-        get() {
-            return null
-        }
+    var parent: Node? = null
 
     abstract fun printAst(currentIndent: Int): String
     protected fun indent(currentIndent: Int): String {
@@ -113,6 +114,28 @@ abstract class Node(val name: String, val context: NodeContext) {
     override fun toString(): String {
         return printAst(0)
     }
+
+    fun linkTree() {
+        if (this is NonTerminalNode) {
+            this.children.forEach { childNode ->
+                childNode.parent = this
+                childNode.linkTree()
+            }
+        }
+    }
+
+    abstract val text: String
+}
+
+abstract class TerminalNode(name: String, context: NodeContext) : Node(name, context) {
+    abstract override val text: String
+}
+
+abstract class NonTerminalNode(name: String, context: NodeContext) : Node(name, context) {
+    abstract val children: List<Node>
+
+    override val text: String
+        get() = children.map { it.text }.joinToString(separator = "")
 }
 
 abstract class Parser(val name: String) {
@@ -130,5 +153,11 @@ abstract class Parser(val name: String) {
     fun test(input: String, skipWhitespace: Boolean = false): Pair<Node, ParserContext>? {
         return test(ParserContext(input, 0, skipWhitespace))
     }
+
+}
+
+abstract class Visitor<T: VisitorContext>(val nodeClass: KClass<out Node>, val nodeName: String? = null) {
+
+    abstract fun visit(context: T, node: Node)
 
 }

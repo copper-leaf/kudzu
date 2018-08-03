@@ -1,14 +1,15 @@
-package com.eden.monadik
+package com.eden.monadik.parser
 
-import com.eden.monadik.parser.AtLeastParser
-import com.eden.monadik.parser.AtMostParser
-import com.eden.monadik.parser.CharParser
-import com.eden.monadik.parser.DigitParser
-import com.eden.monadik.parser.ManyParser
+import com.eden.monadik.Node
+import com.eden.monadik.ParserContext
+import com.eden.monadik.isNonTerminal
+import com.eden.monadik.node
+import com.eden.monadik.parsedCorrectly
+import com.eden.monadik.parsedIncorrectly
+import com.eden.monadik.withChildren
 import org.junit.jupiter.api.Test
 import strikt.api.expect
-import strikt.assertions.hasSize
-import strikt.assertions.isNotNull
+import strikt.assertions.isEqualTo
 
 class TestManys {
 
@@ -30,7 +31,15 @@ class TestManys {
             )
         """
         expect(output).parsedCorrectly(expected)
-        expect(output!!.first.children).isNotNull().hasSize(4)
+                .node()
+                .isNonTerminal()
+                .withChildren(4)
+
+        expect(output).parsedCorrectly(expected)
+                .node()
+                .isNonTerminal()
+                .map { text }
+                .isEqualTo("asdf")
     }
 
     @Test

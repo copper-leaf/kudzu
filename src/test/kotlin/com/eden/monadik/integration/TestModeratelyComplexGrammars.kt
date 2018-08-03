@@ -1,5 +1,9 @@
-package com.eden.monadik
+package com.eden.monadik.integration
 
+import com.eden.monadik.Node
+import com.eden.monadik.Parser
+import com.eden.monadik.ParserContext
+import com.eden.monadik.parsedCorrectly
 import com.eden.monadik.parser.AtLeastParser
 import com.eden.monadik.parser.CharInParser
 import com.eden.monadik.parser.CharNotInParser
