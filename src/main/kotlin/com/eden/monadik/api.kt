@@ -7,6 +7,8 @@ import kotlin.reflect.KClass
 
 class ParserException(message: String, val parser: Parser, val input: ParserContext) : Exception(message)
 
+class VisitorException(message: String) : Exception(message)
+
 // Parsing Context
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -129,6 +131,10 @@ abstract class Node(val name: String, val context: NodeContext) {
 
 abstract class TerminalNode(name: String, context: NodeContext) : Node(name, context) {
     abstract override val text: String
+
+    override fun printAst(currentIndent: Int): String {
+        return "${indent(currentIndent)}(${this::class.java.simpleName}$nodeName: '$text')"
+    }
 }
 
 abstract class NonTerminalNode(name: String, context: NodeContext) : Node(name, context) {
@@ -136,6 +142,14 @@ abstract class NonTerminalNode(name: String, context: NodeContext) : Node(name, 
 
     override val text: String
         get() = children.map { it.text }.joinToString(separator = "")
+
+    override fun printAst(currentIndent: Int): String {
+        return "${indent(currentIndent)}(${this::class.java.simpleName}$nodeName:\n" +
+                    (if(children.isNotEmpty()) { children.map { it.printAst(currentIndent + 2) }.joinToString(separator = "\n") }
+                    else { "${indent(currentIndent + 2)}(empty)" } ) +
+                "\n" +
+                "${indent(currentIndent)})"
+    }
 }
 
 abstract class Parser(val name: String) {
@@ -159,5 +173,9 @@ abstract class Parser(val name: String) {
 abstract class Visitor<T: VisitorContext>(val nodeClass: KClass<out Node>, val nodeName: String? = null) {
 
     abstract fun visit(context: T, node: Node)
+
+    open fun onFinish(context: T) {
+
+    }
 
 }

@@ -8,36 +8,59 @@ import com.eden.monadik.ParserException
 import com.eden.monadik.TerminalNode
 
 class CharNode(private val char: Char, name: String, context: NodeContext) : TerminalNode(name, context) {
-    override fun printAst(currentIndent: Int): String {
-        return "${indent(currentIndent)}(CharNode$nodeName: '$char')"
-    }
-
-    override val text: String
-        get() = "$char"
+    override val text: String get() = "$char"
 }
 
-class CharParser(name: String = "") : Parser(name) {
+class CharParser(private val escapeChar: Char? = null, name: String = "") : Parser(name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         if (input.isEmpty()) throw ParserException("nothing to parse", this, input)
-        return Pair(CharNode(input.next(), name, NodeContext(input, input.remaining())), input.remaining())
-    }
-}
 
-class CharInParser(private vararg val chars: Char, name: String = "") : Parser(name) {
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
-        if (input.isEmpty()) throw ParserException("nothing to parse", this, input)
-        if (!chars.contains(input.next())) throw ParserException("char '${input.next()}' not in [${chars.joinToString()}]", this, input)
+        var nextChar = input.next()
+        var remaining = input.remaining()
+        if(escapeChar != null && nextChar == escapeChar) {
+            if(input.remaining().isEmpty()) throw ParserException("illegal use of escape character $escapeChar", this, input)
+            nextChar = remaining.next()
+            remaining = remaining.remaining()
+        }
 
-        return Pair(CharNode(input.next(), name, NodeContext(input, input.remaining())), input.remaining())
+        return Pair(CharNode(nextChar, name, NodeContext(input, remaining)), remaining)
     }
 }
 
-class CharNotInParser(private vararg val chars: Char, name: String = "") : Parser(name) {
+class CharInParser(private vararg val chars: Char, private val escapeChar: Char? = null, name: String = "") : Parser(name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         if (input.isEmpty()) throw ParserException("nothing to parse", this, input)
-        if (chars.contains(input.next())) throw ParserException("char '${input.next()}' cannot be in [${chars.joinToString()}]", this, input)
 
-        return Pair(CharNode(input.next(), name, NodeContext(input, input.remaining())), input.remaining())
+        var nextChar = input.next()
+        var remaining = input.remaining()
+        if(escapeChar != null && nextChar == escapeChar) {
+            if(input.remaining().isEmpty()) throw ParserException("illegal use of escape character $escapeChar", this, input)
+            nextChar = remaining.next()
+            remaining = remaining.remaining()
+        }
+
+        if (!chars.contains(nextChar)) throw ParserException("char '$nextChar' not in [${chars.joinToString()}]", this, input)
+
+        return Pair(CharNode(nextChar, name, NodeContext(input, remaining)), remaining)
+    }
+}
+
+class CharNotInParser(private vararg val chars: Char, private val escapeChar: Char? = null, name: String = "") : Parser(name) {
+    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+        if (input.isEmpty()) throw ParserException("nothing to parse", this, input)
+
+        var nextChar = input.next()
+        var remaining = input.remaining()
+        if(escapeChar != null && nextChar == escapeChar) {
+            if(input.remaining().isEmpty()) throw ParserException("illegal use of escape character $escapeChar", this, input)
+            nextChar = remaining.next()
+            remaining = remaining.remaining()
+        }
+        else {
+            if (chars.contains(nextChar)) throw ParserException("char '$nextChar' cannot be in [${chars.joinToString()}]", this, input)
+        }
+
+        return Pair(CharNode(nextChar, name, NodeContext(input, remaining)), remaining)
     }
 }
 

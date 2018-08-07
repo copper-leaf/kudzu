@@ -171,6 +171,74 @@ class TestManys {
     }
 
     @Test
+    fun testTimesParser() {
+        var input: String
+        var output: Pair<Node, ParserContext>?
+        var expected: String
+        val underTest = TimesParser(4, DigitParser())
+
+        input = "1234"
+        output = underTest.test(input)
+        expected = """
+            (ManyNode:
+              (CharNode: '1')
+              (CharNode: '2')
+              (CharNode: '3')
+              (CharNode: '4')
+            )
+        """
+        expect(output).parsedCorrectly(expected)
+
+        input = "12345"
+        output = underTest.test(input)
+        expect(output).parsedIncorrectly()
+
+        input = "123"
+        output = underTest.test(input)
+        expect(output).parsedIncorrectly()
+    }
+
+    @Test
+    fun testBetweenTimesParser() {
+        var input: String
+        var output: Pair<Node, ParserContext>?
+        var expected: String
+        val underTest = BetweenTimesParser(2, 4, DigitParser())
+
+        input = "1234"
+        output = underTest.test(input)
+        expected = """
+            (ManyNode:
+              (CharNode: '1')
+              (CharNode: '2')
+              (CharNode: '3')
+              (CharNode: '4')
+            )
+        """
+        expect(output).parsedCorrectly(expected)
+
+        input = "1"
+        output = underTest.test(input)
+        expect(output).parsedIncorrectly()
+
+        input = "12"
+        output = underTest.test(input)
+        expect(output).parsedCorrectly()
+
+        input = "123"
+        output = underTest.test(input)
+        expect(output).parsedCorrectly()
+
+        input = "1234"
+        output = underTest.test(input)
+        expect(output).parsedCorrectly()
+
+        input = "12345"
+        output = underTest.test(input)
+        expect(output).parsedIncorrectly()
+    }
+
+    @Test
     fun testNamedManyNode() {
         var input: String
         var output: Pair<Node, ParserContext>?

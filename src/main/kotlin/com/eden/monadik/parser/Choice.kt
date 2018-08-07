@@ -8,15 +8,7 @@ import com.eden.monadik.ParserContext
 import com.eden.monadik.ParserException
 
 class ChoiceNode(val node: Node, name: String, context: NodeContext) : NonTerminalNode(name, context) {
-    override fun printAst(currentIndent: Int): String {
-        return "${indent(currentIndent)}(ChoiceNode$nodeName:\n" +
-                node.printAst(currentIndent + 2) +
-                "\n" +
-                "${indent(currentIndent)})"
-    }
-
-    override val children: List<Node>
-        get() = listOf(node)
+    override val children: List<Node> get() = listOf(node)
 }
 
 class ChoiceParser(private vararg val parsers: Parser, name: String = "") : Parser(name) {

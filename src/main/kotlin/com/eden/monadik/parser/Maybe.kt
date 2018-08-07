@@ -7,18 +7,6 @@ import com.eden.monadik.Parser
 import com.eden.monadik.ParserContext
 
 class MaybeNode(val node: Node?, name: String, context: NodeContext) : NonTerminalNode(name, context) {
-    override fun printAst(currentIndent: Int): String {
-        if (node != null) {
-            return "${indent(currentIndent)}(MaybeNode$nodeName:\n" +
-                    node.printAst(currentIndent + 2) +
-                    "\n" +
-                    "${indent(currentIndent)})"
-        }
-        else {
-            return "${indent(currentIndent)}(MaybeNode$nodeName: (empty))"
-        }
-    }
-
     override val children: List<Node>
         get() = if(node != null) listOf(node) else emptyList()
 }

@@ -26,6 +26,25 @@ class TestChars {
     }
 
     @Test
+    fun testEscapedCharParser() {
+        var input: String
+        var output: Pair<Node, ParserContext>?
+        var expected: String
+        val underTest = CharParser(escapeChar = '\\')
+
+        input = """\a"""
+        output = underTest.test(input)
+        expected = """(CharNode: 'a')"""
+
+        expect(output).parsedCorrectly(expected)
+        expect(output!!.first.text).isEqualTo("a")
+
+        input = """\"""
+        output = underTest.test(input)
+        expect(output).parsedIncorrectly()
+    }
+
+    @Test
     fun testCharInParser() {
         var input: String
         var output: Pair<Node, ParserContext>?
@@ -50,6 +69,34 @@ class TestChars {
     }
 
     @Test
+    fun testEscapedCharInParser() {
+        var input: String
+        var output: Pair<Node, ParserContext>?
+        var expected: String
+        val underTest = CharInParser('a', 'b', escapeChar = '\\')
+
+        input = """\a"""
+        output = underTest.test(input)
+        expected = """(CharNode: 'a')"""
+        expect(output).parsedCorrectly(expected)
+        expect(output!!.first.text).isEqualTo("a")
+
+        input = """\b"""
+        output = underTest.test(input)
+        expected = """(CharNode: 'b')"""
+        expect(output).parsedCorrectly(expected)
+        expect(output!!.first.text).isEqualTo("b")
+
+        input = """\c"""
+        output = underTest.test(input)
+        expect(output).parsedIncorrectly()
+
+        input = """\"""
+        output = underTest.test(input)
+        expect(output).parsedIncorrectly()
+    }
+
+    @Test
     fun testCharNotInParser() {
         var input: String
         var output: Pair<Node, ParserContext>?
@@ -68,6 +115,41 @@ class TestChars {
         expected = """(CharNode: 'c')"""
         output = underTest.test(input)
         expect(output).parsedCorrectly(expected)
+    }
+
+    @Test
+    fun testEscapedCharNotInParser() {
+        var input: String
+        var output: Pair<Node, ParserContext>?
+        val underTest = CharNotInParser('a', 'b', escapeChar = '\\')
+
+        input = """a"""
+        output = underTest.test(input)
+        expect(output).parsedIncorrectly()
+
+        input = """\a"""
+        output = underTest.test(input)
+        expect(output).parsedCorrectly()
+
+        input = """b"""
+        output = underTest.test(input)
+        expect(output).parsedIncorrectly()
+
+        input = """\b"""
+        output = underTest.test(input)
+        expect(output).parsedCorrectly()
+
+        input = """c"""
+        output = underTest.test(input)
+        expect(output).parsedCorrectly()
+
+        input = """\c"""
+        output = underTest.test(input)
+        expect(output).parsedCorrectly()
+
+        input = """\"""
+        output = underTest.test(input)
+        expect(output).parsedIncorrectly()
     }
 
     @Test

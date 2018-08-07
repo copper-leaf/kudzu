@@ -7,15 +7,7 @@ import com.eden.monadik.Parser
 import com.eden.monadik.ParserContext
 
 class SequenceNode(val nodeList: List<Node>, name: String, context: NodeContext) : NonTerminalNode(name, context) {
-    override fun printAst(currentIndent: Int): String {
-        return "${indent(currentIndent)}(SequenceNode$nodeName:\n" +
-                nodeList.map { it.printAst(currentIndent + 2) }.joinToString(separator = "\n") +
-                "\n" +
-                "${indent(currentIndent)})"
-    }
-
-    override val children: List<Node>
-        get() = nodeList
+    override val children: List<Node> get() = nodeList
 }
 
 class SequenceParser(private vararg val parsers: Parser, name: String = "") : Parser(name) {

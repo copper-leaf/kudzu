@@ -8,12 +8,7 @@ import com.eden.monadik.ParserException
 import com.eden.monadik.TerminalNode
 
 class WordNode(private val word: String, name: String, context: NodeContext) : TerminalNode(name, context) {
-    override fun printAst(currentIndent: Int): String {
-        return "${indent(currentIndent)}(WordNode$nodeName: $word)"
-    }
-
-    override val text: String
-        get() = word
+    override val text: String get() = word
 }
 
 class WordParser(val expected: String, name: String = "") : Parser(name) {
@@ -31,5 +26,26 @@ class WordParser(val expected: String, name: String = "") : Parser(name) {
             }
         }
         return Pair(WordNode(expected, name, NodeContext(input, remaining)), remaining)
+    }
+}
+
+class TokenParser(name: String = "") : Parser(name) {
+    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+        if (input.isEmpty()) throw ParserException("nothing to parse", this, input)
+        var remaining = input
+        var nextChar: Char
+        var token = ""
+
+        do {
+            nextChar = remaining.next()
+            if(!nextChar.isLetterOrDigit()) break
+
+            token += nextChar
+            remaining = remaining.remaining()
+        } while (remaining.isNotEmpty())
+
+        if (token.isEmpty()) throw ParserException("expected a token", this, input)
+
+        return Pair(WordNode(token, name, NodeContext(input, remaining)), remaining)
     }
 }

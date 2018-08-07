@@ -22,391 +22,37 @@ class TestModeratelyComplexGrammars {
     fun testClogParser() {
         var input: String
         var output: Pair<Node, ParserContext>?
-        var expected: String
         val underTest = getClogParser()
 
         input = "asdf, asdf {this is my message} asdfasdfasdf"
         output = underTest.test(input)
-        expected = """
-            (ManyNode:
-              (ChoiceNode:
-                (ManyNode:
-                  (CharNode: 'a')
-                  (CharNode: 's')
-                  (CharNode: 'd')
-                  (CharNode: 'f')
-                  (CharNode: ',')
-                  (CharNode: ' ')
-                  (CharNode: 'a')
-                  (CharNode: 's')
-                  (CharNode: 'd')
-                  (CharNode: 'f')
-                  (CharNode: ' ')
-                )
-              )
-              (ChoiceNode:
-                (SequenceNode:
-                  (CharNode: '{')
-                  (ManyNode:
-                    (CharNode: 't')
-                    (CharNode: 'h')
-                    (CharNode: 'i')
-                    (CharNode: 's')
-                    (CharNode: ' ')
-                    (CharNode: 'i')
-                    (CharNode: 's')
-                    (CharNode: ' ')
-                    (CharNode: 'm')
-                    (CharNode: 'y')
-                    (CharNode: ' ')
-                    (CharNode: 'm')
-                    (CharNode: 'e')
-                    (CharNode: 's')
-                    (CharNode: 's')
-                    (CharNode: 'a')
-                    (CharNode: 'g')
-                    (CharNode: 'e')
-                  )
-                  (CharNode: '}')
-                )
-              )
-              (ChoiceNode:
-                (ManyNode:
-                  (CharNode: ' ')
-                  (CharNode: 'a')
-                  (CharNode: 's')
-                  (CharNode: 'd')
-                  (CharNode: 'f')
-                  (CharNode: 'a')
-                  (CharNode: 's')
-                  (CharNode: 'd')
-                  (CharNode: 'f')
-                  (CharNode: 'a')
-                  (CharNode: 's')
-                  (CharNode: 'd')
-                  (CharNode: 'f')
-                )
-              )
-            )
-        """
-        expect(output).parsedCorrectly(expected)
+        expect(output).parsedCorrectly()
     }
 
     @Test
     fun testArithmeticParser() {
         var input: String
         var output: Pair<Node, ParserContext>?
-        var expected: String
         val underTest = getArithmeticParser()
 
         input = "1 + (-2 * 3 * 4 * 5 * (6 / 7) - (8 / 9))"
         output = underTest.test(input, true)
-        expected = """
-            (SequenceNode:
-              (SequenceNode:
-                (SequenceNode:
-                  (MaybeNode: (empty))
-                  (ChoiceNode:
-                    (ManyNode:
-                      (CharNode: '1')
-                    )
-                  )
-                )
-                (ManyNode:
-
-                )
-              )
-              (ManyNode:
-                (SequenceNode:
-                  (ChoiceNode:
-                    (CharNode: '+')
-                  )
-                  (SequenceNode:
-                    (SequenceNode:
-                      (MaybeNode: (empty))
-                      (ChoiceNode:
-                        (SequenceNode:
-                          (CharNode: '(')
-                          (SequenceNode:
-                            (SequenceNode:
-                              (SequenceNode:
-                                (MaybeNode:
-                                  (CharNode: '-')
-                                )
-                                (ChoiceNode:
-                                  (ManyNode:
-                                    (CharNode: '2')
-                                  )
-                                )
-                              )
-                              (ManyNode:
-                                (SequenceNode:
-                                  (ChoiceNode:
-                                    (CharNode: '*')
-                                  )
-                                  (SequenceNode:
-                                    (MaybeNode: (empty))
-                                    (ChoiceNode:
-                                      (ManyNode:
-                                        (CharNode: '3')
-                                      )
-                                    )
-                                  )
-                                )
-                                (SequenceNode:
-                                  (ChoiceNode:
-                                    (CharNode: '*')
-                                  )
-                                  (SequenceNode:
-                                    (MaybeNode: (empty))
-                                    (ChoiceNode:
-                                      (ManyNode:
-                                        (CharNode: '4')
-                                      )
-                                    )
-                                  )
-                                )
-                                (SequenceNode:
-                                  (ChoiceNode:
-                                    (CharNode: '*')
-                                  )
-                                  (SequenceNode:
-                                    (MaybeNode: (empty))
-                                    (ChoiceNode:
-                                      (ManyNode:
-                                        (CharNode: '5')
-                                      )
-                                    )
-                                  )
-                                )
-                                (SequenceNode:
-                                  (ChoiceNode:
-                                    (CharNode: '*')
-                                  )
-                                  (SequenceNode:
-                                    (MaybeNode: (empty))
-                                    (ChoiceNode:
-                                      (SequenceNode:
-                                        (CharNode: '(')
-                                        (SequenceNode:
-                                          (SequenceNode:
-                                            (SequenceNode:
-                                              (MaybeNode: (empty))
-                                              (ChoiceNode:
-                                                (ManyNode:
-                                                  (CharNode: '6')
-                                                )
-                                              )
-                                            )
-                                            (ManyNode:
-                                              (SequenceNode:
-                                                (ChoiceNode:
-                                                  (CharNode: '/')
-                                                )
-                                                (SequenceNode:
-                                                  (MaybeNode: (empty))
-                                                  (ChoiceNode:
-                                                    (ManyNode:
-                                                      (CharNode: '7')
-                                                    )
-                                                  )
-                                                )
-                                              )
-                                            )
-                                          )
-                                          (ManyNode:
-
-                                          )
-                                        )
-                                        (CharNode: ')')
-                                      )
-                                    )
-                                  )
-                                )
-                              )
-                            )
-                            (ManyNode:
-                              (SequenceNode:
-                                (ChoiceNode:
-                                  (CharNode: '-')
-                                )
-                                (SequenceNode:
-                                  (SequenceNode:
-                                    (MaybeNode: (empty))
-                                    (ChoiceNode:
-                                      (SequenceNode:
-                                        (CharNode: '(')
-                                        (SequenceNode:
-                                          (SequenceNode:
-                                            (SequenceNode:
-                                              (MaybeNode: (empty))
-                                              (ChoiceNode:
-                                                (ManyNode:
-                                                  (CharNode: '8')
-                                                )
-                                              )
-                                            )
-                                            (ManyNode:
-                                              (SequenceNode:
-                                                (ChoiceNode:
-                                                  (CharNode: '/')
-                                                )
-                                                (SequenceNode:
-                                                  (MaybeNode: (empty))
-                                                  (ChoiceNode:
-                                                    (ManyNode:
-                                                      (CharNode: '9')
-                                                    )
-                                                  )
-                                                )
-                                              )
-                                            )
-                                          )
-                                          (ManyNode:
-
-                                          )
-                                        )
-                                        (CharNode: ')')
-                                      )
-                                    )
-                                  )
-                                  (ManyNode:
-
-                                  )
-                                )
-                              )
-                            )
-                          )
-                          (CharNode: ')')
-                        )
-                      )
-                    )
-                    (ManyNode:
-
-                    )
-                  )
-                )
-              )
-            )
-        """
-        expect(output).parsedCorrectly(expected)
+        expect(output).parsedCorrectly()
     }
 
     @Test
     fun testClogExpressionParser() {
         var input: String
         var output: Pair<Node, ParserContext>?
-        var expected: String
         val underTest = getClogExpressionParser()
 
         input = "you have {1+(-2*3)} messages"
         output = underTest.test(input, true)
-        expected = """
-        (ManyNode:
-          (ChoiceNode:
-            (ManyNode:
-              (CharNode: 'y')
-              (CharNode: 'o')
-              (CharNode: 'u')
-              (CharNode: 'h')
-              (CharNode: 'a')
-              (CharNode: 'v')
-              (CharNode: 'e')
-            )
-          )
-          (ChoiceNode:
-            (SequenceNode:
-              (CharNode: '{')
-              (SequenceNode:
-                (SequenceNode:
-                  (SequenceNode:
-                    (MaybeNode: (empty))
-                    (ChoiceNode:
-                      (ManyNode:
-                        (CharNode: '1')
-                      )
-                    )
-                  )
-                  (ManyNode:
-
-                  )
-                )
-                (ManyNode:
-                  (SequenceNode:
-                    (ChoiceNode:
-                      (CharNode: '+')
-                    )
-                    (SequenceNode:
-                      (SequenceNode:
-                        (MaybeNode: (empty))
-                        (ChoiceNode:
-                          (SequenceNode:
-                            (CharNode: '(')
-                            (SequenceNode:
-                              (SequenceNode:
-                                (SequenceNode:
-                                  (MaybeNode:
-                                    (CharNode: '-')
-                                  )
-                                  (ChoiceNode:
-                                    (ManyNode:
-                                      (CharNode: '2')
-                                    )
-                                  )
-                                )
-                                (ManyNode:
-                                  (SequenceNode:
-                                    (ChoiceNode:
-                                      (CharNode: '*')
-                                    )
-                                    (SequenceNode:
-                                      (MaybeNode: (empty))
-                                      (ChoiceNode:
-                                        (ManyNode:
-                                          (CharNode: '3')
-                                        )
-                                      )
-                                    )
-                                  )
-                                )
-                              )
-                              (ManyNode:
-
-                              )
-                            )
-                            (CharNode: ')')
-                          )
-                        )
-                      )
-                      (ManyNode:
-
-                      )
-                    )
-                  )
-                )
-              )
-              (CharNode: '}')
-            )
-          )
-          (ChoiceNode:
-            (ManyNode:
-              (CharNode: 'm')
-              (CharNode: 'e')
-              (CharNode: 's')
-              (CharNode: 's')
-              (CharNode: 'a')
-              (CharNode: 'g')
-              (CharNode: 'e')
-              (CharNode: 's')
-            )
-          )
-        )
-        """
-        expect(output).parsedCorrectly(expected)
+        expect(output).parsedCorrectly()
     }
 
     /*
-    Code island parser
+     * Code island parser
      */
     private fun getClogParser(): Parser {
         val rawParser = AtLeastParser(
@@ -433,15 +79,15 @@ class TestModeratelyComplexGrammars {
     }
 
     /*
-    Recursively-grouped, binary operation expression parser
-
-    number     ::= digit+
-    factor     ::= '-'? (number | '(' expression ')')
-    term       ::= factor (('*'| '/') factor)*
-    expression ::= term   (('+'| '-') term  )*
+     * Recursively-grouped, binary operation expression parser
+     *
+     * number     ::= digit+
+     * factor     ::= '-'? (number | '(' expression ')')
+     * term       ::= factor (('*'| '/') factor)*
+     * expression ::= term   (('+'| '-') term  )*
      */
     private fun getArithmeticParser(): Parser {
-        val number = AtLeastParser(1, DigitParser())
+        val number = AtLeastParser(1, DigitParser(), name = "number")
 
         val lazyExpressionParser = LazyParser()
 
@@ -452,9 +98,9 @@ class TestModeratelyComplexGrammars {
                 ChoiceParser(
                         number,
                         SequenceParser(
-                                CharInParser('('),
+                                CharInParser('(', name = "("),
                                 lazyExpressionParser,
-                                CharInParser(')')
+                                CharInParser(')', name = ")")
                         )
                 )
         )
@@ -464,8 +110,8 @@ class TestModeratelyComplexGrammars {
                 ManyParser(
                         SequenceParser(
                                 ChoiceParser(
-                                        CharInParser('*'),
-                                        CharInParser('/')
+                                        CharInParser('*', name = "*"),
+                                        CharInParser('/', name = "/")
                                 ),
                                 factorParser
                         )
@@ -477,8 +123,8 @@ class TestModeratelyComplexGrammars {
                 ManyParser(
                         SequenceParser(
                                 ChoiceParser(
-                                        CharInParser('+'),
-                                        CharInParser('-')
+                                        CharInParser('+', name = "+"),
+                                        CharInParser('-', name = "-")
                                 ),
                                 termParser
                         )
@@ -491,7 +137,7 @@ class TestModeratelyComplexGrammars {
     }
 
     /*
-    Code island parser using a arithmetic expression as the island contents
+     * Code island parser using a arithmetic expression as the island contents
      */
     private fun getClogExpressionParser(): Parser {
         val rawParser = AtLeastParser(

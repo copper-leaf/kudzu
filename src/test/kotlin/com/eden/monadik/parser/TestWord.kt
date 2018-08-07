@@ -21,7 +21,7 @@ class TestWord {
         input = "kotlin"
         output = underTest.test(input)
         expected = """
-            (WordNode: kotlin)
+            (WordNode: 'kotlin')
         """
         expect(output)
                 .parsedCorrectly(expected)
@@ -30,6 +30,41 @@ class TestWord {
                 .isEqualTo("kotlin")
 
         input = "java"
+        output = underTest.test(input)
+        expect(output).parsedIncorrectly()
+    }
+
+    @Test
+    fun testTokenParser() {
+        var input: String
+        var output: Pair<Node, ParserContext>?
+        val underTest = TokenParser()
+
+        input = "kotlin"
+        output = underTest.test(input)
+        expect(output)
+                .parsedCorrectly()
+                .node()
+                .map { this!!.text }
+                .isEqualTo("kotlin")
+
+        input = "java"
+        output = underTest.test(input)
+        expect(output)
+                .parsedCorrectly()
+                .node()
+                .map { this!!.text }
+                .isEqualTo("java")
+
+        input = "12345"
+        output = underTest.test(input)
+        expect(output)
+                .parsedCorrectly()
+                .node()
+                .map { this!!.text }
+                .isEqualTo("12345")
+
+        input = "="
         output = underTest.test(input)
         expect(output).parsedIncorrectly()
     }
@@ -44,7 +79,7 @@ class TestWord {
         input = "kotlin"
         output = underTest.test(input)
         expected = """
-            (WordNode:word: kotlin)
+            (WordNode:word: 'kotlin')
         """
         expect(output)
                 .parsedCorrectly(expected)

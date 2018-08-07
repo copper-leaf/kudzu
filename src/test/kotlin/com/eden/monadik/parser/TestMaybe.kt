@@ -35,7 +35,9 @@ class TestMaybe {
         input = "a"
         output = underTest.test(input)
         expected = """
-            (MaybeNode: (empty))
+            (MaybeNode:
+              (empty)
+            )
         """
         expect(output)
                 .parsedCorrectly(expected, true)
@@ -66,9 +68,11 @@ class TestMaybe {
         input = "a"
         output = underTest.test(input)
         expected = """
-            (MaybeNode:maybe: (empty))
+            (MaybeNode:maybe:
+              (empty)
+            )
         """
-        expect(output).parsedCorrectly(expected, true)
+        expect(output as Pair<Node, ParserContext>?).parsedCorrectly(expected, true)
     }
 
 }
