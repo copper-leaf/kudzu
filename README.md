@@ -1,10 +1,11 @@
-# Monadik
+# Kudzu
 ---
 
 > A monadic (I think...) recursive-descent parser written in Kotlin
 
-Monadik is a recursive-descent parser written in Kotlin, with the goal of immutability and simplicity. It is most an 
-exercise for me to learn more about parsing algorithms.
+Kudzu is a recursive-descent parser written in Kotlin, with the goal of immutability and simplicity. It is mostly an 
+exercise for me to learn more about parsing algorithms, but should work reasonably-well enough to be used for small, 
+non-trivial parsers.
 
 ## Why did it write it?
 
@@ -16,7 +17,7 @@ things work.
 
 Regardless, I aim for this library to have a very strikt (heh) and clean separation between parsing the input into an 
 AST, and the manipulation and/or evaluation of the AST, which will be implemented using a visitor pattern. You'll first 
-build your grammar using the parsing primitives provided by Monadik, which will produce an immutable grammar that will 
+build your grammar using the parsing primitives provided by Kudzu, which will produce an immutable grammar that will 
 recognize your language. This grammar will parse an input string into an AST. You can then attach visitors to that AST,
 which will react to the nodes in the AST as you walk the tree.
 
