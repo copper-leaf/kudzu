@@ -56,6 +56,7 @@ class TestCommandLineArgsParser {
     }
 
     @Test
+    @Suppress("UNCHECKED_CAST")
     fun testCommandLineArgsParser() {
         var input: String
         var output: Pair<Node, ParserContext>?
@@ -152,6 +153,8 @@ class ArgsContext : VisitorContext {
 }
 
 class ArgsVisitor : Visitor<ArgsContext>(SequenceNode::class, "arg") {
+
+    @Suppress("UNCHECKED_CAST")
     override fun visit(context: ArgsContext, node: Node) {
         val argName = node.findAnywhere(null, "argName").text
         val argValue: String = try {

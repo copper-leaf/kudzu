@@ -132,7 +132,6 @@ class TestSequence {
     fun testSequenceCannotGetNext() {
         var input: String
         var output: Pair<Node, ParserContext>?
-        var expected: String
         val underTest = SequenceParser(
                 AtLeastParser(1, DigitParser()),
                 AtLeastParser(1, LetterParser()),

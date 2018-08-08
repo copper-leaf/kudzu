@@ -73,6 +73,7 @@ class TestJsonParser {
     }
 
     @Test
+    @Suppress("UNCHECKED_CAST")
     fun testJsonVisitor() {
         var input: String
         var output: Pair<Node, ParserContext>?
@@ -200,14 +201,8 @@ private fun initJsonGrammar() {
 private class JsonVisitor : Visitor<JsonContext>(ChoiceNode::class, "json") {
 
     override fun visit(context: JsonContext, node: Node) {
-        context.parsed = context.getValue(node)
+        context.parsed = getValue(node)
     }
-
-}
-
-private class JsonContext : VisitorContext {
-
-    var parsed: Any? = null
 
     fun getValue(node: Node): Any? {
         return when (node.name) {
@@ -291,8 +286,15 @@ private class JsonContext : VisitorContext {
         return node.text.toBoolean()
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun getNullValue(node: Node): Any? {
         return null
     }
+
+}
+
+private class JsonContext : VisitorContext {
+
+    var parsed: Any? = null
 
 }

@@ -58,7 +58,6 @@ class TestVisitor {
     fun testManyLettersAndNumbersVisitor() {
         var input: String
         var output: Pair<Node, ParserContext>?
-        var expected: String
         val parser = ManyParser(
                 ChoiceParser(
                         LetterParser(name = "letters"),
@@ -88,7 +87,6 @@ class TestVisitor {
     fun testManyLettersAndNumbersByParentNodeVisitor() {
         var input: String
         var output: Pair<Node, ParserContext>?
-        var expected: String
         val parser = ManyParser(
                 ChoiceParser(
                         ChoiceParser(
@@ -115,7 +113,7 @@ class TestVisitor {
 
         val stringAccumulatorContext = StringAndDigitAccumulatorContext()
         var dfsTreeVisitor = DfsTreeVisitor(setOf(StringAndDigitAccumulatorVisitor(CharNode::class)))
-        dfsTreeVisitor.visit(stringAccumulatorContext, output!!.first)
+        dfsTreeVisitor.visit(stringAccumulatorContext, output.first)
         expect(stringAccumulatorContext.stringAcc).isEqualTo("a1s2d3f4")
 
         val stringAndDigitAccumulatorContext = StringAndDigitAccumulatorContext()
