@@ -3,6 +3,7 @@
 
 > A monadic (I think...) recursive-descent parser written in Kotlin
 
+[![Build Status](https://travis-ci.org/copper-leaf/kudzu.svg?branch=master)](https://travis-ci.org/copper-leaf/kudzu)
 [![Codacy Project Grade](https://api.codacy.com/project/badge/Grade/3400972041df4049a0fec4624eb36d36)](https://www.codacy.com/app/cjbrooks12/kudzu?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=copper-leaf/kudzu&amp;utm_campaign=Badge_Grade)
 [![Code Coverage](https://api.codacy.com/project/badge/Coverage/3400972041df4049a0fec4624eb36d36)](https://www.codacy.com/app/cjbrooks12/kudzu?utm_source=github.com&utm_medium=referral&utm_content=copper-leaf/kudzu&utm_campaign=Badge_Coverage)
 
