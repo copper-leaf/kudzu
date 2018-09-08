@@ -10,6 +10,15 @@ class SequenceNode(val nodeList: List<Node>, name: String, context: NodeContext)
     override val children: List<Node> get() = nodeList
 }
 
+/**
+ * Consume a sequence of parsers in order. Each parser in the sequence must parse successfully.
+ *
+ * Predicts true when:
+ *   - the first parser predicts true
+ *
+ * Parsing fails when:
+ *   - any of its parsers fails to parse
+ */
 class SequenceParser(private vararg val parsers: Parser, name: String = "") : Parser(name) {
 
     override fun predict(input: ParserContext): Boolean {

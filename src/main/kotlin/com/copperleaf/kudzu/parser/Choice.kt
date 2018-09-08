@@ -11,6 +11,16 @@ class ChoiceNode(val node: Node, name: String, context: NodeContext) : NonTermin
     override val children: List<Node> get() = listOf(node)
 }
 
+/**
+ * Given a set of parsers, choose a single one to parse. The first parser that predicts true is chosen. If a parser
+ * predicts true, it is expected to parse successfully as well.
+ *
+ * Predicts true when:
+ *   - at least one parser predicts true
+ *
+ * Parsing fails when:
+ *   - none of the provides parsers are able to parse successfully
+ */
 class ChoiceParser(private vararg val parsers: Parser, name: String = "") : Parser(name) {
 
     override fun predict(input: ParserContext): Boolean {

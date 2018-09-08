@@ -11,6 +11,21 @@ class WordNode(private val word: String, name: String, context: NodeContext) : T
     override val text: String get() = word
 }
 
+/**
+ * Consume a specific sequence of characters of the input.
+ *
+ * Predicts true when:
+ *   - the next character matches the first expected character
+ *
+ * Parsing stops when:
+ *   - the next character is not whitespace
+ *   - there is no more input remaining
+ *   - the entire expected string has been consumed
+ *
+ * Parsing fails when:
+ *   - there is no more input remaining
+ *   - the next character does not match the corresponding character of the expected string
+ */
 class WordParser(val expected: String, name: String = "") : Parser(name) {
 
     override fun predict(input: ParserContext): Boolean {
@@ -34,6 +49,19 @@ class WordParser(val expected: String, name: String = "") : Parser(name) {
     }
 }
 
+/**
+ * Consume a sequence of letter or digit characters of the input.
+ *
+ * Predicts true when:
+ *   - the next character is a letter of digit
+ *
+ * Parsing stops when:
+ *   - the next character is not a letter or digit
+ *   - there is no more input remaining
+ *
+ * Parsing fails when:
+ *   - no input was consumed
+ */
 class TokenParser(name: String = "") : Parser(name) {
 
     override fun predict(input: ParserContext): Boolean {

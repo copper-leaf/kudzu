@@ -33,6 +33,16 @@ abstract class BaseCharParser(private val escapeChar: Char? = null, name: String
     }
 }
 
+/**
+ * Consumes a single character as long as it is not the escapeChar.
+ *
+ * Predicts true when:
+ *   - parsing is successful
+ *
+ * Parsing fails when:
+ *   - there is no more input
+ *   - the escape character is used without input remaining to escape
+ */
 class CharParser(escapeChar: Char? = null, name: String = "") : BaseCharParser(escapeChar, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         val (nextChar, remaining, _) = nextChar(input)
@@ -41,6 +51,17 @@ class CharParser(escapeChar: Char? = null, name: String = "") : BaseCharParser(e
     }
 }
 
+/**
+ * Consumes a single character from the set of input characters as long as it is not the escapeChar.
+ * 
+ * Predicts true when:
+ *   - parsing is successful
+ *
+ * Parsing fails when:
+ *   - the next input character is not in the whitelisted characters
+ *   - there is no more input
+ *   - the escape character is used without input remaining to escape
+ */
 class CharInParser(private vararg val chars: Char, escapeChar: Char? = null, name: String = "") : BaseCharParser(escapeChar, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         val (nextChar, remaining, _) = nextChar(input)
@@ -51,6 +72,17 @@ class CharInParser(private vararg val chars: Char, escapeChar: Char? = null, nam
     }
 }
 
+/**
+ * Consumes a single character not in the set of input characters as long as it is not the escapeChar.
+ * 
+ * Predicts true when:
+ *   - parsing is successful
+ *
+ * Parsing fails when:
+ *   - the next input character is in the blacklisted characters
+ *   - there is no more input
+ *   - the escape character is used without input remaining to escape
+ */
 class CharNotInParser(private vararg val chars: Char, escapeChar: Char? = null, name: String = "") : BaseCharParser(escapeChar, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         val (nextChar, remaining, wasEscaped) = nextChar(input)
@@ -63,6 +95,17 @@ class CharNotInParser(private vararg val chars: Char, escapeChar: Char? = null, 
     }
 }
 
+/**
+ * Consumes a single whitespace character as long as it is not the escapeChar.
+ * 
+ * Predicts true when:
+ *   - parsing is successful
+ *
+ * Parsing fails when:
+ *   - the next input character is not whitespace
+ *   - there is no more input
+ *   - the escape character is used without input remaining to escape
+ */
 class WhitespaceParser(escapeChar: Char? = null, name: String = "") : BaseCharParser(escapeChar, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         val (nextChar, remaining, _) = nextChar(input)
@@ -73,6 +116,17 @@ class WhitespaceParser(escapeChar: Char? = null, name: String = "") : BaseCharPa
     }
 }
 
+/**
+ * Consumes a single digit character as long as it is not the escapeChar.
+ * 
+ * Predicts true when:
+ *   - parsing is successful
+ *
+ * Parsing fails when:
+ *   - the next input character is not a digit
+ *   - there is no more input
+ *   - the escape character is used without input remaining to escape
+ */
 class DigitParser(escapeChar: Char? = null, name: String = "") : BaseCharParser(escapeChar, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         val (nextChar, remaining, _) = nextChar(input)
@@ -82,6 +136,17 @@ class DigitParser(escapeChar: Char? = null, name: String = "") : BaseCharParser(
     }
 }
 
+/**
+ * Consumes a single letter character as long as it is not the escapeChar.
+ * 
+ * Predicts true when:
+ *   - parsing is successful
+ *
+ * Parsing fails when:
+ *   - the next input character is not a letter
+ *   - there is no more input
+ *   - the escape character is used without input remaining to escape
+ */
 class LetterParser(escapeChar: Char? = null, name: String = "") : BaseCharParser(escapeChar, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         val (nextChar, remaining, _) = nextChar(input)

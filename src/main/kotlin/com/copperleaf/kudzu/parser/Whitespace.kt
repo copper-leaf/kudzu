@@ -11,6 +11,19 @@ class WhitespaceNode(name: String, context: NodeContext) : TerminalNode(name, co
     override val text: String get() = ""
 }
 
+/**
+ * Consume zero or more whitespace characters from the input.
+ *
+ * Predicts true when:
+ *   - always
+ *
+ * Parsing stops when:
+ *   - the next character is not whitespace
+ *   - there is no more input remaining
+ *
+ * Parsing fails when:
+ *   - never
+ */
 class OptionalWhitespaceParser(name: String = "") : Parser(name) {
 
     override fun predict(input: ParserContext): Boolean {
@@ -34,6 +47,19 @@ class OptionalWhitespaceParser(name: String = "") : Parser(name) {
     }
 }
 
+/**
+ * Consume one or more whitespace characters from the input.
+ *
+ * Predicts true when:
+ *   - there is input remaining and the next character is whitespace
+ *
+ * Parsing stops when:
+ *   - the next character is not whitespace
+ *   - there is no more input remaining
+ *
+ * Parsing fails when:
+ *   - there is no more input remaining
+ */
 class RequiredWhitespaceParser(name: String = "") : Parser(name) {
 
     override fun predict(input: ParserContext): Boolean {

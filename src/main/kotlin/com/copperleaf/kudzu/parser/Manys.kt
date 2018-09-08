@@ -17,6 +17,19 @@ abstract class BaseManyParser(protected val parser: Parser, name: String = "") :
     }
 }
 
+/**
+ * Consume input as many times as its parser is able to.
+ *
+ * Predicts true when:
+ *   - its parser predicts true
+ *
+ * Parsing stops when:
+ *   - its parser predicts false
+ *   - there is no more input remaining
+ *
+ * Parsing fails when:
+ *   - its parser fails to parse
+ */
 class ManyParser(parser: Parser, name: String = "") : BaseManyParser(parser, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         val nodeList = ArrayList<Node>()
@@ -38,6 +51,20 @@ class ManyParser(parser: Parser, name: String = "") : BaseManyParser(parser, nam
     }
 }
 
+/**
+ * Consume input as many times as its parser is able to, but it must be able to parse a `minSize` number of times.
+ *
+ * Predicts true when:
+ *   - its parser predicts true
+ *
+ * Parsing stops when:
+ *   - its parser predicts false
+ *   - there is no more input remaining
+ *
+ * Parsing fails when:
+ *   - its parser fails to parse
+ *   - its parser could not parse at least `minSize` number of times.
+ */
 class AtLeastParser(private val minSize: Int, parser: Parser, name: String = "") : BaseManyParser(parser, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         val nodeList = ArrayList<Node>()
@@ -61,6 +88,20 @@ class AtLeastParser(private val minSize: Int, parser: Parser, name: String = "")
     }
 }
 
+/**
+ * Consume input from its parser up to `maxSize` number of times.
+ *
+ * Predicts true when:
+ *   - its parser predicts true
+ *
+ * Parsing stops when:
+ *   - its parser predicts false
+ *   - there is no more input remaining
+ *   - we have parsed `maxSize` number of times already
+ *
+ * Parsing fails when:
+ *   - its parser fails to parse
+ */
 class AtMostParser(private val maxSize: Int, parser: Parser, name: String = "") : BaseManyParser(parser, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         val nodeList = ArrayList<Node>()
@@ -84,6 +125,19 @@ class AtMostParser(private val maxSize: Int, parser: Parser, name: String = "") 
     }
 }
 
+/**
+ * Consume input from its parser a specific number of times.
+ *
+ * Predicts true when:
+ *   - its parser predicts true
+ *
+ * Parsing stops when:
+ *   - we have parsed `times` number of times already
+ *
+ * Parsing fails when:
+ *   - its parser fails to parse
+ *   - there is no more input remaining
+ */
 class TimesParser(private val times: Int, parser: Parser, name: String = "") : BaseManyParser(parser, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         val nodeList = ArrayList<Node>()
@@ -100,6 +154,19 @@ class TimesParser(private val times: Int, parser: Parser, name: String = "") : B
     }
 }
 
+/**
+ * Consume input from its parser between `minSize` and `maxSize` number of times.
+ *
+ * Predicts true when:
+ *   - its parser predicts true
+ *
+ * Parsing stops when:
+ *   - we have parsed `maxSize` number of times already
+ *
+ * Parsing fails when:
+ *   - its parser fails to parse
+ *   - its parser could not parse at least `minSize` number of times.
+ */
 class BetweenTimesParser(private val minSize: Int, private val maxSize: Int, parser: Parser, name: String = "") : BaseManyParser(parser, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         val nodeList = ArrayList<Node>()

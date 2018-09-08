@@ -11,6 +11,15 @@ class MaybeNode(val node: Node?, name: String, context: NodeContext) : NonTermin
         get() = if(node != null) listOf(node) else emptyList()
 }
 
+/**
+ * Maybe consume input from its parser. If its parser predicts true, it is expected to parse successfully.
+ *
+ * Predicts true when:
+ *   - always
+ *
+ * Parsing fails when:
+ *   - its parser fails to parse
+ */
 class MaybeParser(val parser: Parser, name: String = "") : Parser(name) {
 
     override fun predict(input: ParserContext): Boolean {
