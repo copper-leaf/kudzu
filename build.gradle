@@ -1,7 +1,6 @@
 buildscript {
-    ext.kotlin_version = '1.2.51'
-    ext.dokka_version = '0.9.17'
-    ext.orchid_version = '0.9.3'
+    ext.kotlin_version = '1.2.61'
+    ext.orchid_version = '0.11.0'
 
     repositories {
         jcenter()
@@ -10,7 +9,6 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
         classpath "gradle.plugin.com.eden:orchidPlugin:$orchid_version"
     }
 }
@@ -18,7 +16,6 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'jacoco'
-apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'com.eden.orchidPlugin'
 
 group = "com.copper-leaf"
@@ -26,6 +23,7 @@ version = "0.1.0"
 
 repositories {
     jcenter()
+    maven { url "https://kotlin.bintray.com/kotlinx" }
     maven { url 'https://dl.bintray.com/javaeden/Orchid/' }
     maven { url 'https://jitpack.io' }
 }
@@ -40,13 +38,15 @@ dependencies {
     testCompile "io.strikt:strikt-core:0.9.0"
 
     // Orchid
-    def orchid_version = '0.9.3'
+    def orchid_version = '0.11.0'
     orchidCompile "io.github.javaeden.orchid:OrchidCore:$orchid_version"
+
     orchidRuntime "io.github.javaeden.orchid:OrchidCore:$orchid_version"
     orchidRuntime "io.github.javaeden.orchid:OrchidBsDoc:$orchid_version"
     orchidRuntime "io.github.javaeden.orchid:OrchidPages:$orchid_version"
     orchidRuntime "io.github.javaeden.orchid:OrchidPluginDocs:$orchid_version"
     orchidRuntime "io.github.javaeden.orchid:OrchidSearch:$orchid_version"
+    orchidRuntime "io.github.javaeden.orchid:OrchidKotlindoc:$orchid_version"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_6
@@ -63,83 +63,6 @@ jacocoTestReport {
     reports {
         xml.enabled true
         html.enabled false
-    }
-}
-
-// dokka config
-//----------------------------------------------------------------------------------------------------------------------
-
-def _dokkaRoot = "$buildDir/docs/dokka"
-def _dokkaOrchidRoot = "${project.rootDir}/src/orchid/resources/pages/api"
-
-dokka {
-    outputFormat = 'html'
-    outputDirectory = _dokkaRoot
-    reportUndocumented = false
-
-    linkMapping {
-        dir = "src/main/kotlin"
-        url = "https://github.com/copper-leaf/kudzu/blob/master/src/main/kotlin"
-        suffix = "#L"
-    }
-}
-task dokkaPreOrchid {
-    dependsOn dokka
-    doLast {
-        def outputExtension = 'html'
-
-        fileTree(_dokkaRoot).visit { FileVisitDetails details ->
-            if (details.isDirectory()) return
-            if (!details.path.endsWith(outputExtension)) return
-
-            def originalFile = details.file
-            def originalPath = originalFile.path
-            def newPath = originalPath
-            newPath = newPath.replaceAll("${_dokkaRoot}/${project.name}", '')
-            newPath = newPath.replaceAll('\\.' + outputExtension, '')
-            newPath = newPath.replaceAll('\\.', '/')
-            newPath = newPath + "." + outputExtension
-            newPath = _dokkaOrchidRoot + newPath
-
-            File newFile = new File(newPath)
-            if (!newFile.parentFile.exists()) {
-                newFile.parentFile.mkdirs()
-            }
-            newFile.createNewFile()
-
-            def originalText = originalFile.text
-            String newText = originalText
-            newText = newText.replaceAll("\\.md", ".html")
-            newText = newText.replaceAll("<HTML>", "")
-            newText = newText.replaceAll("</HTML>", "")
-            newText = newText.replaceAll("(?s)<HEAD>.*</HEAD>", "")
-            newText = newText.replaceAll("<BODY>", "")
-            newText = newText.replaceAll("</BODY>", "")
-            newText = '<div class="dokka-docs">' + newText + '</div>'
-
-            newFile << newText
-        }
-
-        def packageListFile = file("${_dokkaRoot}/${project.name}/package-list")
-        packageListFile.write '---\nrenderMode: raw\nusePrettyUrl: false\n---\n' + packageListFile.text
-        packageListFile.renameTo("${_dokkaOrchidRoot}/package-list")
-
-        copy {
-            from file("${_dokkaRoot}/style.css")
-            into file("${project.rootDir}/src/orchid/resources/assets/dokka/")
-            rename '(.+)\\.css', '$1.scss'
-
-            eachFile { fileCopyDetails ->
-                fileCopyDetails.file.write ".dokka-docs {\n" + fileCopyDetails.file.text + "\n}"
-            }
-        }
-    }
-}
-
-task dokkaPostOrchid {
-    doLast {
-        file(_dokkaOrchidRoot).deleteDir()
-        file("${project.rootDir}/src/orchid/resources/assets/dokka/style.scss").delete()
     }
 }
 
@@ -164,11 +87,7 @@ orchid {
 
     args = ["githubToken ${project.hasProperty("github_token") ? project.property("github_token") : System.getenv('GITHUB_TOKEN')}"]
 }
-tasks.orchidBuild.dependsOn dokkaPreOrchid
-tasks.orchidServe.dependsOn dokkaPreOrchid
-tasks.orchidDeploy.dependsOn dokkaPreOrchid
 tasks.build.dependsOn orchidBuild
-tasks.clean.dependsOn dokkaPostOrchid
 tasks.check.dependsOn jacocoTestReport
 tasks.deploy.dependsOn orchidDeploy
 
