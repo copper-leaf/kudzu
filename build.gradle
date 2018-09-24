@@ -1,6 +1,6 @@
 buildscript {
-    ext.kotlin_version = '1.2.61'
-    ext.orchid_version = '0.11.0'
+    ext.kotlin_version = '1.2.70'
+    ext.orchid_version = '0.12.1'
 
     repositories {
         jcenter()
@@ -38,7 +38,7 @@ dependencies {
     testCompile "io.strikt:strikt-core:0.9.0"
 
     // Orchid
-    def orchid_version = '0.11.0'
+    def orchid_version = '0.12.1'
     orchidCompile "io.github.javaeden.orchid:OrchidCore:$orchid_version"
 
     orchidRuntime "io.github.javaeden.orchid:OrchidCore:$orchid_version"
