@@ -8,7 +8,7 @@ import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.withChildren
 import org.junit.jupiter.api.Test
-import strikt.api.expect
+import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import strikt.assertions.isFalse
 import strikt.assertions.isTrue
@@ -32,18 +32,18 @@ class TestManys {
               (CharNode: 'f')
             )
         """
-        expect(output).parsedCorrectly(expected)
+        expectThat(output).parsedCorrectly(expected)
                 .node()
                 .isNonTerminal()
                 .withChildren(4)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
-        expect(output).parsedCorrectly(expected)
+        expectThat(output).parsedCorrectly(expected)
                 .node()
                 .isNonTerminal()
-                .map { text }
+                .get { it.text }
                 .isEqualTo("asdf")
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -63,13 +63,13 @@ class TestManys {
               (CharNode: 'f')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "asd"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -89,23 +89,23 @@ class TestManys {
               (CharNode: 'f')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "qwerty"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "as1234"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "12asdf"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 
     @Test
@@ -125,18 +125,18 @@ class TestManys {
               (CharNode: '4')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "1234 asdf"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "asdf"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 
     @Test
@@ -156,18 +156,18 @@ class TestManys {
               (CharNode: '4')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "1234 asdf"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "123 asdf"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -187,18 +187,18 @@ class TestManys {
               (CharNode: '4')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "1234 asdf"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "12345 asdf"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -218,18 +218,18 @@ class TestManys {
               (CharNode: '4')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "12345"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "123"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -249,33 +249,33 @@ class TestManys {
               (CharNode: '4')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "1"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "12"
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "123"
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "1234"
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "12345"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -298,8 +298,8 @@ class TestManys {
               (CharNode:digit: '4')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
 }

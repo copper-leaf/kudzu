@@ -16,7 +16,7 @@ import com.copperleaf.kudzu.parser.LetterParser
 import com.copperleaf.kudzu.parser.ManyParser
 import com.copperleaf.kudzu.withChildren
 import org.junit.jupiter.api.Test
-import strikt.api.expect
+import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import strikt.assertions.isSameInstanceAs
 import kotlin.reflect.KClass
@@ -40,7 +40,7 @@ class TestVisitor {
               (CharNode: 'f')
             )
         """
-        expect(output).parsedCorrectly(expected)
+        expectThat(output).parsedCorrectly(expected)
                 .node()
                 .isNonTerminal()
                 .withChildren(4)
@@ -51,7 +51,7 @@ class TestVisitor {
 
         dfsTreeVisitor.visit(context, output!!.first)
 
-        expect(context.acc).isEqualTo("asdf")
+        expectThat(context.acc).isEqualTo("asdf")
     }
 
     @Test
@@ -67,20 +67,20 @@ class TestVisitor {
 
         input = "a1s2d3f4"
         output = parser.test(input)
-        expect(output).parsedCorrectly()
+        expectThat(output).parsedCorrectly()
 
         val stringAccumulatorContext = StringAndDigitAccumulatorContext()
         var dfsTreeVisitor = DfsTreeVisitor(setOf(StringAndDigitAccumulatorVisitor(CharNode::class)))
         dfsTreeVisitor.visit(stringAccumulatorContext, output!!.first)
-        expect(stringAccumulatorContext.stringAcc).isEqualTo("a1s2d3f4")
+        expectThat(stringAccumulatorContext.stringAcc).isEqualTo("a1s2d3f4")
 
         val stringAndDigitAccumulatorContext = StringAndDigitAccumulatorContext()
         val lettersNodeVisitor = StringAndDigitAccumulatorVisitor(CharNode::class, "letters")
         val digitsNodeVisitor = StringAndDigitAccumulatorVisitor(CharNode::class, "digits")
         dfsTreeVisitor = DfsTreeVisitor(setOf(lettersNodeVisitor, digitsNodeVisitor))
         dfsTreeVisitor.visit(stringAndDigitAccumulatorContext, output.first)
-        expect(stringAndDigitAccumulatorContext.stringAcc).isEqualTo("asdf")
-        expect(stringAndDigitAccumulatorContext.digitAcc).isEqualTo(10)
+        expectThat(stringAndDigitAccumulatorContext.stringAcc).isEqualTo("asdf")
+        expectThat(stringAndDigitAccumulatorContext.digitAcc).isEqualTo(10)
     }
 
     @Test
@@ -102,27 +102,27 @@ class TestVisitor {
 
         input = "a1s2d3f4"
         output = parser.test(input)
-        expect(output).parsedCorrectly()
+        expectThat(output).parsedCorrectly()
                 .node()
                 .isNonTerminal()
         output!!.first.linkTree()
 
         (output.first as NonTerminalNode).children.forEach {
-            expect(it.parent).isSameInstanceAs(output.first)
+            expectThat(it.parent).isSameInstanceAs(output.first)
         }
 
         val stringAccumulatorContext = StringAndDigitAccumulatorContext()
         var dfsTreeVisitor = DfsTreeVisitor(setOf(StringAndDigitAccumulatorVisitor(CharNode::class)))
         dfsTreeVisitor.visit(stringAccumulatorContext, output.first)
-        expect(stringAccumulatorContext.stringAcc).isEqualTo("a1s2d3f4")
+        expectThat(stringAccumulatorContext.stringAcc).isEqualTo("a1s2d3f4")
 
         val stringAndDigitAccumulatorContext = StringAndDigitAccumulatorContext()
         val lettersNodeVisitor = StringAndDigitByParentAccumulatorVisitor(CharNode::class, "letters")
         val digitsNodeVisitor = StringAndDigitByParentAccumulatorVisitor(CharNode::class, "digits")
         dfsTreeVisitor = DfsTreeVisitor(setOf(lettersNodeVisitor, digitsNodeVisitor))
         dfsTreeVisitor.visit(stringAndDigitAccumulatorContext, output.first)
-        expect(stringAndDigitAccumulatorContext.stringAcc).isEqualTo("asdf")
-        expect(stringAndDigitAccumulatorContext.digitAcc).isEqualTo(10)
+        expectThat(stringAndDigitAccumulatorContext.stringAcc).isEqualTo("asdf")
+        expectThat(stringAndDigitAccumulatorContext.digitAcc).isEqualTo(10)
     }
 }
 

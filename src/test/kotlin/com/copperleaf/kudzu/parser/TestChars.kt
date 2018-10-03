@@ -5,7 +5,7 @@ import com.copperleaf.kudzu.ParserContext
 import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
 import org.junit.jupiter.api.Test
-import strikt.api.expect
+import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import strikt.assertions.isFalse
 import strikt.assertions.isTrue
@@ -23,9 +23,9 @@ class TestChars {
         output = underTest.test(input)
         expected = """(CharNode: 'a')"""
 
-        expect(output).parsedCorrectly(expected)
-        expect(output!!.first.text).isEqualTo("a")
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(output!!.first.text).isEqualTo("a")
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -39,14 +39,14 @@ class TestChars {
         output = underTest.test(input)
         expected = """(CharNode: 'a')"""
 
-        expect(output).parsedCorrectly(expected)
-        expect(output!!.first.text).isEqualTo("a")
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(output!!.first.text).isEqualTo("a")
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = """\"""
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 
     @Test
@@ -59,21 +59,21 @@ class TestChars {
         input = "a"
         output = underTest.test(input)
         expected = """(CharNode: 'a')"""
-        expect(output).parsedCorrectly(expected)
-        expect(output!!.first.text).isEqualTo("a")
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(output!!.first.text).isEqualTo("a")
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "b"
         output = underTest.test(input)
         expected = """(CharNode: 'b')"""
-        expect(output).parsedCorrectly(expected)
-        expect(output!!.first.text).isEqualTo("b")
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(output!!.first.text).isEqualTo("b")
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "c"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 
     @Test
@@ -86,26 +86,26 @@ class TestChars {
         input = """\a"""
         output = underTest.test(input)
         expected = """(CharNode: 'a')"""
-        expect(output).parsedCorrectly(expected)
-        expect(output!!.first.text).isEqualTo("a")
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(output!!.first.text).isEqualTo("a")
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = """\b"""
         output = underTest.test(input)
         expected = """(CharNode: 'b')"""
-        expect(output).parsedCorrectly(expected)
-        expect(output!!.first.text).isEqualTo("b")
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(output!!.first.text).isEqualTo("b")
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = """\c"""
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
 
         input = """\"""
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 
     @Test
@@ -117,19 +117,19 @@ class TestChars {
 
         input = "a"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
 
         input = "b"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
 
         input = "c"
         expected = """(CharNode: 'c')"""
         output = underTest.test(input)
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -140,38 +140,38 @@ class TestChars {
 
         input = """a"""
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
 
         input = """\a"""
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = """b"""
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
 
         input = """\b"""
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = """c"""
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = """\c"""
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = """\"""
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 
     @Test
@@ -184,25 +184,25 @@ class TestChars {
         input = " "
         output = underTest.test(input)
         expected = "(CharNode: ' ')"
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "\n"
         output = underTest.test(input)
         expected = "(CharNode: '\n')"
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "\t"
         output = underTest.test(input)
         expected = "(CharNode: '\t')"
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "a"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 
     @Test
@@ -215,19 +215,19 @@ class TestChars {
         input = "0"
         output = underTest.test(input)
         expected = "(CharNode: '0')"
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "1"
         output = underTest.test(input)
         expected = "(CharNode: '1')"
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "a"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 
     @Test
@@ -240,19 +240,19 @@ class TestChars {
         input = "a"
         output = underTest.test(input)
         expected = "(CharNode: 'a')"
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "b"
         output = underTest.test(input)
         expected = "(CharNode: 'b')"
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "1"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 
     @Test
@@ -266,8 +266,8 @@ class TestChars {
         output = underTest.test(input)
         expected = """(CharNode:charNode: 'a')"""
 
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
 }

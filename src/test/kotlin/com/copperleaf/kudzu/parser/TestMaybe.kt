@@ -7,7 +7,7 @@ import com.copperleaf.kudzu.node
 import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.withChildren
 import org.junit.jupiter.api.Test
-import strikt.api.expect
+import strikt.api.expectThat
 import strikt.assertions.isTrue
 
 class TestMaybe {
@@ -28,11 +28,11 @@ class TestMaybe {
               (CharNode: '1')
             )
         """
-        expect(output).parsedCorrectly(expected)
+        expectThat(output).parsedCorrectly(expected)
                 .node()
                 .isNonTerminal()
                 .withChildren(1)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "a"
         output = underTest.test(input)
@@ -41,12 +41,12 @@ class TestMaybe {
               (empty)
             )
         """
-        expect(output)
+        expectThat(output)
                 .parsedCorrectly(expected, true)
                 .node()
                 .isNonTerminal()
                 .withChildren(0)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -66,7 +66,7 @@ class TestMaybe {
               (CharNode:digit: '1')
             )
         """
-        expect(output).parsedCorrectly(expected)
+        expectThat(output).parsedCorrectly(expected)
 
         input = "a"
         output = underTest.test(input)
@@ -75,7 +75,7 @@ class TestMaybe {
               (empty)
             )
         """
-        expect(output).parsedCorrectly(expected, true)
+        expectThat(output).parsedCorrectly(expected, true)
     }
 
 }

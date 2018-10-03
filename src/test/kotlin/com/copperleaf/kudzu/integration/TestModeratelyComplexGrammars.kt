@@ -15,6 +15,7 @@ import com.copperleaf.kudzu.parser.MaybeParser
 import com.copperleaf.kudzu.parser.SequenceParser
 import org.junit.jupiter.api.Test
 import strikt.api.expect
+import strikt.api.expectThat
 
 class TestModeratelyComplexGrammars {
 
@@ -26,7 +27,7 @@ class TestModeratelyComplexGrammars {
 
         input = "asdf, asdf {this is my message} asdfasdfasdf"
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
+        expectThat(output).parsedCorrectly()
     }
 
     @Test
@@ -37,7 +38,7 @@ class TestModeratelyComplexGrammars {
 
         input = "1 + (-2 * 3 * 4 * 5 * (6 / 7) - (8 / 9))"
         output = underTest.test(input, true)
-        expect(output).parsedCorrectly()
+        expectThat(output).parsedCorrectly()
     }
 
     @Test
@@ -48,7 +49,7 @@ class TestModeratelyComplexGrammars {
 
         input = "you have {1+(-2*3)} messages"
         output = underTest.test(input, true)
-        expect(output).parsedCorrectly()
+        expectThat(output).parsedCorrectly()
     }
 
     /*

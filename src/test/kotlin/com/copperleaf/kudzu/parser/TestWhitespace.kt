@@ -7,6 +7,7 @@ import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
 import org.junit.jupiter.api.Test
 import strikt.api.expect
+import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import strikt.assertions.isFalse
 import strikt.assertions.isTrue
@@ -21,42 +22,42 @@ class TestWhitespace {
 
         input = ""
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = " "
         output = underTest.test(input)
-        expect(output)
+        expectThat(output)
                 .parsedCorrectly()
                 .node()
-                .map { this!!.text }
+                .get { it!!.text }
                 .isEqualTo("")
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "\n"
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "     "
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = " \n \n\n\n"
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = " asdf "
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "asdf "
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -67,37 +68,37 @@ class TestWhitespace {
 
         input = ""
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
 
         input = " "
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "\n"
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "     "
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = " \n \n\n\n"
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = " asdf "
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "asdf "
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 }

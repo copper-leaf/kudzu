@@ -7,6 +7,7 @@ import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
 import org.junit.jupiter.api.Test
 import strikt.api.expect
+import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import strikt.assertions.isFalse
 import strikt.assertions.isTrue
@@ -25,17 +26,17 @@ class TestWord {
         expected = """
             (WordNode: 'kotlin')
         """
-        expect(output)
+        expectThat(output)
                 .parsedCorrectly(expected)
                 .node()
-                .map { this!!.text }
+                .get { it!!.text }
                 .isEqualTo("kotlin")
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "java"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 
     @Test
@@ -46,35 +47,35 @@ class TestWord {
 
         input = "kotlin"
         output = underTest.test(input)
-        expect(output)
+        expectThat(output)
                 .parsedCorrectly()
                 .node()
-                .map { this!!.text }
+                .get { it!!.text }
                 .isEqualTo("kotlin")
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "java"
         output = underTest.test(input)
-        expect(output)
+        expectThat(output)
                 .parsedCorrectly()
                 .node()
-                .map { this!!.text }
+                .get { it!!.text }
                 .isEqualTo("java")
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "12345"
         output = underTest.test(input)
-        expect(output)
+        expectThat(output)
                 .parsedCorrectly()
                 .node()
-                .map { this!!.text }
+                .get { it!!.text }
                 .isEqualTo("12345")
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "="
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 
     @Test
@@ -89,17 +90,17 @@ class TestWord {
         expected = """
             (WordNode:word: 'kotlin')
         """
-        expect(output)
+        expectThat(output)
                 .parsedCorrectly(expected)
                 .node()
-                .map { this!!.text }
+                .get { it!!.text }
                 .isEqualTo("kotlin")
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "java"
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 
 }

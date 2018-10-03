@@ -22,9 +22,8 @@ import com.copperleaf.kudzu.parser.SequenceNode
 import com.copperleaf.kudzu.parser.SequenceParser
 import com.copperleaf.kudzu.parser.TokenParser
 import com.copperleaf.kudzu.visitor.DfsTreeVisitor
-
 import org.junit.jupiter.api.Test
-import strikt.api.expect
+import strikt.api.expectThat
 import strikt.assertions.containsExactlyInAnyOrder
 import strikt.assertions.get
 import strikt.assertions.isEqualTo
@@ -40,18 +39,18 @@ class TestCommandLineArgsParser {
 
         input = "\"asdf\"".trim()
         output = underTest.test(input)
-        expect(output)
+        expectThat(output)
                 .parsedCorrectly()
                 .node()
-                .map { this!!.findAnywhere<ManyNode>("argValue").text }
+                .get { it!!.findAnywhere<ManyNode>("argValue").text }
                 .isEqualTo("asdf")
 
         input = """ "as\"df" """.trim()
         output = underTest.test(input)
-        expect(output)
+        expectThat(output)
                 .parsedCorrectly()
                 .node()
-                .map { this!!.findAnywhere<ManyNode>("argValue").text }
+                .get { it!!.findAnywhere<ManyNode>("argValue").text }
                 .isEqualTo("as\"df".trim())
     }
 
@@ -64,7 +63,7 @@ class TestCommandLineArgsParser {
 
         input = "--verbose -d asdf1 -d asdf2 -d asdf3 --destination=\"asdf4\"  --superDestination=\"as\\\"df5\""
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
+        expectThat(output).parsedCorrectly()
 
         val context = ArgsContext()
         val visitor = ArgsVisitor()
@@ -72,18 +71,18 @@ class TestCommandLineArgsParser {
         val iterator = DfsTreeVisitor(setOf(visitor))
         iterator.visit(context, output!!.first)
 
-        expect(context.args)["verbose"]
+        expectThat(context.args)["verbose"]
                 .isEqualTo("true")
 
-        expect(context.args)["d"]
-                .map { this as? List<Any> }
+        expectThat(context.args)["d"]
+                .get { it as? List<Any> }
                 .isNotNull()
                 .containsExactlyInAnyOrder("asdf1", "asdf2", "asdf3")
 
-        expect(context.args)["destination"]
+        expectThat(context.args)["destination"]
                 .isEqualTo("asdf4")
 
-        expect(context.args)["superDestination"]
+        expectThat(context.args)["superDestination"]
                 .isEqualTo("as\"df5")
     }
 }

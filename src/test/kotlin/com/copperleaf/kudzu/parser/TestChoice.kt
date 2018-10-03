@@ -8,7 +8,7 @@ import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.withChildren
 import org.junit.jupiter.api.Test
-import strikt.api.expect
+import strikt.api.expectThat
 import strikt.assertions.isFalse
 import strikt.assertions.isTrue
 
@@ -31,12 +31,12 @@ class TestChoice {
               (CharNode: '1')
             )
         """
-        expect(output)
+        expectThat(output)
                 .parsedCorrectly(expected)
                 .node()
                     .isNonTerminal()
                     .withChildren(1)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "a"
         output = underTest.test(input)
@@ -45,17 +45,17 @@ class TestChoice {
               (CharNode: 'a')
             )
         """
-        expect(output)
+        expectThat(output)
                 .parsedCorrectly(expected)
                 .node()
                     .isNonTerminal()
                     .withChildren(1)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = " "
         output = underTest.test(input)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
 
     @Test
@@ -100,8 +100,8 @@ class TestChoice {
               )
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -122,8 +122,8 @@ class TestChoice {
               (CharNode:digit: '1')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "a"
         output = underTest.test(input)
@@ -132,8 +132,8 @@ class TestChoice {
               (CharNode:letter: 'a')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
 }

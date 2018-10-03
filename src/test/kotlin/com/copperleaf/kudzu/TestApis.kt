@@ -2,82 +2,85 @@ package com.copperleaf.kudzu
 
 import strikt.api.Assertion
 
-fun Assertion<Pair<Node, ParserContext>?>.parsedCorrectly(expected: String? = null, allowRemaining: Boolean = false): Assertion<Pair<Node, ParserContext>> =
+fun Assertion.Builder<Pair<Node, ParserContext>?>.parsedCorrectly(expected: String? = null, allowRemaining: Boolean = false): Assertion.Builder<Pair<Node, ParserContext>> =
         assert("parsedCorrectly") {
-            if(subject == null) fail(
-                    message = "Subject cannot be null",
-                    actual = subject
+            if(it == null) fail(
+                    description = "Subject cannot be null",
+                    actual = it
             )
             else {
                 if(expected != null) {
-                    when(subject!!.first.toString()) {
+                    when(it!!.first.toString()) {
                         expected.trimIndent().trim() -> pass()
                         else                         -> fail(
-                                message = "Output AST should be %s",
-                                actual = subject!!.first
+                                description = "Output AST should be %s",
+                                actual = it!!.first
                         )
                     }
                 }
                 if(!allowRemaining) {
-                    when (subject!!.second.isEmpty()) {
+                    when (it!!.second.isEmpty()) {
                         true -> pass()
                         else -> fail(
-                                message = "There should be nothing remaining, still had %s",
-                                actual = subject!!.second
+                                description = "There should be nothing remaining, still had %s",
+                                actual = it!!.second
                         )
                     }
                 }
             }
-        }.map { this!! }
+        }.get { it!! }
 
-fun Assertion<Pair<Node, ParserContext>?>.parsedIncorrectly(): Assertion<Pair<Node, ParserContext>?> =
+fun Assertion.Builder<Pair<Node, ParserContext>?>.parsedIncorrectly(): Assertion.Builder<Pair<Node, ParserContext>?> =
         assert("parsedIncorrectly") {
-            if(subject == null) pass()
-            else when(subject!!.second.isNotEmpty()) {
+            if(it == null) pass()
+            else when(it!!.second.isNotEmpty()) {
                 true -> pass()
                 else -> fail(
-                        message = "Subject must be null or have input remaining",
-                        actual = subject!!.second
+                        description = "Subject must be null or have input remaining",
+                        actual = it!!.second
                 )
             }
         }
 
-fun Assertion<Pair<Node, ParserContext>>.node(): Assertion<Node?> = map { this.first }
-fun Assertion<Pair<Node, ParserContext>>.context(): Assertion<ParserContext?> = map { this.second }
+fun Assertion.Builder<Pair<Node, ParserContext>>.node(): Assertion.Builder<Node?> = get { it.first }
+fun Assertion.Builder<Pair<Node, ParserContext>>.context(): Assertion.Builder<ParserContext?> = get { it.second }
+fun Assertion.Builder<Pair<Node, ParserContext>>.thenLog() {
+    this.node().get { println(it.toString()) }
+}
 
-fun Assertion<Node?>.isTerminal(): Assertion<TerminalNode> =
+fun Assertion.Builder<Node?>.isTerminal(): Assertion.Builder<TerminalNode> =
         assert("isTerminal") {
-            if(subject == null) fail(
-                    message = "Subject must be non-null",
-                    actual = subject
+            if(it == null) fail(
+                    description = "Subject must be non-null",
+                    actual = it
             )
-            if(subject is TerminalNode) pass()
+            if(it is TerminalNode) pass()
             else fail(
-                    message = "Subject must be be an instance of TerminalNode",
-                    actual = subject
+                    description = "Subject must be be an instance of TerminalNode",
+                    actual = it
             )
-        }.map { this!! as TerminalNode }
+        }.get { it!! as TerminalNode }
 
-fun Assertion<Node?>.isNonTerminal(): Assertion<NonTerminalNode> =
+fun Assertion.Builder<Node?>.isNonTerminal(): Assertion.Builder<NonTerminalNode> =
         assert("isTerminal") {
-            if(subject == null) fail(
-                    message = "Subject must be non-null",
-                    actual = subject
+            if(it == null) fail(
+                    description = "Subject must be non-null",
+                    actual = it
             )
-            if(subject is NonTerminalNode) pass()
+            if(it is NonTerminalNode) pass()
             else fail(
-                    message = "Subject must be be an instance of NonTerminalNode",
-                    actual = subject
+                    description = "Subject must be be an instance of NonTerminalNode",
+                    actual = it
             )
-        }.map { this!! as NonTerminalNode }
+        }.get { it!! as NonTerminalNode }
 
-fun Assertion<NonTerminalNode>.withChildren(expectedChildrenCount: Int): Assertion<NonTerminalNode> =
+fun Assertion.Builder<NonTerminalNode>.withChildren(expectedChildrenCount: Int): Assertion.Builder<NonTerminalNode> =
         assert("isTerminal") {
-            when(subject.children.size) {
+            when(it.children.size) {
                 expectedChildrenCount -> pass()
                 else -> fail(
-                        message = "Subject should have have $expectedChildrenCount children",
-                        actual = subject.children.size
+                        description = "Subject should have have $expectedChildrenCount children",
+                        actual = it.children.size
                 )
             }
         }

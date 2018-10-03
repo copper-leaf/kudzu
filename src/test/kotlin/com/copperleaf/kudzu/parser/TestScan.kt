@@ -4,7 +4,7 @@ import com.copperleaf.kudzu.Node
 import com.copperleaf.kudzu.ParserContext
 import com.copperleaf.kudzu.parsedCorrectly
 import org.junit.jupiter.api.Test
-import strikt.api.expect
+import strikt.api.expectThat
 
 class TestScan {
 
@@ -20,7 +20,7 @@ class TestScan {
         expected = """
             (ScanNode: 'asdf ')
         """
-        expect(output).parsedCorrectly(expected, allowRemaining = true)
+        expectThat(output).parsedCorrectly(expected, allowRemaining = true)
     }
 
     @Test
@@ -42,7 +42,7 @@ class TestScan {
               (CharNode: '1')
             )
         """
-        expect(output).parsedCorrectly(expected)
+        expectThat(output).parsedCorrectly(expected)
     }
 
     @Test
@@ -72,7 +72,7 @@ class TestScan {
               )
             )
         """
-        expect(output).parsedCorrectly(expected)
+        expectThat(output).parsedCorrectly(expected)
     }
 
     @Test
@@ -111,15 +111,15 @@ class TestScan {
 
         input = "asdf {}"
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
+        expectThat(output).parsedCorrectly()
 
         input = "asdf \${asdf}"
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
+        expectThat(output).parsedCorrectly()
 
         input = "asdf #{1}"
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
+        expectThat(output).parsedCorrectly()
 
         input = "asdf {} qwerty #{1} qwerty \${asdf} asdf"
         output = underTest.test(input)
@@ -167,11 +167,11 @@ class TestScan {
               )
             )
         """
-        expect(output).parsedCorrectly(expected)
+        expectThat(output).parsedCorrectly(expected)
 
         input = "{}#{1}\${asdf}"
         output = underTest.test(input)
-        expect(output).parsedCorrectly()
+        expectThat(output).parsedCorrectly()
     }
 
 }

@@ -23,7 +23,7 @@ import com.copperleaf.kudzu.parser.WordParser
 import com.copperleaf.kudzu.visit
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import strikt.api.expect
+import strikt.api.expectThat
 import strikt.assertions.containsExactlyInAnyOrder
 import strikt.assertions.get
 import strikt.assertions.isEqualTo
@@ -43,22 +43,22 @@ class TestJsonParser {
 
     @Test
     fun testJsonParserPredictions() {
-        expect(lazyObjectParser.predict(ParserContext("{}", 0, false))).isTrue()
-        expect(lazyObjectParser.predict(ParserContext("[]", 0, false))).isFalse()
+        expectThat(lazyObjectParser.predict(ParserContext("{}", 0, false))).isTrue()
+        expectThat(lazyObjectParser.predict(ParserContext("[]", 0, false))).isFalse()
 
-        expect(lazyArrayParser.predict(ParserContext("[]", 0, false))).isTrue()
-        expect(lazyArrayParser.predict(ParserContext("{}", 0, false))).isFalse()
+        expectThat(lazyArrayParser.predict(ParserContext("[]", 0, false))).isTrue()
+        expectThat(lazyArrayParser.predict(ParserContext("{}", 0, false))).isFalse()
 
-        expect(jsonParser.predict(ParserContext("{}", 0, false))).isTrue()
-        expect(jsonParser.predict(ParserContext("[]", 0, false))).isTrue()
-        expect(jsonParser.predict(ParserContext("true", 0, false))).isFalse()
+        expectThat(jsonParser.predict(ParserContext("{}", 0, false))).isTrue()
+        expectThat(jsonParser.predict(ParserContext("[]", 0, false))).isTrue()
+        expectThat(jsonParser.predict(ParserContext("true", 0, false))).isFalse()
 
-        expect(lazyValueParser.predict(ParserContext("{}", 0, false))).isTrue()
-        expect(lazyValueParser.predict(ParserContext("[]", 0, false))).isTrue()
-        expect(lazyValueParser.predict(ParserContext("true", 0, false))).isTrue()
-        expect(lazyValueParser.predict(ParserContext("false", 0, false))).isTrue()
-        expect(lazyValueParser.predict(ParserContext("null", 0, false))).isTrue()
-        expect(lazyValueParser.predict(ParserContext("\"asdf\"", 0, false))).isTrue()
+        expectThat(lazyValueParser.predict(ParserContext("{}", 0, false))).isTrue()
+        expectThat(lazyValueParser.predict(ParserContext("[]", 0, false))).isTrue()
+        expectThat(lazyValueParser.predict(ParserContext("true", 0, false))).isTrue()
+        expectThat(lazyValueParser.predict(ParserContext("false", 0, false))).isTrue()
+        expectThat(lazyValueParser.predict(ParserContext("null", 0, false))).isTrue()
+        expectThat(lazyValueParser.predict(ParserContext("\"asdf\"", 0, false))).isTrue()
     }
 
     @Test
@@ -69,7 +69,7 @@ class TestJsonParser {
 
         input = "" + this::class.java.getResourceAsStream("/mockjson.json").reader().readText()
         output = underTest.test(input, true)
-        expect(output).parsedCorrectly()
+        expectThat(output).parsedCorrectly()
     }
 
     @Test
@@ -81,29 +81,29 @@ class TestJsonParser {
 
         input = "" + this::class.java.getResourceAsStream("/mockjson.json").reader().readText()
         output = underTest.test(input, true)
-        expect(output).parsedCorrectly()
+        expectThat(output).parsedCorrectly()
 
         val context = JsonContext()
 
         output!!.first.visit(context, JsonVisitor())
 
-        expect(context.parsed).isNotNull()
-        expect(context.parsed)
-                .map { this as? Map<String, Any?> }
+        expectThat(context.parsed).isNotNull()
+        expectThat(context.parsed)
+                .get { it as? Map<String, Any?> }
                 .isNotNull()
 
-        expect(context.parsed).map { this as Map<String, Any?> }.evaluate {
+        expectThat(context.parsed).get { it as Map<String, Any?> }.apply {
             this["_string"].isEqualTo("two")
             this["_number"].isEqualTo(123456.0)
             this["_false"].isEqualTo(false)
             this["_true"].isEqualTo(true)
             this["_null"].isEqualTo(null)
-            this["_object"].map { this as Map<String, Any?> }.evaluate {
+            this["_object"].get { it as Map<String, Any?> }.apply {
                 this["key_one"].isEqualTo("value_one")
                 this["key_two"].isEqualTo("value_two")
                 this["key_three"].isEqualTo("value_three")
             }
-            this["_array"].map { this as List<Any?> }.evaluate {
+            this["_array"].get { it as List<Any?> }.apply {
                 this.containsExactlyInAnyOrder("element_one", "element_two", "element_three")
             }
         }

@@ -8,7 +8,7 @@ import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.withChildren
 import org.junit.jupiter.api.Test
-import strikt.api.expect
+import strikt.api.expectThat
 import strikt.assertions.isTrue
 
 class TestSequence {
@@ -35,12 +35,12 @@ class TestSequence {
               (CharNode: '4')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(output).parsedCorrectly(expected)
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(output).parsedCorrectly(expected)
                 .node()
                 .isNonTerminal()
                 .withChildren(4)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -75,8 +75,8 @@ class TestSequence {
               )
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -124,8 +124,8 @@ class TestSequence {
               )
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -141,8 +141,8 @@ class TestSequence {
 
         input = "1234 asdf 12345"
         output = underTest.test(input, true)
-        expect(output).parsedIncorrectly()
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
     @Test
@@ -168,8 +168,8 @@ class TestSequence {
               (CharNode:digit4: '4')
             )
         """
-        expect(output).parsedCorrectly(expected)
-        expect(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(output).parsedCorrectly(expected)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
 }
