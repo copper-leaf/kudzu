@@ -10,20 +10,20 @@ fun Assertion.Builder<Pair<Node, ParserContext>?>.parsedCorrectly(expected: Stri
             )
             else {
                 if(expected != null) {
-                    when(it!!.first.toString()) {
+                    when(it.first.toString()) {
                         expected.trimIndent().trim() -> pass()
                         else                         -> fail(
                                 description = "Output AST should be %s",
-                                actual = it!!.first
+                                actual = it.first
                         )
                     }
                 }
                 if(!allowRemaining) {
-                    when (it!!.second.isEmpty()) {
+                    when (it.second.isEmpty()) {
                         true -> pass()
                         else -> fail(
                                 description = "There should be nothing remaining, still had %s",
-                                actual = it!!.second
+                                actual = it.second
                         )
                     }
                 }
@@ -33,11 +33,11 @@ fun Assertion.Builder<Pair<Node, ParserContext>?>.parsedCorrectly(expected: Stri
 fun Assertion.Builder<Pair<Node, ParserContext>?>.parsedIncorrectly(): Assertion.Builder<Pair<Node, ParserContext>?> =
         assert("parsedIncorrectly") {
             if(it == null) pass()
-            else when(it!!.second.isNotEmpty()) {
+            else when(it.second.isNotEmpty()) {
                 true -> pass()
                 else -> fail(
                         description = "Subject must be null or have input remaining",
-                        actual = it!!.second
+                        actual = it.second
                 )
             }
         }
