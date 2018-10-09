@@ -1,6 +1,8 @@
 buildscript {
     ext.kotlin_version = '1.2.71'
     ext.orchid_version = '0.12.6'
+    ext.strikt_version = '0.15.2'
+    ext.junit_version = '5.1.0'
 
     repositories {
         jcenter()
@@ -36,12 +38,11 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7"
 
     // testing
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.1.0"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.1.0"
-    testCompile "io.strikt:strikt-core:0.15.0"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
+    testCompile "io.strikt:strikt-core:$strikt_version"
 
     // Orchid
-    def orchid_version = '0.12.6'
     orchidCompile "io.github.javaeden.orchid:OrchidCore:$orchid_version"
 
     orchidRuntime "io.github.javaeden.orchid:OrchidCore:$orchid_version"
@@ -67,12 +68,12 @@ pitest {
     threads = 8
     outputFormats = ['HTML', 'XML']
     jvmArgs = ['-Xmx1024m']
-    testPlugin = "junit5"
+    testPlugin = 'junit5'
 }
 jacocoTestReport {
     reports {
         xml.enabled true
-        html.enabled false
+        html.enabled true
     }
 }
 

@@ -6,10 +6,10 @@ import com.copperleaf.kudzu.node
 import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
 import org.junit.jupiter.api.Test
-import strikt.api.expect
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import strikt.assertions.isFalse
+import strikt.assertions.isNotNull
 import strikt.assertions.isTrue
 
 class TestWhitespace {
@@ -30,7 +30,8 @@ class TestWhitespace {
         expectThat(output)
                 .parsedCorrectly()
                 .node()
-                .get { it!!.text }
+                .isNotNull()
+                .get { text }
                 .isEqualTo("")
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 

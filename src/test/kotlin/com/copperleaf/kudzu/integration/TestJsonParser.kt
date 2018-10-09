@@ -89,21 +89,21 @@ class TestJsonParser {
 
         expectThat(context.parsed).isNotNull()
         expectThat(context.parsed)
-                .get { it as? Map<String, Any?> }
+                .get { this as? Map<String, Any?> }
                 .isNotNull()
 
-        expectThat(context.parsed).get { it as Map<String, Any?> }.apply {
+        expectThat(context.parsed).get { this as Map<String, Any?> }.apply {
             this["_string"].isEqualTo("two")
             this["_number"].isEqualTo(123456.0)
             this["_false"].isEqualTo(false)
             this["_true"].isEqualTo(true)
             this["_null"].isEqualTo(null)
-            this["_object"].get { it as Map<String, Any?> }.apply {
+            this["_object"].get { this as Map<String, Any?> }.apply {
                 this["key_one"].isEqualTo("value_one")
                 this["key_two"].isEqualTo("value_two")
                 this["key_three"].isEqualTo("value_three")
             }
-            this["_array"].get { it as List<Any?> }.apply {
+            this["_array"].get { this as List<Any?> }.apply {
                 this.containsExactlyInAnyOrder("element_one", "element_two", "element_three")
             }
         }

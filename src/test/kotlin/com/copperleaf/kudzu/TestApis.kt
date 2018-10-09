@@ -28,7 +28,7 @@ fun Assertion.Builder<Pair<Node, ParserContext>?>.parsedCorrectly(expected: Stri
                     }
                 }
             }
-        }.get { it!! }
+        }.get { this!! }
 
 fun Assertion.Builder<Pair<Node, ParserContext>?>.parsedIncorrectly(): Assertion.Builder<Pair<Node, ParserContext>?> =
         assert("parsedIncorrectly") {
@@ -42,10 +42,10 @@ fun Assertion.Builder<Pair<Node, ParserContext>?>.parsedIncorrectly(): Assertion
             }
         }
 
-fun Assertion.Builder<Pair<Node, ParserContext>>.node(): Assertion.Builder<Node?> = get { it.first }
-fun Assertion.Builder<Pair<Node, ParserContext>>.context(): Assertion.Builder<ParserContext?> = get { it.second }
+fun Assertion.Builder<Pair<Node, ParserContext>>.node(): Assertion.Builder<Node?> = get { first }
+fun Assertion.Builder<Pair<Node, ParserContext>>.context(): Assertion.Builder<ParserContext?> = get { second }
 fun Assertion.Builder<Pair<Node, ParserContext>>.thenLog() {
-    this.node().get { println(it.toString()) }
+    this.node().get { println(toString()) }
 }
 
 fun Assertion.Builder<Node?>.isTerminal(): Assertion.Builder<TerminalNode> =
@@ -59,7 +59,7 @@ fun Assertion.Builder<Node?>.isTerminal(): Assertion.Builder<TerminalNode> =
                     description = "Subject must be be an instance of TerminalNode",
                     actual = it
             )
-        }.get { it!! as TerminalNode }
+        }.get { this!! as TerminalNode }
 
 fun Assertion.Builder<Node?>.isNonTerminal(): Assertion.Builder<NonTerminalNode> =
         assert("isTerminal") {
@@ -72,7 +72,7 @@ fun Assertion.Builder<Node?>.isNonTerminal(): Assertion.Builder<NonTerminalNode>
                     description = "Subject must be be an instance of NonTerminalNode",
                     actual = it
             )
-        }.get { it!! as NonTerminalNode }
+        }.get { this!! as NonTerminalNode }
 
 fun Assertion.Builder<NonTerminalNode>.withChildren(expectedChildrenCount: Int): Assertion.Builder<NonTerminalNode> =
         assert("isTerminal") {

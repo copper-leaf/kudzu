@@ -41,7 +41,7 @@ class TestManys {
         expectThat(output).parsedCorrectly(expected)
                 .node()
                 .isNonTerminal()
-                .get { it.text }
+                .get { text }
                 .isEqualTo("asdf")
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }

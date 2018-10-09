@@ -42,7 +42,8 @@ class TestCommandLineArgsParser {
         expectThat(output)
                 .parsedCorrectly()
                 .node()
-                .get { it!!.findAnywhere<ManyNode>("argValue").text }
+                .isNotNull()
+                .get { findAnywhere<ManyNode>("argValue").text }
                 .isEqualTo("asdf")
 
         input = """ "as\"df" """.trim()
@@ -50,7 +51,8 @@ class TestCommandLineArgsParser {
         expectThat(output)
                 .parsedCorrectly()
                 .node()
-                .get { it!!.findAnywhere<ManyNode>("argValue").text }
+                .isNotNull()
+                .get { findAnywhere<ManyNode>("argValue").text }
                 .isEqualTo("as\"df".trim())
     }
 
@@ -75,7 +77,8 @@ class TestCommandLineArgsParser {
                 .isEqualTo("true")
 
         expectThat(context.args)["d"]
-                .get { it as? List<Any> }
+                .isNotNull()
+                .get { this as? List<Any> }
                 .isNotNull()
                 .containsExactlyInAnyOrder("asdf1", "asdf2", "asdf3")
 
