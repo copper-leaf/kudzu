@@ -44,8 +44,9 @@ fun Assertion.Builder<Pair<Node, ParserContext>?>.parsedIncorrectly(): Assertion
 
 fun Assertion.Builder<Pair<Node, ParserContext>>.node(): Assertion.Builder<Node?> = get { first }
 fun Assertion.Builder<Pair<Node, ParserContext>>.context(): Assertion.Builder<ParserContext?> = get { second }
-fun Assertion.Builder<Pair<Node, ParserContext>>.thenLog() {
+fun Assertion.Builder<Pair<Node, ParserContext>>.thenLog(): Assertion.Builder<Pair<Node, ParserContext>> {
     this.node().get { println(toString()) }
+    return this
 }
 
 fun Assertion.Builder<Node?>.isTerminal(): Assertion.Builder<TerminalNode> =

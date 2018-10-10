@@ -1,75 +1,90 @@
 package com.copperleaf.kudzu.parser
 
-import com.copperleaf.kudzu.Node
-import com.copperleaf.kudzu.ParserContext
+import com.copperleaf.kudzu.node
 import com.copperleaf.kudzu.parsedCorrectly
-import com.copperleaf.kudzu.thenLog
-import org.junit.jupiter.api.Test
+import com.copperleaf.kudzu.visit
+import org.junit.jupiter.api.DynamicTest
+import org.junit.jupiter.api.TestFactory
 import strikt.api.expectThat
+import strikt.assertions.isEqualTo
+import strikt.assertions.isNotNull
+import kotlin.math.pow
 
 class TestExpression {
 
-    @Test
-    fun testFixedExpressionParser() {
-        var input: String
-        var output: Pair<Node, ParserContext>?
-        val termParser = AtLeastParser(1, DigitParser(name = "val"))
-        val underTest = ExpressionParser(termParser)
+    @TestFactory
+    fun testExpressionParser(): List<DynamicTest> {
+        val operators = listOf<EvaluatableOperator<Double>>(
+                InfixEvaluatableOperator(CharInParser('+', name = "+"), 40) { lhs, rhs -> lhs + rhs },
+                InfixEvaluatableOperator(CharInParser('-', name = "-"), 40) { lhs, rhs -> lhs - rhs },
+                InfixEvaluatableOperator(CharInParser('*', name = "*"), 60) { lhs, rhs -> lhs * rhs },
+                InfixEvaluatableOperator(CharInParser('/', name = "/"), 60) { lhs, rhs -> lhs / rhs },
 
-        input = "11 ^ 22 * 33 + 44 + 55"
-        output = underTest.test(input, skipWhitespace = true)
-
-        expectThat(output)
-                .parsedCorrectly()
-                .thenLog()
-    }
-
-    @Test
-    fun testOperatorTableExpressionParser() {
-        var input: String
-        var output: Pair<Node, ParserContext>?
-
-        val operatorTable = LazyParser()
-        val valueParser = LazyParser()
-        val termParser = LazyParser()
-
-        val _operatorTable = OperatorTable(
-                termParser,
-                InfixOperator(WordParser("||"), 10),
-                InfixOperator(WordParser("&&"), 20),
-                InfixOperator(WordParser("=="), 30),
-                InfixOperator(CharInParser('+'), 40),
-                InfixOperator(CharInParser('-'), 40),
-                PrefixOperator(CharInParser('-'), 50),
-                InfixOperator(CharInParser('*'), 60),
-                InfixOperator(CharInParser('/'), 60),
-                InfixOperator(CharInParser('^'), 70)
+                PrefixEvaluatableOperator(CharInParser('-', name = "-"), 80) { rhs -> -rhs },
+                InfixrEvaluatableOperator(CharInParser('^', name = "^"), 70) { lhs, rhs -> lhs.pow(rhs) }
         )
-        operatorTable.parser = _operatorTable
 
-        val _valueParser = CharParser(name = "val")
-        valueParser.parser = _valueParser
+        val parser = ExpressionParser(DigitParser(name = "val"), operators)
 
-        val _termParser = ChoiceParser(
-                SequenceParser(
-                        CharInParser('('),
-                        operatorTable,
-                        CharInParser(')'),
-                        name = "parens"
-                ),
-                valueParser,
-                name = "term"
+        val visitor = ExpressionVisitor(operators) { it.text.toDouble() }
+
+        val inputs = listOf(
+                "2 ^ 3" to (2.0.pow(3)),
+                "2 ^ 3 ^ 4" to (2.0.pow(3.0.pow(4))),
+
+                "1" to (1.0),
+                "1 + 2" to (1.0 + 2),
+                "1 + 2 + 3 + 4" to (1.0 + 2 + 3 + 4),
+                "1 - 2 - 3 - 4" to (1.0 - 2 - 3 - 4),
+                "1 + 2 - 3 + 4" to (1.0 + 2 - 3 + 4),
+                "1 - 2 + 3 - 4" to (1.0 - 2 + 3 - 4),
+
+                "1" to (1.0),
+                "1 * 2" to (1.0 * 2),
+                "1 * 2 * 3 * 4" to (1.0 * 2 * 3 * 4),
+                "1 / 2 / 3 / 4" to (1.0 / 2 / 3 / 4),
+                "1 * 2 / 3 * 4" to (1.0 * 2 / 3 * 4),
+                "1 / 2 * 3 / 4" to (1.0 / 2 * 3 / 4),
+
+                "-1" to (-1.0),
+                "--1" to (-(-1.0)),
+                "---1" to (-(-(-1.0))),
+
+                "-1 + 2" to (-1.0 + 2),
+                "-1 - 2" to (-1.0 - 2),
+                "-1 * 2" to (-1.0 * 2),
+                "-1 / 2" to (-1.0 / 2),
+                "-2 ^ 3" to ((-2.0).pow(3)),
+
+                "1 + -2" to (1.0 + -2),
+                "1 - -2" to (1.0 - -2),
+                "1 * -2" to (1.0 * -2),
+                "1 / -2" to (1.0 / -2),
+                "2 ^ -3" to (2.0.pow(-3)),
+
+                "-1 + -2" to (-1.0 + -2),
+                "-1 - -2" to (-1.0 - -2),
+                "-1 * -2" to (-1.0 * -2),
+                "-1 / -2" to (-1.0 / -2),
+                "-2 ^ -3" to ((-2.0).pow(-3)),
+
+                "1 + 2 * 3" to (1.0 + 2 * 3),
+                "2 ^ 3 ^ 4 ^ 5 * 6" to ((2.0.pow(3.0.pow(4.0.pow(5)))) * 6)
         )
-        termParser.parser = _termParser
 
-        val underTest = operatorTable
+        return inputs.map { input ->
+            DynamicTest.dynamicTest("parse [${input.first}]") {
+                val output = parser.test(input.first, skipWhitespace = true)
 
-        input = "a ^ b * c + d + e"
-        output = underTest.test(input, skipWhitespace = true)
+                val context = ExpressionContext<Double>()
 
-        expectThat(output)
-                .parsedCorrectly()
-                .thenLog()
+                expectThat(output)
+                        .parsedCorrectly()
+                        .node()
+                        .isNotNull()
+                        .get { visit(context, visitor).value }
+                        .isEqualTo(input.second)
+            }
+        }
     }
-
 }

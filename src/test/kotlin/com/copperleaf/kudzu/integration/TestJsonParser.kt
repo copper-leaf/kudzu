@@ -87,8 +87,8 @@ class TestJsonParser {
 
         output!!.first.visit(context, JsonVisitor())
 
-        expectThat(context.parsed).isNotNull()
         expectThat(context.parsed)
+                .isNotNull()
                 .get { this as? Map<String, Any?> }
                 .isNotNull()
 

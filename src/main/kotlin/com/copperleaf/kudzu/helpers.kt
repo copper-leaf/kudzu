@@ -52,6 +52,11 @@ fun Node.child(): Node {
     return find(null, null)
 }
 
+@JvmName("typedChild")
+inline fun <reified T: Node> Node.child(): T {
+    return find<T>(null)
+}
+
 fun Node.hasChild(): Boolean {
     return has(null, null)
 }
@@ -108,7 +113,8 @@ fun Node.hasAnywhere(nodeClass: KClass<out Node>?, nodeName: String? = null): Bo
 }
 
 
-fun <T: VisitorContext> Node.visit(context: T, vararg visitors: Visitor<T>) {
+fun <T: VisitorContext> Node.visit(context: T, vararg visitors: Visitor<T>) : T {
     val iterator = DfsTreeVisitor(setOf(*visitors))
     iterator.visit(context, this)
+    return context
 }
