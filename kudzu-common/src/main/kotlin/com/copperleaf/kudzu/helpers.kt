@@ -1,15 +1,15 @@
 package com.copperleaf.kudzu
 
 import com.copperleaf.kudzu.visitor.DfsTreeVisitor
+import kotlin.jvm.JvmName
 import kotlin.reflect.KClass
 
 /**
  * Finds the first matching node by class and name in the immediate children of this node. Throws
  * {@link VisitorException} if this node is a {@link TerminalNode} or if no child nodes match the query.
  */
-@Throws(VisitorException::class)
 fun Node.find(nodeClass: KClass<out Node>?, nodeName: String? = null): Node {
-    val message = "cannot find child node of ${nodeClass?.java?.simpleName} $nodeName".trim()
+    val message = "cannot find child node of ${nodeClass?.simpleName} $nodeName".trim()
 
     if(this is TerminalNode) throw VisitorException("$message: node is terminal")
 
@@ -27,14 +27,13 @@ fun Node.find(nodeClass: KClass<out Node>?, nodeName: String? = null): Node {
     throw VisitorException("$message: no matching nodes found")
 }
 
-@Throws(VisitorException::class)
 inline fun <reified T: Node> Node.find(nodeName: String? = null): T {
     val foundNode = find(T::class, nodeName)
     if(foundNode is T) {
         return foundNode
     }
     else {
-        throw ClassCastException("Found a node, but it was not of type ${foundNode.javaClass.simpleName}")
+        throw ClassCastException("Found a node, but it was not of type ${foundNode::class.simpleName}")
     }
 }
 
@@ -65,9 +64,8 @@ fun Node.hasChild(): Boolean {
  * Finds the first matching node by class and name in any child of this node. Throws {@link VisitorException} if this
  * node is a {@link TerminalNode} or if no child nodes match the query.
  */
-@Throws(VisitorException::class)
 fun Node.findAnywhere(nodeClass: KClass<out Node>?, nodeName: String? = null): Node {
-    val message = "cannot find child node of ${nodeClass?.java?.simpleName} $nodeName".trim()
+    val message = "cannot find child node of ${nodeClass?.simpleName} $nodeName".trim()
 
     if(this is TerminalNode) throw VisitorException("$message: node is terminal")
 
@@ -91,14 +89,13 @@ fun Node.findAnywhere(nodeClass: KClass<out Node>?, nodeName: String? = null): N
     throw VisitorException("$message: no matching nodes found")
 }
 
-@Throws(VisitorException::class)
 inline fun <reified T: Node> Node.findAnywhere(nodeName: String? = null): T {
     val foundNode = findAnywhere(T::class, nodeName)
     if(foundNode is T) {
         return foundNode
     }
     else {
-        throw ClassCastException("Found a node, but it was not of type ${foundNode.javaClass.simpleName}")
+        throw ClassCastException("Found a node, but it was not of type ${foundNode::class.simpleName}")
     }
 }
 
@@ -112,9 +109,17 @@ fun Node.hasAnywhere(nodeClass: KClass<out Node>?, nodeName: String? = null): Bo
     }
 }
 
-
 fun <T: VisitorContext> Node.visit(context: T, vararg visitors: Visitor<T>) : T {
     val iterator = DfsTreeVisitor(setOf(*visitors))
     iterator.visit(context, this)
     return context
 }
+
+// Letter type helpers
+//----------------------------------------------------------------------------------------------------------------------
+
+expect fun Char._isLetter(): Boolean
+
+expect fun Char._isDigit(): Boolean
+
+expect fun Char._isLetterOrDigit(): Boolean

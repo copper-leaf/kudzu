@@ -6,6 +6,7 @@ import com.copperleaf.kudzu.Parser
 import com.copperleaf.kudzu.ParserContext
 import com.copperleaf.kudzu.ParserException
 import com.copperleaf.kudzu.TerminalNode
+import com.copperleaf.kudzu._isLetterOrDigit
 
 class WordNode(private val word: String, name: String, context: NodeContext) : TerminalNode(name, context) {
     override val text: String get() = word
@@ -65,7 +66,7 @@ class WordParser(val expected: String, name: String = "") : Parser(name) {
 class TokenParser(name: String = "") : Parser(name) {
 
     override fun predict(input: ParserContext): Boolean {
-        return input.next().isLetterOrDigit()
+        return input.next()._isLetterOrDigit()
     }
 
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
@@ -76,7 +77,7 @@ class TokenParser(name: String = "") : Parser(name) {
 
         do {
             nextChar = remaining.next()
-            if(!nextChar.isLetterOrDigit()) break
+            if(!nextChar._isLetterOrDigit()) break
 
             token += nextChar
             remaining = remaining.remaining()

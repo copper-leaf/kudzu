@@ -1,0 +1,18 @@
+plugins {
+    id 'kotlin-platform-common'
+}
+
+group rootProject.group
+version rootProject.version
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-common"
+    compile "org.jetbrains.kotlin:kotlin-reflect"
+
+    testCompile "org.jetbrains.kotlin:kotlin-test-annotations-common"
+    testCompile "org.jetbrains.kotlin:kotlin-test-common"
+}
+
+task deploy {
+    doLast {}
+}

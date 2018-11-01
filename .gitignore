@@ -30,3 +30,5 @@ proguard/
 
 # Keystore files
 *.jks
+
+node_modules/

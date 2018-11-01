@@ -1,0 +1,58 @@
+plugins {
+    id 'kotlin-platform-js'
+    id 'org.jetbrains.kotlin.frontend'
+    id 'kotlin-dce-js'
+    id 'kotlin2js'
+}
+
+group rootProject.group
+version rootProject.version
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-js"
+    testCompile "org.jetbrains.kotlin:kotlin-test-js"
+    expectedBy project(':kudzu-common')
+}
+
+compileKotlin2Js {
+    kotlinOptions.metaInfo = true
+    kotlinOptions.sourceMap = true
+    kotlinOptions.suppressWarnings = true
+    kotlinOptions.verbose = true
+    kotlinOptions.outputFile = "${project.buildDir.path}/js/main/${project.name}.js"
+    kotlinOptions.moduleKind = 'umd'
+    kotlinOptions.main = "call"
+}
+
+compileTestKotlin2Js {
+    kotlinOptions.metaInfo = true
+    kotlinOptions.sourceMap = true
+    kotlinOptions.suppressWarnings = true
+    kotlinOptions.verbose = true
+    kotlinOptions.outputFile = "${project.buildDir.path}/js/test/${project.name}-tests.js"
+    kotlinOptions.moduleKind = 'umd'
+    kotlinOptions.main = "call"
+}
+
+kotlinFrontend {
+    downloadNodeJsVersion = "latest"
+
+    npm {
+        devDependency "karma"
+    }
+
+    webpackBundle {
+        sourceMapEnabled = true
+    }
+
+    karma {
+        extraConfig = [
+                singleRun: true,
+                autoWatch: false
+        ]
+    }
+}
+
+task deploy {
+    doLast {}
+}

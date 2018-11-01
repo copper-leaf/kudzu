@@ -27,8 +27,8 @@ class DfsTreeVisitor<T: VisitorContext>(private val visitors: Set<Visitor<T>>) {
 
     private fun findNodeVisitors(node: Node): Set<Visitor<T>> {
         return visitors
-                .filter { visitor -> (node::class == visitor.nodeClass || visitor.nodeClass.java.isAssignableFrom(node::class.java)) }
-                .filter { visitor -> if (visitor.nodeName != null) node.name == visitor.nodeName else true }
+                .filter { visitor -> visitor.nodeClass == null || node::class == visitor.nodeClass }
+                .filter { visitor -> visitor.nodeName == null || node.name == visitor.nodeName }
                 .toSet()
     }
 

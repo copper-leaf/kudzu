@@ -32,10 +32,11 @@ class ExpressionParser(termParser: Parser, vararg operators: Operator, name: Str
         return SequenceParser(
                 operators
                         .groupBy { OperatorLevel(it.precedence, it.associativity) }
-                        .toSortedMap(reverseOrder())
-                        .values
+                        .entries
+                        .sortedBy { it.key }
+                        .reversed()
                         .fold(termParser) { lastParser, currentLevelOperators ->
-                            createParserLevel(lastParser, currentLevelOperators)
+                            createParserLevel(lastParser, currentLevelOperators.value)
                         },
                 name = "expressionRoot"
         )
@@ -155,7 +156,7 @@ class InfixEvaluatableOperator<U>(op: InfixOperator, val eval: (lhs: U, rhs: U) 
 open class ExpressionVisitor<T : ExpressionContext<U>, U>(
         val evaluators: List<EvaluatableOperator<U>>,
         val defaultValue: (Node) -> U
-) : Visitor<T>(NonTerminalNode::class, "expressionRoot") {
+) : Visitor<T>(null, "expressionRoot") {
 
     override fun visit(context: T, node: Node) {
         context.value = getValue(node)

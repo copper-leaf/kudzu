@@ -6,6 +6,8 @@ import com.copperleaf.kudzu.Parser
 import com.copperleaf.kudzu.ParserContext
 import com.copperleaf.kudzu.ParserException
 import com.copperleaf.kudzu.TerminalNode
+import com.copperleaf.kudzu._isDigit
+import com.copperleaf.kudzu._isLetter
 
 class CharNode(private val char: Char, name: String, context: NodeContext) : TerminalNode(name, context) {
     override val text: String get() = "$char"
@@ -130,7 +132,7 @@ class WhitespaceParser(escapeChar: Char? = null, name: String = "") : BaseCharPa
 class DigitParser(escapeChar: Char? = null, name: String = "") : BaseCharParser(escapeChar, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         val (nextChar, remaining, _) = nextChar(input)
-        if (!input.next().isDigit()) throw ParserException("char '${input.next()}' must be a digit", this, input)
+        if (!input.next()._isDigit()) throw ParserException("char '${input.next()}' must be a digit", this, input)
 
         return Pair(CharNode(nextChar, name, NodeContext(input, remaining)), remaining)
     }
@@ -150,7 +152,7 @@ class DigitParser(escapeChar: Char? = null, name: String = "") : BaseCharParser(
 class LetterParser(escapeChar: Char? = null, name: String = "") : BaseCharParser(escapeChar, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
         val (nextChar, remaining, _) = nextChar(input)
-        if (!input.next().isLetter()) throw ParserException("char '${input.next()}' must be a letter", this, input)
+        if (!input.next()._isLetter()) throw ParserException("char '${input.next()}' must be a letter", this, input)
 
         return Pair(CharNode(nextChar, name, NodeContext(input, remaining)), remaining)
     }

@@ -28,3 +28,7 @@ services:
         publishType: CleanBranch
         username: copper-leaf
         repo: kudzu
+
+kotlindoc:
+  sourceDirs:
+    - '../../../../kudzu-common/src/main/kotlin/'

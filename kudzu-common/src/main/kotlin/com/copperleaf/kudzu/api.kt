@@ -137,7 +137,7 @@ abstract class TerminalNode(name: String, context: NodeContext) : Node(name, con
     abstract override val text: String
 
     override fun printAst(currentIndent: Int): String {
-        return "${indent(currentIndent)}(${this::class.java.simpleName}$nodeName: '$text')"
+        return "${indent(currentIndent)}(${this::class.simpleName}$nodeName: '$text')"
     }
 }
 
@@ -148,7 +148,7 @@ abstract class NonTerminalNode(name: String, context: NodeContext) : Node(name, 
         get() = children.map { it.text }.joinToString(separator = "")
 
     override fun printAst(currentIndent: Int): String {
-        return "${indent(currentIndent)}(${this::class.java.simpleName}$nodeName:\n" +
+        return "${indent(currentIndent)}(${this::class.simpleName}$nodeName:\n" +
                     (if(children.isNotEmpty()) { children.map { it.printAst(currentIndent + 2) }.joinToString(separator = "\n") }
                     else { "${indent(currentIndent + 2)}(empty)" } ) +
                 "\n" +
@@ -177,7 +177,7 @@ abstract class Parser(val name: String) {
 
 }
 
-abstract class Visitor<T: VisitorContext>(val nodeClass: KClass<out Node>, val nodeName: String? = null) {
+abstract class Visitor<T: VisitorContext>(val nodeClass: KClass<out Node>?, val nodeName: String? = null) {
 
     abstract fun visit(context: T, node: Node)
 
