@@ -279,6 +279,27 @@ class TestManys {
     }
 
     @Test
+    fun testUntilParser() {
+        var input: String
+        var output: Pair<Node, ParserContext>?
+        var expected: String
+        val underTest = UntilParser(LetterParser(), DigitParser())
+
+        input = "asdf1234"
+        output = underTest.test(input)
+        expected = """
+            (ManyNode:
+              (CharNode: 'a')
+              (CharNode: 's')
+              (CharNode: 'd')
+              (CharNode: 'f')
+            )
+        """
+        expectThat(output).parsedCorrectly(expected, allowRemaining = true)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+    }
+
+    @Test
     fun testNamedManyNode() {
         var input: String
         var output: Pair<Node, ParserContext>?

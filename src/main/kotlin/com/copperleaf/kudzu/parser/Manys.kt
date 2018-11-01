@@ -191,3 +191,38 @@ class BetweenTimesParser(private val minSize: Int, private val maxSize: Int, par
         return Pair(ManyNode(nodeList, name, NodeContext(input, remaining)), remaining)
     }
 }
+
+/**
+ * Consume input as many times as its parser is able to, or until a stopping condition is reached.
+ *
+ * Predicts true when:
+ *   - its parser predicts true
+ *
+ * Parsing stops when:
+ *   - its parser predicts false
+ *   - the stopping condition predicts true
+ *   - there is no more input remaining
+ *
+ * Parsing fails when:
+ *   - its parser fails to parse
+ */
+class UntilParser(parser: Parser, private val stoppingCondition: Parser, name: String = "") : BaseManyParser(parser, name) {
+    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+        val nodeList = ArrayList<Node>()
+
+        var remaining = input
+        var next: Pair<Node, ParserContext>?
+        while (remaining.isNotEmpty()) {
+            if (parser.predict(remaining) && !stoppingCondition.predict(remaining)) {
+                next = parser.parse(remaining)
+                nodeList.add(next.first)
+                remaining = next.second
+            }
+            else {
+                break
+            }
+        }
+
+        return Pair(ManyNode(nodeList, name, NodeContext(input, remaining)), remaining)
+    }
+}
