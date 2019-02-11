@@ -6,6 +6,7 @@ import com.copperleaf.kudzu.Parser
 import com.copperleaf.kudzu.ParserContext
 import com.copperleaf.kudzu.ParserException
 import com.copperleaf.kudzu.TerminalNode
+import com.copperleaf.kudzu.checkNotEmpty
 
 class CharNode(private val char: Char, name: String, context: NodeContext) : TerminalNode(name, context) {
     override val text: String get() = "$char"
@@ -13,11 +14,11 @@ class CharNode(private val char: Char, name: String, context: NodeContext) : Ter
 
 abstract class BaseCharParser(private val escapeChar: Char? = null, name: String = "") : Parser(name) {
     override fun predict(input: ParserContext): Boolean {
-        return test(input)?.second?.isAfter(input) ?: false
+        return input.isNotEmpty() && test(input)?.second?.isAfter(input) ?: false
     }
 
     fun nextChar(input: ParserContext): Triple<Char, ParserContext, Boolean> {
-        if (input.isEmpty()) throw ParserException("nothing to parse", this, input)
+        checkNotEmpty(input)
 
         var nextChar = input.next()
         var remaining = input.remaining()

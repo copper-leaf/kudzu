@@ -4,8 +4,8 @@ import com.copperleaf.kudzu.Node
 import com.copperleaf.kudzu.NodeContext
 import com.copperleaf.kudzu.Parser
 import com.copperleaf.kudzu.ParserContext
-import com.copperleaf.kudzu.ParserException
 import com.copperleaf.kudzu.TerminalNode
+import com.copperleaf.kudzu.checkNotEmpty
 
 class WhitespaceNode(name: String, context: NodeContext) : TerminalNode(name, context) {
     override val text: String get() = ""
@@ -51,6 +51,7 @@ class OptionalWhitespaceParser(name: String = "") : Parser(name) {
  * Consume one or more whitespace characters from the input.
  *
  * Predicts true when:
+ *   - there is remaining input
  *   - there is input remaining and the next character is whitespace
  *
  * Parsing stops when:
@@ -67,7 +68,8 @@ class RequiredWhitespaceParser(name: String = "") : Parser(name) {
     }
 
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
-        if (input.isEmpty()) throw ParserException("nothing to parse", this, input)
+        checkNotEmpty(input)
+
         var remaining = input
         var nextChar: Char
         var token = ""

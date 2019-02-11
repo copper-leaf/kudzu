@@ -6,14 +6,16 @@ import com.copperleaf.kudzu.NonTerminalNode
 import com.copperleaf.kudzu.Parser
 import com.copperleaf.kudzu.ParserContext
 import com.copperleaf.kudzu.ParserException
+import com.copperleaf.kudzu.checkNotEmpty
 
 class ManyNode(private val nodeList: List<Node>, name: String, context: NodeContext) : NonTerminalNode(name, context) {
     override val children: List<Node> get() = nodeList
 }
 
-abstract class BaseManyParser(protected val parser: Parser, name: String = "") : Parser(name) {
+abstract class BaseManyParser(
+    protected val parser: Parser, name: String = "") : Parser(name) {
     override fun predict(input: ParserContext): Boolean {
-        return parser.predict(input)
+        return input.isNotEmpty() && parser.predict(input)
     }
 }
 
@@ -21,6 +23,7 @@ abstract class BaseManyParser(protected val parser: Parser, name: String = "") :
  * Consume input as many times as its parser is able to.
  *
  * Predicts true when:
+ *   - there is remaining input
  *   - its parser predicts true
  *
  * Parsing stops when:
@@ -32,6 +35,8 @@ abstract class BaseManyParser(protected val parser: Parser, name: String = "") :
  */
 class ManyParser(parser: Parser, name: String = "") : BaseManyParser(parser, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+        checkNotEmpty(input)
+
         val nodeList = ArrayList<Node>()
 
         var remaining = input
@@ -55,6 +60,7 @@ class ManyParser(parser: Parser, name: String = "") : BaseManyParser(parser, nam
  * Consume input as many times as its parser is able to, but it must be able to parse a `minSize` number of times.
  *
  * Predicts true when:
+ *   - there is remaining input
  *   - its parser predicts true
  *
  * Parsing stops when:
@@ -67,6 +73,8 @@ class ManyParser(parser: Parser, name: String = "") : BaseManyParser(parser, nam
  */
 class AtLeastParser(private val minSize: Int, parser: Parser, name: String = "") : BaseManyParser(parser, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+        checkNotEmpty(input)
+
         val nodeList = ArrayList<Node>()
 
         var remaining = input
@@ -92,6 +100,7 @@ class AtLeastParser(private val minSize: Int, parser: Parser, name: String = "")
  * Consume input from its parser up to `maxSize` number of times.
  *
  * Predicts true when:
+ *   - there is remaining input
  *   - its parser predicts true
  *
  * Parsing stops when:
@@ -104,6 +113,8 @@ class AtLeastParser(private val minSize: Int, parser: Parser, name: String = "")
  */
 class AtMostParser(private val maxSize: Int, parser: Parser, name: String = "") : BaseManyParser(parser, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+        checkNotEmpty(input)
+
         val nodeList = ArrayList<Node>()
 
         var remaining = input
@@ -129,6 +140,7 @@ class AtMostParser(private val maxSize: Int, parser: Parser, name: String = "") 
  * Consume input from its parser a specific number of times.
  *
  * Predicts true when:
+ *   - there is remaining input
  *   - its parser predicts true
  *
  * Parsing stops when:
@@ -140,11 +152,14 @@ class AtMostParser(private val maxSize: Int, parser: Parser, name: String = "") 
  */
 class TimesParser(private val times: Int, parser: Parser, name: String = "") : BaseManyParser(parser, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+        checkNotEmpty(input)
+
         val nodeList = ArrayList<Node>()
 
         var remaining = input
         var next: Pair<Node, ParserContext>?
         for (i in 0 until times) {
+            if(!parser.predict(remaining)) throw ParserException("unexpected end of input after $i iterations, expected $times", this, remaining)
             next = parser.parse(remaining)
             nodeList.add(next.first)
             remaining = next.second
@@ -158,6 +173,7 @@ class TimesParser(private val times: Int, parser: Parser, name: String = "") : B
  * Consume input from its parser between `minSize` and `maxSize` number of times.
  *
  * Predicts true when:
+ *   - there is remaining input
  *   - its parser predicts true
  *
  * Parsing stops when:
@@ -169,6 +185,8 @@ class TimesParser(private val times: Int, parser: Parser, name: String = "") : B
  */
 class BetweenTimesParser(private val minSize: Int, private val maxSize: Int, parser: Parser, name: String = "") : BaseManyParser(parser, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+        checkNotEmpty(input)
+
         val nodeList = ArrayList<Node>()
 
         var remaining = input
@@ -196,6 +214,7 @@ class BetweenTimesParser(private val minSize: Int, private val maxSize: Int, par
  * Consume input as many times as its parser is able to, or until a stopping condition is reached.
  *
  * Predicts true when:
+ *   - there is remaining input
  *   - its parser predicts true
  *
  * Parsing stops when:
@@ -208,6 +227,8 @@ class BetweenTimesParser(private val minSize: Int, private val maxSize: Int, par
  */
 class UntilParser(parser: Parser, private val stoppingCondition: Parser, name: String = "") : BaseManyParser(parser, name) {
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+        checkNotEmpty(input)
+
         val nodeList = ArrayList<Node>()
 
         var remaining = input

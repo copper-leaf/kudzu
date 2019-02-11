@@ -6,6 +6,7 @@ import com.copperleaf.kudzu.Parser
 import com.copperleaf.kudzu.ParserContext
 import com.copperleaf.kudzu.ParserException
 import com.copperleaf.kudzu.TerminalNode
+import com.copperleaf.kudzu.checkNotEmpty
 
 class WordNode(private val word: String, name: String, context: NodeContext) : TerminalNode(name, context) {
     override val text: String get() = word
@@ -15,6 +16,7 @@ class WordNode(private val word: String, name: String, context: NodeContext) : T
  * Consume a specific sequence of characters of the input.
  *
  * Predicts true when:
+ *   - there is remaining input
  *   - the next character matches the first expected character
  *
  * Parsing stops when:
@@ -29,11 +31,12 @@ class WordNode(private val word: String, name: String, context: NodeContext) : T
 class WordParser(val expected: String, name: String = "") : Parser(name) {
 
     override fun predict(input: ParserContext): Boolean {
-        return input.next() == expected[0]
+        return input.isNotEmpty() && input.next() == expected[0]
     }
 
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
-        if (input.isEmpty()) throw ParserException("nothing to parse", this, input)
+        checkNotEmpty(input)
+
         var remaining = input
         for (i in 0 until expected.length) {
             val nextChar = remaining.next()
@@ -53,6 +56,7 @@ class WordParser(val expected: String, name: String = "") : Parser(name) {
  * Consume a sequence of letter or digit characters of the input.
  *
  * Predicts true when:
+ *   - there is remaining input
  *   - the next character is a letter of digit
  *
  * Parsing stops when:
@@ -65,11 +69,12 @@ class WordParser(val expected: String, name: String = "") : Parser(name) {
 class TokenParser(name: String = "") : Parser(name) {
 
     override fun predict(input: ParserContext): Boolean {
-        return input.next().isLetterOrDigit()
+        return input.isNotEmpty() && input.next().isLetterOrDigit()
     }
 
     override fun parse(input: ParserContext): Pair<Node, ParserContext> {
-        if (input.isEmpty()) throw ParserException("nothing to parse", this, input)
+        checkNotEmpty(input)
+
         var remaining = input
         var nextChar: Char
         var token = ""

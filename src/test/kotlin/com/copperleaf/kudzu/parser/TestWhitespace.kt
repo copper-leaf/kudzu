@@ -2,6 +2,7 @@ package com.copperleaf.kudzu.parser
 
 import com.copperleaf.kudzu.Node
 import com.copperleaf.kudzu.ParserContext
+import com.copperleaf.kudzu.checkParsingWhenEmpty
 import com.copperleaf.kudzu.node
 import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
@@ -59,6 +60,8 @@ class TestWhitespace {
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+
+        underTest.checkParsingWhenEmpty(true)
     }
 
     @Test
@@ -101,5 +104,7 @@ class TestWhitespace {
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+
+        underTest.checkParsingWhenEmpty()
     }
 }

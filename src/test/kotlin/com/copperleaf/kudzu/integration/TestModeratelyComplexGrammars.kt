@@ -14,7 +14,6 @@ import com.copperleaf.kudzu.parser.ManyParser
 import com.copperleaf.kudzu.parser.MaybeParser
 import com.copperleaf.kudzu.parser.SequenceParser
 import org.junit.jupiter.api.Test
-import strikt.api.expect
 import strikt.api.expectThat
 
 class TestModeratelyComplexGrammars {
@@ -108,27 +107,31 @@ class TestModeratelyComplexGrammars {
 
         val termParser = SequenceParser(
                 factorParser,
-                ManyParser(
+                MaybeParser(
+                    ManyParser(
                         SequenceParser(
-                                ChoiceParser(
-                                        CharInParser('*', name = "*"),
-                                        CharInParser('/', name = "/")
-                                ),
-                                factorParser
+                            ChoiceParser(
+                                CharInParser('*', name = "*"),
+                                CharInParser('/', name = "/")
+                            ),
+                            factorParser
                         )
+                    )
                 )
         )
 
         val expressionParser = SequenceParser(
                 termParser,
-                ManyParser(
+                MaybeParser(
+                    ManyParser(
                         SequenceParser(
-                                ChoiceParser(
-                                        CharInParser('+', name = "+"),
-                                        CharInParser('-', name = "-")
-                                ),
-                                termParser
+                            ChoiceParser(
+                                CharInParser('+', name = "+"),
+                                CharInParser('-', name = "-")
+                            ),
+                            termParser
                         )
+                    )
                 )
         )
 

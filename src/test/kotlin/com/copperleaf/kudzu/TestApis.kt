@@ -1,6 +1,9 @@
 package com.copperleaf.kudzu
 
 import strikt.api.Assertion
+import strikt.api.expectThat
+import strikt.assertions.isFalse
+import strikt.assertions.isTrue
 
 fun Assertion.Builder<Pair<Node, ParserContext>?>.parsedCorrectly(expected: String? = null, allowRemaining: Boolean = false): Assertion.Builder<Pair<Node, ParserContext>> =
         assert("parsedCorrectly") {
@@ -85,3 +88,14 @@ fun Assertion.Builder<NonTerminalNode>.withChildren(expectedChildrenCount: Int):
                 )
             }
         }
+
+fun Parser.checkParsingWhenEmpty(shouldSucceed: Boolean = false) {
+    if(shouldSucceed) {
+        expectThat(this.test("")).parsedCorrectly()
+        expectThat(predict(ParserContext("", 0, false))).isTrue()
+    }
+    else {
+        expectThat(this.test("")).parsedIncorrectly()
+        expectThat(predict(ParserContext("", 0, false))).isFalse()
+    }
+}

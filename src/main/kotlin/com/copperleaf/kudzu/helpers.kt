@@ -61,6 +61,11 @@ fun Node.hasChild(): Boolean {
     return has(null, null)
 }
 
+@JvmName("typedHasChild")
+inline fun <reified T: Node> Node.hasChild(): Boolean {
+    return has(T::class, null)
+}
+
 /**
  * Finds the first matching node by class and name in any child of this node. Throws {@link VisitorException} if this
  * node is a {@link TerminalNode} or if no child nodes match the query.
@@ -117,4 +122,8 @@ fun <T: VisitorContext> Node.visit(context: T, vararg visitors: Visitor<T>) : T 
     val iterator = DfsTreeVisitor(setOf(*visitors))
     iterator.visit(context, this)
     return context
+}
+
+fun Parser.checkNotEmpty(input: ParserContext) {
+    if(input.isEmpty()) throw ParserException("unexpected end of input", this, input)
 }

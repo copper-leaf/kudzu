@@ -2,6 +2,7 @@ package com.copperleaf.kudzu.parser
 
 import com.copperleaf.kudzu.Node
 import com.copperleaf.kudzu.ParserContext
+import com.copperleaf.kudzu.checkParsingWhenEmpty
 import com.copperleaf.kudzu.isNonTerminal
 import com.copperleaf.kudzu.node
 import com.copperleaf.kudzu.parsedCorrectly
@@ -44,6 +45,8 @@ class TestManys {
                 .get { text }
                 .isEqualTo("asdf")
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+
+        underTest.checkParsingWhenEmpty()
     }
 
     @Test
@@ -70,6 +73,8 @@ class TestManys {
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+
+        underTest.checkParsingWhenEmpty()
     }
 
     @Test
@@ -106,6 +111,8 @@ class TestManys {
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+
+        underTest.checkParsingWhenEmpty()
     }
 
     @Test
@@ -137,6 +144,8 @@ class TestManys {
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+
+        underTest.checkParsingWhenEmpty()
     }
 
     @Test
@@ -168,6 +177,8 @@ class TestManys {
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+
+        underTest.checkParsingWhenEmpty()
     }
 
     @Test
@@ -199,6 +210,8 @@ class TestManys {
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+
+        underTest.checkParsingWhenEmpty()
     }
 
     @Test
@@ -230,6 +243,8 @@ class TestManys {
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+
+        underTest.checkParsingWhenEmpty()
     }
 
     @Test
@@ -276,6 +291,8 @@ class TestManys {
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+
+        underTest.checkParsingWhenEmpty()
     }
 
     @Test
@@ -297,6 +314,8 @@ class TestManys {
         """
         expectThat(output).parsedCorrectly(expected, allowRemaining = true)
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+
+        underTest.checkParsingWhenEmpty()
     }
 
     @Test
@@ -321,6 +340,8 @@ class TestManys {
         """
         expectThat(output).parsedCorrectly(expected)
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+
+        underTest.checkParsingWhenEmpty()
     }
 
 }

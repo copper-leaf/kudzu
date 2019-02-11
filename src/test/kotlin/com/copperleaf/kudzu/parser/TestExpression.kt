@@ -14,14 +14,14 @@ class TestExpression {
 
     @TestFactory
     fun testExpressionParser(): List<DynamicTest> {
-        val operators = listOf<EvaluatableOperator<Double>>(
-                InfixEvaluatableOperator(CharInParser('+', name = "+"), 40) { lhs, rhs -> lhs + rhs },
-                InfixEvaluatableOperator(CharInParser('-', name = "-"), 40) { lhs, rhs -> lhs - rhs },
-                InfixEvaluatableOperator(CharInParser('*', name = "*"), 60) { lhs, rhs -> lhs * rhs },
-                InfixEvaluatableOperator(CharInParser('/', name = "/"), 60) { lhs, rhs -> lhs / rhs },
+        val operators = listOf<EvaluableOperator<Double>>(
+                InfixEvaluableOperator(CharInParser('+', name = "+"), 40) { lhs, rhs -> lhs + rhs },
+                InfixEvaluableOperator(CharInParser('-', name = "-"), 40) { lhs, rhs -> lhs - rhs },
+                InfixEvaluableOperator(CharInParser('*', name = "*"), 60) { lhs, rhs -> lhs * rhs },
+                InfixEvaluableOperator(CharInParser('/', name = "/"), 60) { lhs, rhs -> lhs / rhs },
 
-                PrefixEvaluatableOperator(CharInParser('-', name = "-"), 80) { rhs -> -rhs },
-                InfixrEvaluatableOperator(CharInParser('^', name = "^"), 70) { lhs, rhs -> lhs.pow(rhs) }
+                PrefixEvaluableOperator(CharInParser('-', name = "-"), 80) { rhs -> -rhs },
+                InfixrEvaluableOperator(CharInParser('^', name = "^"), 70) { lhs, rhs -> lhs.pow(rhs) }
         )
 
         val parser = ExpressionParser(DigitParser(name = "val"), operators)

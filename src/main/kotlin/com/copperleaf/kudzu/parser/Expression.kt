@@ -14,7 +14,7 @@ class ExpressionParser(termParser: Parser, vararg operators: Operator, name: Str
 
     constructor(
             termParser: Parser,
-            operators: List<EvaluatableOperator<*>>,
+            operators: List<EvaluableOperator<*>>,
             name: String = ""
     ) : this(
             termParser,
@@ -43,65 +43,7 @@ class ExpressionParser(termParser: Parser, vararg operators: Operator, name: Str
 
     private fun createParserLevel(operand: Parser, operators: List<Operator>): Parser {
         val operator = operators.toParser()
-
-        return when (operators.first()) {
-            is PrefixOperator  -> SequenceParser(
-                    NamedParser(
-                            ManyParser(NamedParser(operator, "operator")),
-                            name = "operators"
-                    ),
-                    NamedParser(
-                            operand,
-                            "operand"
-                    ),
-                    name = "prefix"
-            )
-            is PostfixOperator -> SequenceParser(
-                    NamedParser(
-                            operand,
-                            "operand"
-                    ),
-                    NamedParser(
-                            ManyParser(operator),
-                            name = "operators"
-                    ),
-                    name = "postfix"
-            )
-            is InfixrOperator  -> LazyParser {
-                SequenceParser(
-                        NamedParser(
-                                operand,
-                                "operand"
-                        ),
-                        NamedParser(
-                                MaybeParser(
-                                        SequenceParser(
-                                                NamedParser(operator, "operator"),
-                                                NamedParser(this, "operand")
-                                        )
-                                ),
-                                "operators"
-                        ),
-                        name = "infixr"
-                )
-            }
-            is InfixOperator   -> SequenceParser(
-                    NamedParser(
-                            operand,
-                            "operand"
-                    ),
-                    NamedParser(
-                            ManyParser(
-                                    SequenceParser(
-                                            NamedParser(operator, "operator"),
-                                            NamedParser(operand, "operand")
-                                    )
-                            ),
-                            "operators"
-                    ),
-                    name = "infix"
-            )
-        }
+        return operators.first().create(operator, operand)
     }
 
     private fun List<Operator>.toParser(): Parser {
@@ -114,12 +56,88 @@ sealed class Operator(
         val parser: Parser,
         val precedence: Int,
         val associativity: Int
-)
+) {
+    abstract fun create(operator: Parser, operand: Parser): Parser
+}
 
-class PrefixOperator(op: Parser, precedence: Int) : Operator(op, precedence, 1)
-class PostfixOperator(op: Parser, precedence: Int) : Operator(op, precedence, 2)
-class InfixrOperator(op: Parser, precedence: Int) : Operator(op, precedence, 3)
-class InfixOperator(op: Parser, precedence: Int) : Operator(op, precedence, 4)
+class PrefixOperator(op: Parser, precedence: Int) : Operator(op, precedence, 1) {
+    override fun create(operator: Parser, operand: Parser): Parser {
+        return SequenceParser(
+            NamedParser(
+                ManyParser(NamedParser(operator, "operator")),
+                name = "operators"
+            ),
+            NamedParser(
+                operand,
+                "operand"
+            ),
+            name = "prefix"
+        )
+    }
+}
+
+class PostfixOperator(op: Parser, precedence: Int) : Operator(op, precedence, 2) {
+    override fun create(operator: Parser, operand: Parser): Parser {
+        return SequenceParser(
+            NamedParser(
+                operand,
+                "operand"
+            ),
+            NamedParser(
+                ManyParser(operator),
+                name = "operators"
+            ),
+            name = "postfix"
+        )
+    }
+}
+
+class InfixrOperator(op: Parser, precedence: Int) : Operator(op, precedence, 3) {
+    override fun create(operator: Parser, operand: Parser): Parser {
+        return LazyParser {
+            SequenceParser(
+                NamedParser(
+                    operand,
+                    "operand"
+                ),
+                NamedParser(
+                    MaybeParser(
+                        SequenceParser(
+                            NamedParser(operator, "operator"),
+                            NamedParser(this, "operand")
+                        )
+                    ),
+                    "operators"
+                ),
+                name = "infixr"
+            )
+        }
+    }
+}
+
+class InfixOperator(op: Parser, precedence: Int) : Operator(op, precedence, 4) {
+    override fun create(operator: Parser, operand: Parser): Parser {
+        return SequenceParser(
+            NamedParser(
+                operand,
+                "operand"
+            ),
+            NamedParser(
+                MaybeParser(
+                    ManyParser(
+                        SequenceParser(
+                            NamedParser(operator, "operator"),
+                            NamedParser(operand, "operand")
+                        )
+                    )
+                ),
+                "operators"
+            ),
+            name = "infix"
+        )
+    }
+}
+
 
 private data class OperatorLevel(val precedence: Int, val associativity: Int) : Comparable<OperatorLevel> {
     override fun compareTo(other: OperatorLevel): Int {
@@ -132,28 +150,28 @@ private data class OperatorLevel(val precedence: Int, val associativity: Int) : 
 // Expression Evaluation
 //----------------------------------------------------------------------------------------------------------------------
 
-sealed class EvaluatableOperator<U>(
+sealed class EvaluableOperator<U>(
         val op: Operator
 )
 
-class PrefixEvaluatableOperator<U>(op: PrefixOperator, val eval: (rhs: U) -> U) : EvaluatableOperator<U>(op) {
+class PrefixEvaluableOperator<U>(op: PrefixOperator, val eval: (rhs: U) -> U) : EvaluableOperator<U>(op) {
     constructor(op: Parser, precedence: Int, eval: (rhs: U) -> U) : this(PrefixOperator(op, precedence), eval)
 }
 
-class PostfixEvaluatableOperator<U>(op: PostfixOperator, val eval: (lhs: U) -> U) : EvaluatableOperator<U>(op) {
+class PostfixEvaluableOperator<U>(op: PostfixOperator, val eval: (lhs: U) -> U) : EvaluableOperator<U>(op) {
     constructor(op: Parser, precedence: Int, eval: (rhs: U) -> U) : this(PostfixOperator(op, precedence), eval)
 }
 
-class InfixrEvaluatableOperator<U>(op: InfixrOperator, val eval: (lhs: U, rhs: U) -> U) : EvaluatableOperator<U>(op) {
+class InfixrEvaluableOperator<U>(op: InfixrOperator, val eval: (lhs: U, rhs: U) -> U) : EvaluableOperator<U>(op) {
     constructor(op: Parser, precedence: Int, eval: (lhs: U, rhs: U) -> U) : this(InfixrOperator(op, precedence), eval)
 }
 
-class InfixEvaluatableOperator<U>(op: InfixOperator, val eval: (lhs: U, rhs: U) -> U) : EvaluatableOperator<U>(op) {
+class InfixEvaluableOperator<U>(op: InfixOperator, val eval: (lhs: U, rhs: U) -> U) : EvaluableOperator<U>(op) {
     constructor(op: Parser, precedence: Int, eval: (lhs: U, rhs: U) -> U) : this(InfixOperator(op, precedence), eval)
 }
 
 open class ExpressionVisitor<T : ExpressionContext<U>, U>(
-        val evaluators: List<EvaluatableOperator<U>>,
+        val evaluators: List<EvaluableOperator<U>>,
         val defaultValue: (Node) -> U
 ) : Visitor<T>(NonTerminalNode::class, "expressionRoot") {
 
@@ -183,9 +201,9 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
             val operator = operationNode.text
 
             val evaluator = evaluators
-                    .filter { it is PrefixEvaluatableOperator<*> }
+                    .filter { it is PrefixEvaluableOperator<*> }
                     .find { operator == it.op.parser.name }
-                    as PrefixEvaluatableOperator<U>
+                    as PrefixEvaluableOperator<U>
 
             rhsValue = evaluator.eval(rhsValue)
         }
@@ -204,9 +222,9 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
             val operator = operationNode.text
 
             val evaluator = evaluators
-                    .filter { it is PostfixEvaluatableOperator<*> }
+                    .filter { it is PostfixEvaluableOperator<*> }
                     .find { operator == it.op.parser.name }
-                    as PostfixEvaluatableOperator<U>
+                    as PostfixEvaluableOperator<U>
 
             lhsValue = evaluator.eval(lhsValue)
         }
@@ -228,9 +246,9 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
             val rhsValue = getValue(rhs)
 
             val evaluator = evaluators
-                    .filter { it is InfixrEvaluatableOperator<*> }
+                    .filter { it is InfixrEvaluableOperator<*> }
                     .find { operator == it.op.parser.name }
-                    as InfixrEvaluatableOperator<U>
+                    as InfixrEvaluableOperator<U>
 
             lhsValue = evaluator.eval(lhsValue, rhsValue)
         }
@@ -244,19 +262,21 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
 
         var lhsValue = initialValue
 
-        val operations = node.find<NamedNode>("operators").child<ManyNode>()
-        for (operationNode in operations.children) {
-            val operator = operationNode.find<NamedNode>("operator").child().text
+        val operations = node.find<NamedNode>("operators").child<MaybeNode>()
+        if(operations.hasChild<ManyNode>()) {
+            for (operationNode in operations.child<ManyNode>().children) {
+                val operator = operationNode.find<NamedNode>("operator").child().text
 
-            val rhs = operationNode.find<NamedNode>("operand").child()
-            val rhsValue = getValue(rhs)
+                val rhs = operationNode.find<NamedNode>("operand").child()
+                val rhsValue = getValue(rhs)
 
-            val evaluator = evaluators
-                    .filter { it is InfixEvaluatableOperator<*> }
+                val evaluator = evaluators
+                    .filter { it is InfixEvaluableOperator<*> }
                     .find { operator == it.op.parser.name }
-                    as InfixEvaluatableOperator<U>
+                        as InfixEvaluableOperator<U>
 
-            lhsValue = evaluator.eval(lhsValue, rhsValue)
+                lhsValue = evaluator.eval(lhsValue, rhsValue)
+            }
         }
 
         return lhsValue
