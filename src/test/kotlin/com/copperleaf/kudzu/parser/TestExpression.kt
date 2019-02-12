@@ -26,7 +26,7 @@ class TestExpression {
 
         val parser = ExpressionParser(DigitParser(name = "val"), operators)
 
-        val visitor = ExpressionVisitor(operators) { it.text.toDouble() }
+        val visitor = ExpressionVisitor(operators) { _, node -> node.text.toDouble() }
 
         val inputs = listOf(
                 "2 ^ 3" to (2.0.pow(3)),

@@ -5,7 +5,8 @@ import kotlin.reflect.KClass
 // Exceptions
 //----------------------------------------------------------------------------------------------------------------------
 
-class ParserException(message: String, val parser: Parser, val input: ParserContext) : Exception(message)
+class ParserException(message: String, val parser: Parser, val input: ParserContext)
+    : Exception("Parse error: $message (${parser.javaClass.simpleName}(${parser.name}) at ${input.position})")
 
 class VisitorException(message: String) : Exception(message)
 
@@ -162,17 +163,18 @@ abstract class Parser(val name: String) {
 
     abstract fun parse(input: ParserContext): Pair<Node, ParserContext>
 
-    fun test(input: ParserContext): Pair<Node, ParserContext>? {
+    fun test(input: ParserContext, logErrors: Boolean = false): Pair<Node, ParserContext>? {
         return try {
             parse(input)
         }
         catch (e: ParserException) {
+            if(logErrors) e.printStackTrace()
             null
         }
     }
 
-    fun test(input: String, skipWhitespace: Boolean = false): Pair<Node, ParserContext>? {
-        return test(ParserContext(input, 0, skipWhitespace))
+    fun test(input: String, skipWhitespace: Boolean = false, logErrors: Boolean = false): Pair<Node, ParserContext>? {
+        return test(ParserContext(input, 0, skipWhitespace), logErrors)
     }
 
 }

@@ -198,7 +198,7 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
 
         val operations = node.find<NamedNode>("operators").child<ManyNode>()
         for (operationNode in operations.children) {
-            val operator = operationNode.text
+            val operator = operationNode.child().child().name
 
             val evaluator = evaluators
                     .filter { it is PrefixEvaluableOperator<*> }
@@ -219,7 +219,7 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
 
         val operations = node.find<NamedNode>("operators").child<ManyNode>()
         for (operationNode in operations.children) {
-            val operator = operationNode.text
+            val operator = operationNode.child().name
 
             val evaluator = evaluators
                     .filter { it is PostfixEvaluableOperator<*> }
@@ -240,7 +240,7 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
 
         if (node.find<NamedNode>("operators").child<MaybeNode>().hasChild()) {
             val operationNode = node.find<NamedNode>("operators").child<MaybeNode>().child()
-            val operator = operationNode.find<NamedNode>("operator").child().text
+            val operator = operationNode.find<NamedNode>("operator").child().child().name
 
             val rhs = operationNode.find<NamedNode>("operand").child()
             val rhsValue = getValue(context, rhs)
@@ -265,7 +265,7 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
         val operations = node.find<NamedNode>("operators").child<MaybeNode>()
         if(operations.hasChild<ManyNode>()) {
             for (operationNode in operations.child<ManyNode>().children) {
-                val operator = operationNode.find<NamedNode>("operator").child().text
+                val operator = operationNode.find<NamedNode>("operator").child().child().name
 
                 val rhs = operationNode.find<NamedNode>("operand").child()
                 val rhsValue = getValue(context, rhs)
