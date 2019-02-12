@@ -172,27 +172,27 @@ class InfixEvaluableOperator<U>(op: InfixOperator, val eval: (lhs: U, rhs: U) ->
 
 open class ExpressionVisitor<T : ExpressionContext<U>, U>(
         val evaluators: List<EvaluableOperator<U>>,
-        val defaultValue: (Node) -> U
+        val defaultValue: (T, Node) -> U
 ) : Visitor<T>(NonTerminalNode::class, "expressionRoot") {
 
     override fun visit(context: T, node: Node) {
-        context.value = getValue(node)
+        context.value = getValue(context, node)
     }
 
-    private fun getValue(node: Node): U {
+    private fun getValue(context: T, node: Node): U {
         return when (node.name) {
-            "prefix"         -> getPrefixValue(node as SequenceNode)
-            "postfix"        -> getPostfixValue(node as SequenceNode)
-            "infixr"         -> getInfixrValue(node as SequenceNode)
-            "infix"          -> getInfixValue(node as SequenceNode)
-            "expressionRoot" -> getValue((node as SequenceNode).child())
-            else             -> defaultValue(node)
+            "prefix"         -> getPrefixValue(context, node as SequenceNode)
+            "postfix"        -> getPostfixValue(context, node as SequenceNode)
+            "infixr"         -> getInfixrValue(context, node as SequenceNode)
+            "infix"          -> getInfixValue(context, node as SequenceNode)
+            "expressionRoot" -> getValue(context, (node as SequenceNode).child())
+            else             -> defaultValue(context, node)
         }
     }
 
-    private fun getPrefixValue(node: NonTerminalNode): U {
+    private fun getPrefixValue(context: T, node: NonTerminalNode): U {
         val initialNode = node.find<NamedNode>("operand").child()
-        val initialValue = getValue(initialNode)
+        val initialValue = getValue(context, initialNode)
 
         var rhsValue = initialValue
 
@@ -211,9 +211,9 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
         return rhsValue
     }
 
-    private fun getPostfixValue(node: NonTerminalNode): U {
+    private fun getPostfixValue(context: T, node: NonTerminalNode): U {
         val initialNode = node.find<NamedNode>("operand").child()
-        val initialValue = getValue(initialNode)
+        val initialValue = getValue(context, initialNode)
 
         var lhsValue = initialValue
 
@@ -232,9 +232,9 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
         return lhsValue
     }
 
-    private fun getInfixrValue(node: NonTerminalNode): U {
+    private fun getInfixrValue(context: T, node: NonTerminalNode): U {
         val initialNode = node.find<NamedNode>("operand").child()
-        val initialValue = getValue(initialNode)
+        val initialValue = getValue(context, initialNode)
 
         var lhsValue = initialValue
 
@@ -243,7 +243,7 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
             val operator = operationNode.find<NamedNode>("operator").child().text
 
             val rhs = operationNode.find<NamedNode>("operand").child()
-            val rhsValue = getValue(rhs)
+            val rhsValue = getValue(context, rhs)
 
             val evaluator = evaluators
                     .filter { it is InfixrEvaluableOperator<*> }
@@ -256,9 +256,9 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
         return lhsValue
     }
 
-    private fun getInfixValue(node: NonTerminalNode): U {
+    private fun getInfixValue(context: T, node: NonTerminalNode): U {
         val initialNode = node.find<NamedNode>("operand").child()
-        val initialValue = getValue(initialNode)
+        val initialValue = getValue(context, initialNode)
 
         var lhsValue = initialValue
 
@@ -268,7 +268,7 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
                 val operator = operationNode.find<NamedNode>("operator").child().text
 
                 val rhs = operationNode.find<NamedNode>("operand").child()
-                val rhsValue = getValue(rhs)
+                val rhsValue = getValue(context, rhs)
 
                 val evaluator = evaluators
                     .filter { it is InfixEvaluableOperator<*> }
