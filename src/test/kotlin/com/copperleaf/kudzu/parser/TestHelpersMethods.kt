@@ -25,7 +25,7 @@ class TestHelpersMethods {
         })
             .isNotNull()
             .get { message }
-            .isEqualTo("unexpected end of input")
+            .isEqualTo("Parse error: unexpected end of input (CharParser() at 1:1)")
     }
 
     @Test

@@ -4,10 +4,13 @@ import com.copperleaf.kudzu.node
 import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.visit
 import org.junit.jupiter.api.DynamicTest
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestFactory
+import strikt.api.catching
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import strikt.assertions.isNotNull
+import strikt.assertions.isNull
 import kotlin.math.pow
 
 class TestExpression {
@@ -15,13 +18,13 @@ class TestExpression {
     @TestFactory
     fun testExpressionParser(): List<DynamicTest> {
         val operators = listOf<EvaluableOperator<Double>>(
-                InfixEvaluableOperator(CharInParser('+', name = "+"), 40) { lhs, rhs -> lhs + rhs },
-                InfixEvaluableOperator(CharInParser('-', name = "-"), 40) { lhs, rhs -> lhs - rhs },
-                InfixEvaluableOperator(CharInParser('*', name = "*"), 60) { lhs, rhs -> lhs * rhs },
-                InfixEvaluableOperator(CharInParser('/', name = "/"), 60) { lhs, rhs -> lhs / rhs },
+                InfixEvaluableOperator(CharInParser('+', name = "plus"), 40) { lhs, rhs -> lhs + rhs },
+                InfixEvaluableOperator(CharInParser('-', name = "minus"), 40) { lhs, rhs -> lhs - rhs },
+                InfixEvaluableOperator(CharInParser('*', name = "mul"), 60) { lhs, rhs -> lhs * rhs },
+                InfixEvaluableOperator(CharInParser('/', name = "div"), 60) { lhs, rhs -> lhs / rhs },
 
-                PrefixEvaluableOperator(CharInParser('-', name = "-"), 80) { rhs -> -rhs },
-                InfixrEvaluableOperator(CharInParser('^', name = "^"), 70) { lhs, rhs -> lhs.pow(rhs) }
+                PrefixEvaluableOperator(CharInParser('-', name = "uminus"), 80) { rhs -> -rhs },
+                InfixrEvaluableOperator(CharInParser('^', name = "exp"), 70) { lhs, rhs -> lhs.pow(rhs) }
         )
 
         val parser = ExpressionParser(DigitParser(name = "val"), operators)
@@ -86,5 +89,46 @@ class TestExpression {
                         .isEqualTo(input.second)
             }
         }
+    }
+
+    @Test
+    fun testParserWithNameDoesNotThrow() {
+        expectThat(catching { InfixEvaluableOperator<Double>(CharInParser('+', name = "+"), 40) { lhs, rhs -> lhs + rhs } })
+            .isNull()
+    }
+
+    @Test
+    fun testParserWithoutNameThrows() {
+        expectThat(catching { InfixEvaluableOperator<Double>(CharInParser('+'), 40) { lhs, rhs -> lhs + rhs } })
+            .isNotNull()
+            .get { message }
+            .isEqualTo("Operator parser must have a name!")
+    }
+
+    @Test
+    fun testCreatingParserWithUniqueOperatorNamesDoesNotThrow() {
+        expectThat(catching {
+            val operators = listOf<EvaluableOperator<Double>>(
+                InfixEvaluableOperator(CharInParser('+', name = "plus"), 40) { lhs, rhs -> lhs + rhs },
+                InfixEvaluableOperator(CharInParser('-', name = "minus"), 40) { lhs, rhs -> lhs - rhs }
+            )
+            ExpressionParser(DigitParser(name = "val"), operators)
+        })
+            .isNull()
+    }
+
+    @Test
+    fun testCreatingParserWithDuplicatedOperatorNamesThrows() {
+        expectThat(catching {
+            val operators = listOf<EvaluableOperator<Double>>(
+                InfixEvaluableOperator(CharInParser('+', name = "op"), 40) { lhs, rhs -> lhs + rhs },
+                InfixEvaluableOperator(CharInParser('-', name = "op"), 40) { lhs, rhs -> lhs - rhs }
+            )
+            ExpressionParser(DigitParser(name = "val"), operators)
+        })
+            .isNotNull()
+            .get { message }
+            .isEqualTo("All operators must have unique names!\n" +
+                    "non-unique operator counts: ['op' -> 2]")
     }
 }

@@ -29,6 +29,10 @@ class ExpressionParser(termParser: Parser, vararg operators: Operator, name: Str
     override fun parse(input: ParserContext): Pair<Node, ParserContext> = parser.parse(input)
 
     private fun setupExpressionParserWithFixedLevels(termParser: Parser, operators: List<Operator>): Parser {
+        val nonUniqueOperators = operators.groupingBy { it.parser.name }.eachCount().filter { it.value > 1 }
+        if(nonUniqueOperators.isNotEmpty()) throw IllegalArgumentException("All operators must have unique names!\n" +
+                "non-unique operator counts: ${nonUniqueOperators.entries.joinToString { "['${it.key}' -> ${it.value}]" }}")
+
         return SequenceParser(
                 operators
                         .groupBy { OperatorLevel(it.precedence, it.associativity) }
@@ -57,6 +61,10 @@ sealed class Operator(
         val precedence: Int,
         val associativity: Int
 ) {
+    init {
+        if(parser.name.isBlank()) throw IllegalArgumentException("Operator parser must have a name!")
+    }
+
     abstract fun create(operator: Parser, operand: Parser): Parser
 }
 
