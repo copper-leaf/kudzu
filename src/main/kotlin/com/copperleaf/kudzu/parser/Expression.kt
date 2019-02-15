@@ -14,7 +14,7 @@ class ExpressionParser(termParser: Parser, vararg operators: Operator, name: Str
 
     constructor(
             termParser: Parser,
-            operators: List<EvaluableOperator<*>>,
+            operators: List<EvaluableOperator<*, *>>,
             name: String = ""
     ) : this(
             termParser,
@@ -158,28 +158,28 @@ private data class OperatorLevel(val precedence: Int, val associativity: Int) : 
 // Expression Evaluation
 //----------------------------------------------------------------------------------------------------------------------
 
-sealed class EvaluableOperator<U>(
+sealed class EvaluableOperator<T : ExpressionContext<U>, U>(
         val op: Operator
 )
 
-class PrefixEvaluableOperator<U>(op: PrefixOperator, val eval: (rhs: U) -> U) : EvaluableOperator<U>(op) {
-    constructor(op: Parser, precedence: Int, eval: (rhs: U) -> U) : this(PrefixOperator(op, precedence), eval)
+class PrefixEvaluableOperator<T : ExpressionContext<U>, U>(op: PrefixOperator, val eval: (cxt: T, rhs: U) -> U) : EvaluableOperator<T, U>(op) {
+    constructor(op: Parser, precedence: Int, eval: (cxt: T, rhs: U) -> U) : this(PrefixOperator(op, precedence), eval)
 }
 
-class PostfixEvaluableOperator<U>(op: PostfixOperator, val eval: (lhs: U) -> U) : EvaluableOperator<U>(op) {
-    constructor(op: Parser, precedence: Int, eval: (rhs: U) -> U) : this(PostfixOperator(op, precedence), eval)
+class PostfixEvaluableOperator<T : ExpressionContext<U>, U>(op: PostfixOperator, val eval: (cxt: T, lhs: U) -> U) : EvaluableOperator<T, U>(op) {
+    constructor(op: Parser, precedence: Int, eval: (cxt: T, rhs: U) -> U) : this(PostfixOperator(op, precedence), eval)
 }
 
-class InfixrEvaluableOperator<U>(op: InfixrOperator, val eval: (lhs: U, rhs: U) -> U) : EvaluableOperator<U>(op) {
-    constructor(op: Parser, precedence: Int, eval: (lhs: U, rhs: U) -> U) : this(InfixrOperator(op, precedence), eval)
+class InfixrEvaluableOperator<T : ExpressionContext<U>, U>(op: InfixrOperator, val eval: (cxt: T, lhs: U, rhs: U) -> U) : EvaluableOperator<T, U>(op) {
+    constructor(op: Parser, precedence: Int, eval: (cxt: T, lhs: U, rhs: U) -> U) : this(InfixrOperator(op, precedence), eval)
 }
 
-class InfixEvaluableOperator<U>(op: InfixOperator, val eval: (lhs: U, rhs: U) -> U) : EvaluableOperator<U>(op) {
-    constructor(op: Parser, precedence: Int, eval: (lhs: U, rhs: U) -> U) : this(InfixOperator(op, precedence), eval)
+class InfixEvaluableOperator<T : ExpressionContext<U>, U>(op: InfixOperator, val eval: (cxt: T, lhs: U, rhs: U) -> U) : EvaluableOperator<T, U>(op) {
+    constructor(op: Parser, precedence: Int, eval: (cxt: T, lhs: U, rhs: U) -> U) : this(InfixOperator(op, precedence), eval)
 }
 
 open class ExpressionVisitor<T : ExpressionContext<U>, U>(
-        val evaluators: List<EvaluableOperator<U>>,
+        val evaluators: List<EvaluableOperator<T, U>>,
         val defaultValue: (T, Node) -> U
 ) : Visitor<T>(NonTerminalNode::class, "expressionRoot") {
 
@@ -209,11 +209,11 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
             val operator = operationNode.child().child().name
 
             val evaluator = evaluators
-                    .filter { it is PrefixEvaluableOperator<*> }
+                    .filter { it is PrefixEvaluableOperator<T, *> }
                     .find { operator == it.op.parser.name }
-                    as PrefixEvaluableOperator<U>
+                    as PrefixEvaluableOperator<T, U>
 
-            rhsValue = evaluator.eval(rhsValue)
+            rhsValue = evaluator.eval(context, rhsValue)
         }
 
         return rhsValue
@@ -230,11 +230,11 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
             val operator = operationNode.child().name
 
             val evaluator = evaluators
-                    .filter { it is PostfixEvaluableOperator<*> }
+                    .filter { it is PostfixEvaluableOperator<T, *> }
                     .find { operator == it.op.parser.name }
-                    as PostfixEvaluableOperator<U>
+                    as PostfixEvaluableOperator<T, U>
 
-            lhsValue = evaluator.eval(lhsValue)
+            lhsValue = evaluator.eval(context, lhsValue)
         }
 
         return lhsValue
@@ -254,11 +254,11 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
             val rhsValue = getValue(context, rhs)
 
             val evaluator = evaluators
-                    .filter { it is InfixrEvaluableOperator<*> }
+                    .filter { it is InfixrEvaluableOperator<T, *> }
                     .find { operator == it.op.parser.name }
-                    as InfixrEvaluableOperator<U>
+                    as InfixrEvaluableOperator<T, U>
 
-            lhsValue = evaluator.eval(lhsValue, rhsValue)
+            lhsValue = evaluator.eval(context, lhsValue, rhsValue)
         }
 
         return lhsValue
@@ -279,11 +279,11 @@ open class ExpressionVisitor<T : ExpressionContext<U>, U>(
                 val rhsValue = getValue(context, rhs)
 
                 val evaluator = evaluators
-                    .filter { it is InfixEvaluableOperator<*> }
+                    .filter { it is InfixEvaluableOperator<T, *> }
                     .find { operator == it.op.parser.name }
-                        as InfixEvaluableOperator<U>
+                        as InfixEvaluableOperator<T, U>
 
-                lhsValue = evaluator.eval(lhsValue, rhsValue)
+                lhsValue = evaluator.eval(context, lhsValue, rhsValue)
             }
         }
 

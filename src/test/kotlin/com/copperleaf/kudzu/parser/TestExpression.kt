@@ -17,14 +17,14 @@ class TestExpression {
 
     @TestFactory
     fun testExpressionParser(): List<DynamicTest> {
-        val operators = listOf<EvaluableOperator<Double>>(
-                InfixEvaluableOperator(CharInParser('+', name = "plus"), 40) { lhs, rhs -> lhs + rhs },
-                InfixEvaluableOperator(CharInParser('-', name = "minus"), 40) { lhs, rhs -> lhs - rhs },
-                InfixEvaluableOperator(CharInParser('*', name = "mul"), 60) { lhs, rhs -> lhs * rhs },
-                InfixEvaluableOperator(CharInParser('/', name = "div"), 60) { lhs, rhs -> lhs / rhs },
+        val operators = listOf<EvaluableOperator<ExpressionContext<Double>, Double>>(
+                InfixEvaluableOperator(CharInParser('+', name = "plus"), 40) { _, lhs, rhs -> lhs + rhs },
+                InfixEvaluableOperator(CharInParser('-', name = "minus"), 40) { _, lhs, rhs -> lhs - rhs },
+                InfixEvaluableOperator(CharInParser('*', name = "mul"), 60) { _, lhs, rhs -> lhs * rhs },
+                InfixEvaluableOperator(CharInParser('/', name = "div"), 60) { _, lhs, rhs -> lhs / rhs },
 
-                PrefixEvaluableOperator(CharInParser('-', name = "uminus"), 80) { rhs -> -rhs },
-                InfixrEvaluableOperator(CharInParser('^', name = "exp"), 70) { lhs, rhs -> lhs.pow(rhs) }
+                PrefixEvaluableOperator(CharInParser('-', name = "uminus"), 80) { _, rhs -> -rhs },
+                InfixrEvaluableOperator(CharInParser('^', name = "exp"), 70) { _, lhs, rhs -> lhs.pow(rhs) }
         )
 
         val parser = ExpressionParser(DigitParser(name = "val"), operators)
@@ -93,13 +93,13 @@ class TestExpression {
 
     @Test
     fun testParserWithNameDoesNotThrow() {
-        expectThat(catching { InfixEvaluableOperator<Double>(CharInParser('+', name = "+"), 40) { lhs, rhs -> lhs + rhs } })
+        expectThat(catching { InfixEvaluableOperator<ExpressionContext<Double>, Double>(CharInParser('+', name = "+"), 40) { _, lhs, rhs -> lhs + rhs } })
             .isNull()
     }
 
     @Test
     fun testParserWithoutNameThrows() {
-        expectThat(catching { InfixEvaluableOperator<Double>(CharInParser('+'), 40) { lhs, rhs -> lhs + rhs } })
+        expectThat(catching { InfixEvaluableOperator<ExpressionContext<Double>, Double>(CharInParser('+'), 40) { _, lhs, rhs -> lhs + rhs } })
             .isNotNull()
             .get { message }
             .isEqualTo("Operator parser must have a name!")
@@ -108,9 +108,9 @@ class TestExpression {
     @Test
     fun testCreatingParserWithUniqueOperatorNamesDoesNotThrow() {
         expectThat(catching {
-            val operators = listOf<EvaluableOperator<Double>>(
-                InfixEvaluableOperator(CharInParser('+', name = "plus"), 40) { lhs, rhs -> lhs + rhs },
-                InfixEvaluableOperator(CharInParser('-', name = "minus"), 40) { lhs, rhs -> lhs - rhs }
+            val operators = listOf<EvaluableOperator<ExpressionContext<Double>, Double>>(
+                InfixEvaluableOperator(CharInParser('+', name = "plus"), 40) { _, lhs, rhs -> lhs + rhs },
+                InfixEvaluableOperator(CharInParser('-', name = "minus"), 40) { _, lhs, rhs -> lhs - rhs }
             )
             ExpressionParser(DigitParser(name = "val"), operators)
         })
@@ -120,9 +120,9 @@ class TestExpression {
     @Test
     fun testCreatingParserWithDuplicatedOperatorNamesThrows() {
         expectThat(catching {
-            val operators = listOf<EvaluableOperator<Double>>(
-                InfixEvaluableOperator(CharInParser('+', name = "op"), 40) { lhs, rhs -> lhs + rhs },
-                InfixEvaluableOperator(CharInParser('-', name = "op"), 40) { lhs, rhs -> lhs - rhs }
+            val operators = listOf<EvaluableOperator<ExpressionContext<Double>, Double>>(
+                InfixEvaluableOperator(CharInParser('+', name = "op"), 40) { _, lhs, rhs -> lhs + rhs },
+                InfixEvaluableOperator(CharInParser('-', name = "op"), 40) { _, lhs, rhs -> lhs - rhs }
             )
             ExpressionParser(DigitParser(name = "val"), operators)
         })
