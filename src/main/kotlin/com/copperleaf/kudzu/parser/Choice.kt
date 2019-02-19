@@ -38,3 +38,31 @@ class ChoiceParser(private vararg val parsers: Parser, name: String = "") : Pars
         throw ParserException("No inputs matched", this, input)
     }
 }
+
+/**
+ * Given a set of parsers, choose a single one to parse. The first parser that predicts true is chosen. If a parser
+ * predicts true, it is expected to parse successfully as well.
+ *
+ * Predicts true when:
+ *   - at least one parser parses successfully
+ *
+ * Parsing fails when:
+ *   - none of the provides parsers are able to parse successfully. This should never happen since it predicts true when parsing succeeds
+ */
+class ExactChoiceParser(private vararg val parsers: Parser, name: String = "") : Parser(name) {
+
+    override fun predict(input: ParserContext): Boolean {
+        return parsers.any { it.test(input) != null }
+    }
+
+    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+        for (parser in parsers) {
+            val next = parser.test(input)
+            if (next != null) {
+                return Pair(ChoiceNode(next.first, name, NodeContext(input, next.second)), next.second)
+            }
+        }
+
+        throw ParserException("No inputs matched", this, input)
+    }
+}

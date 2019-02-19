@@ -51,7 +51,7 @@ class ExpressionParser(termParser: Parser, vararg operators: Operator, name: Str
     }
 
     private fun List<Operator>.toParser(): Parser {
-        return ChoiceParser(*this.map { it.parser }.toTypedArray(), name = "op")
+        return ExactChoiceParser(*this.map { it.parser }.toTypedArray(), name = "op")
     }
 
 }

@@ -136,4 +136,78 @@ class TestChoice {
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
     }
 
+    @Test
+    fun testExactChoiceParser() {
+        var input: String
+        var output: Pair<Node, ParserContext>?
+        var expected: String
+        val underTest = ExactChoiceParser(
+            WordParser("aaaa", name = "W1"),
+            WordParser("bbbb", name = "W2"),
+            WordParser("aabb", name = "W3"),
+            WordParser("bbaabb", name = "W4")
+        )
+
+        input = "aaaa"
+        output = underTest.test(input)
+        expected = """
+            (ChoiceNode:
+              (WordNode:W1: 'aaaa')
+            )
+        """
+        expectThat(output)
+            .parsedCorrectly(expected)
+            .node()
+            .isNonTerminal()
+            .withChildren(1)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+
+        input = "bbbb"
+        output = underTest.test(input)
+        expected = """
+            (ChoiceNode:
+              (WordNode:W2: 'bbbb')
+            )
+        """
+        expectThat(output)
+            .parsedCorrectly(expected)
+            .node()
+            .isNonTerminal()
+            .withChildren(1)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+
+        input = "aabb"
+        output = underTest.test(input)
+        expected = """
+            (ChoiceNode:
+              (WordNode:W3: 'aabb')
+            )
+        """
+        expectThat(output)
+            .parsedCorrectly(expected)
+            .node()
+            .isNonTerminal()
+            .withChildren(1)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+
+        input = "bbaabb"
+        output = underTest.test(input)
+        expected = """
+            (ChoiceNode:
+              (WordNode:W4: 'bbaabb')
+            )
+        """
+        expectThat(output)
+            .parsedCorrectly(expected)
+            .node()
+            .isNonTerminal()
+            .withChildren(1)
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+
+        input = " "
+        output = underTest.test(input)
+        expectThat(output).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+    }
+
 }
