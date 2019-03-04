@@ -49,6 +49,13 @@ pitest {
     jvmArgs = ['-Xmx1024m']
     testPlugin = 'junit5'
 }
+def dummyOutputStream = new OutputStream() {
+    @Override
+    public void write(int b) {}
+}
+tasks.pitest.standardOutput = dummyOutputStream
+tasks.pitest.errorOutput = dummyOutputStream
+tasks.pitest.logging.captureStandardOutput LogLevel.QUIET
 
 task deploy {
     doLast {}
