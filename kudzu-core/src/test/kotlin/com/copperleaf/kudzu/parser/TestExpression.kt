@@ -289,7 +289,12 @@ class TestExpression {
             "1 > 2 && 3 <= 4" to (1 > 2 && 3 <= 4),
             "1 gt 2 and 3 lte 4" to (1 > 2 && 3 <= 4),
             "1 > 2 && false || 4 <= 4" to (1 > 2 && false || 4 <= 4),
-            "1 gt 2 && false or 4 lte 4" to (1 > 2 && false || 4 <= 4)
+            "1 gt 2 && false or 4 lte 4" to (1 > 2 && false || 4 <= 4),
+
+            "true || 1 > 2" to (true || 1 > 2),
+            "true || true" to (true || true),
+            "1 > 2 || true" to (1 > 2 || true),
+            "false || 1 > 2 || true" to (false || 1 > 2 || true)
         )
 
         return inputs.map { input ->
