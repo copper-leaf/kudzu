@@ -1,4 +1,3 @@
-
 site:
   about:
     siteName: Kudzu
@@ -28,9 +27,8 @@ theme:
   colors:
     green: '#588E85'
   palette:
-    link: 'GREEN'
     primary: 'GREEN'
-  useSidebarSearch: true
+    link: 'GREEN'
 
 services:
   publications:
@@ -41,6 +39,12 @@ services:
       - type: githubReleases
         repo: 'copper-leaf/kudzu'
 
+wiki:
+  wikiPages:
+    layout: wiki
+    menu:
+      - type: wiki
+
 allPages:
   components:
     - type: "pageContent"
@@ -50,8 +54,3 @@ allPages:
         - kotlin
         - java
         - groovy
-  extraCss:
-    - 'inline:all.scss:
-      code.language-kotlin .token.number { margin: 0; padding: 0; background: none; border: none; font-size: 1em; min-width: 0; }
-      code.language-kotlin .token.operator { margin: 0; padding: 0; background: none; border: none; font-size: 1em; min-width: 0; }
-      '
