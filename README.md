@@ -3,13 +3,37 @@
 
 > A monadic (I think...) recursive-descent parser written in Kotlin
 
-[![Build Status](https://travis-ci.org/copper-leaf/kudzu.svg?branch=master)](https://travis-ci.org/copper-leaf/kudzu)
-[![Codacy Project Grade](https://api.codacy.com/project/badge/Grade/3400972041df4049a0fec4624eb36d36)](https://www.codacy.com/app/cjbrooks12/kudzu?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=copper-leaf/kudzu&amp;utm_campaign=Badge_Grade)
-[![Code Coverage](https://api.codacy.com/project/badge/Coverage/3400972041df4049a0fec4624eb36d36)](https://www.codacy.com/app/cjbrooks12/kudzu?utm_source=github.com&utm_medium=referral&utm_content=copper-leaf/kudzu&utm_campaign=Badge_Coverage)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/copper-leaf/kudzu)
+![Maven Central](https://img.shields.io/maven-central/v/io.github.copper-leaf/kudzu-core)
+![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.32-orange)
 
 Kudzu is a recursive-descent parser written in Kotlin, with the goal of immutability and simplicity. It is mostly an 
 exercise for me to learn more about parsing algorithms, but should work reasonably-well enough to be used for small, 
 non-trivial parsers.
+
+### Installation
+
+```kotlin
+repositories {
+    mavenCentral()
+}
+
+// for plain JVM or Android projects
+dependencies {
+    implementation("io.github.copper-leaf:kudzu-core:{{site.version}}")
+}
+
+// for multiplatform projects
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation("io.github.copper-leaf:kudzu-core:{{site.version}}")
+            }
+        }
+    }
+}
+```
 
 ## Why did I write it?
 

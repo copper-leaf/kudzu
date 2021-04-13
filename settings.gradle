@@ -1,5 +1,0 @@
-rootProject.name = 'kudzu'
-
-include ':kudzu-core'
-
-include ':kudzu-docs'

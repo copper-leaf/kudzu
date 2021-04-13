@@ -1,0 +1,65 @@
+site:
+  theme: Copper
+  baseUrl: 'https://copper-leaf.github.io/kudzu/'
+  about:
+    siteName: Kudzu
+    siteDescription: A monadic (I think...) recursive-descent parser written in Kotlin
+
+theme:
+  social:
+    other:
+      - link: 'https://copper-leaf.github.io/kudzu'
+        label: 'Home'
+        icon: 'fas fa-home'
+      - link: 'https://github.com/copper-leaf/kudzu'
+        label: 'Github'
+        icon: 'fab fa-github'
+      - link: 'https://twitter.com/OrchidSSG'
+        label: 'Twitter'
+        icon: 'fab fa-twitter'
+  menu:
+    - type: 'page'
+      title: 'Home'
+      itemId: 'Home'
+    - type: 'wikiSections'
+    - type: 'page'
+      itemId: 'Changelog'
+  sidebarBackground: 'primary'
+  sidebarBackgroundType: GRADIENT
+  colors:
+    green: '#588E85'
+  palette:
+    primary: 'GREEN'
+    link: 'GREEN'
+
+changelog:
+  adapter:
+    type: "file"
+    baseDir: "./../../../../"
+
+services:
+  publications:
+    stages:
+      - type: githubReleases
+        repo: 'copper-leaf/kudzu'
+        username: 'cjbrooks12'
+        commitish: 'master'
+      - type: githubPages
+        repo: 'copper-leaf/kudzu'
+        username: 'cjbrooks12'
+
+wiki:
+  wikiPages:
+    layout: wiki
+    menu:
+      - type: wiki
+
+allPages:
+  components:
+    - type: "pageContent"
+    - type: "prism"
+      githubTheme: 'duotone-light'
+      languages:
+        - kotlin
+        - java
+        - groovy
