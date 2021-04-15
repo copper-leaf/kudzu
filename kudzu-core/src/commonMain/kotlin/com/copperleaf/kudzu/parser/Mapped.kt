@@ -13,16 +13,16 @@ class ValueNode<T : Any>(
     override val text: String get() = value.toString()
 }
 
-class MappedParser<T : Any>(
-    val parser: Parser,
+class MappedParser<T : Any, ParserNodeType: Node>(
+    val parser: Parser<ParserNodeType>,
     name: String = "",
-    val mapperFunction: (Node) -> T,
-) : Parser(name) {
+    val mapperFunction: (ParserNodeType) -> T,
+) : Parser<ValueNode<T>>(name) {
     override fun predict(input: ParserContext): Boolean {
         return parser.predict(input)
     }
 
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<ValueNode<T>, ParserContext> {
         val result = parser.parse(input)
         val mappedValue = mapperFunction(result.first)
         val valueNode = ValueNode(

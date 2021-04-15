@@ -4,6 +4,7 @@ import com.copperleaf.kudzu.*
 import com.copperleaf.kudzu.parser.BetweenTimesParser
 import com.copperleaf.kudzu.parser.CharInParser
 import com.copperleaf.kudzu.parser.CharNotInParser
+import com.copperleaf.kudzu.parser.ChoiceNode
 import com.copperleaf.kudzu.parser.ChoiceParser
 import com.copperleaf.kudzu.parser.ManyNode
 import com.copperleaf.kudzu.parser.ManyParser
@@ -22,7 +23,7 @@ class TestCommandLineArgsParser {
     fun testStringParser() {
         var input: String
         var output: Pair<Node, ParserContext>?
-        val underTest = getStringParser()
+        val underTest = stringParser
 
         input = "\"asdf\"".trim()
         output = underTest.test(input)
@@ -80,25 +81,19 @@ class TestCommandLineArgsParser {
 // Parser
 // ----------------------------------------------------------------------------------------------------------------------
 
-private lateinit var stringParser: Parser
-
-internal fun getStringParser(): Parser {
-    if (!::stringParser.isInitialized) {
-        stringParser = SequenceParser(
-            CharInParser('\"'),
-            ManyParser(
-                CharNotInParser('\"', escapeChar = '\\'),
-                name = "argValue"
-            ),
-            CharInParser('\"'),
-            name = "string"
-        )
-    }
-
-    return stringParser
+val stringParser: SequenceParser by lazy {
+    SequenceParser(
+        CharInParser('\"'),
+        ManyParser(
+            CharNotInParser('\"', escapeChar = '\\'),
+            name = "argValue"
+        ),
+        CharInParser('\"'),
+        name = "string"
+    )
 }
 
-internal fun getArgNameSublist(): List<Parser> {
+internal fun getArgNameSublist(): List<Parser<*>> {
     return listOf(
         BetweenTimesParser(1, 2, CharInParser('-')),
         TokenParser(name = "argName"),
@@ -110,17 +105,17 @@ internal fun getArgNameSublist(): List<Parser> {
     )
 }
 
-internal fun getArgValueSublist(): Parser {
+internal fun getArgValueSublist(): MaybeParser<ChoiceNode> {
     return MaybeParser(
         ChoiceParser(
-            getStringParser(),
+            stringParser,
             TokenParser(name = "argValue")
         )
     )
 }
 
-internal fun getParser(): Parser {
-    val argParserList = ArrayList<Parser>()
+internal fun getParser(): ManyParser {
+    val argParserList = ArrayList<Parser<*>>()
     argParserList.addAll(getArgNameSublist())
     argParserList.add(getArgValueSublist())
     argParserList.add(OptionalWhitespaceParser())

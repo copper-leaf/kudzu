@@ -17,9 +17,9 @@ class ManyNode(
 }
 
 abstract class BaseManyParser(
-    protected val parser: Parser,
+    protected val parser: Parser<*>,
     name: String = ""
-) : Parser(name) {
+) : Parser<ManyNode>(name) {
     override fun predict(input: ParserContext): Boolean {
         return input.isNotEmpty() && parser.predict(input)
     }
@@ -40,10 +40,10 @@ abstract class BaseManyParser(
  *   - its parser fails to parse
  */
 class ManyParser(
-    parser: Parser,
+    parser: Parser<*>,
     name: String = ""
 ) : BaseManyParser(parser, name) {
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<ManyNode, ParserContext> {
         checkNotEmpty(input)
 
         val nodeList = ArrayList<Node>()
@@ -60,7 +60,7 @@ class ManyParser(
             }
         }
 
-        return Pair(ManyNode(nodeList, name, NodeContext(input, remaining)), remaining)
+        return ManyNode(nodeList, name, NodeContext(input, remaining)) to remaining
     }
 }
 
@@ -81,10 +81,10 @@ class ManyParser(
  */
 class AtLeastParser(
     private val minSize: Int,
-    parser: Parser,
+    parser: Parser<*>,
     name: String = ""
 ) : BaseManyParser(parser, name) {
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<ManyNode, ParserContext> {
         checkNotEmpty(input)
 
         val nodeList = ArrayList<Node>()
@@ -107,7 +107,7 @@ class AtLeastParser(
             input
         )
 
-        return Pair(ManyNode(nodeList, name, NodeContext(input, remaining)), remaining)
+        return ManyNode(nodeList, name, NodeContext(input, remaining)) to remaining
     }
 }
 
@@ -128,10 +128,10 @@ class AtLeastParser(
  */
 class AtMostParser(
     private val maxSize: Int,
-    parser: Parser,
+    parser: Parser<*>,
     name: String = ""
 ) : BaseManyParser(parser, name) {
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<ManyNode, ParserContext> {
         checkNotEmpty(input)
 
         val nodeList = ArrayList<Node>()
@@ -150,7 +150,7 @@ class AtMostParser(
             }
         }
 
-        return Pair(ManyNode(nodeList, name, NodeContext(input, remaining)), remaining)
+        return ManyNode(nodeList, name, NodeContext(input, remaining)) to remaining
     }
 }
 
@@ -170,10 +170,10 @@ class AtMostParser(
  */
 class TimesParser(
     private val times: Int,
-    parser: Parser,
+    parser: Parser<*>,
     name: String = ""
 ) : BaseManyParser(parser, name) {
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<ManyNode, ParserContext> {
         checkNotEmpty(input)
 
         val nodeList = ArrayList<Node>()
@@ -191,7 +191,7 @@ class TimesParser(
             remaining = next.second
         }
 
-        return Pair(ManyNode(nodeList, name, NodeContext(input, remaining)), remaining)
+        return ManyNode(nodeList, name, NodeContext(input, remaining)) to remaining
     }
 }
 
@@ -212,10 +212,10 @@ class TimesParser(
 class BetweenTimesParser(
     private val minSize: Int,
     private val maxSize: Int,
-    parser: Parser,
+    parser: Parser<*>,
     name: String = ""
 ) : BaseManyParser(parser, name) {
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<ManyNode, ParserContext> {
         checkNotEmpty(input)
 
         val nodeList = ArrayList<Node>()
@@ -240,7 +240,7 @@ class BetweenTimesParser(
             input
         )
 
-        return Pair(ManyNode(nodeList, name, NodeContext(input, remaining)), remaining)
+        return ManyNode(nodeList, name, NodeContext(input, remaining)) to remaining
     }
 }
 
@@ -260,11 +260,11 @@ class BetweenTimesParser(
  *   - its parser fails to parse
  */
 class UntilParser(
-    parser: Parser,
-    private val stoppingCondition: Parser,
+    parser: Parser<*>,
+    private val stoppingCondition: Parser<*>,
     name: String = ""
 ) : BaseManyParser(parser, name) {
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<ManyNode, ParserContext> {
         checkNotEmpty(input)
 
         val nodeList = ArrayList<Node>()
@@ -281,6 +281,6 @@ class UntilParser(
             }
         }
 
-        return Pair(ManyNode(nodeList, name, NodeContext(input, remaining)), remaining)
+        return ManyNode(nodeList, name, NodeContext(input, remaining)) to remaining
     }
 }

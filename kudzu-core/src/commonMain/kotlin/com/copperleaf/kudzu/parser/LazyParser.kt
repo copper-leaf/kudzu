@@ -18,15 +18,15 @@ import com.copperleaf.kudzu.ParserContext
  * Parsing fails when:
  *   - its parser fails to parse
  */
-class LazyParser(name: String = "") : Parser(name) {
+class LazyParser<T : Node>(name: String = "") : Parser<T>(name) {
 
-    constructor(name: String = "", creator: Parser.() -> Parser) : this(name) {
+    constructor(name: String = "", creator: Parser<T>.() -> Parser<T>) : this(name) {
         this.parser = this.creator()
     }
 
-    lateinit var parser: Parser
+    lateinit var parser: Parser<T>
 
     override fun predict(input: ParserContext): Boolean = parser.predict(input)
 
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> = parser.parse(input)
+    override fun parse(input: ParserContext): Pair<T, ParserContext> = parser.parse(input)
 }

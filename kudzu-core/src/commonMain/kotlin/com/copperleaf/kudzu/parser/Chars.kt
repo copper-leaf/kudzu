@@ -13,7 +13,7 @@ class CharNode(
 abstract class BaseCharParser(
     private val escapeChar: Char? = null,
     name: String = ""
-) : Parser(name) {
+) : Parser<CharNode>(name) {
     override fun predict(input: ParserContext): Boolean {
         return input.isNotEmpty() && test(input)?.second?.isAfter(input) ?: false
     }
@@ -53,10 +53,10 @@ class CharParser(
     escapeChar: Char? = null,
     name: String = ""
 ) : BaseCharParser(escapeChar, name) {
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<CharNode, ParserContext> {
         val (nextChar, remaining, _) = nextChar(input)
 
-        return Pair(CharNode(nextChar, name, NodeContext(input, remaining)), remaining)
+        return CharNode(nextChar, name, NodeContext(input, remaining)) to remaining
     }
 }
 
@@ -76,7 +76,7 @@ class CharInParser(
     escapeChar: Char? = null,
     name: String = ""
 ) : BaseCharParser(escapeChar, name) {
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<CharNode, ParserContext> {
         val (nextChar, remaining, _) = nextChar(input)
 
         if (!chars.contains(nextChar)) throw ParserException(
@@ -85,7 +85,7 @@ class CharInParser(
             input
         )
 
-        return Pair(CharNode(nextChar, name, NodeContext(input, remaining)), remaining)
+        return CharNode(nextChar, name, NodeContext(input, remaining)) to remaining
     }
 }
 
@@ -105,7 +105,7 @@ class CharNotInParser(
     escapeChar: Char? = null,
     name: String = ""
 ) : BaseCharParser(escapeChar, name) {
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<CharNode, ParserContext> {
         val (nextChar, remaining, wasEscaped) = nextChar(input)
 
         if (!wasEscaped) {
@@ -116,7 +116,7 @@ class CharNotInParser(
             )
         }
 
-        return Pair(CharNode(nextChar, name, NodeContext(input, remaining)), remaining)
+        return CharNode(nextChar, name, NodeContext(input, remaining)) to remaining
     }
 }
 
@@ -135,7 +135,7 @@ class WhitespaceParser(
     escapeChar: Char? = null,
     name: String = ""
 ) : BaseCharParser(escapeChar, name) {
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<CharNode, ParserContext> {
         val (nextChar, remaining, _) = nextChar(input)
 
         if (!input.next().isWhitespace()) throw ParserException(
@@ -144,7 +144,7 @@ class WhitespaceParser(
             input
         )
 
-        return Pair(CharNode(nextChar, name, NodeContext(input, remaining)), remaining)
+        return CharNode(nextChar, name, NodeContext(input, remaining)) to remaining
     }
 }
 
@@ -163,7 +163,7 @@ class DigitParser(
     escapeChar: Char? = null,
     name: String = ""
 ) : BaseCharParser(escapeChar, name) {
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<CharNode, ParserContext> {
         val (nextChar, remaining, _) = nextChar(input)
         if (!input.next().isDigit()) throw ParserException(
             "char '${input.next()}' must be a digit",
@@ -171,7 +171,7 @@ class DigitParser(
             input
         )
 
-        return Pair(CharNode(nextChar, name, NodeContext(input, remaining)), remaining)
+        return CharNode(nextChar, name, NodeContext(input, remaining)) to remaining
     }
 }
 
@@ -190,7 +190,7 @@ class LetterParser(
     escapeChar: Char? = null,
     name: String = ""
 ) : BaseCharParser(escapeChar, name) {
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<CharNode, ParserContext> {
         val (nextChar, remaining, _) = nextChar(input)
         if (!input.next().isLetter()) throw ParserException(
             "char '${input.next()}' must be a letter",
@@ -198,6 +198,6 @@ class LetterParser(
             input
         )
 
-        return Pair(CharNode(nextChar, name, NodeContext(input, remaining)), remaining)
+        return CharNode(nextChar, name, NodeContext(input, remaining)) to remaining
     }
 }

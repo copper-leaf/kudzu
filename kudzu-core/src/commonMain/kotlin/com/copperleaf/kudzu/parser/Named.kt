@@ -5,16 +5,19 @@ import com.copperleaf.kudzu.NonTerminalNode
 import com.copperleaf.kudzu.Parser
 import com.copperleaf.kudzu.ParserContext
 
-class NamedNode(private val node: Node, name: String) : NonTerminalNode(name, node.context) {
+class NamedNode<T : Node>(
+    private val node: T,
+    name: String
+) : NonTerminalNode(name, node.context) {
     override val children: List<Node> get() = listOf(node)
 }
 
-class NamedParser(val parser: Parser, name: String) : Parser(name) {
+class NamedParser<T : Node>(val parser: Parser<T>, name: String) : Parser<NamedNode<T>>(name) {
 
     override fun predict(input: ParserContext): Boolean = parser.predict(input)
 
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<NamedNode<T>, ParserContext> {
         val node = parser.parse(input)
-        return Pair(NamedNode(node.first, this.name), node.second)
+        return NamedNode(node.first, this.name) to node.second
     }
 }

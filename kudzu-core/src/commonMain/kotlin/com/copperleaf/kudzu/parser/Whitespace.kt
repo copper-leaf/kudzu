@@ -7,7 +7,10 @@ import com.copperleaf.kudzu.ParserContext
 import com.copperleaf.kudzu.TerminalNode
 import com.copperleaf.kudzu.checkNotEmpty
 
-class WhitespaceNode(name: String, context: NodeContext) : TerminalNode(name, context) {
+class WhitespaceNode(
+    name: String,
+    context: NodeContext
+) : TerminalNode(name, context) {
     override val text: String get() = ""
 }
 
@@ -24,13 +27,13 @@ class WhitespaceNode(name: String, context: NodeContext) : TerminalNode(name, co
  * Parsing fails when:
  *   - never
  */
-class OptionalWhitespaceParser(name: String = "") : Parser(name) {
+class OptionalWhitespaceParser(name: String = "") : Parser<WhitespaceNode>(name) {
 
     override fun predict(input: ParserContext): Boolean {
         return true
     }
 
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<WhitespaceNode, ParserContext> {
         var remaining = input
         var nextChar: Char
         var token = ""
@@ -43,7 +46,7 @@ class OptionalWhitespaceParser(name: String = "") : Parser(name) {
             remaining = remaining.remaining()
         }
 
-        return Pair(WhitespaceNode(name, NodeContext(input, remaining)), remaining)
+        return WhitespaceNode(name, NodeContext(input, remaining)) to remaining
     }
 }
 
@@ -61,13 +64,13 @@ class OptionalWhitespaceParser(name: String = "") : Parser(name) {
  * Parsing fails when:
  *   - there is no more input remaining
  */
-class RequiredWhitespaceParser(name: String = "") : Parser(name) {
+class RequiredWhitespaceParser(name: String = "") : Parser<WhitespaceNode>(name) {
 
     override fun predict(input: ParserContext): Boolean {
         return input.isNotEmpty() && input.next().isWhitespace()
     }
 
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<WhitespaceNode, ParserContext> {
         checkNotEmpty(input)
 
         var remaining = input
@@ -82,6 +85,6 @@ class RequiredWhitespaceParser(name: String = "") : Parser(name) {
             remaining = remaining.remaining()
         } while (remaining.isNotEmpty())
 
-        return Pair(WhitespaceNode(name, NodeContext(input, remaining)), remaining)
+        return WhitespaceNode(name, NodeContext(input, remaining)) to remaining
     }
 }

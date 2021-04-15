@@ -9,6 +9,7 @@ import com.copperleaf.kudzu.parser.DigitParser
 import com.copperleaf.kudzu.parser.LazyParser
 import com.copperleaf.kudzu.parser.ManyParser
 import com.copperleaf.kudzu.parser.MaybeParser
+import com.copperleaf.kudzu.parser.SequenceNode
 import com.copperleaf.kudzu.parser.SequenceParser
 import kotlin.test.Test
 
@@ -50,7 +51,7 @@ class TestModeratelyComplexGrammars {
     /*
      * Code island parser
      */
-    private fun getClogParser(): Parser {
+    private fun getClogParser(): Parser<*> {
         val rawParser = AtLeastParser(
             1,
             CharNotInParser('{', '}')
@@ -82,10 +83,10 @@ class TestModeratelyComplexGrammars {
      * term       ::= factor (('*'| '/') factor)*
      * expression ::= term   (('+'| '-') term  )*
      */
-    private fun getArithmeticParser(): Parser {
+    private fun getArithmeticParser(): Parser<*> {
         val number = AtLeastParser(1, DigitParser(), name = "number")
 
-        val lazyExpressionParser = LazyParser()
+        val lazyExpressionParser = LazyParser<SequenceNode>()
 
         val factorParser = SequenceParser(
             MaybeParser(
@@ -139,7 +140,7 @@ class TestModeratelyComplexGrammars {
     /*
      * Code island parser using a arithmetic expression as the island contents
      */
-    private fun getClogExpressionParser(): Parser {
+    private fun getClogExpressionParser(): Parser<*> {
         val rawParser = AtLeastParser(
             1,
             CharNotInParser('{', '}')

@@ -3,8 +3,11 @@ package com.copperleaf.kudzu
 // Exceptions
 // ----------------------------------------------------------------------------------------------------------------------
 
-class ParserException(message: String, val parser: Parser, val input: ParserContext) :
-    Exception("Parse error: $message (${parser::class.simpleName}(${parser.name}) at ${input.position})")
+class ParserException(
+    message: String,
+    val parser: Parser<*>,
+    val input: ParserContext
+) : Exception("Parse error: $message (${parser::class.simpleName}(${parser.name}) at ${input.position})")
 
 class VisitorException(message: String) : Exception(message)
 
@@ -158,24 +161,11 @@ abstract class NonTerminalNode(name: String, context: NodeContext) : Node(name, 
     }
 }
 
-abstract class Parser(val name: String) {
+abstract class Parser<NodeType : Node>(val name: String) {
 
     abstract fun predict(input: ParserContext): Boolean
 
-    abstract fun parse(input: ParserContext): Pair<Node, ParserContext>
-
-    fun test(input: ParserContext, logErrors: Boolean = false): Pair<Node, ParserContext>? {
-        return try {
-            parse(input)
-        } catch (e: ParserException) {
-            if (logErrors) e.printStackTrace()
-            null
-        }
-    }
-
-    fun test(input: String, skipWhitespace: Boolean = false, logErrors: Boolean = false): Pair<Node, ParserContext>? {
-        return test(ParserContext(input, 0, skipWhitespace), logErrors)
-    }
+    abstract fun parse(input: ParserContext): Pair<NodeType, ParserContext>
 }
 
 abstract class Visitor<T : VisitorContext>(val nodeMatcher: (Node) -> Boolean, val nodeName: String? = null) {

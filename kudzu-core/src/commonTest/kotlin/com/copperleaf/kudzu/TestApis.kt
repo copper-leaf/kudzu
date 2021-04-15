@@ -151,7 +151,7 @@ fun NonTerminalNode.withChildren(expectedChildrenCount: Int): NonTerminalNode {
     return this
 }
 
-fun Parser.checkParsingWhenEmpty(shouldSucceed: Boolean = false) {
+fun Parser<*>.checkParsingWhenEmpty(shouldSucceed: Boolean = false) {
     if (shouldSucceed) {
         expectThat(this.test("")).parsedCorrectly()
         expectThat(predict(ParserContext("", 0, false))).isTrue()
@@ -159,4 +159,12 @@ fun Parser.checkParsingWhenEmpty(shouldSucceed: Boolean = false) {
         expectThat(this.test("")).parsedIncorrectly()
         expectThat(predict(ParserContext("", 0, false))).isFalse()
     }
+}
+
+fun <NodeType : Node> Parser<NodeType>.test(
+    input: String,
+    skipWhitespace: Boolean = false,
+    logErrors: Boolean = false
+): Pair<Node, ParserContext>? {
+    return test(ParserContext(input, 0, skipWhitespace), logErrors)
 }

@@ -306,7 +306,7 @@ class TestExpression {
     }
 }
 
-private fun createOperatorParser(name: String, vararg tokens: String): Parser {
+private fun createOperatorParser(name: String, vararg tokens: String): Parser<*> {
     return SequenceParser(
         ExactChoiceParser(*tokens.map { WordParser(it) }.toTypedArray(), WordParser(name)),
         OptionalWhitespaceParser(),

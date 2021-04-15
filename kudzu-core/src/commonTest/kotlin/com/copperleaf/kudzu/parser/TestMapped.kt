@@ -62,12 +62,12 @@ class TestMapped {
         val nodeValue1Parser = MappedParser(
             TokenParser()
         ) { tokenNode ->
-            (tokenNode as WordNode).text.toUpperCase()
+            tokenNode.text.toUpperCase()
         }
         val nodeValue2Parser = MappedParser(
             ManyParser(DigitParser())
         ) { manyNode ->
-            (manyNode as ManyNode)
+            manyNode
                 .children
                 .joinToString(separator = "") { digitNode -> digitNode.text }
                 .toInt()
@@ -89,11 +89,11 @@ class TestMapped {
                 CharInParser(')'),
             )
         ) { sequenceNode ->
-            val (_, choiceNode, _, enumNode, _) = (sequenceNode as SequenceNode).children
+            val (_, choiceNode, _, enumNode, _) = sequenceNode.children
             val enumValue = (enumNode as ValueNode<SomeComplexModelEnum>).value
             val choiceNodeType = (choiceNode as ChoiceNode).node.text
 
-            when(choiceNodeType) {
+            when (choiceNodeType) {
                 "Type1" -> SomeComplexModelType.Type1(enumValue)
                 "Type2" -> SomeComplexModelType.Type2(enumValue)
                 else -> error("invalid model type: $choiceNodeType") // should never get here
@@ -110,7 +110,13 @@ class TestMapped {
                 someComplexModelTypeParser
             )
         ) { sequenceNode ->
-            val (nodeValue1, nodeValue2, someComplexModel) = (sequenceNode as SequenceNode).children.let { listOf(it[0], it[3], it[6]) }
+            val (nodeValue1, nodeValue2, someComplexModel) = (sequenceNode as SequenceNode).children.let {
+                listOf(
+                    it[0],
+                    it[3],
+                    it[6]
+                )
+            }
 
             SomeComplexModel(
                 nodeValue1.text,

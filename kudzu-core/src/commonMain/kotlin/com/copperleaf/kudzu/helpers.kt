@@ -17,7 +17,6 @@ fun Node.find(nodeClass: KClass<out Node>?, nodeName: String? = null): Node {
     }
 
     if (this is TerminalNode) throw VisitorException("$message: node is terminal")
-
     else if (this is NonTerminalNode) {
         for (node in children) {
             val matchesClass = if (nodeClass != null) node::class == nodeClass else true
@@ -82,7 +81,6 @@ fun Node.findAnywhere(nodeClass: KClass<out Node>?, nodeName: String? = null): N
     }
 
     if (this is TerminalNode) throw VisitorException("$message: node is terminal")
-
     else if (this is NonTerminalNode) {
         for (node in children) {
             val matchesClass = if (nodeClass != null) node::class == nodeClass else true
@@ -93,7 +91,8 @@ fun Node.findAnywhere(nodeClass: KClass<out Node>?, nodeName: String? = null): N
             } else if (node is NonTerminalNode) {
                 try {
                     return node.findAnywhere(nodeClass, nodeName)
-                } catch (e: VisitorException) { }
+                } catch (e: VisitorException) {
+                }
             }
         }
     }
@@ -126,10 +125,22 @@ fun <T : VisitorContext> Node.visit(context: T, vararg visitors: Visitor<T>): T 
     return context
 }
 
-fun Parser.checkNotEmpty(input: ParserContext) {
+fun Parser<*>.checkNotEmpty(input: ParserContext) {
     if (input.isEmpty()) throw ParserException("unexpected end of input", this, input)
 }
 
 fun Char.isLetter(): Boolean = KudzuPlatform.isLetter(this)
 fun Char.isDigit(): Boolean = KudzuPlatform.isDigit(this)
 fun Char.isLetterOrDigit(): Boolean = KudzuPlatform.isLetterOrDigit(this)
+
+fun <NodeType : Node> Parser<NodeType>.test(
+    input: ParserContext,
+    logErrors: Boolean = false
+): Pair<NodeType, ParserContext>? {
+    return try {
+        parse(input)
+    } catch (e: ParserException) {
+        if (logErrors) e.printStackTrace()
+        null
+    }
+}

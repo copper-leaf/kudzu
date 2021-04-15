@@ -6,8 +6,10 @@ import com.copperleaf.kudzu.parser.ChoiceNode
 import com.copperleaf.kudzu.parser.ChoiceParser
 import com.copperleaf.kudzu.parser.DigitParser
 import com.copperleaf.kudzu.parser.LazyParser
+import com.copperleaf.kudzu.parser.ManyNode
 import com.copperleaf.kudzu.parser.ManyParser
 import com.copperleaf.kudzu.parser.OptionalWhitespaceParser
+import com.copperleaf.kudzu.parser.SequenceNode
 import com.copperleaf.kudzu.parser.SequenceParser
 import com.copperleaf.kudzu.parser.WordParser
 import kotlin.test.Test
@@ -112,17 +114,17 @@ class TestJsonParser {
     }
 }
 
-private var lazyObjectParser = LazyParser()
-private var lazyMembersParser = LazyParser()
-private var lazyPairParser = LazyParser()
+private var lazyObjectParser = LazyParser<SequenceNode>()
+private var lazyMembersParser = LazyParser<SequenceNode>()
+private var lazyPairParser = LazyParser<SequenceNode>()
 
-private var lazyArrayParser = LazyParser()
-private var lazyElementsParser = LazyParser()
+private var lazyArrayParser = LazyParser<SequenceNode>()
+private var lazyElementsParser = LazyParser<SequenceNode>()
 
-private var lazyValueParser = LazyParser()
-private var lazyNumberParser = LazyParser()
+private var lazyValueParser = LazyParser<ChoiceNode>()
+private var lazyNumberParser = LazyParser<ManyNode>()
 
-private var jsonParser: Parser = ChoiceParser(
+private var jsonParser = ChoiceParser(
     lazyObjectParser,
     lazyArrayParser,
     name = "json"
@@ -130,7 +132,7 @@ private var jsonParser: Parser = ChoiceParser(
 
 private fun initJsonGrammar() {
     lazyValueParser.parser = ChoiceParser(
-        getStringParser(),
+        stringParser,
         lazyNumberParser,
         lazyObjectParser,
         lazyArrayParser,
@@ -169,7 +171,7 @@ private fun initJsonGrammar() {
     )
 
     lazyPairParser.parser = SequenceParser(
-        getStringParser(),
+        stringParser,
         OptionalWhitespaceParser(),
         CharInParser(':'),
         OptionalWhitespaceParser(),

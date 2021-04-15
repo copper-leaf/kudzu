@@ -1,12 +1,15 @@
 package com.copperleaf.kudzu.parser
 
-import com.copperleaf.kudzu.Node
 import com.copperleaf.kudzu.NodeContext
 import com.copperleaf.kudzu.Parser
 import com.copperleaf.kudzu.ParserContext
 import com.copperleaf.kudzu.TerminalNode
 
-class ScanNode(override val text: String, name: String, context: NodeContext) : TerminalNode(name, context)
+class ScanNode(
+    override val text: String,
+    name: String,
+    context: NodeContext
+) : TerminalNode(name, context)
 
 /**
  * Consume characters from the input until its parser predicts true.
@@ -20,14 +23,17 @@ class ScanNode(override val text: String, name: String, context: NodeContext) : 
  *
  * Parsing fails when:
  *   - its parser fails to parse
-*/
-class ScanParser(val next: Parser, name: String = "") : Parser(name) {
+ */
+class ScanParser(
+    val next: Parser<*>,
+    name: String = ""
+) : Parser<ScanNode>(name) {
 
     override fun predict(input: ParserContext): Boolean {
         return true
     }
 
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<ScanNode, ParserContext> {
         var remaining = input
         var text = ""
 
@@ -36,6 +42,6 @@ class ScanParser(val next: Parser, name: String = "") : Parser(name) {
             remaining = remaining.remaining()
         }
 
-        return Pair(ScanNode(text, name, NodeContext(input, remaining)), remaining)
+        return ScanNode(text, name, NodeContext(input, remaining)) to remaining
     }
 }

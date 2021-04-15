@@ -6,6 +6,7 @@ import com.copperleaf.kudzu.NonTerminalNode
 import com.copperleaf.kudzu.Parser
 import com.copperleaf.kudzu.ParserContext
 import com.copperleaf.kudzu.ParserException
+import com.copperleaf.kudzu.test
 
 class ChoiceNode(val node: Node, name: String, context: NodeContext) : NonTerminalNode(name, context) {
     override val children: List<Node> get() = listOf(node)
@@ -21,17 +22,17 @@ class ChoiceNode(val node: Node, name: String, context: NodeContext) : NonTermin
  * Parsing fails when:
  *   - none of the provides parsers are able to parse successfully
  */
-class ChoiceParser(private vararg val parsers: Parser, name: String = "") : Parser(name) {
+class ChoiceParser(private vararg val parsers: Parser<*>, name: String = "") : Parser<ChoiceNode>(name) {
 
     override fun predict(input: ParserContext): Boolean {
         return parsers.any { it.predict(input) }
     }
 
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<ChoiceNode, ParserContext> {
         for (parser in parsers) {
             if (parser.predict(input)) {
                 val next = parser.parse(input)
-                return Pair(ChoiceNode(next.first, name, NodeContext(input, next.second)), next.second)
+                return ChoiceNode(next.first, name, NodeContext(input, next.second)) to next.second
             }
         }
 
@@ -49,17 +50,17 @@ class ChoiceParser(private vararg val parsers: Parser, name: String = "") : Pars
  * Parsing fails when:
  *   - none of the provides parsers are able to parse successfully. This should never happen since it predicts true when parsing succeeds
  */
-class ExactChoiceParser(private vararg val parsers: Parser, name: String = "") : Parser(name) {
+class ExactChoiceParser(private vararg val parsers: Parser<*>, name: String = "") : Parser<ChoiceNode>(name) {
 
     override fun predict(input: ParserContext): Boolean {
         return parsers.any { it.test(input) != null }
     }
 
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<ChoiceNode, ParserContext> {
         for (parser in parsers) {
             val next = parser.test(input)
             if (next != null) {
-                return Pair(ChoiceNode(next.first, name, NodeContext(input, next.second)), next.second)
+                return ChoiceNode(next.first, name, NodeContext(input, next.second)) to next.second
             }
         }
 

@@ -19,13 +19,13 @@ class SequenceNode(val nodeList: List<Node>, name: String, context: NodeContext)
  * Parsing fails when:
  *   - any of its parsers fails to parse
  */
-class SequenceParser(private vararg val parsers: Parser, name: String = "") : Parser(name) {
+class SequenceParser(private vararg val parsers: Parser<*>, name: String = "") : Parser<SequenceNode>(name) {
 
     override fun predict(input: ParserContext): Boolean {
         return parsers.first().predict(input)
     }
 
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<SequenceNode, ParserContext> {
         val nodeList = ArrayList<Node>()
 
         var remaining = input
@@ -36,6 +36,6 @@ class SequenceParser(private vararg val parsers: Parser, name: String = "") : Pa
             remaining = next.second
         }
 
-        return Pair(SequenceNode(nodeList, name, NodeContext(input, remaining)), remaining)
+        return SequenceNode(nodeList, name, NodeContext(input, remaining)) to remaining
     }
 }

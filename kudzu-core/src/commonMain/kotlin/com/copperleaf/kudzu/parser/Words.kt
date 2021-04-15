@@ -2,7 +2,11 @@ package com.copperleaf.kudzu.parser
 
 import com.copperleaf.kudzu.*
 
-class WordNode(private val word: String, name: String, context: NodeContext) : TerminalNode(name, context) {
+class WordNode(
+    private val word: String,
+    name: String,
+    context: NodeContext
+) : TerminalNode(name, context) {
     override val text: String get() = word
 }
 
@@ -22,13 +26,13 @@ class WordNode(private val word: String, name: String, context: NodeContext) : T
  *   - there is no more input remaining
  *   - the next character does not match the corresponding character of the expected string
  */
-class WordParser(val expected: String, name: String = "") : Parser(name) {
+class WordParser(val expected: String, name: String = "") : Parser<WordNode>(name) {
 
     override fun predict(input: ParserContext): Boolean {
         return input.isNotEmpty() && input.next() == expected[0]
     }
 
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<WordNode, ParserContext> {
         checkNotEmpty(input)
 
         var remaining = input
@@ -41,7 +45,7 @@ class WordParser(val expected: String, name: String = "") : Parser(name) {
                 throw ParserException("expected " + expected, this, input)
             }
         }
-        return Pair(WordNode(expected, name, NodeContext(input, remaining)), remaining)
+        return WordNode(expected, name, NodeContext(input, remaining)) to remaining
     }
 }
 
@@ -59,13 +63,13 @@ class WordParser(val expected: String, name: String = "") : Parser(name) {
  * Parsing fails when:
  *   - no input was consumed
  */
-class TokenParser(name: String = "") : Parser(name) {
+class TokenParser(name: String = "") : Parser<WordNode>(name) {
 
     override fun predict(input: ParserContext): Boolean {
         return input.isNotEmpty() && input.next().isLetterOrDigit()
     }
 
-    override fun parse(input: ParserContext): Pair<Node, ParserContext> {
+    override fun parse(input: ParserContext): Pair<WordNode, ParserContext> {
         checkNotEmpty(input)
 
         var remaining = input
@@ -82,6 +86,6 @@ class TokenParser(name: String = "") : Parser(name) {
 
         if (token.isEmpty()) throw ParserException("expected a token", this, input)
 
-        return Pair(WordNode(token, name, NodeContext(input, remaining)), remaining)
+        return WordNode(token, name, NodeContext(input, remaining)) to remaining
     }
 }
