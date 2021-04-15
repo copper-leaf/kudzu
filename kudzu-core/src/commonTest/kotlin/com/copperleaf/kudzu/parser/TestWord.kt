@@ -1,17 +1,7 @@
 package com.copperleaf.kudzu.parser
 
-import com.copperleaf.kudzu.Node
-import com.copperleaf.kudzu.ParserContext
-import com.copperleaf.kudzu.checkParsingWhenEmpty
-import com.copperleaf.kudzu.node
-import com.copperleaf.kudzu.parsedCorrectly
-import com.copperleaf.kudzu.parsedIncorrectly
+import com.copperleaf.kudzu.*
 import kotlin.test.Test
-import strikt.api.expectThat
-import strikt.assertions.isEqualTo
-import strikt.assertions.isFalse
-import strikt.assertions.isNotNull
-import strikt.assertions.isTrue
 
 class TestWord {
 

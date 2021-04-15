@@ -1,12 +1,6 @@
 package com.copperleaf.kudzu.parser
 
-import com.copperleaf.kudzu.Parser
-import com.copperleaf.kudzu.node
-import com.copperleaf.kudzu.parsedCorrectly
-import com.copperleaf.kudzu.visit
-import strikt.api.expectCatching
-import strikt.api.expectThat
-import strikt.assertions.*
+import com.copperleaf.kudzu.*
 import kotlin.math.pow
 import kotlin.test.Test
 

@@ -1,15 +1,6 @@
 package com.copperleaf.kudzu.integration
 
-import com.copperleaf.kudzu.Node
-import com.copperleaf.kudzu.Parser
-import com.copperleaf.kudzu.ParserContext
-import com.copperleaf.kudzu.Visitor
-import com.copperleaf.kudzu.VisitorContext
-import com.copperleaf.kudzu.VisitorException
-import com.copperleaf.kudzu.child
-import com.copperleaf.kudzu.find
-import com.copperleaf.kudzu.has
-import com.copperleaf.kudzu.hasChild
+import com.copperleaf.kudzu.*
 import com.copperleaf.kudzu.parser.CharInParser
 import com.copperleaf.kudzu.parser.ChoiceNode
 import com.copperleaf.kudzu.parser.ChoiceParser
@@ -19,7 +10,6 @@ import com.copperleaf.kudzu.parser.ManyParser
 import com.copperleaf.kudzu.parser.OptionalWhitespaceParser
 import com.copperleaf.kudzu.parser.SequenceParser
 import com.copperleaf.kudzu.parser.WordParser
-import com.copperleaf.kudzu.visit
 import kotlin.test.Test
 import kotlin.test.BeforeTest
 

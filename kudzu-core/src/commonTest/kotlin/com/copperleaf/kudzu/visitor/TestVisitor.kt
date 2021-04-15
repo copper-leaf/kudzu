@@ -2,9 +2,6 @@ package com.copperleaf.kudzu.visitor
 
 import com.copperleaf.kudzu.*
 import com.copperleaf.kudzu.parser.*
-import strikt.api.expectThat
-import strikt.assertions.isEqualTo
-import strikt.assertions.isSameInstanceAs
 import kotlin.test.Test
 
 class TestVisitor {
@@ -132,7 +129,7 @@ class StringAndDigitAccumulatorVisitor(nodeMatcher: (Node) -> Boolean, nodeName:
         if (this.nodeName == "letters" && node.name == "letters") {
             context.stringAcc += node.text
         } else if (this.nodeName == "digits" && node.name == "digits") {
-            context.digitAcc += Integer.parseInt(node.text)
+            context.digitAcc += node.text.toInt()
         } else if (this.nodeName == null) {
             context.stringAcc += node.text
         }
@@ -146,7 +143,7 @@ class StringAndDigitByParentAccumulatorVisitor(nodeMatcher: (Node) -> Boolean, n
         if (this.nodeName == "letters" && node.parent?.name == "letters") {
             context.stringAcc += node.text
         } else if (this.nodeName == "digits" && node.parent?.name == "digits") {
-            context.digitAcc += Integer.parseInt(node.text)
+            context.digitAcc += node.text.toInt()
         } else if (this.nodeName == null) {
             context.stringAcc += node.text
         }

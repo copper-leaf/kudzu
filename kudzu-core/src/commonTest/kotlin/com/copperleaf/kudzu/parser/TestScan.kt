@@ -1,10 +1,7 @@
 package com.copperleaf.kudzu.parser
 
-import com.copperleaf.kudzu.Node
-import com.copperleaf.kudzu.ParserContext
-import com.copperleaf.kudzu.parsedCorrectly
+import com.copperleaf.kudzu.*
 import kotlin.test.Test
-import strikt.api.expectThat
 
 class TestScan {
 

@@ -1,12 +1,24 @@
 package com.copperleaf.kudzu.parser
 
 import com.copperleaf.kudzu.*
-import strikt.api.expectThat
-import strikt.assertions.hasSize
-import strikt.assertions.isEqualTo
 import kotlin.test.Test
 
 class TestSourcePosition {
+
+    val testText = """
+        |one two
+        |
+        |one
+        |
+        |one
+        |two
+        |two one
+        |o ne
+        |
+        |t w o
+        |
+        |
+    """.trimMargin().trim()
 
     @Test
     fun testSourcePositionIncludeWhitespace() {
@@ -87,7 +99,7 @@ class TestSourcePosition {
             )
         )
 
-        input = "" + this::class.java.getResourceAsStream("/test.txt").reader().readText()
+        input = testText
         output = underTest.test(input, true)
         expected = """
             (ManyNode:
