@@ -1,6 +1,20 @@
 package com.copperleaf.kudzu.parser
 
-import com.copperleaf.kudzu.*
+import com.copperleaf.kudzu.expectThat
+import com.copperleaf.kudzu.hasSize
+import com.copperleaf.kudzu.isEqualTo
+import com.copperleaf.kudzu.isNonTerminal
+import com.copperleaf.kudzu.node
+import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.node.NonTerminalNode
+import com.copperleaf.kudzu.parsedCorrectly
+import com.copperleaf.kudzu.parser.chars.WhitespaceCharParser
+import com.copperleaf.kudzu.parser.choice.PredictiveChoiceParser
+import com.copperleaf.kudzu.parser.many.ManyParser
+import com.copperleaf.kudzu.parser.sequence.SequenceParser
+import com.copperleaf.kudzu.parser.text.WordParser
+import com.copperleaf.kudzu.test
+import com.copperleaf.kudzu.withChildren
 import kotlin.test.Test
 
 class TestSourcePosition {
@@ -23,11 +37,11 @@ class TestSourcePosition {
     @Test
     fun testSourcePositionIncludeWhitespace() {
         var input: String
-        var output: Pair<Node, ParserContext>?
+        var output: ParserResult<Node>?
         var expected: String
         val underTest = SequenceParser(
             WordParser("one"),
-            WhitespaceParser(),
+            WhitespaceCharParser(),
             WordParser("two")
         )
 
@@ -35,10 +49,10 @@ class TestSourcePosition {
         output = underTest.test(input)
         expected = """
             (SequenceNode:
-              (WordNode: 'one')
+              (TextNode: 'one')
               (CharNode: '
             ')
-              (WordNode: 'two')
+              (TextNode: 'two')
             )
         """
         expectThat(output)
@@ -59,7 +73,7 @@ class TestSourcePosition {
     @Test
     fun testSourcePositionSkipWhitespace() {
         var input: String
-        var output: Pair<Node, ParserContext>?
+        var output: ParserResult<Node>?
         var expected: String
         val underTest = SequenceParser(
             WordParser("one"),
@@ -70,8 +84,8 @@ class TestSourcePosition {
         output = underTest.test(input, true)
         expected = """
             (SequenceNode:
-              (WordNode: 'one')
-              (WordNode: 'two')
+              (TextNode: 'one')
+              (TextNode: 'two')
             )
         """
         expectThat(output).parsedCorrectly(expected)
@@ -90,10 +104,10 @@ class TestSourcePosition {
     @Test
     fun testSourcePositionFromResourcesFile() {
         var input: String
-        var output: Pair<Node, ParserContext>?
+        var output: ParserResult<Node>?
         var expected: String
         val underTest = ManyParser(
-            ChoiceParser(
+            PredictiveChoiceParser(
                 WordParser("one"),
                 WordParser("two")
             )
@@ -104,31 +118,31 @@ class TestSourcePosition {
         expected = """
             (ManyNode:
               (ChoiceNode:
-                (WordNode: 'one')
+                (TextNode: 'one')
               )
               (ChoiceNode:
-                (WordNode: 'two')
+                (TextNode: 'two')
               )
               (ChoiceNode:
-                (WordNode: 'one')
+                (TextNode: 'one')
               )
               (ChoiceNode:
-                (WordNode: 'one')
+                (TextNode: 'one')
               )
               (ChoiceNode:
-                (WordNode: 'two')
+                (TextNode: 'two')
               )
               (ChoiceNode:
-                (WordNode: 'two')
+                (TextNode: 'two')
               )
               (ChoiceNode:
-                (WordNode: 'one')
+                (TextNode: 'one')
               )
               (ChoiceNode:
-                (WordNode: 'one')
+                (TextNode: 'one')
               )
               (ChoiceNode:
-                (WordNode: 'two')
+                (TextNode: 'two')
               )
             )
         """

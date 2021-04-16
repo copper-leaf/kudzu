@@ -1,6 +1,7 @@
 package com.copperleaf.kudzu.parser
 
 import com.copperleaf.kudzu.*
+import com.copperleaf.kudzu.parser.chars.AnyCharParser
 import kotlin.test.Test
 
 class TestHelpersMethods {
@@ -12,10 +13,10 @@ class TestHelpersMethods {
         expectThat(underTest.isEmpty()).isTrue()
         expectThat(underTest.isNotEmpty()).isFalse()
 
-        expectCatching { CharParser().checkNotEmpty(underTest) }
+        expectCatching { AnyCharParser().checkNotEmpty(underTest) }
             .isFailure()
             .get { message }
-            .isEqualTo("Parse error: unexpected end of input (CharParser() at 1:1)")
+            .isEqualTo("Parse error: unexpected end of input (AnyCharParser at 1:1)")
     }
 
     @Test
@@ -25,9 +26,9 @@ class TestHelpersMethods {
         expectThat(underTest.isEmpty()).isFalse()
         expectThat(underTest.isNotEmpty()).isTrue()
 
-        expectCatching { CharParser().checkNotEmpty(underTest) }
+        expectCatching { AnyCharParser().checkNotEmpty(underTest) }
             .isSuccess()
 
-        CharParser().checkNotEmpty(underTest)
+        AnyCharParser().checkNotEmpty(underTest)
     }
 }

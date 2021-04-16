@@ -1,11 +1,18 @@
 package com.copperleaf.kudzu
 
+import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.node.NonTerminalNode
+import com.copperleaf.kudzu.node.TerminalNode
+import com.copperleaf.kudzu.parser.Parser
+import com.copperleaf.kudzu.parser.ParserContext
+import com.copperleaf.kudzu.parser.ParserException
+import com.copperleaf.kudzu.parser.ParserResult
 import kotlin.test.*
 
-fun Pair<Node, ParserContext>?.parsedCorrectly(
+fun <T: Node> ParserResult<T>?.parsedCorrectly(
     expected: String? = null,
     allowRemaining: Boolean = false
-): Pair<Node, ParserContext> {
+): ParserResult<T> {
     if (this == null) error(
         "Subject cannot be null"
     )
@@ -33,7 +40,7 @@ fun Pair<Node, ParserContext>?.parsedCorrectly(
     return this
 }
 
-fun Pair<Node, ParserContext>?.parsedIncorrectly(): Pair<Node, ParserContext>? {
+fun ParserResult<Node>?.parsedIncorrectly(): ParserResult<Node>? {
     if (this == null) {
     } else {
         when (second.isNotEmpty()) {
@@ -46,7 +53,7 @@ fun Pair<Node, ParserContext>?.parsedIncorrectly(): Pair<Node, ParserContext>? {
     return this
 }
 
-fun Pair<Node, ParserContext>?.node(): Node? = this?.first
+fun <T : Node> ParserResult<T>?.node(): T? = this?.first
 
 fun <T> expectThat(value: T): T {
     return value
@@ -165,6 +172,18 @@ fun <NodeType : Node> Parser<NodeType>.test(
     input: String,
     skipWhitespace: Boolean = false,
     logErrors: Boolean = false
-): Pair<Node, ParserContext>? {
+): ParserResult<NodeType>? {
     return test(ParserContext(input, 0, skipWhitespace), logErrors)
+}
+
+fun <NodeType : Node> Parser<NodeType>.test(
+    input: ParserContext,
+    logErrors: Boolean = false
+): Pair<NodeType, ParserContext>? {
+    return try {
+        parse(input)
+    } catch (e: ParserException) {
+        if (logErrors) e.printStackTrace()
+        null
+    }
 }

@@ -1,0 +1,23 @@
+package com.copperleaf.kudzu.parser.text
+
+import com.copperleaf.kudzu.isLetterOrDigit
+
+/**
+ * Consume a sequence of letter or digit characters of the input.
+ *
+ * Predicts true when:
+ *   - there is remaining input
+ *   - the next character is a letter of digit
+ *
+ * Parsing stops when:
+ *   - the next character is not a letter or digit
+ *   - there is no more input remaining
+ *
+ * Parsing fails when:
+ *   - no input was consumed
+ */
+class AnyTokenParser : BaseTextParser(
+    isValidChar = { _, char -> char.isLetterOrDigit() },
+    isValidText = { it.isNotEmpty() },
+    allowEmptyInput = false
+)
