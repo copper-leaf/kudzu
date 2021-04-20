@@ -9,7 +9,7 @@ import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
 import kotlin.test.*
 
-fun <T: Node> ParserResult<T>?.parsedCorrectly(
+fun <T : Node> ParserResult<T>?.parsedCorrectly(
     expected: String? = null,
     allowRemaining: Boolean = false
 ): ParserResult<T> {

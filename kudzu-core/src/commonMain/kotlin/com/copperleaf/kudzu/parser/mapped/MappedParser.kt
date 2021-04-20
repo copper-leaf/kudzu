@@ -7,7 +7,7 @@ import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 
-class MappedParser<T : Any, ParserNodeType: Node>(
+class MappedParser<T : Any, ParserNodeType : Node>(
     val parser: Parser<ParserNodeType>,
     val mapperFunction: (ParserNodeType) -> T,
 ) : Parser<ValueNode<T>>() {
@@ -26,5 +26,4 @@ class MappedParser<T : Any, ParserNodeType: Node>(
 
         valueNode to result.second
     }
-
 }

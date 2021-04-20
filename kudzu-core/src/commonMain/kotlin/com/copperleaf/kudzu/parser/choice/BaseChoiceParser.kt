@@ -27,7 +27,8 @@ import com.copperleaf.kudzu.parser.ParserResult
 abstract class BaseChoiceParser(
     private vararg val parsers: Parser<*>,
     private val isValidChoice: suspend DeepRecursiveScope<ParserContext, ParserResult<ChoiceNode>>.(
-        Parser<*>, ParserContext
+        Parser<*>,
+        ParserContext
     ) -> Pair<Boolean, (suspend DeepRecursiveScope<ParserContext, ParserResult<ChoiceNode>>.()->ParserResult<Node>)?>
 ) : Parser<ChoiceNode>() {
 

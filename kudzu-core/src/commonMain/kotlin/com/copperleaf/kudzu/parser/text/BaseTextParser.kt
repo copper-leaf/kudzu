@@ -37,7 +37,7 @@ abstract class BaseTextParser(
 
     @OptIn(ExperimentalStdlibApi::class)
     override val parse = DeepRecursiveFunction<ParserContext, ParserResult<TextNode>> { input ->
-        if(!allowEmptyInput) {
+        if (!allowEmptyInput) {
             checkNotEmpty(input)
         }
 

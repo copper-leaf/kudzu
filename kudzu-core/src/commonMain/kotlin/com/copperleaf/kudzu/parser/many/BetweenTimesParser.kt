@@ -1,12 +1,7 @@
 package com.copperleaf.kudzu.parser.many
 
 import com.copperleaf.kudzu.node.Node
-import com.copperleaf.kudzu.node.NodeContext
 import com.copperleaf.kudzu.parser.Parser
-import com.copperleaf.kudzu.parser.ParserContext
-import com.copperleaf.kudzu.parser.ParserException
-import com.copperleaf.kudzu.checkNotEmpty
-import com.copperleaf.kudzu.node.many.ManyNode
 
 /**
  * Consume input from its parser between `minSize` and `maxSize` number of times.
@@ -22,7 +17,7 @@ import com.copperleaf.kudzu.node.many.ManyNode
  *   - its parser fails to parse
  *   - its parser could not parse at least `minSize` number of times.
  */
-class BetweenTimesParser<T: Node>(
+class BetweenTimesParser<T : Node>(
     parser: Parser<T>,
     private val minSize: Int,
     private val maxSize: Int,

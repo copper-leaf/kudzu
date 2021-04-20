@@ -5,7 +5,7 @@ import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 
-class FlatMappedParser<InputParserNodeType: Node, OutputParserNodeType: Node>(
+class FlatMappedParser<InputParserNodeType : Node, OutputParserNodeType : Node>(
     val parser: Parser<InputParserNodeType>,
     val mapperFunction: (InputParserNodeType) -> OutputParserNodeType,
 ) : Parser<OutputParserNodeType>() {
@@ -20,5 +20,4 @@ class FlatMappedParser<InputParserNodeType: Node, OutputParserNodeType: Node>(
 
         mappedNode to result.second
     }
-
 }

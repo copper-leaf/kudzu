@@ -5,7 +5,7 @@ import com.copperleaf.kudzu.node.NonTerminalNode
 import com.copperleaf.kudzu.node.TerminalNode
 
 fun Node.printAst(currentIndent: Int): String {
-    return when(this) {
+    return when (this) {
         is TerminalNode -> printTerminalNodeAst(currentIndent)
         is NonTerminalNode -> printNonTerminalNodeAst(currentIndent)
     }
@@ -24,10 +24,10 @@ fun NonTerminalNode.printNonTerminalNodeAst(currentIndent: Int): String {
         "${indent(currentIndent + 2)}(empty)"
     }
 
-    return "${indent(currentIndent)}(${astNodeName}:\n" +
-            childrenPrinted +
-            "\n" +
-            "${indent(currentIndent)})"
+    return "${indent(currentIndent)}($astNodeName:\n" +
+        childrenPrinted +
+        "\n" +
+        "${indent(currentIndent)})"
 }
 
 fun indent(currentIndent: Int): String {

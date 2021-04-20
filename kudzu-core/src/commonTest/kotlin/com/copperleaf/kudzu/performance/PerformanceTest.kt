@@ -11,11 +11,11 @@ import kotlin.time.toDuration
 fun performanceTest(
     iterations: Int,
     warmups: Int,
-    test: ()->Unit,
+    test: () -> Unit,
 ) {
     val histogram = Histogram(iterations, warmups)
 
-    for(i in 1..(iterations + warmups)) {
+    for (i in 1..(iterations + warmups)) {
         histogram.runAndMeasure(i, test)
     }
 
@@ -28,10 +28,10 @@ private class Histogram(
 ) {
     private val measurements: MutableList<Pair<Int, Duration>> = mutableListOf()
 
-    inline fun runAndMeasure(iteration: Int, test: ()->Unit) {
+    inline fun runAndMeasure(iteration: Int, test: () -> Unit) {
         val time = measureTime(test)
 
-        if(iteration > warmups) {
+        if (iteration > warmups) {
             measurements.add(iteration to time)
         }
     }
@@ -44,7 +44,7 @@ private class Histogram(
         val mean = totalDuration / allMillis.size
         val fastestRun = allDurations.minByOrNull { it }
         val slowestRun = allDurations.maxByOrNull { it }
-        val median = allDurations[allMillis.size/2]
+        val median = allDurations[allMillis.size / 2]
         val varianceMicro = allDurations
             .map { it - mean } // subtract the mean
             .map { it.inMicroseconds * it.inMicroseconds } // square the result
@@ -52,12 +52,13 @@ private class Histogram(
         val stdDeviationMicro = sqrt(varianceMicro)
         val stdDeviationDuration = stdDeviationMicro.toDuration(DurationUnit.MICROSECONDS)
 
-        println("""
+        println(
+            """
             |Total duration of ${allMillis.size} runs: $totalDuration
             |Mean test duration: $mean
             |Test duration spread: [$fastestRun, $median, $slowestRun]
             |standard deviation: $stdDeviationDuration
-        """.trimMargin())
+        """.trimMargin()
+        )
     }
-
 }

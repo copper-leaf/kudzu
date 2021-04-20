@@ -22,7 +22,7 @@ class LazyParser<T : Node> : Parser<T>() {
 
     private lateinit var parser: Parser<T>
 
-    infix fun <U: T> uses(parser: Parser<U>) {
+    infix fun <U : T> uses(parser: Parser<U>) {
         this.parser = parser as Parser<T>
     }
 
