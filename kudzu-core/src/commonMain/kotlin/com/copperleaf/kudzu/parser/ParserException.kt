@@ -1,5 +1,6 @@
 package com.copperleaf.kudzu.parser
 
+@ExperimentalStdlibApi
 class ParserException(
     message: String,
     val parser: Parser<*>,

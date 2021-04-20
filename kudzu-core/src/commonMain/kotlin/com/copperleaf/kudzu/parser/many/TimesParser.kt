@@ -17,6 +17,7 @@ import com.copperleaf.kudzu.parser.Parser
  *   - its parser fails to parse
  *   - there is no more input remaining
  */
+@ExperimentalStdlibApi
 class TimesParser<T : Node>(
     parser: Parser<T>,
     private val times: Int,

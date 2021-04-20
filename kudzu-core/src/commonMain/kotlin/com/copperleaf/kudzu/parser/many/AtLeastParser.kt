@@ -18,6 +18,7 @@ import com.copperleaf.kudzu.parser.Parser
  *   - its parser fails to parse
  *   - its parser could not parse at least `minSize` number of times.
  */
+@ExperimentalStdlibApi
 class AtLeastParser<T : Node>(
     parser: Parser<T>,
     private val minSize: Int,

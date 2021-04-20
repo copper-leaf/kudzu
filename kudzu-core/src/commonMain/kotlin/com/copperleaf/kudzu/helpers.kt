@@ -4,6 +4,7 @@ import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
 
+@ExperimentalStdlibApi
 fun Parser<*>.checkNotEmpty(input: ParserContext) {
     if (input.isEmpty()) throw ParserException("unexpected end of input", this, input)
 }

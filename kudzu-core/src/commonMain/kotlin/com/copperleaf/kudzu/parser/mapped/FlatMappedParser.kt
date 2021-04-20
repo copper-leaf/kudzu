@@ -5,6 +5,7 @@ import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 
+@ExperimentalStdlibApi
 class FlatMappedParser<InputParserNodeType : Node, OutputParserNodeType : Node>(
     val parser: Parser<InputParserNodeType>,
     val mapperFunction: (InputParserNodeType) -> OutputParserNodeType,
@@ -13,7 +14,6 @@ class FlatMappedParser<InputParserNodeType : Node, OutputParserNodeType : Node>(
         return parser.predict(input)
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override val parse = DeepRecursiveFunction<ParserContext, ParserResult<OutputParserNodeType>> { input ->
         val result = parser.parse.callRecursive(input)
         val mappedNode = mapperFunction(result.first)

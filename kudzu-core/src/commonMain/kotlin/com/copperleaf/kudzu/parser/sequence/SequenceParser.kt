@@ -16,6 +16,7 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - any of its parsers fails to parse
  */
+@ExperimentalStdlibApi
 class SequenceParser(
     private vararg val parsers: Parser<*>,
 ) : Parser<SequenceNode>() {
@@ -24,7 +25,6 @@ class SequenceParser(
         return parsers.first().predict(input)
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override val parse = DeepRecursiveFunction<ParserContext, ParserResult<SequenceNode>> { input ->
         val nodeList = ArrayList<Node>()
 

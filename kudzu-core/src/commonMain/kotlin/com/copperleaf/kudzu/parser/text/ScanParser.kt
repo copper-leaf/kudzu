@@ -20,6 +20,7 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - its parser fails to parse
  */
+@ExperimentalStdlibApi
 class ScanParser(
     val next: Parser<*>,
 ) : Parser<TextNode>() {
@@ -28,7 +29,6 @@ class ScanParser(
         return true
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override val parse = DeepRecursiveFunction<ParserContext, ParserResult<TextNode>> { input ->
         var remaining = input
         var text = ""

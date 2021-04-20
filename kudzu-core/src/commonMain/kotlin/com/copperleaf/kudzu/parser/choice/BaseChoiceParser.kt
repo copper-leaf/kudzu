@@ -23,7 +23,7 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - none of the provides parsers are able to parse successfully
  */
-@OptIn(ExperimentalStdlibApi::class)
+@ExperimentalStdlibApi
 abstract class BaseChoiceParser(
     private vararg val parsers: Parser<*>,
     private val isValidChoice: suspend DeepRecursiveScope<ParserContext, ParserResult<ChoiceNode>>.(

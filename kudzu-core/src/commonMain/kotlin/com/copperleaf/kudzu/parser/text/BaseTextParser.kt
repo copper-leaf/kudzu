@@ -21,6 +21,7 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - never
  */
+@ExperimentalStdlibApi
 abstract class BaseTextParser(
     val isValidChar: (Int, Char) -> Boolean,
     val isValidText: (String) -> Boolean,
@@ -35,7 +36,6 @@ abstract class BaseTextParser(
         }
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override val parse = DeepRecursiveFunction<ParserContext, ParserResult<TextNode>> { input ->
         if (!allowEmptyInput) {
             checkNotEmpty(input)

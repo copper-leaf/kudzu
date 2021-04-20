@@ -16,7 +16,7 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - none of the provided parsers are able to parse successfully
  */
-@OptIn(ExperimentalStdlibApi::class)
+@ExperimentalStdlibApi
 class ExactChoiceParser(
     private vararg val parsers: Parser<*>
 ) : Parser<ChoiceNode>() {

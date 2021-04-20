@@ -18,6 +18,7 @@ import com.copperleaf.kudzu.test
 import com.copperleaf.kudzu.withChildren
 import kotlin.test.Test
 
+@OptIn(ExperimentalStdlibApi::class)
 class TestChoice {
 
     @Test
@@ -31,7 +32,7 @@ class TestChoice {
         )
 
         input = "1"
-        output = underTest.test(input, logErrors = true)
+        output = underTest.test(input)
         expected = """
             (ChoiceNode:
               (CharNode: '1')
@@ -45,7 +46,7 @@ class TestChoice {
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "a"
-        output = underTest.test(input, logErrors = true)
+        output = underTest.test(input)
         expected = """
             (ChoiceNode:
               (CharNode: 'a')
@@ -59,7 +60,7 @@ class TestChoice {
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = " "
-        output = underTest.test(input, logErrors = true)
+        output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }
@@ -77,7 +78,7 @@ class TestChoice {
         )
 
         input = "1a2b3c4d"
-        output = underTest.test(input, logErrors = true)
+        output = underTest.test(input)
         expected = """
             (ManyNode:
               (ChoiceNode:
@@ -121,7 +122,7 @@ class TestChoice {
         )
 
         input = "1"
-        output = underTest.test(input, logErrors = true)
+        output = underTest.test(input)
         expected = """
             (ChoiceNode:
               (CharNode: '1')
@@ -131,7 +132,7 @@ class TestChoice {
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "a"
-        output = underTest.test(input, logErrors = true)
+        output = underTest.test(input)
         expected = """
             (ChoiceNode:
               (CharNode: 'a')
@@ -154,7 +155,7 @@ class TestChoice {
         )
 
         input = "aaaa"
-        output = underTest.test(input, logErrors = true)
+        output = underTest.test(input)
         expected = """
             (ChoiceNode:
               (TextNode: 'aaaa')
@@ -168,7 +169,7 @@ class TestChoice {
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "bbbb"
-        output = underTest.test(input, logErrors = true)
+        output = underTest.test(input)
         expected = """
             (ChoiceNode:
               (TextNode: 'bbbb')
@@ -182,7 +183,7 @@ class TestChoice {
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "aabb"
-        output = underTest.test(input, logErrors = true)
+        output = underTest.test(input)
         expected = """
             (ChoiceNode:
               (TextNode: 'aabb')
@@ -196,7 +197,7 @@ class TestChoice {
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = "bbaabb"
-        output = underTest.test(input, logErrors = true)
+        output = underTest.test(input)
         expected = """
             (ChoiceNode:
               (TextNode: 'bbaabb')
@@ -210,7 +211,7 @@ class TestChoice {
         expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
 
         input = " "
-        output = underTest.test(input, logErrors = true)
+        output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
     }

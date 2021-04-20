@@ -24,6 +24,7 @@ import com.copperleaf.kudzu.parser.text.WordParser
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
+@OptIn(ExperimentalStdlibApi::class)
 class TestMapped {
 
     @Test

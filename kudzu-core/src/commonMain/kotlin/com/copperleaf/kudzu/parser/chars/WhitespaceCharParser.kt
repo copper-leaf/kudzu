@@ -11,6 +11,7 @@ package com.copperleaf.kudzu.parser.chars
  *   - there is no more input
  *   - the escape character is used without input remaining to escape
  */
+@ExperimentalStdlibApi
 class WhitespaceCharParser : BaseCharParser(
     isValidChar = { it.isWhitespace() },
     validationFailedMessage = { "must be whitespace" }

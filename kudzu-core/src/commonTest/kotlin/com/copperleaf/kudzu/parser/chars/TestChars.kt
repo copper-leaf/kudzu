@@ -1,11 +1,18 @@
 package com.copperleaf.kudzu.parser.chars
 
-import com.copperleaf.kudzu.*
+import com.copperleaf.kudzu.expectThat
+import com.copperleaf.kudzu.isEqualTo
+import com.copperleaf.kudzu.isFalse
+import com.copperleaf.kudzu.isTrue
 import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.parsedCorrectly
+import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
+import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
+@OptIn(ExperimentalStdlibApi::class)
 class TestChars {
 
     @Test

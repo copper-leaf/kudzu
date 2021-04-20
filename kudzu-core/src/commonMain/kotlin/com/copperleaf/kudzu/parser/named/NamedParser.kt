@@ -16,6 +16,7 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - [parser] fails to parse
  */
+@ExperimentalStdlibApi
 class NamedParser<T : Node>(
     val parser: Parser<T>,
     val name: String
@@ -23,7 +24,6 @@ class NamedParser<T : Node>(
 
     override fun predict(input: ParserContext): Boolean = parser.predict(input)
 
-    @OptIn(ExperimentalStdlibApi::class)
     override val parse = DeepRecursiveFunction<ParserContext, ParserResult<NamedNode<T>>> { input ->
         val node = parser.parse.callRecursive(input)
         NamedNode(node.first, name) to node.second

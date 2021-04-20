@@ -18,16 +18,17 @@ import com.copperleaf.kudzu.parser.ParserContext
  * Parsing fails when:
  *   - its parser fails to parse
  */
+@ExperimentalStdlibApi
 class LazyParser<T : Node> : Parser<T>() {
 
     private lateinit var parser: Parser<T>
 
+    @Suppress("UNCHECKED_CAST")
     infix fun <U : T> uses(parser: Parser<U>) {
         this.parser = parser as Parser<T>
     }
 
     override fun predict(input: ParserContext): Boolean = parser.predict(input)
 
-    @OptIn(ExperimentalStdlibApi::class)
     override val parse get() = parser.parse
 }

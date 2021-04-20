@@ -8,6 +8,7 @@ import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
 
+@ExperimentalStdlibApi
 open class BaseCharParser(
     private val isValidChar: (Char) -> Boolean,
     private val validationFailedMessage: (Char) -> String,
@@ -16,7 +17,6 @@ open class BaseCharParser(
         return input.isNotEmpty() && (runCatching { isValidChar(input.next()) }.getOrNull() ?: false)
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     final override val parse = DeepRecursiveFunction<ParserContext, ParserResult<CharNode>> { input ->
         checkNotEmpty(input)
 

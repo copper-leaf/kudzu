@@ -12,8 +12,8 @@ import com.copperleaf.kudzu.parser.many.ManyParser
 import com.copperleaf.kudzu.parser.maybe.MaybeParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 import com.copperleaf.kudzu.test
-import kotlin.test.Test
 
+@OptIn(ExperimentalStdlibApi::class)
 class KudzuPerformanceTests {
 
     val underTest: Parser<Node>
@@ -93,7 +93,7 @@ class KudzuPerformanceTests {
     Test duration spread: [44.1us, 108us, 7.17ms]
     standard deviation: 328.92861634591554us
      */
-    @Test
+//    @Test // this test takes a long time, so only run it as-needed and not part of normal development cycles
     fun runPerformanceTestOnSimpleExpression() = performanceTest(10_000, 1000) {
         val test = underTest.test("1 - 2 * (3 + 4 / 5 ^ 6 * (7 - 8)) * 9", skipWhitespace = true, logErrors = true)
 

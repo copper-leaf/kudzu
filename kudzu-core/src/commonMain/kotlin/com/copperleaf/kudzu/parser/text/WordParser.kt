@@ -16,6 +16,7 @@ package com.copperleaf.kudzu.parser.text
  *   - there is no more input remaining
  *   - the next character does not match the corresponding character of the expected string
  */
+@ExperimentalStdlibApi
 class WordParser(
     val expected: String
 ) : BaseTextParser(

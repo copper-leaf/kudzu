@@ -16,6 +16,7 @@ import com.copperleaf.kudzu.isLetterOrDigit
  * Parsing fails when:
  *   - no input was consumed
  */
+@ExperimentalStdlibApi
 class AnyTokenParser : BaseTextParser(
     isValidChar = { _, char -> char.isLetterOrDigit() },
     isValidText = { it.isNotEmpty() },

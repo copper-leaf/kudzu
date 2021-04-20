@@ -22,7 +22,7 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - none of the provides parsers are able to parse successfully
  */
-@OptIn(ExperimentalStdlibApi::class)
+@ExperimentalStdlibApi
 class PredictiveChoiceParser(
     private vararg val parsers: Parser<*>
 ) : Parser<ChoiceNode>() {

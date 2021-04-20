@@ -18,6 +18,7 @@ import com.copperleaf.kudzu.parser.Parser
  * Parsing fails when:
  *   - its parser fails to parse
  */
+@ExperimentalStdlibApi
 class UntilParser<T : Node>(
     parser: Parser<T>,
     private val stoppingCondition: Parser<*>,

@@ -13,6 +13,7 @@ import com.copperleaf.kudzu.isDigit
  *   - there is no more input
  *   - the escape character is used without input remaining to escape
  */
+@ExperimentalStdlibApi
 class DigitParser : BaseCharParser(
     isValidChar = { it.isDigit() },
     validationFailedMessage = { "must be a digit" }
