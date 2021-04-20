@@ -23,7 +23,7 @@ abstract class BaseManyParser<T : Node>(
     final override val parse = DeepRecursiveFunction<ParserContext, ParserResult<ManyNode<T>>> { input ->
         checkNotEmpty(input)
 
-        val nodeList = ArrayList<T>()
+        val nodeList = mutableListOf<T>()
 
         var remaining = input
         var next: ParserResult<T>?

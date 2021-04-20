@@ -8,7 +8,7 @@ import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 
 @ExperimentalStdlibApi
-class MappedParser<T : Any, ParserNodeType : Node>(
+class MappedParser<ParserNodeType : Node, T : Any>(
     val parser: Parser<ParserNodeType>,
     val mapperFunction: (ParserNodeType) -> T,
 ) : Parser<ValueNode<T>>() {

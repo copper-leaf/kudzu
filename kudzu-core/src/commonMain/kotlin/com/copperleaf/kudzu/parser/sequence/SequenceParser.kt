@@ -26,7 +26,7 @@ class SequenceParser(
     }
 
     override val parse = DeepRecursiveFunction<ParserContext, ParserResult<SequenceNode>> { input ->
-        val nodeList = ArrayList<Node>()
+        val nodeList = mutableListOf<Node>()
 
         var remaining = input
         var next: ParserResult<Node>?

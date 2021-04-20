@@ -4,14 +4,11 @@ import com.copperleaf.kudzu.expectThat
 import com.copperleaf.kudzu.isEqualTo
 import com.copperleaf.kudzu.isNotNull
 import com.copperleaf.kudzu.node
-import com.copperleaf.kudzu.node.Node
-import com.copperleaf.kudzu.node.expression.InfixOperatorNode
-import com.copperleaf.kudzu.node.expression.InfixrOperatorNode
-import com.copperleaf.kudzu.node.expression.PostfixOperatorNode
-import com.copperleaf.kudzu.node.expression.PrefixOperatorNode
 import com.copperleaf.kudzu.parsedCorrectly
-import com.copperleaf.kudzu.parser.chars.CharInParser
 import com.copperleaf.kudzu.parser.chars.DigitParser
+import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
+import com.copperleaf.kudzu.parser.mapped.MappedParser
+import com.copperleaf.kudzu.parser.text.WordParser
 import com.copperleaf.kudzu.test
 import kotlin.math.pow
 import kotlin.test.Test
@@ -20,20 +17,17 @@ import kotlin.test.Test
 class TestExpression {
 
     @Test
-    fun testBasicScan() {
-        val operators = listOf(
-            Operator.Infix(op = CharInParser('+'), 40),
-            Operator.Infix(op = CharInParser('-'), 40),
-            Operator.Infix(op = CharInParser('*'), 60),
-            Operator.Infix(op = CharInParser('/'), 60),
+    fun testDoubleExpressionParser() {
+        val parser = ExpressionParser<Double>(
+            termParser = MappedParser(DigitParser()) { it.text.toDouble() },
 
-            Operator.Prefix(op = CharInParser('-'), 80),
-            Operator.Infixr(op = CharInParser('^'), 70),
-        )
+            Operator.Infix(op = "+", 40) { l, r -> l + r },
+            Operator.Infix(op = "-", 40) { l, r -> l - r },
+            Operator.Infix(op = "*", 60) { l, r -> l * r },
+            Operator.Infix(op = "/", 60) { l, r -> l / r },
 
-        val parser = ExpressionParser(
-            termParser = DigitParser(),
-            operators = operators.toTypedArray()
+            Operator.Prefix(op = "-", 80) { r -> -r },
+            Operator.Infixr(op = "^", 70) { l, r -> l.pow(r) },
         )
 
         val inputs = listOf(
@@ -86,13 +80,12 @@ class TestExpression {
             println("parse [${input.first}]").also {
                 val output = parser.test(input.first, skipWhitespace = true)
 
-
                 expectThat(output)
                     .parsedCorrectly()
                     .node()
                     .isNotNull()
                     .also {
-                        val kudzuExpressionResult: Double = evaluateExpression(it)
+                        val kudzuExpressionResult: Double = parser.evaluator.evaluateExpression(it)
                         val kotlinExpressionResult = input.second()
 
                         println("    -> kudzu: $kudzuExpressionResult, kotlin: $kotlinExpressionResult")
@@ -103,74 +96,59 @@ class TestExpression {
         }
     }
 
-    private fun evaluateExpression(node: Node): Double {
-        return try {
-            when (node) {
-                is InfixOperatorNode -> node.evaluate()
-                is InfixrOperatorNode -> node.evaluate()
-                is PrefixOperatorNode -> node.evaluate()
-                is PostfixOperatorNode -> node.evaluate()
-                else -> node.text.toDouble()
+    @Test
+    fun testBooleanExpressionParser() {
+        val parser = ExpressionParser<Boolean>(
+            termParser = MappedParser(
+            ExactChoiceParser(
+                WordParser("true"),
+                WordParser("false"),
+            )) { it.text.toBoolean() },
+
+            Operator.Infix("&&", 40) { l, r -> l && r },
+            Operator.Infix("||", 30) { l, r -> l || r },
+            Operator.Prefix("!", 130) { r -> !r },
+
+            Operator.Infix(">=", 90) { l, r -> l >= r },
+            Operator.Infix(">", 90) { l, r -> l > r },
+            Operator.Infix("<=", 80) { l, r -> l <= r },
+            Operator.Infix("<", 80) { l, r -> l < r },
+            Operator.Infix("==", 80) { l, r -> l == r },
+        )
+
+        val inputs = listOf(
+            "true" to { true },
+            "false" to { false },
+            "!true" to { !true },
+            "!false" to { !false },
+            "true && false" to { true && false },
+            "true || false" to { true || false },
+//            "1 > 2" to { 1 > 2 },
+//            "1 >= 2" to { 1 >= 2 },
+//            "1 < 2" to { 1 < 2 },
+//            "1 <= 2" to { 1 <= 2 },
+//            "1 == 2" to { 1 == 2 },
+//            "1 > 2 && 3 <= 4" to { 1 > 2 && 3 <= 4 },
+//            "1 > 2 && false || 4 <= 4" to { 1 > 2 && false || 4 <= 4 },
+        )
+
+        inputs.map { input ->
+            println("parse [${input.first}]").also {
+                val output = parser.test(input.first, skipWhitespace = true)
+
+                expectThat(output)
+                    .parsedCorrectly()
+                    .node()
+                    .isNotNull()
+                    .also {
+                        val kudzuExpressionResult: Boolean = parser.evaluator.evaluateExpression(it)
+                        val kotlinExpressionResult = input.second()
+
+                        println("    -> kudzu: $kudzuExpressionResult, kotlin: $kotlinExpressionResult")
+
+                        kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
+                    }
             }
         }
-        catch (e: Exception) {
-                throw e
-        }
     }
-
-    private fun InfixOperatorNode.evaluate(): Double {
-        var result = evaluateExpression(leftOperand)
-
-        for (node in operationNodes) {
-            val rightOperatorResult = evaluateExpression(node.operand)
-            result = node.operator.text.applyBinary(result, rightOperatorResult)
-        }
-
-        return result
-    }
-
-    private fun InfixrOperatorNode.evaluate(): Double {
-        var result = evaluateExpression(leftOperand)
-
-        if(operation != null) {
-            val rightOperationResult = evaluateExpression(operation!!.operand)
-            result = operation!!.operator.text.applyBinary(result, rightOperationResult)
-        }
-
-        return result
-    }
-
-    private fun PrefixOperatorNode.evaluate(): Double {
-        var result = evaluateExpression(operand)
-
-        for (node in operatorNodes) {
-            result = node.text.applyUnary(result)
-        }
-
-        return result
-    }
-
-    private fun PostfixOperatorNode.evaluate(): Double {
-        TODO()
-    }
-
-    private fun String.applyUnary(node: Double): Double {
-        return when (this) {
-            "-" -> node * -1
-            else -> error("unknown unary operator: $this")
-        }
-    }
-
-    private fun String.applyBinary(left: Double, right: Double): Double {
-        return when (this) {
-            "+" -> left + right
-            "-" -> left - right
-            "*" -> left * right
-            "/" -> left / right
-            "^" -> left.pow(right)
-            else -> error("unknown unary operator: $this")
-        }
-    }
-
-
 }
