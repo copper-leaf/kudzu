@@ -3,8 +3,10 @@ package com.copperleaf.kudzu.performance
 
 import kotlin.math.sqrt
 import kotlin.time.Duration
+import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
+import kotlin.time.toDuration
 
 fun performanceTest(
     iterations: Int,
@@ -48,12 +50,13 @@ private class Histogram(
             .map { it.inMicroseconds * it.inMicroseconds } // square the result
             .average()
         val stdDeviationMicro = sqrt(varianceMicro)
+        val stdDeviationDuration = stdDeviationMicro.toDuration(DurationUnit.MICROSECONDS)
 
         println("""
             |Total duration of ${allMillis.size} runs: $totalDuration
             |Mean test duration: $mean
             |Test duration spread: [$fastestRun, $median, $slowestRun]
-            |standard deviation: ${stdDeviationMicro}us
+            |standard deviation: $stdDeviationDuration
         """.trimMargin())
     }
 

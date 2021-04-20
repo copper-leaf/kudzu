@@ -1,8 +1,8 @@
 package com.copperleaf.kudzu.parser.scan
 
 import com.copperleaf.kudzu.node.NodeContext
-import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.node.scan.ScanNode
+import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 
@@ -28,7 +28,8 @@ class ScanParser(
         return true
     }
 
-    override fun parse(input: ParserContext): ParserResult<ScanNode> {
+    @OptIn(ExperimentalStdlibApi::class)
+    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<ScanNode>> { input ->
         var remaining = input
         var text = ""
 
@@ -37,6 +38,6 @@ class ScanParser(
             remaining = remaining.remaining()
         }
 
-        return ScanNode(text, NodeContext(input, remaining)) to remaining
+        ScanNode(text, NodeContext(input, remaining)) to remaining
     }
 }

@@ -1,6 +1,11 @@
 package com.copperleaf.kudzu.parser.choice
 
+import com.copperleaf.kudzu.node.NodeContext
+import com.copperleaf.kudzu.node.choice.ChoiceNode
 import com.copperleaf.kudzu.parser.Parser
+import com.copperleaf.kudzu.parser.ParserContext
+import com.copperleaf.kudzu.parser.ParserException
+import com.copperleaf.kudzu.parser.ParserResult
 
 /**
  * Given a set of parsers, choose a single one to parse. The first parser that predicts true is chosen. If a parser
@@ -17,12 +22,28 @@ import com.copperleaf.kudzu.parser.Parser
  * Parsing fails when:
  *   - none of the provides parsers are able to parse successfully
  */
+@OptIn(ExperimentalStdlibApi::class)
 class PredictiveChoiceParser(
     private vararg val parsers: Parser<*>
-) : BaseChoiceParser(
-    *parsers,
-    isValidChoice = { parser, input ->
-        parser.predict(input) to { parser.parse(input)}
-    }
-)
+) : Parser<ChoiceNode>() {
 
+    override fun predict(input: ParserContext): Boolean {
+        return parsers.any { it.predict(input) }
+    }
+
+    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<ChoiceNode>> { input ->
+        for (parser in parsers) {
+
+            if (parser.predict(input)) {
+                val next = parser.parse.callRecursive(input)
+                return@DeepRecursiveFunction ChoiceNode(next.first, NodeContext(input, next.second)) to next.second
+            }
+        }
+
+        throw ParserException(
+            "No inputs matched",
+            this@PredictiveChoiceParser,
+            input
+        )
+    }
+}

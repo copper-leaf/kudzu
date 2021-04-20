@@ -13,11 +13,12 @@ class FlatMappedParser<InputParserNodeType: Node, OutputParserNodeType: Node>(
         return parser.predict(input)
     }
 
-    override fun parse(input: ParserContext): ParserResult<OutputParserNodeType> {
-        val result = parser.parse(input)
+    @OptIn(ExperimentalStdlibApi::class)
+    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<OutputParserNodeType>> { input ->
+        val result = parser.parse.callRecursive(input)
         val mappedNode = mapperFunction(result.first)
 
-        return mappedNode to result.second
+        mappedNode to result.second
     }
 
 }

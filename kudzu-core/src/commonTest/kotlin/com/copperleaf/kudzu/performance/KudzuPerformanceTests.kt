@@ -27,7 +27,7 @@ class KudzuPerformanceTests {
 
         // Value production rule
         //     Value ::= [0-9]+ | '(' Exprssion ')'
-        Value.parser = PredictiveChoiceParser(
+        Value uses PredictiveChoiceParser(
             ManyParser(
                 DigitParser()
             ),
@@ -40,7 +40,7 @@ class KudzuPerformanceTests {
 
         // Power production rule
         //     Power ::= Value ('^' Power)?
-        Power.parser = SequenceParser(
+        Power uses SequenceParser(
             Value,
             MaybeParser(
                 SequenceParser(
@@ -52,30 +52,34 @@ class KudzuPerformanceTests {
 
         // Product production rule
         //     Product ::= Power (('*' | '/') Power)*
-        Product.parser = SequenceParser(
+        Product uses SequenceParser(
             Power,
-            ManyParser(
-                SequenceParser(
-                    CharInParser('*', '/'),
-                    Power
+            MaybeParser(
+                ManyParser(
+                    SequenceParser(
+                        CharInParser('*', '/'),
+                        Power
+                    )
                 )
             )
         )
 
         // Sum production rule
         //     Sum ::= Product (('+' / '-') Product)*
-        Sum.parser = SequenceParser(
+        Sum uses SequenceParser(
             Product,
-            ManyParser(
-                SequenceParser(
-                    CharInParser('+', '-'),
-                    Product
+            MaybeParser(
+                ManyParser(
+                    SequenceParser(
+                        CharInParser('+', '-'),
+                        Product
+                    )
                 )
             )
         )
 
         // Expression production rule
-        Expression.parser = Sum
+        Expression uses Sum
 
         // testing the expression
         underTest = Expression
@@ -84,15 +88,28 @@ class KudzuPerformanceTests {
     /*
     Last run data:
 
-    Total duration of 1000 runs: 252ms
-    Mean test duration: 252us
-    Test duration spread: [157us, 166us, 9.31ms]
-    standard deviation: 301.70829903783067us
+    Total duration of 1000 runs: 115ms
+    Mean test duration: 115us
+    Test duration spread: [44.1us, 108us, 7.17ms]
+    standard deviation: 328.92861634591554us
      */
     @Test
-    fun runPerformanceTest() = performanceTest(1000, 100) {
+    fun runPerformanceTestOnSimpleExpression() = performanceTest(10_000, 1000) {
         val test = underTest.test("1 - 2 * (3 + 4 / 5 ^ 6 * (7 - 8)) * 9", skipWhitespace = true, logErrors = true)
 
         expectThat(test).parsedCorrectly()
+    }
+
+//    @Test // this test takes a long time, so only run it as-needed and not part of normal development cycles
+    fun runPerformanceTestOnDeepNestedExpression() {
+        val depth = 100_000
+        val expresssionStart = (1..depth).joinToString(separator = "") { "1 + (" }
+        val expresssionEnd = (1..depth).joinToString(separator = "") { ")" }
+        val expression = "$expresssionStart 1 + 1 $expresssionEnd"
+
+        performanceTest(10, 5) {
+            val test = underTest.test(expression, skipWhitespace = true, logErrors = true)
+            expectThat(test).parsedCorrectly()
+        }
     }
 }

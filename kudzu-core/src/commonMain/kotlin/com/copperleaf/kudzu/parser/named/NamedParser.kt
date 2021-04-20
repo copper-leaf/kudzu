@@ -1,8 +1,8 @@
 package com.copperleaf.kudzu.parser.named
 
 import com.copperleaf.kudzu.node.Node
-import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.node.named.NamedNode
+import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 
@@ -23,8 +23,9 @@ class NamedParser<T : Node>(
 
     override fun predict(input: ParserContext): Boolean = parser.predict(input)
 
-    override fun parse(input: ParserContext): ParserResult<NamedNode<T>> {
-        val node = parser.parse(input)
-        return NamedNode(node.first, name) to node.second
+    @OptIn(ExperimentalStdlibApi::class)
+    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<NamedNode<T>>> { input ->
+        val node = parser.parse.callRecursive(input)
+        NamedNode(node.first, name) to node.second
     }
 }

@@ -176,6 +176,7 @@ fun <NodeType : Node> Parser<NodeType>.test(
     return test(ParserContext(input, 0, skipWhitespace), logErrors)
 }
 
+@OptIn(ExperimentalStdlibApi::class)
 fun <NodeType : Node> Parser<NodeType>.test(
     input: ParserContext,
     logErrors: Boolean = false

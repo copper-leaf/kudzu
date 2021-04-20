@@ -2,8 +2,8 @@ package com.copperleaf.kudzu.parser.sequence
 
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.NodeContext
-import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.node.sequence.SequenceNode
+import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 
@@ -24,17 +24,18 @@ class SequenceParser(
         return parsers.first().predict(input)
     }
 
-    override fun parse(input: ParserContext): ParserResult<SequenceNode> {
+    @OptIn(ExperimentalStdlibApi::class)
+    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<SequenceNode>> { input ->
         val nodeList = ArrayList<Node>()
 
         var remaining = input
         var next: ParserResult<Node>?
         for (parser in parsers) {
-            next = parser.parse(remaining)
+            next = parser.parse.callRecursive(remaining)
             nodeList.add(next.first)
             remaining = next.second
         }
 
-        return SequenceNode(nodeList, NodeContext(input, remaining)) to remaining
+        SequenceNode(nodeList, NodeContext(input, remaining)) to remaining
     }
 }

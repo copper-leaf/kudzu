@@ -15,15 +15,16 @@ class MappedParser<T : Any, ParserNodeType: Node>(
         return parser.predict(input)
     }
 
-    override fun parse(input: ParserContext): ParserResult<ValueNode<T>> {
-        val result = parser.parse(input)
+    @OptIn(ExperimentalStdlibApi::class)
+    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<ValueNode<T>>> { input ->
+        val result = parser.parse.callRecursive(input)
         val mappedValue = mapperFunction(result.first)
         val valueNode = ValueNode(
             mappedValue,
             NodeContext(input, result.second)
         )
 
-        return valueNode to result.second
+        valueNode to result.second
     }
 
 }

@@ -35,7 +35,8 @@ abstract class BaseTextParser(
         }
     }
 
-    final override fun parse(input: ParserContext): ParserResult<TextNode> {
+    @OptIn(ExperimentalStdlibApi::class)
+    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<TextNode>> { input ->
         if(!allowEmptyInput) {
             checkNotEmpty(input)
         }
@@ -56,10 +57,10 @@ abstract class BaseTextParser(
 
         if (!isValidText(token)) throw ParserException(
             "Unexpected text '$token' in ${this::class.simpleName}",
-            this,
+            this@BaseTextParser,
             input
         )
 
-        return TextNode(token, NodeContext(input, remaining)) to remaining
+        TextNode(token, NodeContext(input, remaining)) to remaining
     }
 }

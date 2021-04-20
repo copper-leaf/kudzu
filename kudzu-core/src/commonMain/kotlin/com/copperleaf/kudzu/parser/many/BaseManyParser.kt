@@ -3,8 +3,8 @@ package com.copperleaf.kudzu.parser.many
 import com.copperleaf.kudzu.checkNotEmpty
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.NodeContext
-import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.node.many.ManyNode
+import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
@@ -15,11 +15,12 @@ abstract class BaseManyParser<T: Node>(
     private val shouldStopParsingForNext: (ParserContext) -> Boolean,
     private val isValidNodeCount: (Int) -> Boolean,
 ) : Parser<ManyNode<T>>() {
-    override fun predict(input: ParserContext): Boolean {
+    final override fun predict(input: ParserContext): Boolean {
         return input.isNotEmpty() && parser.predict(input)
     }
 
-    override fun parse(input: ParserContext): ParserResult<ManyNode<T>> {
+    @OptIn(ExperimentalStdlibApi::class)
+    final override val parse = DeepRecursiveFunction<ParserContext, ParserResult<ManyNode<T>>> { input ->
         checkNotEmpty(input)
 
         val nodeList = ArrayList<T>()
@@ -32,7 +33,7 @@ abstract class BaseManyParser<T: Node>(
             if (parser.predict(remaining)) {
                 if (shouldStopParsingForNext(remaining)) break
 
-                next = parser.parse(remaining)
+                next = parser.parse.callRecursive(remaining)
                 nodeList.add(next.first)
                 remaining = next.second
             } else {
@@ -42,10 +43,10 @@ abstract class BaseManyParser<T: Node>(
 
         if (!isValidNodeCount(nodeList.size)) throw ParserException(
             "",
-            this,
+            this@BaseManyParser,
             input
         )
 
-        return ManyNode(nodeList, NodeContext(input, remaining)) to remaining
+        ManyNode(nodeList, NodeContext(input, remaining)) to remaining
     }
 }

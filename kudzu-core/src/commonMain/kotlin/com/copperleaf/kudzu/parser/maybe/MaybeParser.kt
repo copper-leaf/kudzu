@@ -2,8 +2,8 @@ package com.copperleaf.kudzu.parser.maybe
 
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.NodeContext
-import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.node.maybe.MaybeNode
+import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 
@@ -24,12 +24,13 @@ class MaybeParser<T: Node>(
         return true
     }
 
-    override fun parse(input: ParserContext): ParserResult<MaybeNode<T>> {
+    @OptIn(ExperimentalStdlibApi::class)
+    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<MaybeNode<T>>> { input ->
         if (parser.predict(input)) {
-            val next = parser.parse(input)
-            return MaybeNode(next.first, NodeContext(input, next.second)) to next.second
+            val next = parser.parse.callRecursive(input)
+            MaybeNode(next.first, NodeContext(input, next.second)) to next.second
         } else {
-            return MaybeNode<T>(null, NodeContext(input, input)) to input
+            MaybeNode<T>(null, NodeContext(input, input)) to input
         }
     }
 }

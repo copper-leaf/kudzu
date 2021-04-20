@@ -3,7 +3,6 @@ package com.copperleaf.kudzu.parser.lazy
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
-import com.copperleaf.kudzu.parser.ParserResult
 
 /**
  * A shim to allow parsers to be mutually recursive. Unlike most parsers, the Lazy parser does not do anything on its
@@ -21,9 +20,14 @@ import com.copperleaf.kudzu.parser.ParserResult
  */
 class LazyParser<T : Node> : Parser<T>() {
 
-    lateinit var parser: Parser<T>
+    private lateinit var parser: Parser<T>
+
+    infix fun <U: T> uses(parser: Parser<U>) {
+        this.parser = parser as Parser<T>
+    }
 
     override fun predict(input: ParserContext): Boolean = parser.predict(input)
 
-    override fun parse(input: ParserContext): ParserResult<T> = parser.parse(input)
+    @OptIn(ExperimentalStdlibApi::class)
+    override val parse get() = parser.parse
 }
