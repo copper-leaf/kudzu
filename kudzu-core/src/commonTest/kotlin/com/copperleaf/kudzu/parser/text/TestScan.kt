@@ -1,7 +1,8 @@
-package com.copperleaf.kudzu.parser.scan
+package com.copperleaf.kudzu.parser.text
 
-import com.copperleaf.kudzu.*
+import com.copperleaf.kudzu.expectThat
 import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.parser.chars.CharInParser
 import com.copperleaf.kudzu.parser.chars.DigitParser
@@ -9,7 +10,7 @@ import com.copperleaf.kudzu.parser.choice.PredictiveChoiceParser
 import com.copperleaf.kudzu.parser.many.ManyParser
 import com.copperleaf.kudzu.parser.named.NamedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
-import com.copperleaf.kudzu.parser.text.AnyTokenParser
+import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
 class TestScan {
@@ -24,7 +25,7 @@ class TestScan {
         input = "asdf 1"
         output = underTest.test(input)
         expected = """
-            (ScanNode: 'asdf ')
+            (TextNode: 'asdf ')
         """
         expectThat(output).parsedCorrectly(expected, allowRemaining = true)
     }
@@ -44,7 +45,7 @@ class TestScan {
         output = underTest.test(input)
         expected = """
             (SequenceNode:
-              (ScanNode: 'asdf ')
+              (TextNode: 'asdf ')
               (CharNode: '1')
             )
         """
@@ -69,11 +70,11 @@ class TestScan {
         expected = """
             (ManyNode:
               (SequenceNode:
-                (ScanNode: 'asdf ')
+                (TextNode: 'asdf ')
                 (CharNode: '1')
               )
               (SequenceNode:
-                (ScanNode: ' qwerty ')
+                (TextNode: ' qwerty ')
                 (CharNode: '2')
               )
             )
@@ -132,7 +133,7 @@ class TestScan {
         expected = """
             (ManyNode:
               (ChoiceNode:
-                (ScanNode: 'asdf ')
+                (TextNode: 'asdf ')
               )
               (ChoiceNode:
                 (ChoiceNode:
@@ -143,7 +144,7 @@ class TestScan {
                 )
               )
               (ChoiceNode:
-                (ScanNode: ' qwerty ')
+                (TextNode: ' qwerty ')
               )
               (ChoiceNode:
                 (ChoiceNode:
@@ -158,7 +159,7 @@ class TestScan {
                 )
               )
               (ChoiceNode:
-                (ScanNode: ' qwerty ')
+                (TextNode: ' qwerty ')
               )
               (ChoiceNode:
                 (ChoiceNode:
@@ -173,7 +174,7 @@ class TestScan {
                 )
               )
               (ChoiceNode:
-                (ScanNode: ' asdf')
+                (TextNode: ' asdf')
               )
             )
         """

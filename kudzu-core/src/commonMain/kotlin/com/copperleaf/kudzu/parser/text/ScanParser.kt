@@ -1,13 +1,13 @@
-package com.copperleaf.kudzu.parser.scan
+package com.copperleaf.kudzu.parser.text
 
 import com.copperleaf.kudzu.node.NodeContext
-import com.copperleaf.kudzu.node.scan.ScanNode
+import com.copperleaf.kudzu.node.text.TextNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 
 /**
- * Consume characters from the input until its parser predicts true. The resulting [ScanNode] contains all the
+ * Consume characters from the input until its parser predicts true. The resulting [TextNode] contains all the
  * characters that were consumed as a single text String.
  *
  * Predicts true when:
@@ -22,14 +22,14 @@ import com.copperleaf.kudzu.parser.ParserResult
  */
 class ScanParser(
     val next: Parser<*>,
-) : Parser<ScanNode>() {
+) : Parser<TextNode>() {
 
     override fun predict(input: ParserContext): Boolean {
         return true
     }
 
     @OptIn(ExperimentalStdlibApi::class)
-    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<ScanNode>> { input ->
+    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<TextNode>> { input ->
         var remaining = input
         var text = ""
 
@@ -38,6 +38,6 @@ class ScanParser(
             remaining = remaining.remaining()
         }
 
-        ScanNode(text, NodeContext(input, remaining)) to remaining
+        TextNode(text, NodeContext(input, remaining)) to remaining
     }
 }

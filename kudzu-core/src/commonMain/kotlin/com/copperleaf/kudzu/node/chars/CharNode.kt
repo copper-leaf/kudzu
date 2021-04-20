@@ -7,5 +7,5 @@ class CharNode(
     private val char: Char,
     context: NodeContext
 ) : TerminalNode(context) {
-    override val text: String get() = "$char"
+    override val text: String = "$char"
 }

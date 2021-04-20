@@ -5,8 +5,6 @@ import com.copperleaf.kudzu.node.NodeContext
 import com.copperleaf.kudzu.node.NonTerminalNode
 
 class SequenceNode(
-    val nodeList: List<Node>,
+    override val children: List<Node>,
     context: NodeContext
-) : NonTerminalNode(context) {
-    override val children: List<Node> = nodeList
-}
+) : NonTerminalNode(context)

@@ -8,5 +8,5 @@ class ManyNode<T: Node>(
     private val nodeList: List<T>,
     context: NodeContext
 ) : NonTerminalNode(context) {
-    override val children: List<Node> get() = nodeList
+    override val children: List<Node> = nodeList
 }

@@ -9,5 +9,5 @@ class ValueNode<T : Any>(
 ) : TerminalNode(
     context
 ) {
-    override val text: String get() = value.toString()
+    override val text: String = value.toString()
 }

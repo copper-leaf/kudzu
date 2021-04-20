@@ -8,5 +8,5 @@ class ChoiceNode(
     val node: Node,
     context: NodeContext
 ) : NonTerminalNode(context) {
-    override val children: List<Node> get() = listOf(node)
+    override val children: List<Node> = listOf(node)
 }
