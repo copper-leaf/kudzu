@@ -3,9 +3,7 @@ package com.copperleaf.kudzu.parser
 import com.copperleaf.kudzu.node.Node
 
 @ExperimentalStdlibApi
-abstract class Parser<NodeType : Node> {
-
-    abstract fun predict(input: ParserContext): Boolean
-
-    abstract val parse: DeepRecursiveFunction<ParserContext, ParserResult<NodeType>>
+interface Parser<NodeType : Node> {
+    fun predict(input: ParserContext): Boolean
+    val parse: DeepRecursiveFunction<ParserContext, ParserResult<NodeType>>
 }

@@ -19,7 +19,7 @@ import com.copperleaf.kudzu.parser.ParserResult
 @ExperimentalStdlibApi
 class ExactChoiceParser(
     private vararg val parsers: Parser<*>
-) : Parser<ChoiceNode>() {
+) : Parser<ChoiceNode> {
 
     override fun predict(input: ParserContext): Boolean {
         return parsers.any { it.predict(input) }

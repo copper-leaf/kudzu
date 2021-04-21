@@ -11,7 +11,7 @@ import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 class ExpressionParser<T: Any>(
     private val termParser: Parser<ValueNode<T>>,
     private vararg val operators: Operator<T>,
-) : Parser<Node>() {
+) : Parser<Node> {
 
     private val parser: Parser<Node> by lazy {
         val unaryOperators = operators.filterIsInstance<Operator.UnaryOperator<T>>()

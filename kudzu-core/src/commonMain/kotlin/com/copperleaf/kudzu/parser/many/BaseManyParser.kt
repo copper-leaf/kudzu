@@ -15,7 +15,7 @@ abstract class BaseManyParser<T : Node>(
     private val shouldStopParsingAtNodeCount: (Int) -> Boolean,
     private val shouldStopParsingForNext: (ParserContext) -> Boolean,
     private val isValidNodeCount: (Int) -> Boolean,
-) : Parser<ManyNode<T>>() {
+) : Parser<ManyNode<T>> {
     final override fun predict(input: ParserContext): Boolean {
         return input.isNotEmpty() && parser.predict(input)
     }

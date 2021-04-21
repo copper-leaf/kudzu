@@ -23,7 +23,7 @@ import com.copperleaf.kudzu.parser.ParserResult
 @ExperimentalStdlibApi
 class ScanParser(
     val next: Parser<*>,
-) : Parser<TextNode>() {
+) : Parser<TextNode> {
 
     override fun predict(input: ParserContext): Boolean {
         return true

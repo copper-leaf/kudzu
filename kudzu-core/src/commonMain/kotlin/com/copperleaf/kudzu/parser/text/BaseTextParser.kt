@@ -26,7 +26,7 @@ abstract class BaseTextParser(
     val isValidChar: (Int, Char) -> Boolean,
     val isValidText: (String) -> Boolean,
     val allowEmptyInput: Boolean
-) : Parser<TextNode>() {
+) : Parser<TextNode> {
 
     final override fun predict(input: ParserContext): Boolean {
         return if (input.isEmpty()) {

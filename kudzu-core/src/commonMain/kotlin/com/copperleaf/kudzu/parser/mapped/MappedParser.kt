@@ -11,7 +11,7 @@ import com.copperleaf.kudzu.parser.ParserResult
 class MappedParser<ParserNodeType : Node, T : Any>(
     val parser: Parser<ParserNodeType>,
     val mapperFunction: (ParserNodeType) -> T,
-) : Parser<ValueNode<T>>() {
+) : Parser<ValueNode<T>> {
     override fun predict(input: ParserContext): Boolean {
         return parser.predict(input)
     }

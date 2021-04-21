@@ -9,7 +9,7 @@ import com.copperleaf.kudzu.parser.ParserResult
 class FlatMappedParser<InputParserNodeType : Node, OutputParserNodeType : Node>(
     val parser: Parser<InputParserNodeType>,
     val mapperFunction: (InputParserNodeType) -> OutputParserNodeType,
-) : Parser<OutputParserNodeType>() {
+) : Parser<OutputParserNodeType> {
     override fun predict(input: ParserContext): Boolean {
         return parser.predict(input)
     }

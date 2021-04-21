@@ -12,7 +12,7 @@ import com.copperleaf.kudzu.parser.ParserResult
 open class BaseCharParser(
     private val isValidChar: (Char) -> Boolean,
     private val validationFailedMessage: (Char) -> String,
-) : Parser<CharNode>() {
+) : Parser<CharNode> {
     final override fun predict(input: ParserContext): Boolean {
         return input.isNotEmpty() && (runCatching { isValidChar(input.next()) }.getOrNull() ?: false)
     }

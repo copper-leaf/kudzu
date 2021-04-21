@@ -20,7 +20,7 @@ import com.copperleaf.kudzu.parser.ParserResult
 class NamedParser<T : Node>(
     val parser: Parser<T>,
     val name: String
-) : Parser<NamedNode<T>>() {
+) : Parser<NamedNode<T>> {
 
     override fun predict(input: ParserContext): Boolean = parser.predict(input)
 

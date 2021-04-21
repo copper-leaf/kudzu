@@ -19,7 +19,7 @@ import com.copperleaf.kudzu.parser.ParserResult
 @ExperimentalStdlibApi
 class MaybeParser<T : Node>(
     val parser: Parser<T>,
-) : Parser<MaybeNode<T>>() {
+) : Parser<MaybeNode<T>> {
 
     override fun predict(input: ParserContext): Boolean {
         return true

@@ -20,7 +20,7 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
 class InfixOperatorParser(
     val operator: ExactChoiceParser,
     val operand: Parser<Node>
-) : Parser<InfixOperatorNode>() {
+) : Parser<InfixOperatorNode> {
 
     private val parser: Parser<InfixOperatorNode> by lazy {
         val impl = SequenceParser(

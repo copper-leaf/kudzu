@@ -16,7 +16,7 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
 class PostfixOperatorParser(
     private val operator: ExactChoiceParser,
     private val operand: Parser<Node>
-) : Parser<PostfixOperatorNode>() {
+) : Parser<PostfixOperatorNode> {
 
     private val parser: Parser<PostfixOperatorNode> by lazy {
         val impl = SequenceParser(
