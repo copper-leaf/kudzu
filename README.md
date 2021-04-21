@@ -7,9 +7,9 @@
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.copper-leaf/kudzu-core)
 ![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.32-orange)
 
-Kudzu is a recursive-descent parser written in Kotlin, with the goal of immutability and simplicity. It is mostly an 
-exercise for me to learn more about parsing algorithms, but should work reasonably-well enough to be used for small, 
-non-trivial parsers.
+Kudzu is a recursive-descent parser written in Kotlin, with the goal of immutability, simplicity, and multiplatform 
+usability. It is mostly an exercise for me to learn more about parsing algorithms, but should work reasonably-well 
+enough to be used for small, non-trivial parsers.
 
 ### Installation
 
@@ -39,30 +39,33 @@ kotlin {
 
 I've got several projects which require custom parsing, and after looking around at the various options available in 
 Java and Kotlin, I've decided that I would just rather write my own. Most of the ones I found either require Java 8
-(a deal-breaker if I want to use it on Android), or I found them to be very complex to use, being intended for writing
-full-blown, high-performance compilers. I needed something simple, and I also wanted to learn how parsers work, so I 
-decided to make my own. 
+(a deal-breaker if I want to use it on older versions of Android), or I found them to be very complex to use, being 
+intended for writing full-blown, high-performance compilers. I needed something simple, and I also wanted to learn how 
+parsers work, so I decided to make my own. 
 
 This library is a parser combinator like most of the others, but is focused on having a simpler API and clear separation 
 of concerns. Maybe I just found the other options confusing just because I am still learning how these things work, but 
-Kudzu produces code that is quite a bit easier to read and understand than most of the other options I've found.
+Kudzu produces code that is quite a bit easier to read and understand than most of the other options I've found. There 
+is not complex DSL that needs to be learned, Kudzu parsers are just normal Kotlin classes, and recursive parsing is just
+constructing those classes with other parsers. It's all just normal Kotlin, you don't have to learn all the special
+operator overrides or know anything about functional programming/terminology to build a Kudzu parser. Just express the
+intent in well-named classes and it should just work.
 
-Regardless, I aim for this library to have a very strikt (heh) and clean separation between parsing the input into an 
-AST, and the evaluation of the AST. You'll first build your grammar using the parsing primitives provided by Kudzu, 
-which will produce an immutable grammar that will recognize your language. This grammar will parse an input string into 
-an AST. You can then attach visitors to that AST and navigate the nodes in the parse tree, which will allow you to 
-easily get the data you need out of the AST.
+Kudzu parses content into an AST, but features several utilities that can help you deal with the complexity of the AST
+without bogging you down in details or complex AST-navigation code.
 
 ## Features
 
+- Fully multiplatform parsing library, which can be used on JVM, Android, JS, and iOS targets.
 - Simple, combinatorial API for constructing complex parsers from simpler ones
 - Parsing API does not rely on generics, which make your code difficult to read. Instead, it relies on node tagging and 
     helper functions available to all Node types for evaluating an AST, rather than specific properties of specific 
     class types.
 - Recursive-descent parsing does not require separate lexing and parsing phases
 - Parsers and AST are both immutable structures, and can safely be used in multithreaded code
-- Evaluating a parse tree uses the visitor pattern. Strict separation between parsing and evaluation makes each phase
-    simpler and easier to understand.
+- Parse trees can be evaluated during parsing using `MappedParser`, or you can evaluate it afterward from the full AST
+    with its `Visitor` API. You can also combine the two: simplify particular subtrees with `MappedParser` to make the 
+    final AST easier to understand and navigate.
 
 ## Basic Usage
 
@@ -111,12 +114,11 @@ built-in parser primitives provided by Kudzu. A basic example of building a Pars
 or a number follows:
 
 ```kotlin
-val wordParser = ManyParser(LetterParser(), name = "word")
-val numberParser = ManyParser(DigitParser(), name = "number")
+val wordParser = ManyParser(LetterParser())
+val numberParser = ManyParser(DigitParser())
 val tokenParser = ChoiceParser(
         wordParser, 
-        numberParser, 
-        name = "token"
+        numberParser
 )
 val statement = ManyParser(
     SequenceParser(
@@ -140,7 +142,7 @@ description of some of these parser types.
     other Parser to this, not just character-type parsers, and so arbitrarily-complex sub-grammars can be repeated as 
     needed. You'll notice that we gave the parser a `name`. This name is attached to the nodes it produces, so that when 
     we evaluate the parse tree, we can look for nodes named `word` or `number`, and take different actions accordingly.
-- `ChoiceParser`: Takes a list of sub-parsers, and predicatively* picks one to continue parsing with.
+- `PredictiveChoiceParser`: Takes a list of sub-parsers, and predicatively* picks one to continue parsing with.
 - `SequenceParser`: Takes a list of sub-parsers, and executes each one a single time in order. 
 - `OptionalWhitespaceParser`: Consumes and throws away whitespace if it exists. As the whitespace is optional, and input
     such as `two1234` would still match and be parsed correctly.
@@ -159,39 +161,31 @@ true will be used, and other rules will not be tested. This is to improve perfor
 ### Evaluating Parse Trees
 
 Once the full parser has been built, and text parsed into an AST, we can now evaluate it. Evaluating an AST consists of
-a `Visitor`, which is typically set up once to match the grammar and navigate the nodes in the parsed tree, and a 
-context, which holds the result of visiting the AST. Visitors should be stateless and immutable, so that they can be 
-reused, even in parallel, and all the state that is needed to be maintained should be kept in a matching 
-`VisitorContext`. A basic example, using a fictional grammar, follows:
+a `Visitor.Callback`, or a simple lambda callback. A basic example, using a fictional grammar, follows:
 
 ```kotlin
-val parser = getParser()
-val visitors = getVisitor()
-val context = CustomVisitorContext() 
+val parser = constructParser()
 
 val (node, _) = parser.parse(input)
-node.visit(context, visitors)
 
-// context now holds the data collected by the visitors, whatever that may be
+// simple visiting, such as finding all nodes of a particular type and not caring about the structure
+node.visit { node -> 
+    // do something with each node as it is entered in the tree
+}
+
+// alternatively, visit with a full set of callbacks to also introspect the parse-tree's structure
+node.visit(object : Visitor.Callback {
+    var depth: Int = 0
+    override fun enter(node: Node) {
+        depth++
+    }
+    override fun exit(node: Node) {
+        depth--
+    }
+    override fun onStart() { }
+    override fun onFinish() { }
+})
 ```
-
-A VisitorContext is just an empty interface and is used simply to indicate that a Context should be created specifically 
-for a Visitor. A Visitor defines a node class and/or a node name that it should be applied to, and when passed to a node
-as it is evaluated, will be passed each matching node to do with it whatever it needs. 
-
-In addition to passing concrete visitors and matching individually on a given node, you may wish to navigate other nodes
-in the parse tree relative to a node matched by a Visitor. In that case, there are several helpful extension methods 
-available to you, described below.
-
-1. `node.find(nodeClass?, nodeName?)`, `node.find<nodeClass>(nodeName?)`: Finds a node of a given type with a given name
-    in the immediate children of the subject node. Throws a `VisitorException` if there is no such a matching node. 
-2. `node.has(nodeClass?, nodeName?)`, `node.has<nodeClass>(nodeName?)`: To accompany `find`, `has` will let you know if 
-    a matching node can be found before attempting to fetch it.
-3. `node.findAnywhere(nodeClass?, nodeName?)`, `node.findAnywhere<nodeClass>(nodeName?)`: Finds a node of a given type 
-    with a given name in the any child of the subject node. Throws a `VisitorException` if there is no such a matching 
-    node. 
-4. `node.hasAnywhere(nodeClass?, nodeName?)`, `node.hasAnywhere<nodeClass>(nodeName?)`: To accompany `findAnywhere`, 
-    `hasAnywhere` will let you know if a matching node can be found before attempting to fetch it.
 
 ## To-Do
 

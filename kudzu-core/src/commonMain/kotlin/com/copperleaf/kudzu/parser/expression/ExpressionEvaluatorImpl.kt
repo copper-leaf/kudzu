@@ -8,6 +8,7 @@ import com.copperleaf.kudzu.node.expression.PrefixOperatorNode
 import com.copperleaf.kudzu.node.mapped.ValueNode
 
 @ExperimentalStdlibApi
+@Suppress("UNCHECKED_CAST")
 internal class ExpressionEvaluatorImpl<T : Any>(
     private vararg val operators: Operator<T>,
 ) : ExpressionEvaluator<T> {
