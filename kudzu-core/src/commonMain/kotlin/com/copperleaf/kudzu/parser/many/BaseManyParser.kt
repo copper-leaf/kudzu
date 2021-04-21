@@ -17,7 +17,7 @@ abstract class BaseManyParser<T : Node>(
     private val isValidNodeCount: (Int) -> Boolean,
 ) : Parser<ManyNode<T>> {
     final override fun predict(input: ParserContext): Boolean {
-        return input.isNotEmpty() && parser.predict(input)
+        return !input.isEmpty() && parser.predict(input)
     }
 
     final override val parse = DeepRecursiveFunction<ParserContext, ParserResult<ManyNode<T>>> { input ->
@@ -27,7 +27,7 @@ abstract class BaseManyParser<T : Node>(
 
         var remaining = input
         var next: ParserResult<T>?
-        while (remaining.isNotEmpty()) {
+        while (!remaining.isEmpty()) {
             if (shouldStopParsingAtNodeCount(nodeList.size)) break
 
             if (parser.predict(remaining)) {

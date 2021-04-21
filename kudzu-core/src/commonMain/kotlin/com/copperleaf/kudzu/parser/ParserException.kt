@@ -5,4 +5,4 @@ class ParserException(
     message: String,
     val parser: Parser<*>,
     val input: ParserContext
-) : Exception("Parse error: $message (${parser::class.simpleName} at ${input.position})")
+) : Exception("Parse error: $message (${parser::class.simpleName} at ${input.sourcePosition})")

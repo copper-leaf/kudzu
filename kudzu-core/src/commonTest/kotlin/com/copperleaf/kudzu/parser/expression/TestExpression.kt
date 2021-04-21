@@ -100,10 +100,11 @@ class TestExpression {
     fun testBooleanExpressionParser() {
         val parser = ExpressionParser<Boolean>(
             termParser = MappedParser(
-            ExactChoiceParser(
-                WordParser("true"),
-                WordParser("false"),
-            )) { it.text.toBoolean() },
+                ExactChoiceParser(
+                    WordParser("true"),
+                    WordParser("false"),
+                )
+            ) { it.text.toBoolean() },
 
             Operator.Infix("&&", 40) { l, r -> l && r },
             Operator.Infix("||", 30) { l, r -> l || r },

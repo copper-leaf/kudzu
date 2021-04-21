@@ -28,7 +28,7 @@ class TestWhitespace {
         input = ""
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = " "
         output = underTest.test(input)
@@ -38,32 +38,32 @@ class TestWhitespace {
             .isNotNull()
             .get { text }
             .isEqualTo(" ")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "\n"
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "     "
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = " \n \n\n\n"
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = " asdf "
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "asdf "
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         underTest.checkParsingWhenEmpty(true)
     }
@@ -77,37 +77,37 @@ class TestWhitespace {
         input = ""
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         input = " "
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "\n"
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "     "
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = " \n \n\n\n"
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = " asdf "
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "asdf "
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         underTest.checkParsingWhenEmpty()
     }

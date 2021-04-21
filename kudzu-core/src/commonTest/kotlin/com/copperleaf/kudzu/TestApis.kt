@@ -44,7 +44,7 @@ fun <T : Node> ParserResult<T>?.parsedCorrectly(
 fun ParserResult<Node>?.parsedIncorrectly(): ParserResult<Node>? {
     if (this == null) {
     } else {
-        when (second.isNotEmpty()) {
+        when (!second.isEmpty()) {
             true -> {
             }
             else -> error("Subject must be null or have input remaining. Actual: $second")
@@ -159,13 +159,14 @@ fun NonTerminalNode.withChildren(expectedChildrenCount: Int): NonTerminalNode {
     return this
 }
 
+@ExperimentalStdlibApi
 fun Parser<*>.checkParsingWhenEmpty(shouldSucceed: Boolean = false) {
     if (shouldSucceed) {
         expectThat(this.test("")).parsedCorrectly()
-        expectThat(predict(ParserContext("", 0, false))).isTrue()
+        expectThat(predict(ParserContext.fromString(""))).isTrue()
     } else {
         expectThat(this.test("")).parsedIncorrectly()
-        expectThat(predict(ParserContext("", 0, false))).isFalse()
+        expectThat(predict(ParserContext.fromString(""))).isFalse()
     }
 }
 
@@ -174,7 +175,7 @@ fun <NodeType : Node> Parser<NodeType>.test(
     skipWhitespace: Boolean = false,
     logErrors: Boolean = false
 ): ParserResult<NodeType>? {
-    return test(ParserContext(input, 0, skipWhitespace), logErrors)
+    return test(ParserContext.fromString(input, skipWhitespace), logErrors)
 }
 
 fun <NodeType : Node> Parser<NodeType>.test(

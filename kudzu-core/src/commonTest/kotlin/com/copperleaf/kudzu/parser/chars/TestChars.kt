@@ -28,7 +28,7 @@ class TestChars {
 
         expectThat(output).parsedCorrectly(expected)
         expectThat(output!!.first.text).isEqualTo("a")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     @Test
@@ -44,13 +44,13 @@ class TestChars {
 
         expectThat(output).parsedCorrectly(expected, allowRemaining = true)
         expectThat(output!!.first.text).isEqualTo("\\")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = """\"""
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
         expectThat(output!!.first.text).isEqualTo("\\")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     @Test
@@ -65,19 +65,19 @@ class TestChars {
         expected = """(CharNode: 'a')"""
         expectThat(output).parsedCorrectly(expected)
         expectThat(output!!.first.text).isEqualTo("a")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "b"
         output = underTest.test(input)
         expected = """(CharNode: 'b')"""
         expectThat(output).parsedCorrectly(expected)
         expectThat(output!!.first.text).isEqualTo("b")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "c"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
 
     @Test
@@ -89,32 +89,32 @@ class TestChars {
         input = """\a"""
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         input = """a"""
         output = underTest.test(input)
         expectThat(output).parsedCorrectly("(CharNode: 'a')")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = """\b"""
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         input = """b"""
         output = underTest.test(input)
         expectThat(output).parsedCorrectly("(CharNode: 'b')")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = """\c"""
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         input = """\"""
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
 
     @Test
@@ -127,18 +127,18 @@ class TestChars {
         input = "a"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         input = "b"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         input = "c"
         expected = """(CharNode: 'c')"""
         output = underTest.test(input)
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     @Test
@@ -150,37 +150,37 @@ class TestChars {
         input = """a"""
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         input = """\a"""
         output = underTest.test(input)
         expectThat(output).parsedCorrectly(allowRemaining = true)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = """b"""
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         input = """\b"""
         output = underTest.test(input)
         expectThat(output).parsedCorrectly(allowRemaining = true)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = """c"""
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = """\c"""
         output = underTest.test(input)
         expectThat(output).parsedCorrectly(allowRemaining = true)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = """\"""
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     @Test
@@ -194,24 +194,24 @@ class TestChars {
         output = underTest.test(input)
         expected = "(CharNode: ' ')"
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "\n"
         output = underTest.test(input)
         expected = "(CharNode: '\n')"
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "\t"
         output = underTest.test(input)
         expected = "(CharNode: '\t')"
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "a"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
 
     @Test
@@ -225,18 +225,18 @@ class TestChars {
         output = underTest.test(input)
         expected = "(CharNode: '0')"
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "1"
         output = underTest.test(input)
         expected = "(CharNode: '1')"
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "a"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
 
     @Test
@@ -250,18 +250,18 @@ class TestChars {
         output = underTest.test(input)
         expected = "(CharNode: 'a')"
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "b"
         output = underTest.test(input)
         expected = "(CharNode: 'b')"
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(com.copperleaf.kudzu.parser.ParserContext.fromString(input))).isTrue()
 
         input = "1"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(com.copperleaf.kudzu.parser.ParserContext.fromString(input))).isFalse()
     }
 
     @Test
@@ -276,6 +276,6 @@ class TestChars {
         expected = """(CharNode: 'a')"""
 
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 }

@@ -62,13 +62,13 @@ class TestSourcePosition {
             .isNonTerminal()
 
         expectThat(output!!.first.context.toString())
-            .isEqualTo("NodeContext(ParserContext(1:1) to ParserContext(2:4))")
+            .isEqualTo("NodeContext(1:1 to 2:4)")
         expectThat((output.first as NonTerminalNode).children[0].context.toString())
-            .isEqualTo("NodeContext(ParserContext(1:1) to ParserContext(1:4))")
+            .isEqualTo("NodeContext(1:1 to 1:4)")
         expectThat((output.first as NonTerminalNode).children[1].context.toString())
-            .isEqualTo("NodeContext(ParserContext(1:4) to ParserContext(2:1))")
+            .isEqualTo("NodeContext(1:4 to 2:1)")
         expectThat((output.first as NonTerminalNode).children[2].context.toString())
-            .isEqualTo("NodeContext(ParserContext(2:1) to ParserContext(2:4))")
+            .isEqualTo("NodeContext(2:1 to 2:4)")
     }
 
     @Test
@@ -95,11 +95,11 @@ class TestSourcePosition {
             .withChildren(2)
 
         expectThat(output!!.first.context.toString())
-            .isEqualTo("NodeContext(ParserContext(1:1) to ParserContext(2:4))")
+            .isEqualTo("NodeContext(1:1 to 2:4)")
         expectThat((output.first as NonTerminalNode).children[0].context.toString())
-            .isEqualTo("NodeContext(ParserContext(1:1) to ParserContext(1:4))")
+            .isEqualTo("NodeContext(1:1 to 1:4)")
         expectThat((output.first as NonTerminalNode).children[1].context.toString())
-            .isEqualTo("NodeContext(ParserContext(1:4) to ParserContext(2:4))")
+            .isEqualTo("NodeContext(1:4 to 2:4)")
     }
 
     @Test
@@ -150,26 +150,26 @@ class TestSourcePosition {
         expectThat(output).parsedCorrectly(expected)
 
         expectThat(output!!.first.context.toString())
-            .isEqualTo("NodeContext(ParserContext(1:1) to ParserContext(10:6))")
+            .isEqualTo("NodeContext(1:1 to 10:6)")
         expectThat((output.first as NonTerminalNode).children)
             .hasSize(9)
         expectThat((output.first as NonTerminalNode).children[0].context.toString())
-            .isEqualTo("NodeContext(ParserContext(1:1) to ParserContext(1:4))")
+            .isEqualTo("NodeContext(1:1 to 1:4)")
         expectThat((output.first as NonTerminalNode).children[1].context.toString())
-            .isEqualTo("NodeContext(ParserContext(1:4) to ParserContext(1:8))")
+            .isEqualTo("NodeContext(1:4 to 1:8)")
         expectThat((output.first as NonTerminalNode).children[2].context.toString())
-            .isEqualTo("NodeContext(ParserContext(1:8) to ParserContext(3:4))")
+            .isEqualTo("NodeContext(1:8 to 3:4)")
         expectThat((output.first as NonTerminalNode).children[3].context.toString())
-            .isEqualTo("NodeContext(ParserContext(3:4) to ParserContext(5:4))")
+            .isEqualTo("NodeContext(3:4 to 5:4)")
         expectThat((output.first as NonTerminalNode).children[4].context.toString())
-            .isEqualTo("NodeContext(ParserContext(5:4) to ParserContext(6:4))")
+            .isEqualTo("NodeContext(5:4 to 6:4)")
         expectThat((output.first as NonTerminalNode).children[5].context.toString())
-            .isEqualTo("NodeContext(ParserContext(6:4) to ParserContext(7:4))")
+            .isEqualTo("NodeContext(6:4 to 7:4)")
         expectThat((output.first as NonTerminalNode).children[6].context.toString())
-            .isEqualTo("NodeContext(ParserContext(7:4) to ParserContext(7:8))")
+            .isEqualTo("NodeContext(7:4 to 7:8)")
         expectThat((output.first as NonTerminalNode).children[7].context.toString())
-            .isEqualTo("NodeContext(ParserContext(7:8) to ParserContext(8:5))")
+            .isEqualTo("NodeContext(7:8 to 8:5)")
         expectThat((output.first as NonTerminalNode).children[8].context.toString())
-            .isEqualTo("NodeContext(ParserContext(8:5) to ParserContext(10:6))")
+            .isEqualTo("NodeContext(8:5 to 10:6)")
     }
 }

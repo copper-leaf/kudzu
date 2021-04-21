@@ -8,7 +8,8 @@ import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 
 @ExperimentalStdlibApi
-class ExpressionParser<T: Any>(
+@Suppress("UNCHECKED_CAST")
+class ExpressionParser<T : Any>(
     private val termParser: Parser<ValueNode<T>>,
     private vararg val operators: Operator<T>,
 ) : Parser<Node> {
@@ -44,10 +45,10 @@ class ExpressionParser<T: Any>(
     override val parse: DeepRecursiveFunction<ParserContext, ParserResult<Node>> = parser.parse
 
     companion object {
-        private fun <T: Any> createParserLevel(operand: Parser<Node>, operators: List<Operator<T>>): Parser<Node> {
+        private fun <T : Any> createParserLevel(operand: Parser<Node>, operators: List<Operator<T>>): Parser<Node> {
             val actualOperatorParserForLevel = ExactChoiceParser(*operators.map { it.parser }.toTypedArray())
 
-            val operatorParserLevelParser: Parser<*> = when(operators.first()) {
+            val operatorParserLevelParser: Parser<*> = when (operators.first()) {
                 is Operator.Prefix<T> -> PrefixOperatorParser(actualOperatorParserForLevel, operand)
                 is Operator.Postfix<T> -> PostfixOperatorParser(actualOperatorParserForLevel, operand)
                 is Operator.Infixr<T> -> InfixrOperatorParser(actualOperatorParserForLevel, operand)

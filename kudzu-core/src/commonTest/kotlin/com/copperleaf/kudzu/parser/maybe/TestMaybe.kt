@@ -36,7 +36,7 @@ class TestMaybe {
             .node()
             .isNonTerminal()
             .withChildren(1)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "a"
         output = underTest.test(input)
@@ -50,7 +50,7 @@ class TestMaybe {
             .node()
             .isNonTerminal()
             .withChildren(0)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     @Test

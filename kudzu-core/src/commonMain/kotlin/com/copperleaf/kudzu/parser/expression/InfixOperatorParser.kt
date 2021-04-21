@@ -17,6 +17,7 @@ import com.copperleaf.kudzu.parser.maybe.MaybeParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 
 @ExperimentalStdlibApi
+@Suppress("UNCHECKED_CAST")
 class InfixOperatorParser(
     val operator: ExactChoiceParser,
     val operand: Parser<Node>
@@ -37,19 +38,18 @@ class InfixOperatorParser(
 
         FlatMappedParser(impl) { sequenceNode ->
             val (startOperandNode, maybeManyBinaryOperationNodes) = sequenceNode.children
-
-            val maybeNode: MaybeNode<ManyNode<SequenceNode>> = (maybeManyBinaryOperationNodes as MaybeNode<ManyNode<SequenceNode>>)
-            val manyNode: ManyNode<SequenceNode>? = maybeNode.node
-            val manySequenceNodes: List<SequenceNode>? = manyNode?.children?.map { it as SequenceNode }
-            val binaryOperationNodes = manySequenceNodes?.map { sequenceNode ->
-                val (operatorNode, operandNode) = sequenceNode.children
-                val choiceOperatorNode: ChoiceNode = operatorNode as ChoiceNode
-                BinaryOperationNode(
-                    choiceOperatorNode.node,
-                    operandNode,
-                    sequenceNode.context
-                )
-            } ?: emptyList()
+            val binaryOperationNodes = (maybeManyBinaryOperationNodes as MaybeNode<ManyNode<SequenceNode>>)
+                .node
+                ?.children
+                ?.map {
+                    val (operatorNode, operandNode) = (it as SequenceNode).children
+                    val choiceOperatorNode: ChoiceNode = operatorNode as ChoiceNode
+                    BinaryOperationNode(
+                        choiceOperatorNode.node,
+                        operandNode,
+                        sequenceNode.context
+                    )
+                } ?: emptyList()
 
             InfixOperatorNode(
                 startOperandNode,

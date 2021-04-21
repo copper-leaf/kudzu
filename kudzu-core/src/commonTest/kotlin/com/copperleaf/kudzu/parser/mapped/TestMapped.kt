@@ -49,7 +49,7 @@ class TestMapped {
                 it.text.isEqualTo("3")
                 it.isA<ValueNode<Int>>().value.isEqualTo(3)
             }
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     // asdf, 123, (Type1-A)
@@ -166,7 +166,7 @@ class TestMapped {
                 expectThat(model.node2Value).isEqualTo(123)
                 expectThat(model.node3Value).isEqualTo(SomeComplexModelType.Type1(SomeComplexModelEnum.A))
             }
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     @Test
@@ -195,7 +195,7 @@ class TestMapped {
                 it.text.isEqualTo("3")
                 it.isA<ValueNode<Int>>().value.isEqualTo(3)
             }
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     @Test
@@ -221,6 +221,6 @@ class TestMapped {
             .also {
                 it.text.isEqualTo("This is the replacement text")
             }
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 }

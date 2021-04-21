@@ -13,6 +13,7 @@ import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 
 @ExperimentalStdlibApi
+@Suppress("UNCHECKED_CAST")
 class PostfixOperatorParser(
     private val operator: ExactChoiceParser,
     private val operand: Parser<Node>
@@ -26,10 +27,13 @@ class PostfixOperatorParser(
 
         FlatMappedParser(impl) { sequenceNode ->
             val (operandNode, manyOperatorsNode) = sequenceNode.children
+            val operatorNodes = (manyOperatorsNode as ManyNode<ChoiceNode>)
+                .nodeList
+                .map { it.node }
 
             PostfixOperatorNode(
                 operandNode,
-                (manyOperatorsNode as ManyNode<ChoiceNode>).nodeList.map { it.node },
+                operatorNodes,
                 sequenceNode.context
             )
         }

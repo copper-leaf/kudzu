@@ -47,7 +47,7 @@ class TestSequence {
             .node()
             .isNonTerminal()
             .withChildren(4)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     @Test
@@ -83,7 +83,7 @@ class TestSequence {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     @Test
@@ -132,7 +132,7 @@ class TestSequence {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     @Test
@@ -149,7 +149,7 @@ class TestSequence {
         input = "1234 asdf 12345"
         output = underTest.test(input, true)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     @Test
@@ -175,6 +175,6 @@ class TestSequence {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 }

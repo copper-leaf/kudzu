@@ -37,12 +37,12 @@ class TestWord {
             .isNotNull()
             .get { text }
             .isEqualTo("kotlin")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "java"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         underTest.checkParsingWhenEmpty()
     }
@@ -61,7 +61,7 @@ class TestWord {
             .isNotNull()
             .get { text }
             .isEqualTo("kotlin")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "java"
         output = underTest.test(input)
@@ -71,7 +71,7 @@ class TestWord {
             .isNotNull()
             .get { text }
             .isEqualTo("java")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "12345"
         output = underTest.test(input)
@@ -81,22 +81,22 @@ class TestWord {
             .isNotNull()
             .get { text }
             .isEqualTo("12345")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "="
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         input = " "
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         input = ""
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         underTest.checkParsingWhenEmpty()
     }
@@ -119,12 +119,12 @@ class TestWord {
             .isNotNull()
             .get { text }
             .isEqualTo("kotlin")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "java"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         underTest.checkParsingWhenEmpty()
     }

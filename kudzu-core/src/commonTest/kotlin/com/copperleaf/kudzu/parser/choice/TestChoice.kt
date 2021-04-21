@@ -43,7 +43,7 @@ class TestChoice {
             .node()
             .isNonTerminal()
             .withChildren(1)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "a"
         output = underTest.test(input)
@@ -57,12 +57,12 @@ class TestChoice {
             .node()
             .isNonTerminal()
             .withChildren(1)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = " "
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
 
     @Test
@@ -108,7 +108,7 @@ class TestChoice {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     @Test
@@ -129,7 +129,7 @@ class TestChoice {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "a"
         output = underTest.test(input)
@@ -139,7 +139,7 @@ class TestChoice {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
     @Test
@@ -166,7 +166,7 @@ class TestChoice {
             .node()
             .isNonTerminal()
             .withChildren(1)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "bbbb"
         output = underTest.test(input)
@@ -180,7 +180,7 @@ class TestChoice {
             .node()
             .isNonTerminal()
             .withChildren(1)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "aabb"
         output = underTest.test(input)
@@ -194,7 +194,7 @@ class TestChoice {
             .node()
             .isNonTerminal()
             .withChildren(1)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "bbaabb"
         output = underTest.test(input)
@@ -208,11 +208,11 @@ class TestChoice {
             .node()
             .isNonTerminal()
             .withChildren(1)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = " "
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
 }

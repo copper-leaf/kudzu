@@ -33,7 +33,7 @@ class ScanParser(
         var remaining = input
         var text = ""
 
-        while (remaining.isNotEmpty() && !next.predict(remaining)) {
+        while (!remaining.isEmpty() && !next.predict(remaining)) {
             text += remaining.next()
             remaining = remaining.remaining()
         }

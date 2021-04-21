@@ -14,7 +14,7 @@ open class BaseCharParser(
     private val validationFailedMessage: (Char) -> String,
 ) : Parser<CharNode> {
     final override fun predict(input: ParserContext): Boolean {
-        return input.isNotEmpty() && (runCatching { isValidChar(input.next()) }.getOrNull() ?: false)
+        return !input.isEmpty() && (runCatching { isValidChar(input.next()) }.getOrNull() ?: false)
     }
 
     final override val parse = DeepRecursiveFunction<ParserContext, ParserResult<CharNode>> { input ->

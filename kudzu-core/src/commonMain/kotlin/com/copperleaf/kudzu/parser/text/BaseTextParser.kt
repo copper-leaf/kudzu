@@ -46,7 +46,7 @@ abstract class BaseTextParser(
         var token = ""
         var index = 0
 
-        while (remaining.isNotEmpty()) {
+        while (!remaining.isEmpty()) {
             nextChar = remaining.next()
             if (!isValidChar(index, nextChar)) break
 

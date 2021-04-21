@@ -13,6 +13,7 @@ import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 
 @ExperimentalStdlibApi
+@Suppress("UNCHECKED_CAST")
 class PrefixOperatorParser(
     private val operator: ExactChoiceParser,
     private val operand: Parser<Node>
@@ -26,9 +27,12 @@ class PrefixOperatorParser(
 
         FlatMappedParser(impl) { sequenceNode ->
             val (manyOperatorsNode, operandNode) = sequenceNode.children
+            val operatorNodes = (manyOperatorsNode as ManyNode<ChoiceNode>)
+                .nodeList
+                .map { it.node }
 
             PrefixOperatorNode(
-                (manyOperatorsNode as ManyNode<ChoiceNode>).nodeList.map { it.node },
+                operatorNodes,
                 operandNode,
                 sequenceNode.context
             )

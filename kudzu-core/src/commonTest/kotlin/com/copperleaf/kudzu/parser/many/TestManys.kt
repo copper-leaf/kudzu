@@ -44,14 +44,14 @@ class TestManys {
             .node()
             .isNonTerminal()
             .withChildren(4)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         expectThat(output).parsedCorrectly(expected)
             .node()
             .isNonTerminal()
             .get { text }
             .isEqualTo("asdf")
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         underTest.checkParsingWhenEmpty()
     }
@@ -74,12 +74,12 @@ class TestManys {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "asd"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         underTest.checkParsingWhenEmpty()
     }
@@ -102,22 +102,22 @@ class TestManys {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "qwerty"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "as1234"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "12asdf"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         underTest.checkParsingWhenEmpty()
     }
@@ -140,17 +140,17 @@ class TestManys {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "1234 asdf"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "asdf"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isFalse()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         underTest.checkParsingWhenEmpty()
     }
@@ -173,17 +173,17 @@ class TestManys {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "1234 asdf"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "123 asdf"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         underTest.checkParsingWhenEmpty()
     }
@@ -206,17 +206,17 @@ class TestManys {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "1234 asdf"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "12345 asdf"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         underTest.checkParsingWhenEmpty()
     }
@@ -239,17 +239,17 @@ class TestManys {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "12345"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "123"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         underTest.checkParsingWhenEmpty()
     }
@@ -272,32 +272,32 @@ class TestManys {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "1"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "12"
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "123"
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "1234"
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         input = "12345"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         underTest.checkParsingWhenEmpty()
     }
@@ -320,7 +320,7 @@ class TestManys {
             )
         """
         expectThat(output).parsedCorrectly(expected, allowRemaining = true)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         underTest.checkParsingWhenEmpty()
     }
@@ -345,7 +345,7 @@ class TestManys {
             )
         """
         expectThat(output).parsedCorrectly(expected)
-        expectThat(underTest.predict(ParserContext(input, 0, false))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
         underTest.checkParsingWhenEmpty()
     }

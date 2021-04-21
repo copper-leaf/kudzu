@@ -8,7 +8,7 @@ import com.copperleaf.kudzu.node.expression.PrefixOperatorNode
 import com.copperleaf.kudzu.node.mapped.ValueNode
 
 @ExperimentalStdlibApi
-class ExpressionEvaluator<T: Any>(
+class ExpressionEvaluator<T : Any>(
     private vararg val operators: Operator<T>,
 ) {
     fun evaluateExpression(node: Node): T {
@@ -55,7 +55,13 @@ class ExpressionEvaluator<T: Any>(
     }
 
     private fun PostfixOperatorNode.evaluate(): T {
-        TODO()
+        var result = evaluateExpression(operand)
+
+        for (node in operatorNodes) {
+            result = node.text.applyUnary(result)
+        }
+
+        return result
     }
 
     private fun String.applyUnary(node: T): T {

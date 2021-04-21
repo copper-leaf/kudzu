@@ -17,10 +17,9 @@ class TestHelpersMethods {
 
     @Test
     fun testIsEmpty() {
-        val underTest = ParserContext("", 0, false)
+        val underTest = ParserContext.fromString("")
 
         expectThat(underTest.isEmpty()).isTrue()
-        expectThat(underTest.isNotEmpty()).isFalse()
 
         expectCatching { AnyCharParser().checkNotEmpty(underTest) }
             .isFailure()
@@ -30,10 +29,9 @@ class TestHelpersMethods {
 
     @Test
     fun testIsNotEmpty() {
-        val underTest = ParserContext("2 + 3", 0, false)
+        val underTest = ParserContext.fromString("2 + 3")
 
         expectThat(underTest.isEmpty()).isFalse()
-        expectThat(underTest.isNotEmpty()).isTrue()
 
         expectCatching { AnyCharParser().checkNotEmpty(underTest) }
             .isSuccess()
