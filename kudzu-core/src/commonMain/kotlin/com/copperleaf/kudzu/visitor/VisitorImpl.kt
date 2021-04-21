@@ -1,0 +1,33 @@
+package com.copperleaf.kudzu.visitor
+
+import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.node.NonTerminalNode
+
+@ExperimentalStdlibApi
+class VisitorImpl internal constructor(
+    private vararg val callbacks: Visitor.Callback
+) : Visitor {
+
+    private fun enter(node: Node) { callbacks.forEach { it.enter(node) }}
+    private fun exit(node: Node) { callbacks.forEach { it.exit(node) }}
+    private fun onStart() { callbacks.forEach { it.onStart() }}
+    private fun onFinish() { callbacks.forEach { it.onFinish() }}
+
+    override fun visit(node: Node) {
+        onStart()
+        visitNode(node)
+        onFinish()
+    }
+
+    private val visitNode = DeepRecursiveFunction<Node, Unit> { node ->
+        enter(node)
+
+        if (node is NonTerminalNode) {
+            node.children.forEach { childNode ->
+                callRecursive(childNode)
+            }
+        }
+
+        exit(node)
+    }
+}

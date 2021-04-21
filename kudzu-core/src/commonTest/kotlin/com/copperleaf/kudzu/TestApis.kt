@@ -87,7 +87,7 @@ fun <T : Any> Pair<T?, Throwable?>.isSuccess(): T {
     return first!!
 }
 
-fun <T> List<T>.containsExactlyInAnyOrder(vararg items: T): List<T> {
+fun <T> List<T>.containsExactly(vararg items: T): List<T> {
     check(this == listOf(*items))
 
     return this
