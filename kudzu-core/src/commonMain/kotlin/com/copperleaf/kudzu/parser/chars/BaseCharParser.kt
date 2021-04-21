@@ -9,7 +9,7 @@ import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
 
 @ExperimentalStdlibApi
-open class BaseCharParser(
+abstract class BaseCharParser(
     private val isValidChar: (Char) -> Boolean,
     private val validationFailedMessage: (Char) -> String,
 ) : Parser<CharNode> {

@@ -20,7 +20,7 @@ import com.copperleaf.kudzu.parser.many.ManyParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 import com.copperleaf.kudzu.parser.text.AnyTokenParser
 import com.copperleaf.kudzu.parser.text.OptionalWhitespaceParser
-import com.copperleaf.kudzu.parser.text.WordParser
+import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
@@ -104,8 +104,8 @@ class TestMapped {
             SequenceParser(
                 CharInParser('('),
                 PredictiveChoiceParser(
-                    WordParser("Type1"),
-                    WordParser("Type2"),
+                    LiteralTokenParser("Type1"),
+                    LiteralTokenParser("Type2"),
                 ),
                 CharInParser('-'),
                 someComplexModelEnumParser,

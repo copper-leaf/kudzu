@@ -66,19 +66,18 @@ class TestVisitor {
                     .also { println(it.joinToString(separator = "\n")) }
                     .containsExactly(
                         "(SequenceNode: 1:1 to 2:5)",
-                            "(MaybeNode: 1:1 to 1:5)",
-                                "(ManyNode: 1:1 to 1:5)",
-                                    "(CharNode: 1:1 to 1:2)",
-                                    "(CharNode: 1:2 to 1:3)",
-                                    "(CharNode: 1:3 to 1:4)",
-                                    "(CharNode: 1:4 to 1:5)",
+                        "(MaybeNode: 1:1 to 1:5)",
+                        "(ManyNode: 1:1 to 1:5)",
+                        "(CharNode: 1:1 to 1:2)",
+                        "(CharNode: 1:2 to 1:3)",
+                        "(CharNode: 1:3 to 1:4)",
+                        "(CharNode: 1:4 to 1:5)",
                         "(TextNode: 1:5 to 2:2)",
                         "(ManyNode: 2:2 to 2:5)",
-                            "(CharNode: 2:2 to 2:3)",
-                            "(CharNode: 2:3 to 2:4)",
-                            "(CharNode: 2:4 to 2:5)",
+                        "(CharNode: 2:2 to 2:3)",
+                        "(CharNode: 2:3 to 2:4)",
+                        "(CharNode: 2:4 to 2:5)",
                     )
-
             }
     }
 
@@ -119,20 +118,19 @@ class TestVisitor {
                     .map { it.toString() }
                     .also { println(it.joinToString(separator = "\n")) }
                     .containsExactly(
-                                    "(CharNode: 1:1 to 1:2)",
-                                    "(CharNode: 1:2 to 1:3)",
-                                    "(CharNode: 1:3 to 1:4)",
-                                    "(CharNode: 1:4 to 1:5)",
-                                "(ManyNode: 1:1 to 1:5)",
-                            "(MaybeNode: 1:1 to 1:5)",
-                            "(TextNode: 1:5 to 2:2)",
-                                "(CharNode: 2:2 to 2:3)",
-                                "(CharNode: 2:3 to 2:4)",
-                                "(CharNode: 2:4 to 2:5)",
-                            "(ManyNode: 2:2 to 2:5)",
+                        "(CharNode: 1:1 to 1:2)",
+                        "(CharNode: 1:2 to 1:3)",
+                        "(CharNode: 1:3 to 1:4)",
+                        "(CharNode: 1:4 to 1:5)",
+                        "(ManyNode: 1:1 to 1:5)",
+                        "(MaybeNode: 1:1 to 1:5)",
+                        "(TextNode: 1:5 to 2:2)",
+                        "(CharNode: 2:2 to 2:3)",
+                        "(CharNode: 2:3 to 2:4)",
+                        "(CharNode: 2:4 to 2:5)",
+                        "(ManyNode: 2:2 to 2:5)",
                         "(SequenceNode: 1:1 to 2:5)",
                     )
-
             }
     }
 }

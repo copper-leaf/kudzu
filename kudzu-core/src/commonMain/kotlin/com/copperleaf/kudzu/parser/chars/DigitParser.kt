@@ -1,6 +1,6 @@
 package com.copperleaf.kudzu.parser.chars
 
-import com.copperleaf.kudzu.isDigit
+import com.copperleaf.kudzu.KudzuPlatform
 
 /**
  * Consumes a single digit character as long as it is not the escapeChar.
@@ -15,6 +15,6 @@ import com.copperleaf.kudzu.isDigit
  */
 @ExperimentalStdlibApi
 class DigitParser : BaseCharParser(
-    isValidChar = { it.isDigit() },
+    isValidChar = { KudzuPlatform.isDigit(it) },
     validationFailedMessage = { "must be a digit" }
 )

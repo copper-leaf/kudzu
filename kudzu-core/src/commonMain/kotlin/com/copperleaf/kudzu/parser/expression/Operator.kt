@@ -1,8 +1,14 @@
 package com.copperleaf.kudzu.parser.expression
 
 import com.copperleaf.kudzu.parser.Parser
-import com.copperleaf.kudzu.parser.text.WordParser
+import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 
+/**
+ * Configure [ExpressionParser] with a list of operators of configurable precedence and associativity. These operators
+ * become both the Parser for the operator during parsing, and also the operator lookup table during evaluation with
+ * [ExpressionEvaluator]. All operators must have unique names to ensure the parser result maps back to the proper
+ * applyFn.
+ */
 @ExperimentalStdlibApi
 sealed class Operator<T : Any>(
     val name: String,
@@ -10,6 +16,7 @@ sealed class Operator<T : Any>(
     val precedence: Precedence
 ) : Comparable<Operator<T>> {
 
+    @ExperimentalStdlibApi
     abstract class UnaryOperator<T : Any>(
         name: String,
         parser: Parser<*>,
@@ -18,6 +25,7 @@ sealed class Operator<T : Any>(
         abstract val applyFn: (T) -> T
     }
 
+    @ExperimentalStdlibApi
     abstract class BinaryOperator<T : Any>(
         name: String,
         parser: Parser<*>,
@@ -31,28 +39,28 @@ sealed class Operator<T : Any>(
         op: String,
         precedence: Int,
         override val applyFn: (T) -> T
-    ) : UnaryOperator<T>(op, WordParser(op), Precedence(precedence, 1))
+    ) : UnaryOperator<T>(op, LiteralTokenParser(op), Precedence(precedence, 1))
 
     @ExperimentalStdlibApi
     class Postfix<T : Any>(
         op: String,
         precedence: Int,
         override val applyFn: (T) -> T
-    ) : UnaryOperator<T>(op, WordParser(op), Precedence(precedence, 2))
+    ) : UnaryOperator<T>(op, LiteralTokenParser(op), Precedence(precedence, 2))
 
     @ExperimentalStdlibApi
     class Infixr<T : Any>(
         op: String,
         precedence: Int,
         override val applyFn: (T, T) -> T
-    ) : BinaryOperator<T>(op, WordParser(op), Precedence(precedence, 3))
+    ) : BinaryOperator<T>(op, LiteralTokenParser(op), Precedence(precedence, 3))
 
     @ExperimentalStdlibApi
     class Infix<T : Any>(
         op: String,
         precedence: Int,
         override val applyFn: (T, T) -> T
-    ) : BinaryOperator<T>(op, WordParser(op), Precedence(precedence, 4))
+    ) : BinaryOperator<T>(op, LiteralTokenParser(op), Precedence(precedence, 4))
 
     override fun compareTo(other: Operator<T>): Int {
         return compareValuesBy(this, other) { it.precedence }

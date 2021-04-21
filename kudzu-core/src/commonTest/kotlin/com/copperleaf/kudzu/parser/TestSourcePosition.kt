@@ -12,7 +12,7 @@ import com.copperleaf.kudzu.parser.chars.WhitespaceCharParser
 import com.copperleaf.kudzu.parser.choice.PredictiveChoiceParser
 import com.copperleaf.kudzu.parser.many.ManyParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
-import com.copperleaf.kudzu.parser.text.WordParser
+import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.test
 import com.copperleaf.kudzu.withChildren
 import kotlin.test.Test
@@ -41,9 +41,9 @@ class TestSourcePosition {
         var output: ParserResult<Node>?
         var expected: String
         val underTest = SequenceParser(
-            WordParser("one"),
+            LiteralTokenParser("one"),
             WhitespaceCharParser(),
-            WordParser("two")
+            LiteralTokenParser("two")
         )
 
         input = "one\ntwo"
@@ -77,8 +77,8 @@ class TestSourcePosition {
         var output: ParserResult<Node>?
         var expected: String
         val underTest = SequenceParser(
-            WordParser("one"),
-            WordParser("two")
+            LiteralTokenParser("one"),
+            LiteralTokenParser("two")
         )
 
         input = "one\ntwo"
@@ -109,8 +109,8 @@ class TestSourcePosition {
         var expected: String
         val underTest = ManyParser(
             PredictiveChoiceParser(
-                WordParser("one"),
-                WordParser("two")
+                LiteralTokenParser("one"),
+                LiteralTokenParser("two")
             )
         )
 

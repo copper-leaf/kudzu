@@ -8,7 +8,7 @@ import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parser.chars.DigitParser
 import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 import com.copperleaf.kudzu.parser.mapped.MappedParser
-import com.copperleaf.kudzu.parser.text.WordParser
+import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.test
 import kotlin.math.pow
 import kotlin.test.Test
@@ -101,8 +101,8 @@ class TestExpression {
         val parser = ExpressionParser<Boolean>(
             termParser = MappedParser(
                 ExactChoiceParser(
-                    WordParser("true"),
-                    WordParser("false"),
+                    LiteralTokenParser("true"),
+                    LiteralTokenParser("false"),
                 )
             ) { it.text.toBoolean() },
 

@@ -7,6 +7,13 @@ import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 
+/**
+ * A configurable operator-precedence parser for a simple expression grammar. A list of operators with custom
+ * associativity and precedence will construct the multi-leveled parser which will properly parse and evaluate a simple
+ * expression.
+ *
+ * The parameterized type [T] is the value type this expression's Operators operate on.
+ */
 @ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
 class ExpressionParser<T : Any>(
@@ -37,7 +44,7 @@ class ExpressionParser<T : Any>(
     }
 
     val evaluator: ExpressionEvaluator<T> by lazy {
-        ExpressionEvaluator(*operators)
+        ExpressionEvaluatorImpl(*operators)
     }
 
     override fun predict(input: ParserContext): Boolean = parser.predict(input)

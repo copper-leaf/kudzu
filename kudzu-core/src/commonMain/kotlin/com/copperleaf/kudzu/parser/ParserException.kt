@@ -1,5 +1,8 @@
 package com.copperleaf.kudzu.parser
 
+/**
+ * Indicates an unrecoverable error was encountered during parsing.
+ */
 @ExperimentalStdlibApi
 class ParserException(
     message: String,

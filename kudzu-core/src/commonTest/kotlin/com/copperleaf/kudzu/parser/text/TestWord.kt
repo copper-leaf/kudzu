@@ -24,7 +24,7 @@ class TestWord {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
-        val underTest = WordParser("kotlin")
+        val underTest = LiteralTokenParser("kotlin")
 
         input = "kotlin"
         output = underTest.test(input)
@@ -106,7 +106,7 @@ class TestWord {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
-        val underTest = WordParser("kotlin")
+        val underTest = LiteralTokenParser("kotlin")
 
         input = "kotlin"
         output = underTest.test(input)

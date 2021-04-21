@@ -1,6 +1,6 @@
 package com.copperleaf.kudzu.parser.chars
 
-import com.copperleaf.kudzu.isLetterOrDigit
+import com.copperleaf.kudzu.KudzuPlatform
 
 /**
  * Consumes a single letter character as long as it is not the escapeChar.
@@ -15,6 +15,6 @@ import com.copperleaf.kudzu.isLetterOrDigit
  */
 @ExperimentalStdlibApi
 class LetterOrDigitParser : BaseCharParser(
-    isValidChar = { it.isLetterOrDigit() },
+    isValidChar = { KudzuPlatform.isLetterOrDigit(it) },
     validationFailedMessage = { "must be a letter or digit" }
 )

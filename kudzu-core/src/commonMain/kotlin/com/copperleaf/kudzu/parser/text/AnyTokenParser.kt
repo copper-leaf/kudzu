@@ -1,6 +1,6 @@
 package com.copperleaf.kudzu.parser.text
 
-import com.copperleaf.kudzu.isLetterOrDigit
+import com.copperleaf.kudzu.KudzuPlatform
 
 /**
  * Consume a sequence of letter or digit characters of the input.
@@ -18,7 +18,7 @@ import com.copperleaf.kudzu.isLetterOrDigit
  */
 @ExperimentalStdlibApi
 class AnyTokenParser : BaseTextParser(
-    isValidChar = { _, char -> char.isLetterOrDigit() },
+    isValidChar = { _, char -> KudzuPlatform.isLetterOrDigit(char) },
     isValidText = { it.isNotEmpty() },
     allowEmptyInput = false
 )

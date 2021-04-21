@@ -1,6 +1,9 @@
 package com.copperleaf.kudzu.parser
 
-data class ParserContextImpl internal constructor(
+/**
+ * The default, in-memory implementation of an immutable [ParserContext].
+ */
+internal data class ParserContextImpl(
     private val input: String,
     private val index: Int = 0,
     private val skipWhitespace: Boolean = false,

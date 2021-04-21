@@ -4,14 +4,14 @@ import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.NonTerminalNode
 
 @ExperimentalStdlibApi
-class VisitorImpl internal constructor(
+internal class VisitorImpl(
     private vararg val callbacks: Visitor.Callback
 ) : Visitor {
 
-    private fun enter(node: Node) { callbacks.forEach { it.enter(node) }}
-    private fun exit(node: Node) { callbacks.forEach { it.exit(node) }}
-    private fun onStart() { callbacks.forEach { it.onStart() }}
-    private fun onFinish() { callbacks.forEach { it.onFinish() }}
+    private fun enter(node: Node) { callbacks.forEach { it.enter(node) } }
+    private fun exit(node: Node) { callbacks.forEach { it.exit(node) } }
+    private fun onStart() { callbacks.forEach { it.onStart() } }
+    private fun onFinish() { callbacks.forEach { it.onFinish() } }
 
     override fun visit(node: Node) {
         onStart()

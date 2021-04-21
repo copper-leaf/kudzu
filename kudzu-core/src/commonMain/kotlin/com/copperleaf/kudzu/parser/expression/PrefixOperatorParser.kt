@@ -12,6 +12,9 @@ import com.copperleaf.kudzu.parser.many.ManyParser
 import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 
+/**
+ * The parser for a level of combined [Operator.Prefix] operators of the same precedence.
+ */
 @ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
 class PrefixOperatorParser(

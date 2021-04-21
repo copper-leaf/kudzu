@@ -8,7 +8,8 @@ import com.copperleaf.kudzu.parser.ParserResult
 
 /**
  * Consume characters from the input until its parser predicts true. The resulting [TextNode] contains all the
- * characters that were consumed as a single text String.
+ * characters that were consumed as a single text String. This Parser is useful in doing find/replace operations on
+ * text, where the text to be replaced is a complex Parser that would be overly cumbersome to implement using Regex.
  *
  * Predicts true when:
  *   - always

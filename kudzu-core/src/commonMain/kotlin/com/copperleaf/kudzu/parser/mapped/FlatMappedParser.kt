@@ -5,6 +5,9 @@ import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 
+/**
+ * Convert the Node from a Parser into a Node of a different type.
+ */
 @ExperimentalStdlibApi
 class FlatMappedParser<InputParserNodeType : Node, OutputParserNodeType : Node>(
     val parser: Parser<InputParserNodeType>,

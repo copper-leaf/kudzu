@@ -17,7 +17,7 @@ package com.copperleaf.kudzu.parser.text
  *   - the next character does not match the corresponding character of the expected string
  */
 @ExperimentalStdlibApi
-class WordParser(
+class LiteralTokenParser(
     val expected: String
 ) : BaseTextParser(
     isValidChar = { index, char -> index < expected.length && char == expected[index] },

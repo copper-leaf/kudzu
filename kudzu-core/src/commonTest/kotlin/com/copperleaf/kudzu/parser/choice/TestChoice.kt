@@ -13,7 +13,7 @@ import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.parser.chars.DigitParser
 import com.copperleaf.kudzu.parser.chars.LetterParser
 import com.copperleaf.kudzu.parser.many.ManyParser
-import com.copperleaf.kudzu.parser.text.WordParser
+import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.test
 import com.copperleaf.kudzu.withChildren
 import kotlin.test.Test
@@ -148,10 +148,10 @@ class TestChoice {
         var output: ParserResult<Node>?
         var expected: String
         val underTest = ExactChoiceParser(
-            WordParser("aaaa"),
-            WordParser("bbbb"),
-            WordParser("aabb"),
-            WordParser("bbaabb")
+            LiteralTokenParser("aaaa"),
+            LiteralTokenParser("bbbb"),
+            LiteralTokenParser("aabb"),
+            LiteralTokenParser("bbaabb")
         )
 
         input = "aaaa"
