@@ -19,5 +19,5 @@ class CharInParser(
     validationFailedMessage = { "not in [${chars.joinToString()}]" }
 ) {
     constructor(vararg chars: Char) : this(chars.toList())
-    constructor(chars: CharRange) : this(chars.toList().also { println(it) })
+    constructor(chars: CharRange) : this(chars.toList())
 }

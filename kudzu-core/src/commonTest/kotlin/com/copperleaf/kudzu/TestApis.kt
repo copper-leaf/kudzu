@@ -170,6 +170,7 @@ fun Parser<*>.checkParsingWhenEmpty(shouldSucceed: Boolean = false) {
     }
 }
 
+@ExperimentalStdlibApi
 fun <NodeType : Node> Parser<NodeType>.test(
     input: String,
     skipWhitespace: Boolean = false,
@@ -178,6 +179,7 @@ fun <NodeType : Node> Parser<NodeType>.test(
     return test(ParserContext.fromString(input, skipWhitespace), logErrors)
 }
 
+@ExperimentalStdlibApi
 fun <NodeType : Node> Parser<NodeType>.test(
     input: ParserContext,
     logErrors: Boolean = false
@@ -185,7 +187,10 @@ fun <NodeType : Node> Parser<NodeType>.test(
     return try {
         parse(input)
     } catch (e: ParserException) {
-        if (logErrors) e.printStackTrace()
+        if (logErrors) {
+            e.printStackTrace()
+            println("Parsing failed for input: '${input}'")
+        }
         null
     }
 }

@@ -77,22 +77,18 @@ class TestExpression {
         )
 
         inputs.map { input ->
-            println("parse [${input.first}]").also {
-                val output = parser.test(input.first, skipWhitespace = true)
+            val output = parser.test(input.first, skipWhitespace = true)
 
-                expectThat(output)
-                    .parsedCorrectly()
-                    .node()
-                    .isNotNull()
-                    .also {
-                        val kudzuExpressionResult: Double = parser.evaluator.evaluateExpression(it)
-                        val kotlinExpressionResult = input.second()
+            expectThat(output)
+                .parsedCorrectly()
+                .node()
+                .isNotNull()
+                .also {
+                    val kudzuExpressionResult: Double = parser.evaluator.evaluateExpression(it)
+                    val kotlinExpressionResult = input.second()
 
-                        println("    -> kudzu: $kudzuExpressionResult, kotlin: $kotlinExpressionResult")
-
-                        kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
-                    }
-            }
+                    kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
+                }
         }
     }
 
@@ -134,22 +130,18 @@ class TestExpression {
         )
 
         inputs.map { input ->
-            println("parse [${input.first}]").also {
-                val output = parser.test(input.first, skipWhitespace = true)
+            val output = parser.test(input.first, skipWhitespace = true)
 
-                expectThat(output)
-                    .parsedCorrectly()
-                    .node()
-                    .isNotNull()
-                    .also {
-                        val kudzuExpressionResult: Boolean = parser.evaluator.evaluateExpression(it)
-                        val kotlinExpressionResult = input.second()
+            expectThat(output)
+                .parsedCorrectly()
+                .node()
+                .isNotNull()
+                .also {
+                    val kudzuExpressionResult: Boolean = parser.evaluator.evaluateExpression(it)
+                    val kotlinExpressionResult = input.second()
 
-                        println("    -> kudzu: $kudzuExpressionResult, kotlin: $kotlinExpressionResult")
-
-                        kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
-                    }
-            }
+                    kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
+                }
         }
     }
 }

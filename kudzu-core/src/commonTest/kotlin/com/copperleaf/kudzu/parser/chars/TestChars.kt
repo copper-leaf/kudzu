@@ -3,7 +3,9 @@ package com.copperleaf.kudzu.parser.chars
 import com.copperleaf.kudzu.expectThat
 import com.copperleaf.kudzu.isEqualTo
 import com.copperleaf.kudzu.isFalse
+import com.copperleaf.kudzu.isNotNull
 import com.copperleaf.kudzu.isTrue
+import com.copperleaf.kudzu.node
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
@@ -32,7 +34,7 @@ class TestChars {
     }
 
     @Test
-    fun testEscapedCharParser() {
+    fun testEscapedAnyCharParser() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -277,5 +279,67 @@ class TestChars {
 
         expectThat(output).parsedCorrectly(expected)
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
+    }
+
+    @Test
+    fun testHexDigitParser() {
+        val underTest = HexDigitParser()
+
+        listOf(
+            "0" to '0',
+            "1" to '1',
+            "2" to '2',
+            "3" to '3',
+            "4" to '4',
+            "5" to '5',
+            "6" to '6',
+            "7" to '7',
+            "8" to '8',
+            "9" to '9',
+            "a" to 'a',
+            "A" to 'A',
+            "b" to 'b',
+            "B" to 'B',
+            "c" to 'c',
+            "C" to 'C',
+            "d" to 'd',
+            "D" to 'D',
+            "e" to 'e',
+            "E" to 'E',
+            "f" to 'f',
+            "F" to 'F',
+        ).forEach { (input, expectedValue) ->
+            expectThat(underTest.test(input))
+                .parsedCorrectly()
+                .node()
+                .isNotNull()
+                .apply {
+                    this.char.isEqualTo(expectedValue)
+                }
+        }
+    }
+
+    @Test
+    fun testEscapedCharParser() {
+        val underTest = EscapedCharParser()
+
+        listOf(
+            """\\""" to '\\',
+            """\r""" to '\r',
+            """\n""" to '\n',
+            """\t""" to '\t',
+            """\'""" to '\'',
+            """\"""" to '"',
+            """\u00A2""" to '¢',
+            """\u00b5""" to 'µ',
+        ).forEach { (input, expectedValue) ->
+            expectThat(underTest.test(input))
+                .parsedCorrectly()
+                .node()
+                .isNotNull()
+                .apply {
+                    this.char.isEqualTo(expectedValue)
+                }
+        }
     }
 }

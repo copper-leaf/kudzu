@@ -17,6 +17,8 @@ class AnyNullableLiteralParser : Parser<ValueNode<Any?>> {
                 BooleanLiteralParser(),
                 DoubleLiteralParser(),
                 IntLiteralParser(),
+                StringLiteralParser(),
+                CharLiteralParser(),
             )
         ) { it.node as ValueNode<Any?> }
     }

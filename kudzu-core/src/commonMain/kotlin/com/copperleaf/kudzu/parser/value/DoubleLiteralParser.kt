@@ -23,12 +23,10 @@ class DoubleLiteralParser : Parser<ValueNode<Double>> {
                     DigitParser(),
                     minSize = 1
                 ),
-                SequenceParser(
-                    CharInParser('.'),
-                    AtLeastParser(
-                        DigitParser(),
-                        minSize = 1
-                    )
+                CharInParser('.'),
+                AtLeastParser(
+                    DigitParser(),
+                    minSize = 1
                 )
             )
         ) { it.text.toDouble() }
