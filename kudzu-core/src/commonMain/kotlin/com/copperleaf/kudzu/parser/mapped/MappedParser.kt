@@ -12,7 +12,7 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Node. The the mapped result should be another node, consider using [FlatMappedParser] instead.
  */
 @ExperimentalStdlibApi
-class MappedParser<ParserNodeType : Node, T : Any>(
+class MappedParser<ParserNodeType : Node, T>(
     val parser: Parser<ParserNodeType>,
     val mapperFunction: (ParserNodeType) -> T,
 ) : Parser<ValueNode<T>> {

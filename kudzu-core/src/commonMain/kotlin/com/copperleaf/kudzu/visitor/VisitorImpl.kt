@@ -5,13 +5,25 @@ import com.copperleaf.kudzu.node.NonTerminalNode
 
 @ExperimentalStdlibApi
 internal class VisitorImpl(
-    private vararg val callbacks: Visitor.Callback
+    private val callbacks: List<Visitor.Callback>
 ) : Visitor {
+    constructor(vararg callbacks: Visitor.Callback) : this(callbacks.toList())
 
-    private fun enter(node: Node) { callbacks.forEach { it.enter(node) } }
-    private fun exit(node: Node) { callbacks.forEach { it.exit(node) } }
-    private fun onStart() { callbacks.forEach { it.onStart() } }
-    private fun onFinish() { callbacks.forEach { it.onFinish() } }
+    private fun enter(node: Node) {
+        callbacks.forEach { it.enter(node) }
+    }
+
+    private fun exit(node: Node) {
+        callbacks.forEach { it.exit(node) }
+    }
+
+    private fun onStart() {
+        callbacks.forEach { it.onStart() }
+    }
+
+    private fun onFinish() {
+        callbacks.forEach { it.onFinish() }
+    }
 
     override fun visit(node: Node) {
         onStart()

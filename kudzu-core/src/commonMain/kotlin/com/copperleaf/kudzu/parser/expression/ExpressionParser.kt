@@ -18,8 +18,12 @@ import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 @Suppress("UNCHECKED_CAST")
 class ExpressionParser<T : Any>(
     private val termParser: Parser<ValueNode<T>>,
-    private vararg val operators: Operator<T>,
+    private val operators: List<Operator<T>>,
 ) : Parser<Node> {
+    constructor(
+        termParser: Parser<ValueNode<T>>,
+        vararg operators: Operator<T>
+    ) : this(termParser, operators.toList())
 
     private val parser: Parser<Node> by lazy {
         val unaryOperators = operators.filterIsInstance<Operator.UnaryOperator<T>>()
@@ -44,7 +48,7 @@ class ExpressionParser<T : Any>(
     }
 
     val evaluator: ExpressionEvaluator<T> by lazy {
-        ExpressionEvaluatorImpl(*operators)
+        ExpressionEvaluatorImpl(operators)
     }
 
     override fun predict(input: ParserContext): Boolean = parser.predict(input)

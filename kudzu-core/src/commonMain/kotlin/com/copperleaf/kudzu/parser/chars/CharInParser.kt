@@ -13,8 +13,11 @@ package com.copperleaf.kudzu.parser.chars
  */
 @ExperimentalStdlibApi
 class CharInParser(
-    private vararg val chars: Char,
+    private val chars: List<Char>,
 ) : BaseCharParser(
-    isValidChar = { chars.contains(it) },
+    isValidChar = { it in chars },
     validationFailedMessage = { "not in [${chars.joinToString()}]" }
-)
+) {
+    constructor(vararg chars: Char) : this(chars.toList())
+    constructor(chars: CharRange) : this(chars.toList().also { println(it) })
+}

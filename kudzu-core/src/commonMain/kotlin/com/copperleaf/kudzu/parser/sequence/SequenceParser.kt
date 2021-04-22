@@ -18,8 +18,9 @@ import com.copperleaf.kudzu.parser.ParserResult
  */
 @ExperimentalStdlibApi
 class SequenceParser(
-    private vararg val parsers: Parser<*>,
+    private val parsers: List<Parser<*>>,
 ) : Parser<SequenceNode> {
+    constructor(vararg parsers: Parser<*>) : this(parsers.toList())
 
     override fun predict(input: ParserContext): Boolean {
         return parsers.first().predict(input)

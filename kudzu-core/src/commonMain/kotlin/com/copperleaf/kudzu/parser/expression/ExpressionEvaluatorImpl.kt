@@ -10,8 +10,9 @@ import com.copperleaf.kudzu.node.mapped.ValueNode
 @ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
 internal class ExpressionEvaluatorImpl<T : Any>(
-    private vararg val operators: Operator<T>,
+    private val operators: List<Operator<T>>,
 ) : ExpressionEvaluator<T> {
+
     override fun evaluateExpression(node: Node): T {
         return when (node) {
             is InfixOperatorNode -> node.evaluate()
