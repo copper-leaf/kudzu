@@ -2,7 +2,6 @@ package com.copperleaf.kudzu.node.expression
 
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.NodeContext
-import com.copperleaf.kudzu.node.NonTerminalNode
 import com.copperleaf.kudzu.parser.expression.InfixrOperatorParser
 
 /**
@@ -13,6 +12,18 @@ class InfixrOperatorNode(
     val leftOperand: Node,
     val operation: BinaryOperationNode?,
     context: NodeContext
-) : NonTerminalNode(context) {
+) : ExpressionNode(context) {
     override val children: List<Node> = listOfNotNull(leftOperand, operation)
+
+    override fun simplify(): Node {
+        return if (operation != null) {
+            InfixrOperatorNode(
+                leftOperand.simplifyChild(),
+                operation.simplifyChild() as BinaryOperationNode,
+                context
+            )
+        } else {
+            leftOperand.simplifyChild()
+        }
+    }
 }

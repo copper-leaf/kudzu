@@ -1,6 +1,7 @@
 package com.copperleaf.kudzu.parser.expression
 
 import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.node.expression.ExpressionNode
 import com.copperleaf.kudzu.node.mapped.ValueNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.chars.CharInParser
@@ -73,7 +74,8 @@ object ExpressionParserBuilder {
         expressionParser: Parser<*>,
         termParser: Parser<ValueNode<T>>,
         operators: List<Operator<T>>,
-        parenthesizedTerm: Boolean = true
+        parenthesizedTerm: Boolean,
+        simplifyAst: Boolean
     ): Parser<Node> {
         checkOperatorsAreValid(operators)
 
@@ -92,6 +94,22 @@ object ExpressionParserBuilder {
                 createParserLevel(lastParser, currentLevelOperators)
             }
 
-        return operatorsLevelsFoldedIntoExpressionParser
+        val maybeSimplifiedExpressionParser = if(simplifyAst) {
+            FlatMappedParser(
+                operatorsLevelsFoldedIntoExpressionParser
+            ) {
+                if(it is ExpressionNode) {
+                    it.simplify()
+                }
+                else {
+                    it
+                }
+            }
+        }
+        else {
+            operatorsLevelsFoldedIntoExpressionParser
+        }
+
+        return maybeSimplifiedExpressionParser
     }
 }

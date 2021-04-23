@@ -13,16 +13,29 @@ import com.copperleaf.kudzu.parser.lazy.LazyParser
  * expression.
  *
  * The parameterized type [T] is the value type this expression's Operators operate on.
+ *
+ * If [parenthesizedTerm] is true, then the parser will be constructed such that "leaf terms" may also be
+ * sub-expressions wrapped in parentheses (like `(1 + 2) * 3`). If false, only the exact term parser passed in will be
+ * allowed as the term, which may useful for you to create your own sub-expression grammar.
+ *
+ * The typical AST for an expression can go quite deep due to the nature of how operator precedence levels ultimately
+ * nest inside one another. For an expression with 4 operators, the AST for a simple value would be at least 4 nodes
+ * deep, which makes it harder to understand the actual structure parsed, and makes subsequent evaluation slower. But if
+ * [simplifyAst] is true, the actual expression parse-tree will be simplified such that all the intermediate nodes that
+ * are not necessary are removed, leaving a simpler AST that still have the same structure and evaluates in exactly the
+ * same way, but has many fewer AST nodes, and the only ones that remain would actually represent the smallest set of
+ * real operations in the expression and the literal values used as their operands.
  */
 @ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
 class ExpressionParser<T : Any>(
-    private val termParser: Parser<ValueNode<T>>,
+    private val termParser: (Parser<Node>)->Parser<ValueNode<T>>,
     private val operators: List<Operator<T>>,
-    private val parenthesizedTerm: Boolean = true
+    private val parenthesizedTerm: Boolean = true,
+    private val simplifyAst: Boolean = true
 ) : Parser<Node> {
     constructor(
-        termParser: Parser<ValueNode<T>>,
+        termParser: (Parser<Node>)->Parser<ValueNode<T>>,
         vararg operators: Operator<T>,
         parenthesizedTerm: Boolean = true
     ) : this(termParser, operators.toList(), parenthesizedTerm)
@@ -31,9 +44,10 @@ class ExpressionParser<T : Any>(
         LazyParser<Node>().also {
             it uses ExpressionParserBuilder.createExpressionParser(
                 it,
-                termParser,
+                termParser(it),
                 operators,
-                parenthesizedTerm
+                parenthesizedTerm,
+                simplifyAst
             )
         }
     }

@@ -4,12 +4,13 @@ import com.copperleaf.kudzu.expectThat
 import com.copperleaf.kudzu.isEqualTo
 import com.copperleaf.kudzu.isNotNull
 import com.copperleaf.kudzu.node
+import com.copperleaf.kudzu.node.mapped.ValueNode
 import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
-import com.copperleaf.kudzu.parser.chars.DigitParser
-import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
+import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.mapped.MappedParser
-import com.copperleaf.kudzu.parser.text.LiteralTokenParser
+import com.copperleaf.kudzu.parser.value.BooleanLiteralParser
+import com.copperleaf.kudzu.parser.value.IntLiteralParser
 import com.copperleaf.kudzu.test
 import kotlin.math.pow
 import kotlin.test.Test
@@ -17,10 +18,14 @@ import kotlin.test.Test
 @OptIn(ExperimentalStdlibApi::class)
 class TestExpression {
 
+    private class IntAsDoubleParser(
+        private val parser: Parser<ValueNode<Double>> = MappedParser(IntLiteralParser()) { it.value.toDouble() }
+    ) : Parser<ValueNode<Double>> by parser
+
     @Test
     fun testDoubleExpressionParser() {
         val parser = ExpressionParser<Double>(
-            termParser = MappedParser(DigitParser()) { it.text.toDouble() },
+            termParser = { IntAsDoubleParser() },
 
             Operator.Infix(op = "+", 40) { l, r -> l + r },
             Operator.Infix(op = "-", 40) { l, r -> l - r },
@@ -96,12 +101,7 @@ class TestExpression {
     @Test
     fun testBooleanExpressionParser() {
         val parser = ExpressionParser<Boolean>(
-            termParser = MappedParser(
-                ExactChoiceParser(
-                    LiteralTokenParser("true"),
-                    LiteralTokenParser("false"),
-                )
-            ) { it.text.toBoolean() },
+            termParser = { BooleanLiteralParser() },
 
             Operator.Infix("&&", 40) { l, r -> l && r },
             Operator.Infix("||", 30) { l, r -> l || r },
@@ -146,10 +146,13 @@ class TestExpression {
         }
     }
 
+// Parentheses support
+// ---------------------------------------------------------------------------------------------------------------------
+
     @Test
     fun testParenthesizedExpression() {
         val parser = ExpressionParser<Double>(
-            termParser = MappedParser(DigitParser()) { it.text.toDouble() },
+            termParser = { IntAsDoubleParser() },
             parenthesizedTerm = true,
             operators = listOf(
                 Operator.Infix(op = "+", 40) { l, r -> l + r },
@@ -187,7 +190,7 @@ class TestExpression {
     @Test
     fun testNonParenthesizedExpression() {
         val parser = ExpressionParser<Double>(
-            termParser = MappedParser(DigitParser()) { it.text.toDouble() },
+            termParser = { IntAsDoubleParser() },
             parenthesizedTerm = false,
             operators = listOf(
                 Operator.Infix(op = "+", 40) { l, r -> l + r },
@@ -209,9 +212,7 @@ class TestExpression {
         inputs.map { input ->
             val output = parser.test(input.first, skipWhitespace = true)
 
-            println(output?.first)
-
-            if(input.second != null) {
+            if (input.second != null) {
                 expectThat(output)
                     .parsedCorrectly()
                     .node()
@@ -222,11 +223,111 @@ class TestExpression {
 
                         kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
                     }
-            }
-            else {
+            } else {
                 expectThat(output)
                     .parsedIncorrectly()
             }
         }
+    }
+
+// AST simplification support
+// ---------------------------------------------------------------------------------------------------------------------
+
+    @Test
+    fun testSimplifiedExpression() {
+        val parser = ExpressionParser<Double>(
+            termParser = { IntAsDoubleParser() },
+            parenthesizedTerm = true,
+            simplifyAst = true,
+            operators = listOf(
+                Operator.Infix(op = "+", 40) { l, r -> l + r },
+                Operator.Infix(op = "-", 40) { l, r -> l - r },
+                Operator.Infix(op = "*", 60) { l, r -> l * r },
+                Operator.Infix(op = "/", 60) { l, r -> l / r },
+
+                Operator.Prefix(op = "-", 80) { r -> -r },
+                Operator.Infixr(op = "^", 70) { l, r -> l.pow(r) },
+            )
+        )
+        val output = parser.test("(1 + 2) * 3", skipWhitespace = true)
+
+        expectThat(output)
+            .parsedCorrectly(
+                """
+                |(InfixOperatorNode:
+                |  (InfixOperatorNode:
+                |    (ValueNode: '1.0')
+                |    (BinaryOperationNode:
+                |      (TextNode: '+')
+                |      (ValueNode: '2.0')
+                |    )
+                |  )
+                |  (BinaryOperationNode:
+                |    (TextNode: '*')
+                |    (ValueNode: '3.0')
+                |  )
+                |)
+                """.trimMargin()
+            )
+    }
+
+    @Test
+    fun testNonSimplifiedExpression() {
+        val parser = ExpressionParser<Double>(
+            termParser = { IntAsDoubleParser() },
+            parenthesizedTerm = true,
+            simplifyAst = false,
+            operators = listOf(
+                Operator.Infix(op = "+", 40) { l, r -> l + r },
+                Operator.Infix(op = "-", 40) { l, r -> l - r },
+                Operator.Infix(op = "*", 60) { l, r -> l * r },
+                Operator.Infix(op = "/", 60) { l, r -> l / r },
+
+                Operator.Prefix(op = "-", 80) { r -> -r },
+                Operator.Infixr(op = "^", 70) { l, r -> l.pow(r) },
+            )
+        )
+        val output = parser.test("(1 + 2) * 3", skipWhitespace = true)
+
+        expectThat(output)
+            .parsedCorrectly(
+                """
+                |(InfixOperatorNode:
+                |  (InfixOperatorNode:
+                |    (InfixrOperatorNode:
+                |      (PrefixOperatorNode:
+                |        (InfixOperatorNode:
+                |          (InfixOperatorNode:
+                |            (InfixrOperatorNode:
+                |              (PrefixOperatorNode:
+                |                (ValueNode: '1.0')
+                |              )
+                |            )
+                |          )
+                |          (BinaryOperationNode:
+                |            (TextNode: '+')
+                |            (InfixOperatorNode:
+                |              (InfixrOperatorNode:
+                |                (PrefixOperatorNode:
+                |                  (ValueNode: '2.0')
+                |                )
+                |              )
+                |            )
+                |          )
+                |        )
+                |      )
+                |    )
+                |    (BinaryOperationNode:
+                |      (TextNode: '*')
+                |      (InfixrOperatorNode:
+                |        (PrefixOperatorNode:
+                |          (ValueNode: '3.0')
+                |        )
+                |      )
+                |    )
+                |  )
+                |)
+                """.trimMargin()
+            )
     }
 }
