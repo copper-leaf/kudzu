@@ -5,6 +5,7 @@ import com.copperleaf.kudzu.isEqualTo
 import com.copperleaf.kudzu.isNotNull
 import com.copperleaf.kudzu.node
 import com.copperleaf.kudzu.parsedCorrectly
+import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.parser.chars.DigitParser
 import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 import com.copperleaf.kudzu.parser.mapped.MappedParser
@@ -142,6 +143,90 @@ class TestExpression {
 
                     kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
                 }
+        }
+    }
+
+    @Test
+    fun testParenthesizedExpression() {
+        val parser = ExpressionParser<Double>(
+            termParser = MappedParser(DigitParser()) { it.text.toDouble() },
+            parenthesizedTerm = true,
+            operators = listOf(
+                Operator.Infix(op = "+", 40) { l, r -> l + r },
+                Operator.Infix(op = "-", 40) { l, r -> l - r },
+                Operator.Infix(op = "*", 60) { l, r -> l * r },
+                Operator.Infix(op = "/", 60) { l, r -> l / r },
+
+                Operator.Prefix(op = "-", 80) { r -> -r },
+                Operator.Infixr(op = "^", 70) { l, r -> l.pow(r) },
+            )
+        )
+
+        val inputs = listOf(
+            "1 + 2 * 3" to { 1.0 + 2.0 * 3.0 },
+            "1 + (2 * 3)" to { 1.0 + (2.0 * 3.0) },
+            "(1 + 2) * 3" to { (1.0 + 2.0) * 3.0 },
+        )
+
+        inputs.map { input ->
+            val output = parser.test(input.first, skipWhitespace = true)
+
+            expectThat(output)
+                .parsedCorrectly()
+                .node()
+                .isNotNull()
+                .also {
+                    val kudzuExpressionResult: Double = parser.evaluator.evaluateExpression(it)
+                    val kotlinExpressionResult = input.second()
+
+                    kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
+                }
+        }
+    }
+
+    @Test
+    fun testNonParenthesizedExpression() {
+        val parser = ExpressionParser<Double>(
+            termParser = MappedParser(DigitParser()) { it.text.toDouble() },
+            parenthesizedTerm = false,
+            operators = listOf(
+                Operator.Infix(op = "+", 40) { l, r -> l + r },
+                Operator.Infix(op = "-", 40) { l, r -> l - r },
+                Operator.Infix(op = "*", 60) { l, r -> l * r },
+                Operator.Infix(op = "/", 60) { l, r -> l / r },
+
+                Operator.Prefix(op = "-", 80) { r -> -r },
+                Operator.Infixr(op = "^", 70) { l, r -> l.pow(r) },
+            )
+        )
+
+        val inputs = listOf(
+            "1 + 2 * 3" to { 1.0 + 2.0 * 3.0 },
+            "1 + (2 * 3)" to null,
+            "(1 + 2) * 3" to null,
+        )
+
+        inputs.map { input ->
+            val output = parser.test(input.first, skipWhitespace = true)
+
+            println(output?.first)
+
+            if(input.second != null) {
+                expectThat(output)
+                    .parsedCorrectly()
+                    .node()
+                    .isNotNull()
+                    .also {
+                        val kudzuExpressionResult: Double = parser.evaluator.evaluateExpression(it)
+                        val kotlinExpressionResult = input.second!!()
+
+                        kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
+                    }
+            }
+            else {
+                expectThat(output)
+                    .parsedIncorrectly()
+            }
         }
     }
 }
