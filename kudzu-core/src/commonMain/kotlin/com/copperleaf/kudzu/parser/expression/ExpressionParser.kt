@@ -29,16 +29,17 @@ import com.copperleaf.kudzu.parser.lazy.LazyParser
 @ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
 class ExpressionParser<T : Any>(
-    private val termParser: (Parser<Node>)->Parser<ValueNode<T>>,
+    private val termParser: (Parser<Node>) -> Parser<ValueNode<T>>,
     private val operators: List<Operator<T>>,
     private val parenthesizedTerm: Boolean = true,
     private val simplifyAst: Boolean = true
 ) : Parser<Node> {
     constructor(
-        termParser: (Parser<Node>)->Parser<ValueNode<T>>,
+        termParser: (Parser<Node>) -> Parser<ValueNode<T>>,
         vararg operators: Operator<T>,
-        parenthesizedTerm: Boolean = true
-    ) : this(termParser, operators.toList(), parenthesizedTerm)
+        parenthesizedTerm: Boolean = true,
+        simplifyAst: Boolean = true
+    ) : this(termParser, operators.toList(), parenthesizedTerm, simplifyAst)
 
     private val parser: Parser<Node> by lazy {
         LazyParser<Node>().also {

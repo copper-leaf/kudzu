@@ -9,6 +9,7 @@ import com.copperleaf.kudzu.parser.expression.PrefixOperatorParser
  * left-to-right using [operatorNodes] for each subsequent operator. The result of one operation becomes the operand for
  * the next.
  */
+@ExperimentalStdlibApi
 class PrefixOperatorNode(
     val operatorNodes: List<Node>,
     val operand: Node,
@@ -16,11 +17,11 @@ class PrefixOperatorNode(
 ) : ExpressionNode(context) {
     override val children: List<Node> = operatorNodes + operand
 
-    override fun simplify(): Node {
-        return if(operatorNodes.isEmpty()) {
-            operand.simplifyChild()
+    override val simplify = DeepRecursiveFunction<Node, Node> {
+        if (operatorNodes.isEmpty()) {
+            simplifyChild(operand)
         } else {
-            this
+            this@PrefixOperatorNode
         }
     }
 }

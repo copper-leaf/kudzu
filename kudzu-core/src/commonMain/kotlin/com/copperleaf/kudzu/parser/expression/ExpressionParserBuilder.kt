@@ -10,8 +10,9 @@ import com.copperleaf.kudzu.parser.choice.PredictiveChoiceParser
 import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 
+@ExperimentalStdlibApi
+@Suppress("UNCHECKED_CAST")
 object ExpressionParserBuilder {
-    @ExperimentalStdlibApi
     fun <T : Any> checkOperatorsAreValid(
         operators: List<Operator<T>>
     ) {
@@ -21,7 +22,6 @@ object ExpressionParserBuilder {
         check(binaryOperators.map { it.name }.distinct().size == binaryOperators.size) { "Operators must be unique" }
     }
 
-    @ExperimentalStdlibApi
     fun <T : Any> createRootTermParser(
         expressionParser: Parser<*>,
         termParser: Parser<ValueNode<T>>,
@@ -48,13 +48,12 @@ object ExpressionParserBuilder {
                 it.node
             }
 
-            unwrappedChoiceParser as Parser<Node>
+            unwrappedChoiceParser
         } else {
             termParser as Parser<Node>
         }
     }
 
-    @ExperimentalStdlibApi
     fun <T : Any> createParserLevel(operand: Parser<Node>, operators: List<Operator<T>>): Parser<Node> {
         val actualOperatorParserForLevel = ExactChoiceParser(*operators.map { it.parser }.toTypedArray())
 
@@ -69,7 +68,6 @@ object ExpressionParserBuilder {
         return operatorParserLevelParser as Parser<Node>
     }
 
-    @ExperimentalStdlibApi
     fun <T : Any> createExpressionParser(
         expressionParser: Parser<*>,
         termParser: Parser<ValueNode<T>>,
@@ -94,19 +92,17 @@ object ExpressionParserBuilder {
                 createParserLevel(lastParser, currentLevelOperators)
             }
 
-        val maybeSimplifiedExpressionParser = if(simplifyAst) {
+        val maybeSimplifiedExpressionParser = if (simplifyAst) {
             FlatMappedParser(
                 operatorsLevelsFoldedIntoExpressionParser
             ) {
-                if(it is ExpressionNode) {
-                    it.simplify()
-                }
-                else {
+                if (it is ExpressionNode) {
+                    it.simplify(it)
+                } else {
                     it
                 }
             }
-        }
-        else {
+        } else {
             operatorsLevelsFoldedIntoExpressionParser
         }
 

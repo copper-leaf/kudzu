@@ -9,6 +9,7 @@ import com.copperleaf.kudzu.node.NodeContext
  * @see [InfixOperatorNode]
  * @see [InfixrOperatorNode]
  */
+@ExperimentalStdlibApi
 class BinaryOperationNode(
     val operator: Node,
     val operand: Node,
@@ -16,10 +17,10 @@ class BinaryOperationNode(
 ) : ExpressionNode(context) {
     override val children: List<Node> = listOf(operator, operand)
 
-    override fun simplify(): Node {
-        return BinaryOperationNode(
+    override val simplify = DeepRecursiveFunction<Node, Node> {
+        BinaryOperationNode(
             operator,
-            operand.simplifyChild(),
+            simplifyChild(operand),
             context
         )
     }

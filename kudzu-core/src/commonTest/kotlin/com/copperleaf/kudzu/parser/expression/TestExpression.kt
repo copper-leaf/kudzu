@@ -10,6 +10,7 @@ import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.mapped.MappedParser
 import com.copperleaf.kudzu.parser.value.BooleanLiteralParser
+import com.copperleaf.kudzu.parser.value.DoubleLiteralParser
 import com.copperleaf.kudzu.parser.value.IntLiteralParser
 import com.copperleaf.kudzu.test
 import kotlin.math.pow
@@ -18,7 +19,7 @@ import kotlin.test.Test
 @OptIn(ExperimentalStdlibApi::class)
 class TestExpression {
 
-    private class IntAsDoubleParser(
+    class IntAsDoubleParser(
         private val parser: Parser<ValueNode<Double>> = MappedParser(IntLiteralParser()) { it.value.toDouble() }
     ) : Parser<ValueNode<Double>> by parser
 
@@ -90,7 +91,7 @@ class TestExpression {
                 .node()
                 .isNotNull()
                 .also {
-                    val kudzuExpressionResult: Double = parser.evaluator.evaluateExpression(it)
+                    val kudzuExpressionResult: Double = parser.evaluator.evaluate(it)
                     val kotlinExpressionResult = input.second()
 
                     kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
@@ -138,7 +139,7 @@ class TestExpression {
                 .node()
                 .isNotNull()
                 .also {
-                    val kudzuExpressionResult: Boolean = parser.evaluator.evaluateExpression(it)
+                    val kudzuExpressionResult: Boolean = parser.evaluator.evaluate(it)
                     val kotlinExpressionResult = input.second()
 
                     kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
@@ -179,7 +180,7 @@ class TestExpression {
                 .node()
                 .isNotNull()
                 .also {
-                    val kudzuExpressionResult: Double = parser.evaluator.evaluateExpression(it)
+                    val kudzuExpressionResult: Double = parser.evaluator.evaluate(it)
                     val kotlinExpressionResult = input.second()
 
                     kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
@@ -218,7 +219,7 @@ class TestExpression {
                     .node()
                     .isNotNull()
                     .also {
-                        val kudzuExpressionResult: Double = parser.evaluator.evaluateExpression(it)
+                        val kudzuExpressionResult: Double = parser.evaluator.evaluate(it)
                         val kotlinExpressionResult = input.second!!()
 
                         kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
@@ -236,7 +237,7 @@ class TestExpression {
     @Test
     fun testSimplifiedExpression() {
         val parser = ExpressionParser<Double>(
-            termParser = { IntAsDoubleParser() },
+            termParser = { DoubleLiteralParser() },
             parenthesizedTerm = true,
             simplifyAst = true,
             operators = listOf(
@@ -249,22 +250,22 @@ class TestExpression {
                 Operator.Infixr(op = "^", 70) { l, r -> l.pow(r) },
             )
         )
-        val output = parser.test("(1 + 2) * 3", skipWhitespace = true)
+        val output = parser.test("(1.1 + 2.2) * 3.3", skipWhitespace = true)
 
         expectThat(output)
             .parsedCorrectly(
                 """
                 |(InfixOperatorNode:
                 |  (InfixOperatorNode:
-                |    (ValueNode: '1.0')
+                |    (ValueNode: '1.1')
                 |    (BinaryOperationNode:
                 |      (TextNode: '+')
-                |      (ValueNode: '2.0')
+                |      (ValueNode: '2.2')
                 |    )
                 |  )
                 |  (BinaryOperationNode:
                 |    (TextNode: '*')
-                |    (ValueNode: '3.0')
+                |    (ValueNode: '3.3')
                 |  )
                 |)
                 """.trimMargin()
@@ -274,7 +275,7 @@ class TestExpression {
     @Test
     fun testNonSimplifiedExpression() {
         val parser = ExpressionParser<Double>(
-            termParser = { IntAsDoubleParser() },
+            termParser = { DoubleLiteralParser() },
             parenthesizedTerm = true,
             simplifyAst = false,
             operators = listOf(
@@ -287,7 +288,7 @@ class TestExpression {
                 Operator.Infixr(op = "^", 70) { l, r -> l.pow(r) },
             )
         )
-        val output = parser.test("(1 + 2) * 3", skipWhitespace = true)
+        val output = parser.test("(1.1 + 2.2) * 3.3", skipWhitespace = true)
 
         expectThat(output)
             .parsedCorrectly(
@@ -300,7 +301,7 @@ class TestExpression {
                 |          (InfixOperatorNode:
                 |            (InfixrOperatorNode:
                 |              (PrefixOperatorNode:
-                |                (ValueNode: '1.0')
+                |                (ValueNode: '1.1')
                 |              )
                 |            )
                 |          )
@@ -309,7 +310,7 @@ class TestExpression {
                 |            (InfixOperatorNode:
                 |              (InfixrOperatorNode:
                 |                (PrefixOperatorNode:
-                |                  (ValueNode: '2.0')
+                |                  (ValueNode: '2.2')
                 |                )
                 |              )
                 |            )
@@ -321,7 +322,7 @@ class TestExpression {
                 |      (TextNode: '*')
                 |      (InfixrOperatorNode:
                 |        (PrefixOperatorNode:
-                |          (ValueNode: '3.0')
+                |          (ValueNode: '3.3')
                 |        )
                 |      )
                 |    )

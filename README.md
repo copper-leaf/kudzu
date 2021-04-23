@@ -1,17 +1,41 @@
 # Kudzu
 ---
 
-> A monadic (I think...) recursive-descent parser written in Kotlin
+> A monadic (I think...) recursive-descent parser combinator written in Kotlin
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/copper-leaf/kudzu)
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.copper-leaf/kudzu-core)
 ![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.32-orange)
 
-Kudzu is a recursive-descent parser written in Kotlin, with the goal of immutability, simplicity, and multiplatform 
-usability. It is mostly an exercise for me to learn more about parsing algorithms, but should work reasonably-well 
-enough to be used for small, non-trivial parsers.
+Kudzu is a recursive-descent parser written in Kotlin, with the goal of immutability, simplicity, testability, and 
+multiplatform usability. It's designed to be a simple starting place for writing smaller parsers to evaluate relatively 
+simple grammars for other Copper-Leaf libraries, but flexible enough to be used for larger languages.
 
-### Installation
+Notable features:
+
+- Multiplatform targets: JVM, Android, JS Legacy, JS IR, iOS
+- No separate lexer/parser. You really just don't need it, so Kudzu omits it
+- Parser combinator structure means every piece of your grammar is a complete parser, and thus smaller parsing units can 
+  be tested in isolation, but the combination of them creates the full language
+- Everything in Kudzu is immutable, and thus fully thread-safe
+- Built on top of [DeepRecursiveFunction](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-deep-recursive-function/#:~:text=Defines%20deep%20recursive%20function%20that,function%20use%20its%20invoke%20function.&text=The%20block%20of%20code%20defines%20the%20body%20of%20a%20recursive%20function.)
+  to provide readable stacktraces and prevent StackOverflowErrors
+- No complicated DSL or arcane combinator operators required, just normal, readable Kotlin classes. You don't need a 
+  Ph.D. in computational linguistics or functional programming to understand a Kudzu parser
+- Many useful combinators provided out of the box
+    - Boolean, Int, Double literals
+    - String and Character literals, with standard escaped characters (i.e. \n) and Unicode sequences (i.e. \u00A2)
+    - Identifiers
+    - Choice, repetition, optional higher-kinded parsers
+- Parses input to an Abstract Syntax Tree (AST) and provides facilities for simplifying and/or introspecting the AST 
+- Line- and column-number source tracking
+- Generic expression parser with all the fixin's
+    - Customizable operator precedence
+    - Operators with prefix, postfix, and infix with both left- and right-recursive associativity
+    - Parentheses
+    - Simplify deeply-nested expressions AST to simpler representation
+
+## Installation
 
 ```kotlin
 repositories {
@@ -35,43 +59,83 @@ kotlin {
 }
 ```
 
-## Why did I write it?
-
-I've got several projects which require custom parsing, and after looking around at the various options available in 
-Java and Kotlin, I've decided that I would just rather write my own. Most of the ones I found either require Java 8
-(a deal-breaker if I want to use it on older versions of Android), or I found them to be very complex to use, being 
-intended for writing full-blown, high-performance compilers. I needed something simple, and I also wanted to learn how 
-parsers work, so I decided to make my own. 
-
-This library is a parser combinator like most of the others, but is focused on having a simpler API and clear separation 
-of concerns. Maybe I just found the other options confusing just because I am still learning how these things work, but 
-Kudzu produces code that is quite a bit easier to read and understand than most of the other options I've found. There 
-is not complex DSL that needs to be learned, Kudzu parsers are just normal Kotlin classes, and recursive parsing is just
-constructing those classes with other parsers. It's all just normal Kotlin, you don't have to learn all the special
-operator overrides or know anything about functional programming/terminology to build a Kudzu parser. Just express the
-intent in well-named classes and it should just work.
-
-Kudzu parses content into an AST, but features several utilities that can help you deal with the complexity of the AST
-without bogging you down in details or complex AST-navigation code.
-
-## Features
-
-- Fully multiplatform parsing library, which can be used on JVM, Android, JS, and iOS targets.
-- Simple, combinatorial API for constructing complex parsers from simpler ones
-- Parsing API does not rely on generics, which make your code difficult to read. Instead, it relies on node tagging and 
-    helper functions available to all Node types for evaluating an AST, rather than specific properties of specific 
-    class types.
-- Recursive-descent parsing does not require separate lexing and parsing phases
-- Parsers and AST are both immutable structures, and can safely be used in multithreaded code
-- Parse trees can be evaluated during parsing using `MappedParser`, or you can evaluate it afterward from the full AST
-    with its `Visitor` API. You can also combine the two: simplify particular subtrees with `MappedParser` to make the 
-    final AST easier to understand and navigate.
-
 ## Basic Usage
 
-See tests for example usage of every included parser. A basic example of parsing and evaluating follows.
+See tests for example usage of every included parser. A basic example of parsing and evaluating in several different 
+formats follows:
 
-### Overview
+### Combine several small parsers into a single larger one
+
+```kotlin
+val intLiteralParser = MappedParser(
+    SequenceParser(
+        MaybeParser(
+            CharInParser('-')
+        ),
+        AtLeastParser(
+            DigitParser(),
+            minSize = 1
+        )
+    )
+) { it.text.toInt() }
+
+val (node, remainingText) = intLiteralParser.parse(ParserContext.fromString("-123"))
+val parsedValue: Int = node.value
+expectThat(parsedValue).isEqualTo(-123)
+```
+
+### Find-and-replace structured sequences within unstructured text
+
+```kotlin
+val variableMap = mapOf(
+    "asdf" to 1,
+    "qwerty" to 2,
+)
+
+val patternToReplace = MappedParser(
+    SequenceParser(
+        CharInParser('#'),
+        CharInParser('{'),
+        IdentifierTokenParser(),
+        CharInParser('}'),
+    )
+) {
+    val (_, _, identifier, _) = it.children
+    variableMap[identifier.text]
+}
+
+val findAndReplaceParser = ManyParser(
+    PredictiveChoiceParser(
+        patternToReplace,
+        ScanParser(patternToReplace),
+    )
+)
+
+val (node, remainingText) = findAndReplaceParser.parse(ParserContext.fromString("the value of #{asdf} is 1, but #{qwerty} is 2"))
+expectThat(node.text).isEqualTo("the value of 1 is 1, but 2 is 2")
+```
+
+### Construct and evaluate expressions with custom operators
+
+```kotlin
+val expressionParser = ExpressionParser<Int>(
+    termParser = { IntLiteralParser() },
+
+    Operator.Infix(op = "+", 40) { l, r -> l + r },
+    Operator.Infix(op = "-", 40) { l, r -> l - r },
+    Operator.Infix(op = "*", 60) { l, r -> l * r },
+    Operator.Infix(op = "/", 60) { l, r -> l / r },
+
+    Operator.Prefix(op = "-", 80) { r -> -r },
+    Operator.Infixr(op = "^", 70) { l, r -> l.toDouble().pow(r).toInt() },
+)
+
+val (node, remainingText) = expressionParser.parse(ParserContext.fromString("2 ^ ((4 - 2) * 2)", skipWhitespace = true))
+val value = expressionParser.evaluator.evaluate(node)
+expectThat(value).isEqualTo(16)
+```
+
+## Implementation Details
 
 In Kudzu, a Parser is a class that extends `Parser` and implements 2 methods: `predict`, and `parse`. `predict` is a 
 method that checks if the parser is capable of consuming the next character, and `parse` actually implements the parsing
@@ -95,7 +159,7 @@ general process of parsing and evaluating text with Kudzu is as follows:
 1) String
 2) ParserContext
 3) Parser.parse(ParserContext) -> Pair<Node, ParserContext>
-4) Node.visit(VisitorContext, [Visitor]) -> Unit
+4) Node.visit([Visitor]) -> Unit
 ```
 
 1. The String text that is to be parsed.
@@ -105,7 +169,7 @@ general process of parsing and evaluating text with Kudzu is as follows:
     empty ParserContext. This root parser will recursively call the same method on other parser objects, each one 
     building more nodes in the full tree and advancing the position in the ParserContext.
 4. The Node can be visited by any number of Visitor objects, which recognize and evaluate distinct nodes in the parse 
-    tree and combine the results into the VisitorContext. 
+    tree.
     
 ### Building Parsers
 
@@ -132,7 +196,7 @@ val output = statement.parse("one two 1234 asdf 56 qwerty 7890")
 
 This simple grammar will match an input string like `one two 1234 asdf 56 qwerty 7890`, and demonstrates how complex 
 parsers can be built from smaller ones, and introduces several of the important built-in parses available. Below is a 
-description of some of these parser types.
+description of some of these parser types (browse source for all available parsers)
 
 - `LetterParser`: Consumes a single letter from the input, as recognized by Kotlin's `char.isLetter()`
 - `DigitParser`: Consumes a single digit from the input, as recognized by Kotlin's `char.isDigit()`
@@ -193,6 +257,11 @@ node.visit(object : Visitor.Callback {
 - [x] Implement a visitor pattern for evaluating the AST
 - [x] Setup API for predictive parsing rather than always assuming infinite-lookahead (which may never terminate)
 - [x] Add helper APIs for navigating the parsed AST
-- [ ] Create nice builder-style API for combining parsers 
-- [ ] Be able to render the grammar in BNF
-- [ ] Be able to render the grammar in a railroad diagram  
+- [ ] Build a nicer, more fully-featured "find and replace"-style parser, to match simplicity of Expression parser
+- [ ] Create nice builder-style API for combining parsers (this will always be optional)
+- [ ] Be able to render the grammar in EBNF format or railroad diagrams
+- [ ] Improved input stream pre-processing. Right now it only allows to skip whitespace, would be nice to use an 
+      arbitrary Parser or something similar to skip comments, or do other source-level transformations on the stream
+- [ ] Support reading directly from a File or other Stream, rather than holding entire input in memory
+- [ ] The generic types aren't quite working how I'd like them to, especially with the expression parser. I need to 
+      figure out more about how to properly implement the variance of the generics here

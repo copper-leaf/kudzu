@@ -9,6 +9,10 @@ plugins {
 
 description = "A monadic (I think...) recursive-descent parser written in Kotlin"
 
+repositories {
+    maven(url = "https://jitpack.io")
+}
+
 android {
     compileSdkVersion(30)
     defaultConfig {
@@ -76,10 +80,12 @@ kotlin {
             }
         }
         val jvmTest by getting {
+            dependsOn(commonTest)
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-test-junit:1.4.32")
-                implementation("io.mockk:mockk:1.11.0")
-                implementation("io.strikt:strikt-core:0.30.1")
+
+                implementation("com.github.alllex:parsus:v0.1.2")
+                implementation("com.github.h0tk3y.betterParse:better-parse:0.4.2")
             }
         }
 

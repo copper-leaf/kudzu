@@ -93,6 +93,7 @@ class TestLiteralValues {
             """  "\'asdf\'"      """ to { "'asdf'" },
             """  "\"asdf\""      """ to { "\"asdf\"" },
             """  "\u00A2\u00b5"  """ to { "¢µ" },
+            """  "\uFDFD"        """ to { "﷽" },
             """  "0123asdf \u00A2 \\ \r \'asdf\' \n \t \u00b5 \"asdf\""  """ to {
                 "0123asdf ¢ \\ \r 'asdf' \n \t µ \"asdf\""
             },
@@ -152,14 +153,13 @@ class TestLiteralValues {
         tests.forEach { (input, expectedValueFn) ->
             val expectedValue = expectedValueFn?.invoke()
 
-            if(logErrors) {
+            if (logErrors) {
                 println("input=$input, expectedValue=$expectedValue")
             }
 
-            if(expectedValueFn == null) {
+            if (expectedValueFn == null) {
                 expectThat(underTest.test(input)).parsedIncorrectly()
-            }
-            else if (allTestsShouldFail) {
+            } else if (allTestsShouldFail) {
                 expectThat(underTest.test(input)).parsedIncorrectly()
             } else {
                 expectThat(underTest.test(input, logErrors = logErrors))

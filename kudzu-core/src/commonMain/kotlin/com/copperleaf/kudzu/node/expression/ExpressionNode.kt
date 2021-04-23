@@ -8,18 +8,18 @@ import com.copperleaf.kudzu.node.NonTerminalNode
  * A Node representing a generic non-terminal node in an Expression. Other expression nodes must extend this to support
  * simplifying the resulting expression AST.
  */
+@ExperimentalStdlibApi
 abstract class ExpressionNode(
     context: NodeContext
 ) : NonTerminalNode(context) {
 
-    abstract fun simplify(): Node
+    abstract val simplify: DeepRecursiveFunction<Node, Node>
 
-    protected fun Node.simplifyChild(): Node {
-        return if(this is ExpressionNode) {
-            this.simplify()
-        }
-        else {
-            this
+    protected suspend fun DeepRecursiveScope<Node, Node>.simplifyChild(child: Node): Node {
+        return if (child is ExpressionNode) {
+            child.simplify.callRecursive(child)
+        } else {
+            child
         }
     }
 }

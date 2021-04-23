@@ -13,57 +13,66 @@ internal class ExpressionEvaluatorImpl<T : Any>(
     private val operators: List<Operator<T>>,
 ) : ExpressionEvaluator<T> {
 
-    override fun evaluateExpression(node: Node): T {
-        return when (node) {
-            is InfixOperatorNode -> node.evaluate()
-            is InfixrOperatorNode -> node.evaluate()
-            is PrefixOperatorNode -> node.evaluate()
-            is PostfixOperatorNode -> node.evaluate()
+    override val evaluate = DeepRecursiveFunction<Node, T> { node ->
+        when (node) {
+            is InfixOperatorNode -> evaluateInfix.callRecursive(node)
+            is InfixrOperatorNode -> evaluateInfixr.callRecursive(node)
+            is PrefixOperatorNode -> evaluatePrefix.callRecursive(node)
+            is PostfixOperatorNode -> evaluatePostfix.callRecursive(node)
             is ValueNode<*> -> node.value as T
             else -> error("Unknown expression node")
         }
     }
 
-    private fun InfixOperatorNode.evaluate(): T {
-        var result = evaluateExpression(leftOperand)
+    private val evaluateInfix: DeepRecursiveFunction<InfixOperatorNode, T> = DeepRecursiveFunction {
+        with(it) {
+            var result = evaluate.callRecursive(leftOperand)
 
-        for (node in operationNodes) {
-            val rightOperatorResult = evaluateExpression(node.operand)
-            result = node.operator.text.applyBinary(result, rightOperatorResult)
+            for (node in operationNodes) {
+                val rightOperatorResult = evaluate.callRecursive(node.operand)
+                result = node.operator.text.applyBinary(result, rightOperatorResult)
+            }
+
+            result
         }
-
-        return result
     }
 
-    private fun InfixrOperatorNode.evaluate(): T {
-        var result = evaluateExpression(leftOperand)
+    private val evaluateInfixr: DeepRecursiveFunction<InfixrOperatorNode, T> = DeepRecursiveFunction {
+        with(it) {
+            var result = evaluate.callRecursive(leftOperand)
 
-        if (operation != null) {
-            val rightOperationResult = evaluateExpression(operation.operand)
-            result = operation.operator.text.applyBinary(result, rightOperationResult)
+            if (operation != null) {
+                val rightOperationResult = evaluate.callRecursive(operation.operand)
+                result = operation.operator.text.applyBinary(result, rightOperationResult)
+            }
+
+            result
         }
-
-        return result
     }
 
-    private fun PrefixOperatorNode.evaluate(): T {
-        var result = evaluateExpression(operand)
+    private val evaluatePrefix: DeepRecursiveFunction<PrefixOperatorNode, T> = DeepRecursiveFunction {
 
-        for (node in operatorNodes) {
-            result = node.text.applyUnary(result)
+        with(it) {
+            var result = evaluate.callRecursive(operand)
+
+            for (node in operatorNodes) {
+                result = node.text.applyUnary(result)
+            }
+
+            result
         }
-
-        return result
     }
 
-    private fun PostfixOperatorNode.evaluate(): T {
-        var result = evaluateExpression(operand)
+    private val evaluatePostfix: DeepRecursiveFunction<PostfixOperatorNode, T> = DeepRecursiveFunction {
+        with(it) {
+            var result = evaluate.callRecursive(operand)
 
-        for (node in operatorNodes) {
-            result = node.text.applyUnary(result)
+            for (node in operatorNodes) {
+                result = node.text.applyUnary(result)
+            }
+
+            result
         }
-
-        return result
     }
 
     private fun String.applyUnary(node: T): T {

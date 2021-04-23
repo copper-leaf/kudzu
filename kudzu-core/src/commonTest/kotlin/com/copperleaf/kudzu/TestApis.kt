@@ -189,7 +189,7 @@ fun <NodeType : Node> Parser<NodeType>.test(
     } catch (e: ParserException) {
         if (logErrors) {
             e.printStackTrace()
-            println("Parsing failed for input: '${input}'")
+            println("Parsing failed for input: '$input'")
         }
         null
     }

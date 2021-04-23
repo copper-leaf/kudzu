@@ -1,3 +1,9 @@
+## 2.1.0 - 2021-04-23
+
+- Adds parsers for hexidecimal characters, standard escaped characters, escaped unicode sequences, generic identifiers
+- Adds parsers for literal values: int, double, boolean, char, string, null
+- improvements to expression parser: parentheses, AST simplification, implemented with DeepRecursiveFunction
+
 ## 2.0.0 - 2021-04-21
 
 - Major cleanup of internal implementation and public APIs. The general structure/usage of the library remains mostly 
