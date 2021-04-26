@@ -1,3 +1,7 @@
+## 2.2.0 - 2021-04-26
+
+- Adds `SeparatedbyParser` for more easily parsing lists of items separated by an ignored value (like commas)
+
 ## 2.1.0 - 2021-04-23
 
 - Adds parsers for hexidecimal characters, standard escaped characters, escaped unicode sequences, generic identifiers

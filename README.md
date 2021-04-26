@@ -7,9 +7,10 @@
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.copper-leaf/kudzu-core)
 ![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.32-orange)
 
-Kudzu is a recursive-descent parser written in Kotlin, with the goal of immutability, simplicity, testability, and 
-multiplatform usability. It's designed to be a simple starting place for writing smaller parsers to evaluate relatively 
-simple grammars for other Copper-Leaf libraries, but flexible enough to be used for larger languages.
+Kudzu is a recursive-descent parser written in Kotlin, inspired by [Parsec](https://github.com/haskell/parsec), with the
+goal of immutability, simplicity, testability, and multiplatform usability. It's designed to be a simple starting place 
+for writing smaller parsers to evaluate relatively simple grammars for other Copper-Leaf libraries, but flexible enough 
+to be used for larger languages.
 
 Notable features:
 
@@ -265,3 +266,4 @@ node.visit(object : Visitor.Callback {
 - [ ] Support reading directly from a File or other Stream, rather than holding entire input in memory
 - [ ] The generic types aren't quite working how I'd like them to, especially with the expression parser. I need to 
       figure out more about how to properly implement the variance of the generics here
+- [ ] Improve error messages
