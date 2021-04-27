@@ -75,15 +75,19 @@ object ExpressionParserBuilder {
         parenthesizedTerm: Boolean,
         simplifyAst: Boolean
     ): Parser<Node> {
-        checkOperatorsAreValid(operators)
+        val expandedOperatorList = operators.flatMap { it.expandAliases() }
 
-        val operatorsGroupedByPrecedenceAndAssociativity: Map<Operator.Precedence, List<Operator<T>>> = operators
-            .groupBy { it.precedence }
+        checkOperatorsAreValid(expandedOperatorList)
 
-        val operatorsSortedIntoDiscreteLevels: List<List<Operator<T>>> = operatorsGroupedByPrecedenceAndAssociativity
-            .entries
-            .sortedByDescending { it.key }
-            .map { it.value }
+        val operatorsGroupedByPrecedenceAndAssociativity: Map<Operator.Precedence, List<Operator<T>>> =
+            expandedOperatorList
+                .groupBy { it.precedence }
+
+        val operatorsSortedIntoDiscreteLevels: List<List<Operator<T>>> =
+            operatorsGroupedByPrecedenceAndAssociativity
+                .entries
+                .sortedByDescending { it.key }
+                .map { it.value }
 
         val actualTermParser: Parser<Node> = createRootTermParser(expressionParser, termParser, parenthesizedTerm)
 

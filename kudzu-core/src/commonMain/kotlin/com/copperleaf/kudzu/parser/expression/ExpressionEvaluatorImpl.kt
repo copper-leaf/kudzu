@@ -79,7 +79,7 @@ internal class ExpressionEvaluatorImpl<T : Any>(
         return operators
             .asSequence()
             .filterIsInstance<Operator.UnaryOperator<T>>()
-            .first { it.name == this@applyUnary }
+            .first { it.name == this@applyUnary || this@applyUnary in it.aliases }
             .applyFn(node)
     }
 
@@ -87,7 +87,7 @@ internal class ExpressionEvaluatorImpl<T : Any>(
         return operators
             .asSequence()
             .filterIsInstance<Operator.BinaryOperator<T>>()
-            .first { it.name == this@applyBinary }
+            .first { it.name == this@applyBinary || this@applyBinary in it.aliases }
             .applyFn(left, right)
     }
 }

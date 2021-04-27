@@ -331,4 +331,45 @@ class TestExpression {
                 """.trimMargin()
             )
     }
+
+// Operator alias support
+// ---------------------------------------------------------------------------------------------------------------------
+
+    @Test
+    fun testOperatorAliases() {
+        val parser = ExpressionParser<Double>(
+            termParser = { IntAsDoubleParser() },
+
+            Operator.Infix(op = "+", 40, aliases = listOf("plus", "pp")) { l, r -> l + r },
+            Operator.Infix(op = "-", 40, aliases = listOf("minus", "mm")) { l, r -> l - r },
+            Operator.Infix(op = "*", 60, aliases = listOf("times", "tt")) { l, r -> l * r },
+            Operator.Infix(op = "/", 60, aliases = listOf("dividedBy", "dd")) { l, r -> l / r },
+
+            Operator.Prefix(op = "-", 80, aliases = listOf("negative")) { r -> -r },
+            Operator.Infixr(op = "^", 70, aliases = listOf("raisedToThePowerOf")) { l, r -> l.pow(r) },
+        )
+
+        val inputs = listOf(
+            "1 + 2 * 3 - 4 / -5 ^ 6" to { 1.0 + 2.0 * 3.0 - 4.0 / (-5.0).pow(6.0) },
+            "1 plus 2 times 3 minus 4 dividedBy negative 5 raisedToThePowerOf 6" to {
+                1.0 + 2.0 * 3.0 - 4.0 / (-5.0).pow(6.0)
+            },
+            "1 + 2 times 3 - 4 dividedBy negative 5 ^ 6" to { 1.0 + 2.0 * 3.0 - 4.0 / (-5.0).pow(6.0) },
+        )
+
+        inputs.map { input ->
+            val output = parser.test(input.first, skipWhitespace = true, logErrors = true)
+
+            expectThat(output)
+                .parsedCorrectly()
+                .node()
+                .isNotNull()
+                .also {
+                    val kudzuExpressionResult: Double = parser.evaluator.evaluate(it)
+                    val kotlinExpressionResult = input.second()
+
+                    kudzuExpressionResult.isEqualTo(kotlinExpressionResult)
+                }
+        }
+    }
 }

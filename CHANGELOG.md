@@ -1,3 +1,7 @@
+## 2.3.0 - 2021-04-26
+
+- Adds support for operator aliases in `ExpressionParser`
+
 ## 2.2.0 - 2021-04-26
 
 - Adds `SeparatedbyParser` for more easily parsing lists of items separated by an ignored value (like commas)
