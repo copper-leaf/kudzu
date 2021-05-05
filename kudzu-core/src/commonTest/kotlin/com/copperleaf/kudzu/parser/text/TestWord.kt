@@ -13,6 +13,7 @@ import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
+import com.copperleaf.kudzu.remainingText
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
@@ -20,35 +21,48 @@ import kotlin.test.Test
 class TestWord {
 
     @Test
-    fun testWordParser() {
-        var input: String
-        var output: ParserResult<Node>?
-        var expected: String
+    fun testLiteralTokenParser() {
         val underTest = LiteralTokenParser("kotlin")
 
-        input = "kotlin"
-        output = underTest.test(input)
-        expected = """
-            (TextNode: 'kotlin')
-        """
-        expectThat(output)
-            .parsedCorrectly(expected)
+        expectThat(underTest.test("kotlin"))
+            .parsedCorrectly(
+                """
+                |(TextNode: 'kotlin')
+                """.trimMargin()
+            )
             .node()
             .isNotNull()
             .get { text }
             .isEqualTo("kotlin")
-        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
+        expectThat(underTest.predict(ParserContext.fromString("kotlin"))).isTrue()
 
-        input = "java"
-        output = underTest.test(input)
-        expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
+        expectThat(underTest.test("kotli"))
+            .parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext.fromString("kotli"))).isFalse()
+
+        expectThat(underTest.test("kotlin yo"))
+            .parsedCorrectly(
+                """
+                |(TextNode: 'kotlin')
+                """.trimMargin(),
+                allowRemaining = true
+            )
+            .also {
+                it.node()
+                    .isNotNull()
+                    .get { text }
+                    .isEqualTo("kotlin")
+
+                it.remainingText()
+                    .isEqualTo(" yo")
+            }
+        expectThat(underTest.predict(ParserContext.fromString("kotlin yo"))).isTrue()
 
         underTest.checkParsingWhenEmpty()
     }
 
     @Test
-    fun testTokenParser() {
+    fun testAnyTokenParser() {
         var input: String
         var output: ParserResult<Node>?
         val underTest = AnyTokenParser()
@@ -94,34 +108,6 @@ class TestWord {
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
         input = ""
-        output = underTest.test(input)
-        expectThat(output).parsedIncorrectly()
-        expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
-
-        underTest.checkParsingWhenEmpty()
-    }
-
-    @Test
-    fun testNamedTextNode() {
-        var input: String
-        var output: ParserResult<Node>?
-        var expected: String
-        val underTest = LiteralTokenParser("kotlin")
-
-        input = "kotlin"
-        output = underTest.test(input)
-        expected = """
-            (TextNode: 'kotlin')
-        """
-        expectThat(output)
-            .parsedCorrectly(expected)
-            .node()
-            .isNotNull()
-            .get { text }
-            .isEqualTo("kotlin")
-        expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
-
-        input = "java"
         output = underTest.test(input)
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()

@@ -7,9 +7,12 @@ import com.copperleaf.kudzu.parser.expression.Operator
 import com.copperleaf.kudzu.parser.expression.TestExpression
 import com.copperleaf.kudzu.test
 import kotlin.math.pow
+import kotlin.test.Test
 
 @OptIn(ExperimentalStdlibApi::class)
 class KudzuPerformanceTests {
+
+    val enabled = false
 
     val simpleExpression = run {
         "1 - 2 * (3 + 4 / 5 ^ 6 * (7 - 8)) * 9"
@@ -35,8 +38,10 @@ class KudzuPerformanceTests {
     Test duration spread: [5.68s, 6.43s, 7.70s]
     standard deviation: 662ms
      */
-//    @Test // this test takes a long time, so only run it as-needed and not part of normal development cycles
+    @Test // this test takes a long time, so only run it as-needed and not part of normal development cycles
     fun runPerformanceTestOnSimpleExpression() {
+        if (!enabled) return
+
         performanceTest(10_000, 1000) {
             val parser = ExpressionParser<Double>(
                 termParser = { TestExpression.IntAsDoubleParser() },

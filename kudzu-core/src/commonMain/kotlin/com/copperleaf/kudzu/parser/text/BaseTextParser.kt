@@ -8,19 +8,6 @@ import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
 
-/**
- * Consume zero or more whitespace characters from the input.
- *
- * Predicts true when:
- *   - always
- *
- * Parsing stops when:
- *   - the next character is not whitespace
- *   - there is no more input remaining
- *
- * Parsing fails when:
- *   - never
- */
 @ExperimentalStdlibApi
 abstract class BaseTextParser(
     val isValidChar: (Int, Char) -> Boolean,

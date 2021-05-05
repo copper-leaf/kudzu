@@ -11,8 +11,16 @@ import com.copperleaf.kudzu.visitor.VisitorImpl
  * Used by a Parser to verify that the input is not empty when it expects to be able to consume a character.
  */
 @ExperimentalStdlibApi
-fun Parser<*>.checkNotEmpty(input: ParserContext) {
-    if (input.isEmpty()) throw ParserException("unexpected end of input", this, input)
+fun Parser<*>.checkNotEmpty(input: ParserContext, expected: (() -> String)? = null) {
+    if (input.isEmpty()) {
+        val expectedValue = expected?.invoke()
+        val message = if (expectedValue != null) {
+            "unexpected end of input. Expected '$expectedValue'"
+        } else {
+            "unexpected end of input"
+        }
+        throw ParserException(message, this, input)
+    }
 }
 
 /**

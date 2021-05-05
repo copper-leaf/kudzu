@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalStdlibApi::class)
+
 package com.copperleaf.kudzu
 
 import com.copperleaf.kudzu.node.Node
@@ -55,6 +56,20 @@ fun ParserResult<Node>?.parsedIncorrectly(): ParserResult<Node>? {
 }
 
 fun <T : Node> ParserResult<T>?.node(): T? = this?.first
+
+fun ParserResult<*>?.remainingText(): String? {
+    if (this == null) return null
+
+    var remaining = this.second
+    var token = ""
+
+    while (!remaining.isEmpty()) {
+        token += remaining.next()
+        remaining = remaining.remaining()
+    }
+
+    return token
+}
 
 fun <T> expectThat(value: T): T {
     return value

@@ -1,3 +1,18 @@
+## 2.4.0 - 2021-05-05
+
+- Introduces new `TagParser` for parsing recursive, inline, tag-based markup. This is suitable for parsing things like 
+  HTML spans or the inline formats of Markdown.
+  - Features: 
+    - Fully custom opening and closing tags
+    - Allows tags to contain the same start and end tags (such as for Markdown)
+- `PredictionParser` allows more tailored prediction, which can be useful for things like simpler tag parsers that push
+  open/close tag matching into the evaluation phase instead of enforcing it during parsing.
+- The implementation of `ScanParser` has been tweaked such that it requires at least 1 character able to be parsed. This '
+  also means that it no longer always predicts true, but delegated prediction to its stopping condition: only if its 
+  stopping condition predicts false does `ScanParser` predict true.
+- The implementation of `LiteralTokenParser` has been tweaked such that it requires the entire expected token to match
+  in order to predict true, instead of predicting only based on the next character.
+
 ## 2.3.0 - 2021-04-26
 
 - Adds support for operator aliases in `ExpressionParser`
