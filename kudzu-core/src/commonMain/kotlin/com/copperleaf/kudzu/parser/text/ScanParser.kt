@@ -40,14 +40,14 @@ class ScanParser(
         checkNotEmpty(input)
 
         var remaining = input
-        var text = ""
+        var textBuilder = StringBuilder()
 
         while (!remaining.isEmpty() && !stoppingCondition.predict(remaining)) {
-            text += remaining.next()
+            textBuilder.append(remaining.next())
             remaining = remaining.remaining()
         }
 
-        if (text.isEmpty()) {
+        if (textBuilder.isEmpty()) {
             throw ParserException(
                 "No text was scanned",
                 this@ScanParser,
@@ -55,7 +55,7 @@ class ScanParser(
             )
         } else {
             val nodeContext = NodeContext(input, remaining)
-            TextNode(text, nodeContext) to remaining
+            TextNode(textBuilder.toString(), nodeContext) to remaining
         }
     }
 }

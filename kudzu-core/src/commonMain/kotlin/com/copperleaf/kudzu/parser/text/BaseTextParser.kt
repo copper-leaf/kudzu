@@ -30,17 +30,19 @@ abstract class BaseTextParser(
 
         var remaining = input
         var nextChar: Char
-        var token = ""
+        val tokenBuilder = StringBuilder()
         var index = 0
 
         while (!remaining.isEmpty()) {
             nextChar = remaining.next()
             if (!isValidChar(index, nextChar)) break
 
-            token += nextChar
+            tokenBuilder.append(nextChar)
             remaining = remaining.remaining()
             index++
         }
+
+        val token = tokenBuilder.toString()
 
         if (!isValidText(token)) throw ParserException(
             "Unexpected text '$token' in ${this::class.simpleName}",

@@ -1,3 +1,8 @@
+## 2.5.0 - 2021-05-12
+
+- Adds `NoopParser` for implementing self-closing tags with the `TagParser`
+- Adds `AnyTextParser`, which is like `AnyTextParser`, but parses any non-whitespace characters
+
 ## 2.4.0 - 2021-05-05
 
 - Introduces new `TagParser` for parsing recursive, inline, tag-based markup. This is suitable for parsing things like 
