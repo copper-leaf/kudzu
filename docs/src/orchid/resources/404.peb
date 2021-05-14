@@ -1,9 +1,0 @@
----
-layout: boxNoTitle
----
-
-<div class="has-text-centered">
-  <div class="is-size-1" style="margin-bottom: 30px;">There's nothing here!</div>
-  <img src="{{ 'assets/media/undraw_page_not_found.svg'|asset }}" alt="Not Found">
-  <!-- Image courtesy of unDraw (https://undraw.co/license) -->
-</div>

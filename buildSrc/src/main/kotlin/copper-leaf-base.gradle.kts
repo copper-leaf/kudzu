@@ -5,7 +5,6 @@ plugins {
 repositories {
     mavenCentral()
     google()
-    maven(url = "https://kotlin.bintray.com/kotlinx")
 }
 
 group = Config.groupId
