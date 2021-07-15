@@ -14,7 +14,7 @@ import com.copperleaf.kudzu.parser.ParserResult
 @ExperimentalStdlibApi
 class MappedParser<ParserNodeType : Node, T>(
     val parser: Parser<ParserNodeType>,
-    val mapperFunction: (ParserNodeType) -> T,
+    val mapperFunction: ParserContext.(ParserNodeType) -> T,
 ) : Parser<ValueNode<T>> {
     override fun predict(input: ParserContext): Boolean {
         return parser.predict(input)
@@ -22,7 +22,7 @@ class MappedParser<ParserNodeType : Node, T>(
 
     override val parse = DeepRecursiveFunction<ParserContext, ParserResult<ValueNode<T>>> { input ->
         val result = parser.parse.callRecursive(input)
-        val mappedValue = mapperFunction(result.first)
+        val mappedValue = mapperFunction(input, result.first)
         val valueNode = ValueNode(
             mappedValue,
             NodeContext(input, result.second)

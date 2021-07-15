@@ -43,17 +43,15 @@ class LiteralTokenParser(
 
         val result = doParse(input)
 
-        if (result.first == null) {
-            throw ParserException(
-                "LiteralTokenParser passed predict(), but failed to parse(). Make sure you're using predict() " +
-                    "properly, and that the input text has not been modified during parsing. Expected '$expected', " +
-                    "but got '${result.second}'.",
-                this@LiteralTokenParser,
-                input
-            )
-        }
+        val resultFirst = result.first ?: throw ParserException(
+            "LiteralTokenParser passed predict(), but failed to parse(). Make sure you're using predict() " +
+                "properly, and that the input text has not been modified during parsing. Expected '$expected', " +
+                "but got '${result.second}'.",
+            this@LiteralTokenParser,
+            input
+        )
 
-        TextNode(expected, NodeContext(input, result.first!!)) to result.first!!
+        TextNode(expected, NodeContext(input, resultFirst)) to resultFirst
     }
 
     private fun isValidChar(index: Int, nextChar: Char): Boolean {

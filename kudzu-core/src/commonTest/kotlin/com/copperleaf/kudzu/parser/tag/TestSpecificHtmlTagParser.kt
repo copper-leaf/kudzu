@@ -2,8 +2,12 @@ package com.copperleaf.kudzu.parser.tag
 
 import com.copperleaf.kudzu.expectThat
 import com.copperleaf.kudzu.isTrue
+import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.node.tag.TagNameNode
 import com.copperleaf.kudzu.parsedCorrectly
+import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
+import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
@@ -15,30 +19,36 @@ class TestSpecificHtmlTagParser {
     val tags = listOf(
         TagBuilder(
             "anchor",
-            LiteralTokenParser("<a>"),
-            LiteralTokenParser("</a>"),
+            LiteralTokenParser("<a>").asTagNameParser("a"),
+            LiteralTokenParser("</a>").asTagNameParser("a"),
         ),
         TagBuilder(
             "bold",
-            LiteralTokenParser("<b>"),
-            LiteralTokenParser("</b>"),
+            LiteralTokenParser("<b>").asTagNameParser("b"),
+            LiteralTokenParser("</b>").asTagNameParser("b"),
         ),
         TagBuilder(
             "italics",
-            LiteralTokenParser("<i>"),
-            LiteralTokenParser("</i>"),
+            LiteralTokenParser("<i>").asTagNameParser("i"),
+            LiteralTokenParser("</i>").asTagNameParser("i"),
         ),
         TagBuilder(
             "article",
-            LiteralTokenParser("<article>"),
-            LiteralTokenParser("</article>"),
+            LiteralTokenParser("<article>").asTagNameParser("article"),
+            LiteralTokenParser("</article>").asTagNameParser("article"),
         ),
         TagBuilder(
             "blockquote",
-            LiteralTokenParser("<blockquote>"),
-            LiteralTokenParser("</blockquote>"),
+            LiteralTokenParser("<blockquote>").asTagNameParser("blockquote"),
+            LiteralTokenParser("</blockquote>").asTagNameParser("blockquote"),
         )
     )
+
+    private fun <T : Node> Parser<T>.asTagNameParser(name: String): Parser<TagNameNode<T>> {
+        return FlatMappedParser(this) {
+            TagNameNode(name, it, it.context)
+        }
+    }
 
     @Test
     fun testTagParserPredict() {

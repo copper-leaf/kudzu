@@ -1,6 +1,7 @@
 package com.copperleaf.kudzu.parser.tag
 
 import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.node.tag.TagNameNode
 import com.copperleaf.kudzu.parser.Parser
 
 /**
@@ -9,8 +10,8 @@ import com.copperleaf.kudzu.parser.Parser
  * "closing tag" ends the recursive parsing.
  */
 @ExperimentalStdlibApi
-class TagBuilder<Opening : Node>(
+class TagBuilder<Opening : Node, Closing : Node>(
     val name: String,
-    val openingParser: Parser<Opening>,
-    val closingParser: Parser<*>
+    val openingParser: Parser<TagNameNode<Opening>>,
+    val closingParser: Parser<TagNameNode<Closing>>
 )

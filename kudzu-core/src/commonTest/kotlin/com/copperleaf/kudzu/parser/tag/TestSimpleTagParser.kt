@@ -5,15 +5,18 @@ import com.copperleaf.kudzu.isEqualTo
 import com.copperleaf.kudzu.isNotNull
 import com.copperleaf.kudzu.isTrue
 import com.copperleaf.kudzu.node
+import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.many.ManyNode
 import com.copperleaf.kudzu.node.mapped.ValueNode
 import com.copperleaf.kudzu.node.maybe.MaybeNode
+import com.copperleaf.kudzu.node.tag.TagNameNode
 import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.chars.CharInParser
 import com.copperleaf.kudzu.parser.many.SeparatedByParser
+import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.mapped.MappedParser
 import com.copperleaf.kudzu.parser.maybe.MaybeParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
@@ -30,13 +33,19 @@ import kotlin.test.Test
 @ExperimentalStdlibApi
 class TestSimpleTagParser {
 
+    private fun <T : Node> Parser<T>.asTagNameParser(name: String): Parser<TagNameNode<T>> {
+        return FlatMappedParser(this) {
+            TagNameNode(name, it, it.context)
+        }
+    }
+
     @Test
     fun testTrivialTag() {
         val underTest = SimpleTagParser(
             "anchor",
-            LiteralTokenParser("<a>"),
+            LiteralTokenParser("<a>").asTagNameParser("a"),
             AnyTokenParser(),
-            LiteralTokenParser("</a>")
+            LiteralTokenParser("</a>").asTagNameParser("a")
         )
 
         "<a>one</a>".run {
@@ -119,9 +128,9 @@ class TestSimpleTagParser {
 
     private val nonTrivialTagParser = SimpleTagParser(
         "anchor",
-        openingTag,
+        openingTag.asTagNameParser("a"),
         ScanParser(LiteralTokenParser("</a>")),
-        LiteralTokenParser("</a>")
+        LiteralTokenParser("</a>").asTagNameParser("a")
     )
 
     @Test
@@ -228,7 +237,7 @@ class TestSimpleTagParser {
                 .node()
                 .isNotNull()
                 .apply {
-                    opening.value.isEqualTo(emptyMap<String, Any>())
+                    opening.wrapped.value.isEqualTo(emptyMap<String, Any>())
                     content.text.isEqualTo(" ")
                 }
         }
@@ -246,7 +255,7 @@ class TestSimpleTagParser {
                 .node()
                 .isNotNull()
                 .apply {
-                    opening.value.isEqualTo(mapOf<String, Any>("one" to "two", "three" to 4))
+                    opening.wrapped.value.isEqualTo(mapOf<String, Any>("one" to "two", "three" to 4))
                     content.text.isEqualTo("This is the text that will run all the way to the end of the tag")
                 }
         }

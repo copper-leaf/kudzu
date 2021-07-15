@@ -9,7 +9,7 @@ import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
-import kotlin.test.*
+import kotlin.test.assertEquals
 
 fun <T : Node> ParserResult<T>?.parsedCorrectly(
     expected: String? = null,
@@ -189,19 +189,24 @@ fun Parser<*>.checkParsingWhenEmpty(shouldSucceed: Boolean = false) {
 fun <NodeType : Node> Parser<NodeType>.test(
     input: String,
     skipWhitespace: Boolean = false,
-    logErrors: Boolean = false
+    logErrors: Boolean = false,
+    expectedErrorMessage: String? = null,
 ): ParserResult<NodeType>? {
-    return test(ParserContext.fromString(input, skipWhitespace), logErrors)
+    return test(ParserContext.fromString(input, skipWhitespace), logErrors, expectedErrorMessage)
 }
 
 @ExperimentalStdlibApi
 fun <NodeType : Node> Parser<NodeType>.test(
     input: ParserContext,
-    logErrors: Boolean = false
+    logErrors: Boolean = false,
+    expectedErrorMessage: String? = null,
 ): Pair<NodeType, ParserContext>? {
     return try {
         parse(input)
     } catch (e: ParserException) {
+        if (expectedErrorMessage != null) {
+            assertEquals(expectedErrorMessage, e.message)
+        }
         if (logErrors) {
             e.printStackTrace()
             println("Parsing failed for input: '$input'")

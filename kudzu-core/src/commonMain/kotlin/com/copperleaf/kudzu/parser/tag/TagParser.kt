@@ -14,7 +14,7 @@ import com.copperleaf.kudzu.parser.tag.TagParserBuilder.checkTagsAreValid
  */
 @ExperimentalStdlibApi
 class TagParser(
-    private val tags: List<TagBuilder<*>>,
+    private val tags: List<TagBuilder<*, *>>,
     private val allowSameTagRecursion: Boolean = false
 ) : Parser<ManyNode<Node>> {
 

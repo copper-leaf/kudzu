@@ -1,9 +1,11 @@
 package com.copperleaf.kudzu.parser.tag
 
 import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.node.tag.TagNameNode
 import com.copperleaf.kudzu.node.tag.TagNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
+import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 
@@ -12,14 +14,14 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
  */
 @ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
-class SimpleTagParser<Opening : Node, Content : Node>(
+class SimpleTagParser<Opening : Node, Content : Node, Closing : Node>(
     val name: String,
-    val openingParser: Parser<Opening>,
+    val openingParser: Parser<TagNameNode<Opening>>,
     val contentParser: Parser<Content>,
-    val closingParser: Parser<*>,
-) : Parser<TagNode<Opening, Content>> {
+    val closingParser: Parser<TagNameNode<Closing>>,
+) : Parser<TagNode<Opening, Content, Closing>> {
 
-    private val parser: Parser<TagNode<Opening, Content>> by lazy {
+    private val parser: Parser<TagNode<Opening, Content, Closing>> by lazy {
         FlatMappedParser(
             SequenceParser(
                 openingParser,
@@ -27,8 +29,21 @@ class SimpleTagParser<Opening : Node, Content : Node>(
                 closingParser,
             )
         ) {
-            val (open, content, _) = it.children
-            TagNode(open as Opening, content as Content, it.context)
+            val (open, content, close) = it.children
+            val openingNode = open as TagNameNode<Opening>
+            val contentNode = content as Content
+            val closingNode = close as TagNameNode<Closing>
+
+            if (openingNode.tagName != closingNode.tagName) {
+                throw ParserException(
+                    "Mismatched closing tag: Expected tag name to be " +
+                        "'${openingNode.tagName}', got '${closingNode.tagName}'",
+                    parser = this@SimpleTagParser,
+                    input = this
+                )
+            }
+
+            TagNode(openingNode, contentNode, closingNode, it.context)
         }
     }
 

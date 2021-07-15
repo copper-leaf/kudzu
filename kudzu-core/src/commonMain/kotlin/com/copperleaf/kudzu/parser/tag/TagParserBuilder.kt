@@ -13,19 +13,23 @@ import com.copperleaf.kudzu.parser.text.ScanParser
 @ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
 object TagParserBuilder {
+
+    @Suppress("UNUSED_PARAMETER")
     internal fun checkTagsAreValid(
-        tags: List<TagBuilder<*>>
+        tags: List<TagBuilder<*, *>>
     ) {
         // no-op
     }
 
     internal fun createTagScanningParser(
-        tags: List<TagBuilder<*>>,
+        tags: List<TagBuilder<*, *>>,
         allowSameTagRecursion: Boolean
     ): Parser<ManyNode<Node>> {
+        val tagsWithNode: List<TagBuilder<Node, Node>> = tags as List<TagBuilder<Node, Node>>
+
         // convert each TagBuilder into a SimpleTagParser with a shim for the actual inner content
-        val tagsAsSimpleTagsWithLazyContent: List<Pair<SimpleTagParser<*, *>, LazyParser<ManyNode<Node>>>> = tags
-            .map {
+        val tagsAsSimpleTagsWithLazyContent: List<Pair<SimpleTagParser<*, *, *>, LazyParser<ManyNode<Node>>>> =
+            tagsWithNode.map {
                 val tagContentParser = LazyParser<ManyNode<Node>>()
                 SimpleTagParser(
                     name = it.name,
@@ -49,7 +53,7 @@ object TagParserBuilder {
             val tagChoiceExceptItselfParser = FlatMappedParser(
                 PredictiveChoiceParser(childParsers)
             ) {
-                it.node as TagNode<*, *>
+                it.node as TagNode<*, *, *>
             }
 
             // generic text parsing scans all characters until this tag's closing parser, or until a recursive tag is
@@ -77,7 +81,7 @@ object TagParserBuilder {
                 tagsAsSimpleTagsWithLazyContent.map { it.first }
             )
         ) {
-            it.node as TagNode<*, *>
+            it.node as TagNode<*, *, *>
         }
 
         return ManyParser(
