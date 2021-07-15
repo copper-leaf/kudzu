@@ -1,7 +1,6 @@
 package com.copperleaf.kudzu.parser.value
 
 import com.copperleaf.kudzu.node.chars.CharNode
-import com.copperleaf.kudzu.node.choice.ChoiceNode
 import com.copperleaf.kudzu.node.mapped.ValueNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
@@ -25,10 +24,7 @@ class CharLiteralParser : Parser<ValueNode<Char>> {
                 ),
                 CharInParser('\''),
             ),
-        ) {
-            val (_, c, _) = it.children
-            val choiceNode = c as ChoiceNode
-
+        ) { (_, _, choiceNode, _) ->
             (choiceNode.node as CharNode).char
         }
     }

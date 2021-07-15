@@ -2,8 +2,6 @@ package com.copperleaf.kudzu.parser.many
 
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.many.ManyNode
-import com.copperleaf.kudzu.node.maybe.MaybeNode
-import com.copperleaf.kudzu.node.sequence.SequenceNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
@@ -20,7 +18,7 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
  * SeparatedByParser ::= parser (separator parser)*
  */
 @ExperimentalStdlibApi
-@Suppress("UNCHECKED_CAST")
+
 class SeparatedByParser<T : Node>(
     term: Parser<T>,
     separator: Parser<*>,
@@ -38,24 +36,19 @@ class SeparatedByParser<T : Node>(
                     )
                 )
             )
-        ) {
-            val (initialNode, maybeRemainingList) = it.children
-
-            val initialNodeList: List<T> = listOf(initialNode as T)
-            val remainingNodeList: List<T> = (maybeRemainingList as MaybeNode<ManyNode<SequenceNode>>)
+        ) { (nodeContext, initialNode, maybeRemainingList) ->
+            val initialNodeList: List<T> = listOf(initialNode)
+            val remainingNodeList: List<T> = maybeRemainingList
                 .node
                 ?.nodeList
-                ?.map { nextNodeInList ->
-                    val (_, itemNode) = nextNodeInList.children
-                    itemNode as T
-                }
+                ?.map { (_, _, itemNode) -> itemNode }
                 ?: emptyList()
 
             val actualNodeList = initialNodeList + remainingNodeList
 
             ManyNode(
                 actualNodeList,
-                it.context
+                nodeContext
             )
         }
     }

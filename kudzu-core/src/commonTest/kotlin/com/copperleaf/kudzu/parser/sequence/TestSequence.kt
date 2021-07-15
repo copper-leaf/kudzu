@@ -25,7 +25,7 @@ class TestSequence {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
-        val underTest = SequenceParser(
+        val underTest = SequenceNParser(
             DigitParser(),
             DigitParser(),
             DigitParser(),
@@ -35,7 +35,7 @@ class TestSequence {
         input = "1234"
         output = underTest.test(input)
         expected = """
-            (SequenceNode:
+            (SequenceNNode:
               (CharNode: '1')
               (CharNode: '2')
               (CharNode: '3')
@@ -55,7 +55,7 @@ class TestSequence {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
-        val underTest = SequenceParser(
+        val underTest = SequenceNParser(
             AtLeastParser(DigitParser(), minSize = 1),
             AtLeastParser(WhitespaceCharParser(), minSize = 1),
             AtLeastParser(LetterParser(), minSize = 1)
@@ -64,7 +64,7 @@ class TestSequence {
         input = "1234 asdf"
         output = underTest.test(input)
         expected = """
-            (SequenceNode:
+            (SequenceNNode:
               (ManyNode:
                 (CharNode: '1')
                 (CharNode: '2')
@@ -91,7 +91,7 @@ class TestSequence {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
-        val underTest = SequenceParser(
+        val underTest = SequenceNParser(
             AtLeastParser(DigitParser(), minSize = 1),
             AtLeastParser(LetterParser(), minSize = 1),
             AtLeastParser(DigitParser(), minSize = 1),
@@ -101,7 +101,7 @@ class TestSequence {
         input = "1234 asdf 12345 qwerty"
         output = underTest.test(input, true)
         expected = """
-            (SequenceNode:
+            (SequenceNNode:
               (ManyNode:
                 (CharNode: '1')
                 (CharNode: '2')
@@ -139,7 +139,7 @@ class TestSequence {
     fun testSequenceCannotGetNext() {
         var input: String
         var output: ParserResult<Node>?
-        val underTest = SequenceParser(
+        val underTest = SequenceNParser(
             AtLeastParser(DigitParser(), minSize = 1),
             AtLeastParser(LetterParser(), minSize = 1),
             AtLeastParser(DigitParser(), minSize = 1),
@@ -157,7 +157,7 @@ class TestSequence {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
-        val underTest = SequenceParser(
+        val underTest = SequenceNParser(
             DigitParser(),
             DigitParser(),
             DigitParser(),
@@ -167,7 +167,7 @@ class TestSequence {
         input = "1234"
         output = underTest.test(input)
         expected = """
-            (SequenceNode:
+            (SequenceNNode:
               (CharNode: '1')
               (CharNode: '2')
               (CharNode: '3')

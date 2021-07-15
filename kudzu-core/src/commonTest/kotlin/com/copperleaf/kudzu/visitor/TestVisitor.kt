@@ -64,7 +64,7 @@ class TestVisitor {
                 expectThat(nodesInVisitOrder)
                     .map { it.toString() }
                     .containsExactly(
-                        "(SequenceNode: 1:1 to 2:5)",
+                        "(Sequence3Node: 1:1 to 2:5)",
                         "(MaybeNode: 1:1 to 1:5)",
                         "(ManyNode: 1:1 to 1:5)",
                         "(CharNode: 1:1 to 1:2)",
@@ -127,7 +127,7 @@ class TestVisitor {
                         "(CharNode: 2:3 to 2:4)",
                         "(CharNode: 2:4 to 2:5)",
                         "(ManyNode: 2:2 to 2:5)",
-                        "(SequenceNode: 1:1 to 2:5)",
+                        "(Sequence3Node: 1:1 to 2:5)",
                     )
             }
     }

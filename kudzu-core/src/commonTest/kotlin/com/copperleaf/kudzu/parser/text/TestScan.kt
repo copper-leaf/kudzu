@@ -45,7 +45,7 @@ class TestScan {
         input = "asdf 1"
         output = underTest.test(input)
         expected = """
-            (SequenceNode:
+            (Sequence2Node:
               (TextNode: 'asdf ')
               (CharNode: '1')
             )
@@ -70,11 +70,11 @@ class TestScan {
         output = underTest.test(input)
         expected = """
             (ManyNode:
-              (SequenceNode:
+              (Sequence2Node:
                 (TextNode: 'asdf ')
                 (CharNode: '1')
               )
-              (SequenceNode:
+              (Sequence2Node:
                 (TextNode: ' qwerty ')
                 (CharNode: '2')
               )
@@ -138,7 +138,7 @@ class TestScan {
               )
               (ChoiceNode:
                 (ChoiceNode:
-                  (SequenceNode:
+                  (Sequence2Node:
                     (CharNode: '{')
                     (CharNode: '}')
                   )
@@ -149,7 +149,7 @@ class TestScan {
               )
               (ChoiceNode:
                 (ChoiceNode:
-                  (SequenceNode:
+                  (Sequence4Node:
                     (CharNode: '#')
                     (CharNode: '{')
                     (NamedNode:varIndex:
@@ -164,7 +164,7 @@ class TestScan {
               )
               (ChoiceNode:
                 (ChoiceNode:
-                  (SequenceNode:
+                  (Sequence4Node:
                     (CharNode: '$')
                     (CharNode: '{')
                     (NamedNode:varName:

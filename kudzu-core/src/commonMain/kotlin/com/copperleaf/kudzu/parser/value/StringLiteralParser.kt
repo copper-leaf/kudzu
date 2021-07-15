@@ -4,8 +4,8 @@ import com.copperleaf.kudzu.node.mapped.ValueNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
-import com.copperleaf.kudzu.parser.chars.CharNotInParser
 import com.copperleaf.kudzu.parser.chars.CharInParser
+import com.copperleaf.kudzu.parser.chars.CharNotInParser
 import com.copperleaf.kudzu.parser.chars.EscapedCharParser
 import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 import com.copperleaf.kudzu.parser.many.ManyParser
@@ -26,8 +26,7 @@ class StringLiteralParser : Parser<ValueNode<String>> {
                 ),
                 CharInParser('"'),
             ),
-        ) {
-            val (_, manyNode, _) = it.children
+        ) { (_, _, manyNode, _) ->
             manyNode.text
         }
     }

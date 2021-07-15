@@ -13,7 +13,6 @@ import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
-@Suppress("UNCHECKED_CAST")
 @ExperimentalStdlibApi
 class TestMarkdownWithSpecificHtmlTagsParser {
 

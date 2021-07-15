@@ -6,9 +6,7 @@ import com.copperleaf.kudzu.isNotNull
 import com.copperleaf.kudzu.isTrue
 import com.copperleaf.kudzu.node
 import com.copperleaf.kudzu.node.Node
-import com.copperleaf.kudzu.node.many.ManyNode
 import com.copperleaf.kudzu.node.mapped.ValueNode
-import com.copperleaf.kudzu.node.maybe.MaybeNode
 import com.copperleaf.kudzu.node.tag.TagNameNode
 import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
@@ -29,7 +27,6 @@ import com.copperleaf.kudzu.parser.value.AnyLiteralParser
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
-@Suppress("UNCHECKED_CAST")
 @ExperimentalStdlibApi
 class TestSimpleTagParser {
 
@@ -88,9 +85,8 @@ class TestSimpleTagParser {
             CharInParser('='),
             AnyLiteralParser()
         )
-    ) {
-        val (key, _, value) = it.children
-        key.text to (value as ValueNode<Any>).value
+    ) { (_, key, _, value) ->
+        key.text to value.value
     }
 
     private val paramsListParser: Parser<ValueNode<Map<String, Any>>> = MappedParser(
@@ -102,10 +98,8 @@ class TestSimpleTagParser {
             ),
             OptionalWhitespaceParser()
         )
-    ) {
-        val (_, manyPairsNode, _) = it.children
-
-        val manyPairs: List<Pair<String, Any>> = (manyPairsNode as ManyNode<ValueNode<Pair<String, Any>>>)
+    ) { (_, _, manyPairsNode, _) ->
+        val manyPairs: List<Pair<String, Any>> = manyPairsNode
             .nodeList
             .map { it.value }
 
@@ -120,10 +114,8 @@ class TestSimpleTagParser {
             ),
             CharInParser('>'),
         )
-    ) { seq ->
-        val (_, maybeNode, _) = seq.children
-
-        (maybeNode as MaybeNode<ValueNode<Map<String, Any>>>).node?.value ?: emptyMap()
+    ) { (_, _, maybeNode, _) ->
+        maybeNode.node?.value ?: emptyMap()
     }
 
     private val nonTrivialTagParser = SimpleTagParser(

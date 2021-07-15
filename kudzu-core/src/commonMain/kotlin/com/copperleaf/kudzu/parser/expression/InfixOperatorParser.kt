@@ -1,12 +1,10 @@
 package com.copperleaf.kudzu.parser.expression
 
 import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.node.NonTerminalNode
 import com.copperleaf.kudzu.node.choice.ChoiceNode
 import com.copperleaf.kudzu.node.expression.BinaryOperationNode
 import com.copperleaf.kudzu.node.expression.InfixOperatorNode
-import com.copperleaf.kudzu.node.many.ManyNode
-import com.copperleaf.kudzu.node.maybe.MaybeNode
-import com.copperleaf.kudzu.node.sequence.SequenceNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
@@ -20,7 +18,7 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
  * The parser for a level of combined [Operator.Infix] operators of the same precedence.
  */
 @ExperimentalStdlibApi
-@Suppress("UNCHECKED_CAST")
+
 class InfixOperatorParser(
     val operator: ExactChoiceParser,
     val operand: Parser<Node>
@@ -39,25 +37,24 @@ class InfixOperatorParser(
             )
         )
 
-        FlatMappedParser(impl) { sequenceNode ->
-            val (startOperandNode, maybeManyBinaryOperationNodes) = sequenceNode.children
-            val binaryOperationNodes = (maybeManyBinaryOperationNodes as MaybeNode<ManyNode<SequenceNode>>)
+        FlatMappedParser(impl) { (nodeContext, startOperandNode, maybeManyBinaryOperationNodes) ->
+            val binaryOperationNodes = maybeManyBinaryOperationNodes
                 .node
                 ?.children
                 ?.map {
-                    val (operatorNode, operandNode) = (it as SequenceNode).children
+                    val (operatorNode, operandNode) = (it as NonTerminalNode).children
                     val choiceOperatorNode: ChoiceNode = operatorNode as ChoiceNode
                     BinaryOperationNode(
                         choiceOperatorNode.node,
                         operandNode,
-                        sequenceNode.context
+                        nodeContext
                     )
                 } ?: emptyList()
 
             InfixOperatorNode(
                 startOperandNode,
                 binaryOperationNodes,
-                sequenceNode.context
+                nodeContext
             )
         }
     }

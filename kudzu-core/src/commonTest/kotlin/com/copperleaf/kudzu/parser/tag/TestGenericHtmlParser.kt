@@ -8,7 +8,6 @@ import com.copperleaf.kudzu.node
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.many.ManyNode
 import com.copperleaf.kudzu.node.mapped.ValueNode
-import com.copperleaf.kudzu.node.sequence.SequenceNode
 import com.copperleaf.kudzu.node.tag.TagNameNode
 import com.copperleaf.kudzu.node.tag.TagNode
 import com.copperleaf.kudzu.node.text.TextNode
@@ -29,8 +28,8 @@ import com.copperleaf.kudzu.parser.value.AnyLiteralParser
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
-@Suppress("UNCHECKED_CAST")
 @ExperimentalStdlibApi
+@Suppress("UNCHECKED_CAST")
 class TestGenericHtmlParser {
 
     val htmlAttr: Parser<ValueNode<Pair<String, Any>>> = MappedParser(
@@ -39,10 +38,8 @@ class TestGenericHtmlParser {
             CharInParser('='),
             AnyLiteralParser()
         )
-    ) {
-        val (key, _, value) = it.children
-
-        key.text to (value as ValueNode<Any>).value
+    ) { (_, key, _, value) ->
+        key.text to value.value
     }
 
     @Test
@@ -162,13 +159,11 @@ class TestGenericHtmlParser {
             htmlAttrList,
             CharInParser('>'),
         )
-    ) {
-        val (tagNameSequence, _, attrMap) = it.children
-        val (_, tagName) = (tagNameSequence as SequenceNode).children
+    ) { (nodeContext, tagNameSequence, _, attrMap) ->
+        val (_, _, tagName) = tagNameSequence
+        val contentNode = ValueNode(attrMap.value, nodeContext)
 
-        val contentNode = ValueNode((attrMap as ValueNode<Map<String, Any>>).value, it.context)
-
-        TagNameNode(tagName.text, contentNode, it.context)
+        TagNameNode(tagName.text, contentNode, nodeContext)
     }
 
     @Test
@@ -218,9 +213,9 @@ class TestGenericHtmlParser {
             CharInParser('>'),
         )
     ) {
-        val (_, tagName, _) = it.children
+        val (nodeContext, _, tagName, _) = it
 
-        TagNameNode(tagName.text, it, it.context)
+        TagNameNode(tagName.text, it, nodeContext)
     }
 
     @Test
@@ -300,7 +295,7 @@ class TestGenericHtmlParser {
                     |          (TextNode: 'cruel')
                     |        )
                     |        (TagNameNode:
-                    |          (SequenceNode:
+                    |          (Sequence3Node:
                     |            (TextNode: '</')
                     |            (TextNode: 'b')
                     |            (CharNode: '>')
@@ -310,7 +305,7 @@ class TestGenericHtmlParser {
                     |      (TextNode: ' world')
                     |    )
                     |    (TagNameNode:
-                    |      (SequenceNode:
+                    |      (Sequence3Node:
                     |        (TextNode: '</')
                     |        (TextNode: 'a')
                     |        (CharNode: '>')

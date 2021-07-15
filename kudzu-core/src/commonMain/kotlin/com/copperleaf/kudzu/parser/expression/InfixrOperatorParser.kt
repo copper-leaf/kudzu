@@ -4,8 +4,6 @@ import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.choice.ChoiceNode
 import com.copperleaf.kudzu.node.expression.BinaryOperationNode
 import com.copperleaf.kudzu.node.expression.InfixrOperatorNode
-import com.copperleaf.kudzu.node.maybe.MaybeNode
-import com.copperleaf.kudzu.node.sequence.SequenceNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
@@ -19,7 +17,7 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
  * The parser for a level of combined [Operator.Infixr] operators of the same precedence.
  */
 @ExperimentalStdlibApi
-@Suppress("UNCHECKED_CAST")
+
 class InfixrOperatorParser(
     private val operator: ExactChoiceParser,
     private val operand: Parser<Node>
@@ -37,9 +35,8 @@ class InfixrOperatorParser(
             ),
         )
 
-        impl uses FlatMappedParser(lazy) { sequenceNode ->
-            val (startOperandNode, maybeBinaryOperationNodes) = sequenceNode.children
-            val binaryOperationNode = (maybeBinaryOperationNodes as MaybeNode<SequenceNode>)
+        impl uses FlatMappedParser(lazy) { (nodeContext, startOperandNode, maybeBinaryOperationNodes) ->
+            val binaryOperationNode = maybeBinaryOperationNodes
                 .node
                 ?.let {
                     val (operatorNode, operandNode) = it.children
@@ -54,7 +51,7 @@ class InfixrOperatorParser(
             InfixrOperatorNode(
                 startOperandNode,
                 binaryOperationNode,
-                sequenceNode.context
+                nodeContext
             )
         }
 

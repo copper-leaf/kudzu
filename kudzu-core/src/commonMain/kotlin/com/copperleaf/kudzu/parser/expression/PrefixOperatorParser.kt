@@ -1,9 +1,7 @@
 package com.copperleaf.kudzu.parser.expression
 
 import com.copperleaf.kudzu.node.Node
-import com.copperleaf.kudzu.node.choice.ChoiceNode
 import com.copperleaf.kudzu.node.expression.PrefixOperatorNode
-import com.copperleaf.kudzu.node.many.ManyNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
@@ -16,7 +14,7 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
  * The parser for a level of combined [Operator.Prefix] operators of the same precedence.
  */
 @ExperimentalStdlibApi
-@Suppress("UNCHECKED_CAST")
+
 class PrefixOperatorParser(
     private val operator: ExactChoiceParser,
     private val operand: Parser<Node>
@@ -28,16 +26,15 @@ class PrefixOperatorParser(
             operand
         )
 
-        FlatMappedParser(impl) { sequenceNode ->
-            val (manyOperatorsNode, operandNode) = sequenceNode.children
-            val operatorNodes = (manyOperatorsNode as ManyNode<ChoiceNode>)
+        FlatMappedParser(impl) { (nodeContext, manyOperatorsNode, operandNode) ->
+            val operatorNodes = manyOperatorsNode
                 .nodeList
                 .map { it.node }
 
             PrefixOperatorNode(
                 operatorNodes,
                 operandNode,
-                sequenceNode.context
+                nodeContext
             )
         }
     }

@@ -7,7 +7,6 @@ import com.copperleaf.kudzu.isNotNull
 import com.copperleaf.kudzu.isTrue
 import com.copperleaf.kudzu.node
 import com.copperleaf.kudzu.node.Node
-import com.copperleaf.kudzu.node.choice.ChoiceNode
 import com.copperleaf.kudzu.node.mapped.ValueNode
 import com.copperleaf.kudzu.node.text.TextNode
 import com.copperleaf.kudzu.parsedCorrectly
@@ -19,8 +18,8 @@ import com.copperleaf.kudzu.parser.choice.PredictiveChoiceParser
 import com.copperleaf.kudzu.parser.many.ManyParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 import com.copperleaf.kudzu.parser.text.AnyTokenParser
-import com.copperleaf.kudzu.parser.text.OptionalWhitespaceParser
 import com.copperleaf.kudzu.parser.text.LiteralTokenParser
+import com.copperleaf.kudzu.parser.text.OptionalWhitespaceParser
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
@@ -80,7 +79,7 @@ class TestMapped {
     }
 
     @Test
-    @Suppress("UNCHECKED_CAST")
+
     fun testMappedParser2() {
         val nodeValue1Parser = MappedParser(
             AnyTokenParser()
@@ -111,10 +110,9 @@ class TestMapped {
                 someComplexModelEnumParser,
                 CharInParser(')'),
             )
-        ) { sequenceNode ->
-            val (_, choiceNode, _, enumNode, _) = sequenceNode.children
-            val enumValue = (enumNode as ValueNode<SomeComplexModelEnum>).value
-            val choiceNodeType = (choiceNode as ChoiceNode).node.text
+        ) { (_, _, choiceNode, _, enumNode, _) ->
+            val enumValue = enumNode.value
+            val choiceNodeType = choiceNode.node.text
 
             when (choiceNodeType) {
                 "Type1" -> SomeComplexModelType.Type1(enumValue)
@@ -132,19 +130,11 @@ class TestMapped {
                 OptionalWhitespaceParser(),
                 someComplexModelTypeParser
             )
-        ) { sequenceNode ->
-            val (nodeValue1, nodeValue2, someComplexModel) = sequenceNode.children.let {
-                listOf(
-                    it[0],
-                    it[3],
-                    it[6]
-                )
-            }
-
+        ) { (_, nodeValue1, _, _, nodeValue2, _, _, someComplexModel) ->
             SomeComplexModel(
                 nodeValue1.text,
-                (nodeValue2 as ValueNode<Int>).value,
-                (someComplexModel as ValueNode<SomeComplexModelType>).value,
+                nodeValue2.value,
+                someComplexModel.value,
             )
         }
 

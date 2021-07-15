@@ -13,7 +13,7 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
  * A simple, non-necessarily-recursive tag parser. It matches a sequence of "open tag", "content", "close tag".
  */
 @ExperimentalStdlibApi
-@Suppress("UNCHECKED_CAST")
+
 class SimpleTagParser<Opening : Node, Content : Node, Closing : Node>(
     val name: String,
     val openingParser: Parser<TagNameNode<Opening>>,
@@ -28,12 +28,7 @@ class SimpleTagParser<Opening : Node, Content : Node, Closing : Node>(
                 contentParser,
                 closingParser,
             )
-        ) {
-            val (open, content, close) = it.children
-            val openingNode = open as TagNameNode<Opening>
-            val contentNode = content as Content
-            val closingNode = close as TagNameNode<Closing>
-
+        ) { (nodeContext, openingNode, contentNode, closingNode) ->
             if (openingNode.tagName != closingNode.tagName) {
                 throw ParserException(
                     "Mismatched closing tag: Expected tag name to be " +
@@ -43,7 +38,7 @@ class SimpleTagParser<Opening : Node, Content : Node, Closing : Node>(
                 )
             }
 
-            TagNode(openingNode, contentNode, closingNode, it.context)
+            TagNode(openingNode, contentNode, closingNode, nodeContext)
         }
     }
 

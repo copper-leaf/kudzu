@@ -27,7 +27,7 @@ import com.copperleaf.kudzu.parser.lazy.LazyParser
  * real operations in the expression and the literal values used as their operands.
  */
 @ExperimentalStdlibApi
-@Suppress("UNCHECKED_CAST")
+
 class ExpressionParser<T : Any>(
     private val termParser: (Parser<Node>) -> Parser<ValueNode<T>>,
     private val operators: List<Operator<T>>,

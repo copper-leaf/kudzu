@@ -34,8 +34,7 @@ object ExpressionParserBuilder {
                     expressionParser,
                     CharInParser(')'),
                 )
-            ) {
-                val (_, exprNode, _) = it.children
+            ) { (_, _, exprNode, _) ->
                 exprNode
             }
 

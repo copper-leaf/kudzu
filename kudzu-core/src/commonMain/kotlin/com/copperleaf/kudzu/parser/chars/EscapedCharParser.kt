@@ -28,9 +28,7 @@ class EscapedCharParser : Parser<CharNode> {
                 CharInParser('\\'),
                 CharInParser('\\', 'r', 'n', 't', '\'', '"'),
             )
-        ) {
-            val (_, charNode) = it.children
-
+        ) { (nodeContext, _, charNode) ->
             val escapedChar = when (charNode.text) {
                 "\\" -> '\\'
                 "r" -> '\r'
@@ -41,7 +39,7 @@ class EscapedCharParser : Parser<CharNode> {
                 else -> error("invalid escape char: ${charNode.text}")
             }
 
-            CharNode(escapedChar, it.context)
+            CharNode(escapedChar, nodeContext)
         }
 
         val unicodeEscapeChar = FlatMappedParser(
@@ -53,13 +51,11 @@ class EscapedCharParser : Parser<CharNode> {
                     times = 4
                 )
             )
-        ) {
-            val (_, _, unicodeHexNodes) = it.children
-
+        ) { (nodeContext, _, _, unicodeHexNodes) ->
             val codePoint = unicodeHexNodes.text.toInt(16)
             val unicodeChar = codePoint.toChar()
 
-            CharNode(unicodeChar, it.context)
+            CharNode(unicodeChar, nodeContext)
         }
 
         FlatMappedParser(

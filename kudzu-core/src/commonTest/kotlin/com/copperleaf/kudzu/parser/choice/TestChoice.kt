@@ -309,9 +309,8 @@ class TestChoice {
                     ScanParser(closeTag),
                     closeTag
                 )
-            ) { seq ->
-                val (_, scanned, _) = seq.children
-                TextNode(scanned.text, seq.context)
+            ) { (nodeContext, _, scanned, _) ->
+                TextNode(scanned.text, nodeContext)
             }
         }
 

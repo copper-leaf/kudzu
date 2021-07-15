@@ -49,7 +49,7 @@ class TestSourcePosition {
         input = "one\ntwo"
         output = underTest.test(input)
         expected = """
-            (SequenceNode:
+            (Sequence3Node:
               (TextNode: 'one')
               (CharNode: '
             ')
@@ -84,7 +84,7 @@ class TestSourcePosition {
         input = "one\ntwo"
         output = underTest.test(input, true)
         expected = """
-            (SequenceNode:
+            (Sequence2Node:
               (TextNode: 'one')
               (TextNode: 'two')
             )

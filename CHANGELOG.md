@@ -1,3 +1,10 @@
+## 2.6.0 - 2021-07-15
+
+- Adds a bunch of Sequence parsers for fixed lengths to preserve strong generic typing. `SequenceParser` is now a 
+    factory function instead of a constructor, returning the appropriate sequence parser for the number of "varargs".
+- Validate that the start and end tags match in `TagParser`
+- Enables hierarchical sourcesets
+
 ## 2.5.0 - 2021-05-12
 
 - Adds `NoopParser` for implementing self-closing tags with the `TagParser`

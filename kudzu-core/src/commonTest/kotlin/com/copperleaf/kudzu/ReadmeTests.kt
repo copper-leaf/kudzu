@@ -18,7 +18,7 @@ import kotlin.math.pow
 import kotlin.test.Test
 
 @ExperimentalStdlibApi
-@Suppress("UNUSED_VARIABLE")
+@Suppress("UNUSED_VARIABLE", "UNUSED_DESTRUCTURED_PARAMETER_ENTRY")
 class ReadmeTests {
 
     @Test
@@ -54,8 +54,7 @@ class ReadmeTests {
                 IdentifierTokenParser(),
                 CharInParser('}'),
             )
-        ) {
-            val (_, _, identifier, _) = it.children
+        ) { (nodeContext, _, _, identifier, _) ->
             variableMap[identifier.text]
         }
 
