@@ -2,7 +2,7 @@ import org.gradle.api.JavaVersion
 
 object Config {
     val groupId = "io.github.copper-leaf"
-    val githubUrl = "https://github.com/copper-leaf/clog"
+    val githubUrl = "https://github.com/copper-leaf/ludzu"
     val license = License.BSD3
     val javaVersion = JavaVersion.VERSION_1_8.toString()
 
