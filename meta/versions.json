@@ -1,0 +1,38 @@
+[
+  {
+    "patch": false,
+    "components": {
+      "major": "2",
+      "minor": "0",
+      "patch": "0"
+    },
+    "major": true,
+    "minor": false,
+    "version": "2.0.0",
+    "url": ""
+  },
+  {
+    "patch": false,
+    "components": {
+      "major": "1",
+      "minor": "0",
+      "patch": "0"
+    },
+    "major": true,
+    "minor": true,
+    "version": "1.0.0",
+    "url": ""
+  },
+  {
+    "patch": true,
+    "components": {
+      "major": "0",
+      "minor": "1",
+      "patch": "0"
+    },
+    "major": true,
+    "minor": true,
+    "version": "0.1.0",
+    "url": ""
+  }
+]
