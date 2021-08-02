@@ -1,6 +1,5 @@
 package com.copperleaf.kudzu.parser.text
 
-import com.copperleaf.kudzu.checkParsingWhenEmpty
 import com.copperleaf.kudzu.expectThat
 import com.copperleaf.kudzu.get
 import com.copperleaf.kudzu.isEqualTo
@@ -58,7 +57,8 @@ class TestWord {
             }
         expectThat(underTest.predict(ParserContext.fromString("kotlin yo"))).isTrue()
 
-        underTest.checkParsingWhenEmpty()
+        expectThat(underTest.test("")).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
     @Test
@@ -112,6 +112,7 @@ class TestWord {
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
-        underTest.checkParsingWhenEmpty()
+        expectThat(underTest.test("")).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 }

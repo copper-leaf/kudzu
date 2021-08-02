@@ -1,6 +1,5 @@
 package com.copperleaf.kudzu.parser.many
 
-import com.copperleaf.kudzu.checkNotEmpty
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.NodeContext
 import com.copperleaf.kudzu.node.many.ManyNode
@@ -17,12 +16,10 @@ abstract class BaseManyParser<T : Node>(
     private val isValidNodeCount: (Int) -> Boolean,
 ) : Parser<ManyNode<T>> {
     final override fun predict(input: ParserContext): Boolean {
-        return !input.isEmpty() && parser.predict(input)
+        return parser.predict(input)
     }
 
     final override val parse = DeepRecursiveFunction<ParserContext, ParserResult<ManyNode<T>>> { input ->
-        checkNotEmpty(input)
-
         val nodeList = mutableListOf<T>()
 
         var remaining = input

@@ -1,6 +1,5 @@
 package com.copperleaf.kudzu.parser.many
 
-import com.copperleaf.kudzu.checkParsingWhenEmpty
 import com.copperleaf.kudzu.containsExactly
 import com.copperleaf.kudzu.expectThat
 import com.copperleaf.kudzu.get
@@ -57,7 +56,8 @@ class TestManys {
             .isEqualTo("asdf")
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
-        underTest.checkParsingWhenEmpty()
+        expectThat(underTest.test("")).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
     @Test
@@ -85,7 +85,8 @@ class TestManys {
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
-        underTest.checkParsingWhenEmpty()
+        expectThat(underTest.test("")).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
     @Test
@@ -123,7 +124,8 @@ class TestManys {
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
-        underTest.checkParsingWhenEmpty()
+        expectThat(underTest.test("")).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
     @Test
@@ -156,7 +158,8 @@ class TestManys {
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
 
-        underTest.checkParsingWhenEmpty()
+        expectThat(underTest.test("")).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
     @Test
@@ -189,7 +192,8 @@ class TestManys {
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
-        underTest.checkParsingWhenEmpty()
+        expectThat(underTest.test("")).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
     @Test
@@ -222,7 +226,8 @@ class TestManys {
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
-        underTest.checkParsingWhenEmpty()
+        expectThat(underTest.test("")).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
     @Test
@@ -255,7 +260,8 @@ class TestManys {
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
-        underTest.checkParsingWhenEmpty()
+        expectThat(underTest.test("")).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
     @Test
@@ -303,7 +309,8 @@ class TestManys {
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
-        underTest.checkParsingWhenEmpty()
+        expectThat(underTest.test("")).parsedIncorrectly()
+        expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
     @Test
@@ -326,7 +333,8 @@ class TestManys {
         expectThat(output).parsedCorrectly(expected, allowRemaining = true)
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
-        underTest.checkParsingWhenEmpty()
+        expectThat(underTest.test("")).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
     @Test
@@ -351,7 +359,8 @@ class TestManys {
         expectThat(output).parsedCorrectly(expected)
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
 
-        underTest.checkParsingWhenEmpty()
+        expectThat(underTest.test("")).parsedCorrectly()
+        expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
     @Test
