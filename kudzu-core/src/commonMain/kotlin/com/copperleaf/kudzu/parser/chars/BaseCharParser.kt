@@ -14,14 +14,13 @@ abstract class BaseCharParser(
     private val validationFailedMessage: (Char) -> String,
 ) : Parser<CharNode> {
     final override fun predict(input: ParserContext): Boolean {
-        return !input.isEmpty() && (runCatching { isValidChar(input.next()) }.getOrNull() ?: false)
+        return input.validateNextChar(isValidChar)
     }
 
     final override val parse = DeepRecursiveFunction<ParserContext, ParserResult<CharNode>> { input ->
         checkNotEmpty(input)
 
-        val nextChar = input.next()
-        val remaining = input.remaining()
+        val (nextChar, remaining) = input.nextChar()
 
         if (!isValidChar(nextChar)) throw ParserException(
             "char '$nextChar' ${validationFailedMessage(nextChar)}",

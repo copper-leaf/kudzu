@@ -19,7 +19,7 @@ abstract class BaseTextParser(
         return if (input.isEmpty()) {
             allowEmptyInput
         } else {
-            isValidChar(0, input.next())
+            input.validateNextChar { isValidChar(0, it) }
         }
     }
 
@@ -34,11 +34,13 @@ abstract class BaseTextParser(
         var index = 0
 
         while (!remaining.isEmpty()) {
-            nextChar = remaining.next()
-            if (!isValidChar(index, nextChar)) break
+            val nextCharResult = remaining.nextChar()
+            if (!isValidChar(index, nextCharResult.first)) break
+
+            nextChar = nextCharResult.first
+            remaining = nextCharResult.second
 
             tokenBuilder.append(nextChar)
-            remaining = remaining.remaining()
             index++
         }
 

@@ -21,9 +21,9 @@ interface ParserContext {
 
     fun isEmpty(): Boolean
 
-    fun next(): Char
+    fun nextChar(): Pair<Char, ParserContext>
 
-    fun remaining(): ParserContext
+    fun validateNextChar(fn: (Char) -> Boolean): Boolean
 
     fun getSurroundingText(position: SourcePosition): String
 

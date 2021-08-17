@@ -60,16 +60,15 @@ class LiteralTokenParser(
 
     private fun doParse(input: ParserContext): Pair<ParserContext?, String> {
         var remaining = input
-        var nextChar: Char
         val tokenBuilder = StringBuilder()
         var index = 0
 
         while (!remaining.isEmpty()) {
-            nextChar = remaining.next()
-            if (!isValidChar(index, nextChar)) break
+            val nextCharResult = remaining.nextChar()
+            if (!isValidChar(index, nextCharResult.first)) break
 
-            tokenBuilder.append(nextChar)
-            remaining = remaining.remaining()
+            tokenBuilder.append(nextCharResult.first)
+            remaining = nextCharResult.second
             index++
         }
 

@@ -40,11 +40,12 @@ class ScanParser(
         checkNotEmpty(input)
 
         var remaining = input
-        var textBuilder = StringBuilder()
+        val textBuilder = StringBuilder()
 
         while (!remaining.isEmpty() && !stoppingCondition.predict(remaining)) {
-            textBuilder.append(remaining.next())
-            remaining = remaining.remaining()
+            val nextCharResult = remaining.nextChar()
+            textBuilder.append(nextCharResult.first)
+            remaining = nextCharResult.second
         }
 
         if (textBuilder.isEmpty()) {

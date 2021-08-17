@@ -22,7 +22,11 @@ internal data class ParserContextImpl(
         }
     }
 
-    override fun next(): Char {
+    override fun nextChar(): Pair<Char, ParserContext> {
+        return getNextChar() to remaining()
+    }
+
+    private fun getNextChar(): Char {
         val nextChar: Char
         if (skipWhitespace) {
             var idx = index
@@ -35,7 +39,7 @@ internal data class ParserContextImpl(
         return nextChar
     }
 
-    override fun remaining(): ParserContext {
+    private fun remaining(): ParserContext {
         if (skipWhitespace) {
             var idx = index
             var lineNumbersInc = sourcePosition.lineNumber
@@ -69,6 +73,14 @@ internal data class ParserContextImpl(
                     sourcePosition = sourcePosition.incrementColumn()
                 )
             }
+        }
+    }
+
+    override fun validateNextChar(fn: (Char) -> Boolean): Boolean {
+        return if (this.isEmpty()) {
+            false
+        } else {
+            fn(getNextChar())
         }
     }
 
