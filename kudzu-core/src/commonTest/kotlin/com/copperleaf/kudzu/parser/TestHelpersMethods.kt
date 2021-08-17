@@ -24,7 +24,16 @@ class TestHelpersMethods {
         expectCatching { AnyCharParser().checkNotEmpty(underTest) }
             .isFailure()
             .get { message }
-            .isEqualTo("Parse error: unexpected end of input (AnyCharParser at 1:1)")
+            .isEqualTo(
+                """
+                |Parse error at 1:1 (AnyCharParser)
+                |
+                |unexpected end of input
+                |
+                |1|
+                |>>^
+                """.trimMargin()
+            )
     }
 
     @Test

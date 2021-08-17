@@ -3,6 +3,7 @@ package com.copperleaf.kudzu.parser.value
 import com.copperleaf.kudzu.node.mapped.ValueNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
+import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.parser.chars.CharInParser
 import com.copperleaf.kudzu.parser.chars.DigitParser
@@ -23,7 +24,14 @@ class IntLiteralParser : Parser<ValueNode<Int>> {
                     DigitParser(),
                     minSize = 1
                 )
-            )
+            ),
+            remapErrors = { _, _ ->
+                ParserException(
+                    "Expected integer literal",
+                    this@IntLiteralParser,
+                    this
+                )
+            }
         ) { it.text.toInt() }
     }
 

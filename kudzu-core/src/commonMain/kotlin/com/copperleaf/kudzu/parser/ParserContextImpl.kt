@@ -72,6 +72,63 @@ internal data class ParserContextImpl(
         }
     }
 
+// getSurroundingText
+// ---------------------------------------------------------------------------------------------------------------------
+
+    private var surroundingPipe = '|'
+    private var surroundingRightArrow = '>'
+    private var surroundingUpArrow = '^'
+
+    override fun getSurroundingText(position: SourcePosition): String {
+        val lines = this.input.lines()
+        check((position.lineNumber - 1) in lines.indices)
+
+        return buildString {
+            val lineIndices = when {
+                position.lineNumber == 1 -> {
+                    listOf(1, 2, 3)
+                }
+                position.lineNumber == lines.size -> {
+                    lines.indices.toList().takeLast(3).map { it + 1 }
+                }
+                else -> {
+                    ((position.lineNumber - 1)..(position.lineNumber + 1)).toList()
+                }
+            }
+
+            val lineNumberColumnWidth = lineIndices.maxOrNull().toString().length
+
+            lineIndices
+                .filter { (it - 1) in lines.indices }
+                .forEach {
+                    appendContentLine(it, lineNumberColumnWidth, lines)
+                    if (position.lineNumber == it) {
+                        appendPointerLine(position.lineColumn, lineNumberColumnWidth)
+                    }
+                }
+        }.removeSuffix("\n")
+    }
+
+    private fun StringBuilder.appendContentLine(
+        lineNumber: Int,
+        columnWidth: Int,
+        lines: List<String>,
+    ) {
+        append(lineNumber.toString().padStart(columnWidth))
+        append(surroundingPipe)
+        append(lines[lineNumber - 1])
+        appendLine()
+    }
+
+    private fun StringBuilder.appendPointerLine(
+        lineWidth: Int,
+        columnWidth: Int,
+    ) {
+        append(CharArray(lineWidth + columnWidth) { surroundingRightArrow })
+        append(surroundingUpArrow)
+        appendLine()
+    }
+
     override fun toString(): String {
         return "ParserContextImpl($sourcePosition)"
     }

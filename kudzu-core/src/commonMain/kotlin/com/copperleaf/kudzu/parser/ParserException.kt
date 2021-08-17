@@ -5,7 +5,15 @@ package com.copperleaf.kudzu.parser
  */
 @ExperimentalStdlibApi
 class ParserException(
-    message: String,
+    val actualMessage: String,
     val parser: Parser<*>,
     val input: ParserContext
-) : Exception("Parse error: $message (${parser::class.simpleName} at ${input.sourcePosition})")
+) : Exception(
+    """
+    |Parse error at ${input.sourcePosition} (${parser::class.simpleName})
+    |
+    |$actualMessage
+    |
+    ${input.getSurroundingText(input.sourcePosition).lines().joinToString(separator = "\n") { "|$it" }}
+    """.trimMargin()
+)

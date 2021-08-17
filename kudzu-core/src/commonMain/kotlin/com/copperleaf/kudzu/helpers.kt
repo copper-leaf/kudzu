@@ -4,6 +4,7 @@ import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
+import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.visitor.Visitor
 import com.copperleaf.kudzu.visitor.VisitorImpl
 
@@ -57,4 +58,23 @@ fun Node.visit(reversed: Boolean = false, callback: (Node) -> Unit) {
     }
 
     visit(visitorCallback)
+}
+
+@ExperimentalStdlibApi
+typealias RemapperFn = ParserContext.(Parser<*>, ParserException) -> ParserException
+
+@ExperimentalStdlibApi
+suspend inline fun <
+    BaseParser : Node,
+    ChildParser : Node
+    > DeepRecursiveScope<ParserContext, ParserResult<BaseParser>>.parseWithRemappedErrors(
+    parser: Parser<ChildParser>,
+    input: ParserContext,
+    remapErrors: RemapperFn,
+): ParserResult<ChildParser> {
+    return try {
+        parser.parse.callRecursive(input)
+    } catch (e: ParserException) {
+        throw remapErrors(input, parser, e)
+    }
 }

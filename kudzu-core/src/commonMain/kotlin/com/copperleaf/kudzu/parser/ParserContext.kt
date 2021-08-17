@@ -25,6 +25,8 @@ interface ParserContext {
 
     fun remaining(): ParserContext
 
+    fun getSurroundingText(position: SourcePosition): String
+
     companion object {
         fun fromString(input: String, skipWhitespace: Boolean = false): ParserContext {
             return ParserContextImpl(input, skipWhitespace = skipWhitespace)

@@ -3,6 +3,7 @@ package com.copperleaf.kudzu.parser.value
 import com.copperleaf.kudzu.node.mapped.ValueNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
+import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 import com.copperleaf.kudzu.parser.mapped.MappedParser
@@ -15,7 +16,14 @@ class BooleanLiteralParser : Parser<ValueNode<Boolean>> {
             ExactChoiceParser(
                 LiteralTokenParser("true"),
                 LiteralTokenParser("false"),
-            )
+            ),
+            remapErrors = { _, _ ->
+                ParserException(
+                    "Expected 'true' or 'false' literal",
+                    this@BooleanLiteralParser,
+                    this
+                )
+            }
         ) { it.text.toBoolean() }
     }
 
