@@ -1,11 +1,11 @@
 package com.copperleaf.kudzu.parser.expression
 
 import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.node.choice.ChoiceNNode
 import com.copperleaf.kudzu.node.expression.PostfixOperatorNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
-import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 import com.copperleaf.kudzu.parser.many.ManyParser
 import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
@@ -15,7 +15,7 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
  */
 @ExperimentalStdlibApi
 class PostfixOperatorParser(
-    private val operator: ExactChoiceParser,
+    private val operator: Parser<ChoiceNNode>,
     private val operand: Parser<Node>
 ) : Parser<PostfixOperatorNode> {
 

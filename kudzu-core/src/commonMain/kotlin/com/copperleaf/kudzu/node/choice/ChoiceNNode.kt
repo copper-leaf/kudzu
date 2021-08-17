@@ -12,7 +12,7 @@ import com.copperleaf.kudzu.parser.named.NamedParser
  * which sub-parser succeeded, it simply contains the node that was properly parsed. If you need to know specifically
  * which parser produced this [node], it should be annotated with [NamedParser].
  */
-class ChoiceNode(
+class ChoiceNNode(
     val node: Node,
     context: NodeContext
 ) : NonTerminalNode(context) {

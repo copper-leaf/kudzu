@@ -42,7 +42,7 @@ class TestChoice {
         input = "1"
         output = underTest.test(input)
         expected = """
-            (ChoiceNode:
+            (Choice2Node.Option1:
               (CharNode: '1')
             )
         """
@@ -56,7 +56,7 @@ class TestChoice {
         input = "a"
         output = underTest.test(input)
         expected = """
-            (ChoiceNode:
+            (Choice2Node.Option2:
               (CharNode: 'a')
             )
         """
@@ -89,28 +89,28 @@ class TestChoice {
         output = underTest.test(input)
         expected = """
             (ManyNode:
-              (ChoiceNode:
+              (Choice2Node.Option1:
                 (CharNode: '1')
               )
-              (ChoiceNode:
+              (Choice2Node.Option2:
                 (CharNode: 'a')
               )
-              (ChoiceNode:
+              (Choice2Node.Option1:
                 (CharNode: '2')
               )
-              (ChoiceNode:
+              (Choice2Node.Option2:
                 (CharNode: 'b')
               )
-              (ChoiceNode:
+              (Choice2Node.Option1:
                 (CharNode: '3')
               )
-              (ChoiceNode:
+              (Choice2Node.Option2:
                 (CharNode: 'c')
               )
-              (ChoiceNode:
+              (Choice2Node.Option1:
                 (CharNode: '4')
               )
-              (ChoiceNode:
+              (Choice2Node.Option2:
                 (CharNode: 'd')
               )
             )
@@ -132,7 +132,7 @@ class TestChoice {
         input = "1"
         output = underTest.test(input)
         expected = """
-            (ChoiceNode:
+            (Choice2Node.Option1:
               (CharNode: '1')
             )
         """
@@ -142,7 +142,7 @@ class TestChoice {
         input = "a"
         output = underTest.test(input)
         expected = """
-            (ChoiceNode:
+            (Choice2Node.Option2:
               (CharNode: 'a')
             )
         """
@@ -165,7 +165,7 @@ class TestChoice {
         input = "aaaa"
         output = underTest.test(input)
         expected = """
-            (ChoiceNode:
+            (Choice4Node.Option1:
               (TextNode: 'aaaa')
             )
         """
@@ -179,7 +179,7 @@ class TestChoice {
         input = "bbbb"
         output = underTest.test(input)
         expected = """
-            (ChoiceNode:
+            (Choice4Node.Option2:
               (TextNode: 'bbbb')
             )
         """
@@ -193,7 +193,7 @@ class TestChoice {
         input = "aabb"
         output = underTest.test(input)
         expected = """
-            (ChoiceNode:
+            (Choice4Node.Option3:
               (TextNode: 'aabb')
             )
         """
@@ -207,7 +207,7 @@ class TestChoice {
         input = "bbaabb"
         output = underTest.test(input)
         expected = """
-            (ChoiceNode:
+            (Choice4Node.Option4:
               (TextNode: 'bbaabb')
             )
         """
@@ -239,7 +239,7 @@ class TestChoice {
         input = "aaaa"
         output = underTest.test(input)
         expected = """
-            (ChoiceNode:
+            (Choice4Node.Option1:
               (TextNode: 'aaaa')
             )
         """
@@ -253,7 +253,7 @@ class TestChoice {
         input = "bbbb"
         output = underTest.test(input)
         expected = """
-            (ChoiceNode:
+            (Choice4Node.Option2:
               (TextNode: 'bbbb')
             )
         """
@@ -267,7 +267,7 @@ class TestChoice {
         input = "aabb"
         output = underTest.test(input)
         expected = """
-            (ChoiceNode:
+            (Choice4Node.Option3:
               (TextNode: 'aabb')
             )
         """
@@ -281,7 +281,7 @@ class TestChoice {
         input = "bbaabb"
         output = underTest.test(input)
         expected = """
-            (ChoiceNode:
+            (Choice4Node.Option4:
               (TextNode: 'bbaabb')
             )
         """

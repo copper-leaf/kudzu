@@ -51,7 +51,7 @@ object TagParserBuilder {
                 tagsAsSimpleTagsWithLazyContent.map { it.first }.filterNot { it === thisSimpleTagParser }
             }
             val tagChoiceExceptItselfParser = FlatMappedParser(
-                PredictiveChoiceParser(childParsers)
+                PredictiveChoiceParser(*childParsers.toTypedArray())
             ) {
                 it.node as TagNode<*, *, *>
             }
@@ -78,7 +78,7 @@ object TagParserBuilder {
         // subparser which excludes itself
         val tagChoiceParser = FlatMappedParser(
             PredictiveChoiceParser(
-                tagsAsSimpleTagsWithLazyContent.map { it.first }
+                *tagsAsSimpleTagsWithLazyContent.map { it.first }.toTypedArray()
             )
         ) {
             it.node as TagNode<*, *, *>

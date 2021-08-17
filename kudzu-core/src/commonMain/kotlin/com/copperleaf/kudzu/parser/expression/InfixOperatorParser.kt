@@ -2,13 +2,12 @@ package com.copperleaf.kudzu.parser.expression
 
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.NonTerminalNode
-import com.copperleaf.kudzu.node.choice.ChoiceNode
+import com.copperleaf.kudzu.node.choice.ChoiceNNode
 import com.copperleaf.kudzu.node.expression.BinaryOperationNode
 import com.copperleaf.kudzu.node.expression.InfixOperatorNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
-import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 import com.copperleaf.kudzu.parser.many.ManyParser
 import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.maybe.MaybeParser
@@ -20,7 +19,7 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
 @ExperimentalStdlibApi
 
 class InfixOperatorParser(
-    val operator: ExactChoiceParser,
+    val operator: Parser<ChoiceNNode>,
     val operand: Parser<Node>
 ) : Parser<InfixOperatorNode> {
 
@@ -43,7 +42,7 @@ class InfixOperatorParser(
                 ?.children
                 ?.map {
                     val (operatorNode, operandNode) = (it as NonTerminalNode).children
-                    val choiceOperatorNode: ChoiceNode = operatorNode as ChoiceNode
+                    val choiceOperatorNode: ChoiceNNode = operatorNode as ChoiceNNode
                     BinaryOperationNode(
                         choiceOperatorNode.node,
                         operandNode,

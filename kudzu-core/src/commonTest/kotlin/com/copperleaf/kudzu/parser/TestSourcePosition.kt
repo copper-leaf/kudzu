@@ -118,31 +118,31 @@ class TestSourcePosition {
         output = underTest.test(input, true)
         expected = """
             (ManyNode:
-              (ChoiceNode:
+              (Choice2Node.Option1:
                 (TextNode: 'one')
               )
-              (ChoiceNode:
+              (Choice2Node.Option2:
                 (TextNode: 'two')
               )
-              (ChoiceNode:
+              (Choice2Node.Option1:
                 (TextNode: 'one')
               )
-              (ChoiceNode:
+              (Choice2Node.Option1:
                 (TextNode: 'one')
               )
-              (ChoiceNode:
+              (Choice2Node.Option2:
                 (TextNode: 'two')
               )
-              (ChoiceNode:
+              (Choice2Node.Option2:
                 (TextNode: 'two')
               )
-              (ChoiceNode:
+              (Choice2Node.Option1:
                 (TextNode: 'one')
               )
-              (ChoiceNode:
+              (Choice2Node.Option1:
                 (TextNode: 'one')
               )
-              (ChoiceNode:
+              (Choice2Node.Option2:
                 (TextNode: 'two')
               )
             )

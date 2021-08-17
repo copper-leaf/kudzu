@@ -133,22 +133,22 @@ class TestScan {
         output = underTest.test(input)
         expected = """
             (ManyNode:
-              (ChoiceNode:
+              (Choice2Node.Option2:
                 (TextNode: 'asdf ')
               )
-              (ChoiceNode:
-                (ChoiceNode:
+              (Choice2Node.Option1:
+                (Choice3Node.Option1:
                   (Sequence2Node:
                     (CharNode: '{')
                     (CharNode: '}')
                   )
                 )
               )
-              (ChoiceNode:
+              (Choice2Node.Option2:
                 (TextNode: ' qwerty ')
               )
-              (ChoiceNode:
-                (ChoiceNode:
+              (Choice2Node.Option1:
+                (Choice3Node.Option3:
                   (Sequence4Node:
                     (CharNode: '#')
                     (CharNode: '{')
@@ -159,13 +159,13 @@ class TestScan {
                   )
                 )
               )
-              (ChoiceNode:
+              (Choice2Node.Option2:
                 (TextNode: ' qwerty ')
               )
-              (ChoiceNode:
-                (ChoiceNode:
+              (Choice2Node.Option1:
+                (Choice3Node.Option2:
                   (Sequence4Node:
-                    (CharNode: '$')
+                    (CharNode: '${'$'}')
                     (CharNode: '{')
                     (NamedNode:varName:
                       (TextNode: 'asdf')
@@ -174,7 +174,7 @@ class TestScan {
                   )
                 )
               )
-              (ChoiceNode:
+              (Choice2Node.Option2:
                 (TextNode: ' asdf')
               )
             )
