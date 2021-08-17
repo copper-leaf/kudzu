@@ -5,6 +5,7 @@ import com.copperleaf.kudzu.node.expression.InfixOperatorNode
 import com.copperleaf.kudzu.node.expression.InfixrOperatorNode
 import com.copperleaf.kudzu.node.expression.PostfixOperatorNode
 import com.copperleaf.kudzu.node.expression.PrefixOperatorNode
+import com.copperleaf.kudzu.node.expression.RootExpressionNode
 import com.copperleaf.kudzu.node.mapped.ValueNode
 
 @ExperimentalStdlibApi
@@ -15,12 +16,19 @@ internal class ExpressionEvaluatorImpl<T : Any>(
 
     override val evaluate = DeepRecursiveFunction<Node, T> { node ->
         when (node) {
+            is RootExpressionNode -> evaluateRoot.callRecursive(node)
             is InfixOperatorNode -> evaluateInfix.callRecursive(node)
             is InfixrOperatorNode -> evaluateInfixr.callRecursive(node)
             is PrefixOperatorNode -> evaluatePrefix.callRecursive(node)
             is PostfixOperatorNode -> evaluatePostfix.callRecursive(node)
             is ValueNode<*> -> node.value as T
             else -> error("Unknown expression node")
+        }
+    }
+
+    private val evaluateRoot: DeepRecursiveFunction<RootExpressionNode, T> = DeepRecursiveFunction {
+        with(it) {
+            evaluate.callRecursive(expressionNode)
         }
     }
 

@@ -1,6 +1,6 @@
 package com.copperleaf.kudzu.parser.expression
 
-import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.node.expression.RootExpressionNode
 import com.copperleaf.kudzu.node.mapped.ValueNode
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
@@ -29,20 +29,20 @@ import com.copperleaf.kudzu.parser.lazy.LazyParser
 @ExperimentalStdlibApi
 
 class ExpressionParser<T : Any>(
-    private val termParser: (Parser<Node>) -> Parser<ValueNode<T>>,
+    private val termParser: (Parser<RootExpressionNode>) -> Parser<ValueNode<T>>,
     private val operators: List<Operator<T>>,
     private val parenthesizedTerm: Boolean = true,
     private val simplifyAst: Boolean = true
-) : Parser<Node> {
+) : Parser<RootExpressionNode> {
     constructor(
-        termParser: (Parser<Node>) -> Parser<ValueNode<T>>,
+        termParser: (Parser<RootExpressionNode>) -> Parser<ValueNode<T>>,
         vararg operators: Operator<T>,
         parenthesizedTerm: Boolean = true,
         simplifyAst: Boolean = true
     ) : this(termParser, operators.toList(), parenthesizedTerm, simplifyAst)
 
-    private val parser: Parser<Node> by lazy {
-        LazyParser<Node>().also {
+    private val parser: Parser<RootExpressionNode> by lazy {
+        LazyParser<RootExpressionNode>().also {
             it uses ExpressionParserBuilder.createExpressionParser(
                 it,
                 termParser(it),
@@ -59,5 +59,5 @@ class ExpressionParser<T : Any>(
 
     override fun predict(input: ParserContext): Boolean = parser.predict(input)
 
-    override val parse: DeepRecursiveFunction<ParserContext, ParserResult<Node>> = parser.parse
+    override val parse: DeepRecursiveFunction<ParserContext, ParserResult<RootExpressionNode>> = parser.parse
 }

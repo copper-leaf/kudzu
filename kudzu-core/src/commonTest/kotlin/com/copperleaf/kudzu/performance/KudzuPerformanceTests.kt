@@ -12,7 +12,7 @@ import kotlin.test.Test
 @OptIn(ExperimentalStdlibApi::class)
 class KudzuPerformanceTests {
 
-    val enabled = false
+    val enabled = true
 
     val simpleExpression = run {
         "1 - 2 * (3 + 4 / 5 ^ 6 * (7 - 8)) * 9"

@@ -170,6 +170,7 @@ class TestExpression {
             "1 + 2 * 3" to { 1.0 + 2.0 * 3.0 },
             "1 + (2 * 3)" to { 1.0 + (2.0 * 3.0) },
             "(1 + 2) * 3" to { (1.0 + 2.0) * 3.0 },
+            " ( ( 1 + 2 ) * 3 ) " to { (1.0 + 2.0) * 3.0 },
         )
 
         inputs.map { input ->
@@ -255,17 +256,21 @@ class TestExpression {
         expectThat(output)
             .parsedCorrectly(
                 """
-                |(InfixOperatorNode:
+                |(RootExpressionNode:
                 |  (InfixOperatorNode:
-                |    (ValueNode: '1.1')
-                |    (BinaryOperationNode:
-                |      (TextNode: '+')
-                |      (ValueNode: '2.2')
+                |    (RootExpressionNode:
+                |      (InfixOperatorNode:
+                |        (ValueNode: '1.1')
+                |        (BinaryOperationNode:
+                |          (TextNode: '+')
+                |          (ValueNode: '2.2')
+                |        )
+                |      )
                 |    )
-                |  )
-                |  (BinaryOperationNode:
-                |    (TextNode: '*')
-                |    (ValueNode: '3.3')
+                |    (BinaryOperationNode:
+                |      (TextNode: '*')
+                |      (ValueNode: '3.3')
+                |    )
                 |  )
                 |)
                 """.trimMargin()
@@ -293,36 +298,40 @@ class TestExpression {
         expectThat(output)
             .parsedCorrectly(
                 """
-                |(InfixOperatorNode:
+                |(RootExpressionNode:
                 |  (InfixOperatorNode:
-                |    (InfixrOperatorNode:
-                |      (PrefixOperatorNode:
-                |        (InfixOperatorNode:
-                |          (InfixOperatorNode:
-                |            (InfixrOperatorNode:
-                |              (PrefixOperatorNode:
-                |                (ValueNode: '1.1')
-                |              )
-                |            )
-                |          )
-                |          (BinaryOperationNode:
-                |            (TextNode: '+')
+                |    (InfixOperatorNode:
+                |      (InfixrOperatorNode:
+                |        (PrefixOperatorNode:
+                |          (RootExpressionNode:
                 |            (InfixOperatorNode:
-                |              (InfixrOperatorNode:
-                |                (PrefixOperatorNode:
-                |                  (ValueNode: '2.2')
+                |              (InfixOperatorNode:
+                |                (InfixrOperatorNode:
+                |                  (PrefixOperatorNode:
+                |                    (ValueNode: '1.1')
+                |                  )
+                |                )
+                |              )
+                |              (BinaryOperationNode:
+                |                (TextNode: '+')
+                |                (InfixOperatorNode:
+                |                  (InfixrOperatorNode:
+                |                    (PrefixOperatorNode:
+                |                      (ValueNode: '2.2')
+                |                    )
+                |                  )
                 |                )
                 |              )
                 |            )
                 |          )
                 |        )
                 |      )
-                |    )
-                |    (BinaryOperationNode:
-                |      (TextNode: '*')
-                |      (InfixrOperatorNode:
-                |        (PrefixOperatorNode:
-                |          (ValueNode: '3.3')
+                |      (BinaryOperationNode:
+                |        (TextNode: '*')
+                |        (InfixrOperatorNode:
+                |          (PrefixOperatorNode:
+                |            (ValueNode: '3.3')
+                |          )
                 |        )
                 |      )
                 |    )

@@ -2,13 +2,14 @@ package com.copperleaf.kudzu.parser.expression
 
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.expression.ExpressionNode
+import com.copperleaf.kudzu.node.expression.RootExpressionNode
 import com.copperleaf.kudzu.node.mapped.ValueNode
 import com.copperleaf.kudzu.parser.Parser
-import com.copperleaf.kudzu.parser.chars.CharInParser
 import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 import com.copperleaf.kudzu.parser.choice.PredictiveChoiceParser
 import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
+import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 
 @ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
@@ -18,7 +19,7 @@ object ExpressionParserBuilder {
     ) {
         val unaryOperators = operators.filterIsInstance<Operator.UnaryOperator<T>>()
         check(unaryOperators.map { it.name }.distinct().size == unaryOperators.size) { "Operators must be unique" }
-        val binaryOperators = operators.filterIsInstance<Operator.UnaryOperator<T>>()
+        val binaryOperators = operators.filterIsInstance<Operator.BinaryOperator<T>>()
         check(binaryOperators.map { it.name }.distinct().size == binaryOperators.size) { "Operators must be unique" }
     }
 
@@ -30,9 +31,9 @@ object ExpressionParserBuilder {
         return if (parenthesizedTerm) {
             val parenthesizedExpressionParser = FlatMappedParser(
                 SequenceParser(
-                    CharInParser('('),
+                    LiteralTokenParser("("),
                     expressionParser,
-                    CharInParser(')'),
+                    LiteralTokenParser(")"),
                 )
             ) { (_, _, exprNode, _) ->
                 exprNode
@@ -73,7 +74,7 @@ object ExpressionParserBuilder {
         operators: List<Operator<T>>,
         parenthesizedTerm: Boolean,
         simplifyAst: Boolean
-    ): Parser<Node> {
+    ): Parser<RootExpressionNode> {
         val expandedOperatorList = operators.flatMap { it.expandAliases() }
 
         checkOperatorsAreValid(expandedOperatorList)
@@ -109,6 +110,6 @@ object ExpressionParserBuilder {
             operatorsLevelsFoldedIntoExpressionParser
         }
 
-        return maybeSimplifiedExpressionParser
+        return FlatMappedParser(maybeSimplifiedExpressionParser) { RootExpressionNode(it, it.context) }
     }
 }
