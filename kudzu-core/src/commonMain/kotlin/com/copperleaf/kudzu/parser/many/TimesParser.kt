@@ -26,4 +26,5 @@ class TimesParser<T : Node>(
     shouldStopParsingAtNodeCount = { it == times },
     shouldStopParsingForNext = { false },
     isValidNodeCount = { it == times },
+    invalidNodeCountMessage = { "Expected exactly $times iterations of $parser, got $it" }
 )

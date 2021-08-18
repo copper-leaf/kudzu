@@ -17,5 +17,6 @@ package com.copperleaf.kudzu.parser.text
 class OptionalWhitespaceParser : BaseTextParser(
     isValidChar = { _, char -> char.isWhitespace() },
     isValidText = { true },
+    invalidTextErrorMessage = { "" },
     allowEmptyInput = true
 )

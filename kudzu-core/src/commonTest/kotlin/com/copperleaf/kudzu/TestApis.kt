@@ -20,13 +20,11 @@ fun <T : Node> ParserResult<T>?.parsedCorrectly(
     )
     else {
         if (expected != null) {
-            when (first.toString()) {
-                expected.trimIndent().trim() -> {
-                }
-                else -> error(
-                    "Output AST should be $expected, got $first"
-                )
-            }
+            assertEquals(
+                expected = expected.trimIndent().trim(),
+                actual = first.toString(),
+                message = "Output AST should be $expected, got $first"
+            )
         }
         if (!allowRemaining) {
             when (second.isEmpty()) {

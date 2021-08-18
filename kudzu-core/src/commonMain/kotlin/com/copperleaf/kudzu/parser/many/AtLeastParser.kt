@@ -27,4 +27,5 @@ class AtLeastParser<T : Node>(
     shouldStopParsingAtNodeCount = { false },
     shouldStopParsingForNext = { false },
     isValidNodeCount = { it >= minSize },
+    invalidNodeCountMessage = { "Expected at least $minSize iterations of $parser, got $it" }
 )

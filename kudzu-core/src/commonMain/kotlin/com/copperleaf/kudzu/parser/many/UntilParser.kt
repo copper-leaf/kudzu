@@ -27,4 +27,5 @@ class UntilParser<T : Node>(
     shouldStopParsingAtNodeCount = { false },
     shouldStopParsingForNext = { stoppingCondition.predict(it) },
     isValidNodeCount = { true },
+    invalidNodeCountMessage = { "" }
 )

@@ -18,5 +18,6 @@ package com.copperleaf.kudzu.parser.text
 class RequiredWhitespaceParser : BaseTextParser(
     isValidChar = { _, char -> char.isWhitespace() },
     isValidText = { it.isNotEmpty() },
+    invalidTextErrorMessage = { "Required whitespace not found" },
     allowEmptyInput = false
 )

@@ -25,4 +25,5 @@ class ManyParser<T : Node>(
     shouldStopParsingAtNodeCount = { false },
     shouldStopParsingForNext = { false },
     isValidNodeCount = { true },
+    invalidNodeCountMessage = { "" }
 )

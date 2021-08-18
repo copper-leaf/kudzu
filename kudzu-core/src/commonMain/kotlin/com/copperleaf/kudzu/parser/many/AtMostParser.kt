@@ -27,4 +27,5 @@ class AtMostParser<T : Node>(
     shouldStopParsingAtNodeCount = { it == maxSize },
     shouldStopParsingForNext = { false },
     isValidNodeCount = { it <= maxSize },
+    invalidNodeCountMessage = { "Expected at most $maxSize iterations of $parser, got $it" }
 )

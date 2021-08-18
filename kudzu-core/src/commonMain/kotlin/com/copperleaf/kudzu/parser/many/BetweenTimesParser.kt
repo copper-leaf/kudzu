@@ -27,4 +27,5 @@ class BetweenTimesParser<T : Node>(
     shouldStopParsingAtNodeCount = { it == maxSize },
     shouldStopParsingForNext = { false },
     isValidNodeCount = { it in minSize..maxSize },
+    invalidNodeCountMessage = { "Expected between $minSize and $maxSize iterations of $parser, got $it" }
 )

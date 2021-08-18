@@ -12,6 +12,7 @@ import com.copperleaf.kudzu.parser.ParserResult
 abstract class BaseTextParser(
     val isValidChar: (Int, Char) -> Boolean,
     val isValidText: (String) -> Boolean,
+    val invalidTextErrorMessage: (String) -> String,
     val allowEmptyInput: Boolean
 ) : Parser<TextNode> {
 
@@ -47,7 +48,7 @@ abstract class BaseTextParser(
         val token = tokenBuilder.toString()
 
         if (!isValidText(token)) throw ParserException(
-            "Unexpected text '$token' in ${this::class.simpleName}",
+            invalidTextErrorMessage(token),
             this@BaseTextParser,
             input
         )

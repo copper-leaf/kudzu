@@ -14,6 +14,7 @@ abstract class BaseManyParser<T : Node>(
     private val shouldStopParsingAtNodeCount: (Int) -> Boolean,
     private val shouldStopParsingForNext: (ParserContext) -> Boolean,
     private val isValidNodeCount: (Int) -> Boolean,
+    private val invalidNodeCountMessage: (Int) -> String,
 ) : Parser<ManyNode<T>> {
     final override fun predict(input: ParserContext): Boolean {
         return parser.predict(input)
@@ -39,7 +40,7 @@ abstract class BaseManyParser<T : Node>(
         }
 
         if (!isValidNodeCount(nodeList.size)) throw ParserException(
-            "",
+            invalidNodeCountMessage(nodeList.size),
             this@BaseManyParser,
             input
         )
