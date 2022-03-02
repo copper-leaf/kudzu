@@ -1,7 +1,11 @@
-## 3.0-.0 - 2022-03-02
+## 3.0.0 - 2022-03-02
 
 - Updates to kotlin 1.6.10
-- 
+- Implements strongly-typed Choice parsers in the same manner as Sequence parsers (supports 2-9 choices)
+- don't check for empty with many parser. Let the sub-parser make that determination
+- Improve error messages
+- Wrap expressions in RootExpressionNode
+- Adds newline and EOF parsers
 
 ## 2.6.0 - 2021-07-15
 

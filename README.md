@@ -4,7 +4,7 @@
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/copper-leaf/kudzu)
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.copper-leaf/kudzu-core)
-![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.32-orange)
+![Kotlin Version](https://img.shields.io/badge/Kotlin-1.6.10-orange)
 
 Kudzu is a recursive-descent parser written in Kotlin, inspired by [Parsec](https://github.com/haskell/parsec), with the
 goal of immutability, simplicity, testability, and multiplatform usability. It's designed to be a simple starting place 
@@ -74,7 +74,7 @@ See the [website](https://copper-leaf.github.io/kudzu/) for detailed documentati
 
 # License
 
-Kudzu is licensed under the BSD 3-Clause License, see [LICENSE.md](https://github.com/copper-leaf/kudzu/tree/master/LICENSE.md).
+Kudzu is licensed under the BSD 3-Clause License, see [LICENSE.md](https://github.com/copper-leaf/kudzu/tree/main/LICENSE.md).
 
 # References
 

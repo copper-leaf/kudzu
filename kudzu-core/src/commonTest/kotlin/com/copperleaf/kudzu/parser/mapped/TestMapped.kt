@@ -84,7 +84,7 @@ class TestMapped {
         val nodeValue1Parser = MappedParser(
             AnyTokenParser()
         ) { tokenNode ->
-            tokenNode.text.toUpperCase()
+            tokenNode.text.uppercase()
         }
         val nodeValue2Parser = MappedParser(
             ManyParser(DigitParser())

@@ -81,7 +81,7 @@ services:
       - type: githubReleases
         repo: 'copper-leaf/kudzu'
         username: 'cjbrooks12'
-        commitish: 'master'
+        commitish: 'main'
       - type: githubPages
         repo: 'copper-leaf/kudzu'
         username: 'cjbrooks12'

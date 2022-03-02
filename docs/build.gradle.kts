@@ -21,13 +21,11 @@ dependencies {
 // Orchid setup
 // ---------------------------------------------------------------------------------------------------------------------
 
-val ghUser: String by extra
-val ghToken: String by extra
-val releaseVersion: String by extra
+val publishConfiguration: PublishConfiguration = Config.publishConfiguration(project)
 
 orchid {
-    githubToken = ghToken
-    version = releaseVersion
+    githubToken = publishConfiguration.githubToken
+    version = Config.projectVersion(project).documentationVersion
 }
 
 val build by tasks

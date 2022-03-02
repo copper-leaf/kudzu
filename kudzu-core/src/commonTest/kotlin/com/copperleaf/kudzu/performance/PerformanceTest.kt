@@ -38,7 +38,7 @@ private class Histogram(
 
     fun print() {
         val allDurations = measurements.map { it.second }
-        val allMillis = allDurations.map { it.inMilliseconds }
+        val allMillis = allDurations.map { it.inWholeMilliseconds }
 
         val totalDuration = allDurations.reduce { acc, d -> acc + d }
         val mean = totalDuration / allMillis.size
@@ -47,7 +47,7 @@ private class Histogram(
         val median = allDurations[allMillis.size / 2]
         val varianceMicro = allDurations
             .map { it - mean } // subtract the mean
-            .map { it.inMicroseconds * it.inMicroseconds } // square the result
+            .map { it.inWholeMicroseconds * it.inWholeMicroseconds } // square the result
             .average()
         val stdDeviationMicro = sqrt(varianceMicro)
         val stdDeviationDuration = stdDeviationMicro.toDuration(DurationUnit.MICROSECONDS)
