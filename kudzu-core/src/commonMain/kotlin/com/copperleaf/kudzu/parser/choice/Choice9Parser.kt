@@ -8,8 +8,9 @@ import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
 
+/* ktlint-disable max-line-length */
 @ExperimentalStdlibApi
-class Choice9Parser<T1 : Node, T2 : Node, T3: Node, T4: Node, T5: Node, T6: Node, T7: Node, T8: Node, T9: Node>(
+class Choice9Parser<T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node, T8 : Node, T9 : Node>(
     private val p1: Parser<T1>,
     private val p2: Parser<T2>,
     private val p3: Parser<T3>,
@@ -47,9 +48,9 @@ class Choice9Parser<T1 : Node, T2 : Node, T3: Node, T4: Node, T5: Node, T6: Node
         parser: Parser<T>,
         mapToOptionNode: (T, NodeContext) -> Choice9Node<T1, T2, T3, T4, T5, T6, T7, T8, T9>,
     ): ParserResult<Choice9Node<T1, T2, T3, T4, T5, T6, T7, T8, T9>>? {
-        return when(strategy) {
+        return when (strategy) {
             ChoiceStrategy.Predictive -> {
-                if(parser.predict(input)) {
+                if (parser.predict(input)) {
                     val parsedNode = parser.parse.callRecursive(input)
                     mapToOptionNode(parsedNode.first, NodeContext(input, parsedNode.second)) to parsedNode.second
                 } else {
@@ -68,3 +69,4 @@ class Choice9Parser<T1 : Node, T2 : Node, T3: Node, T4: Node, T5: Node, T6: Node
         }
     }
 }
+/* ktlint-enable max-line-length */

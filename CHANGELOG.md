@@ -1,3 +1,8 @@
+## 3.0-.0 - 2022-03-02
+
+- Updates to kotlin 1.6.10
+- 
+
 ## 2.6.0 - 2021-07-15
 
 - Adds a bunch of Sequence parsers for fixed lengths to preserve strong generic typing. `SequenceParser` is now a 

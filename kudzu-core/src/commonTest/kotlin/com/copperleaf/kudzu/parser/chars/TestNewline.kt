@@ -54,7 +54,9 @@ class TestNewline {
         val underTest = NewlineCharParser()
 
         input = "\r"
-        output = underTest.test(input, expectedErrorMessage = """
+        output = underTest.test(
+            input,
+            expectedErrorMessage = """
             |Parse error at 1:1 (NewlineCharParser)
             |
             |\r must be followed by \n
@@ -62,7 +64,8 @@ class TestNewline {
             |1|
             |>>^
             |2|
-        """.trimMargin())
+        """.trimMargin()
+        )
 
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
@@ -75,7 +78,9 @@ class TestNewline {
         val underTest = NewlineCharParser()
 
         input = "\ra"
-        output = underTest.test(input, expectedErrorMessage = """
+        output = underTest.test(
+            input,
+            expectedErrorMessage = """
             |Parse error at 1:1 (NewlineCharParser)
             |
             |\r must be followed by \n
@@ -83,7 +88,8 @@ class TestNewline {
             |1|
             |>>^
             |2|a
-        """.trimMargin())
+        """.trimMargin()
+        )
 
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
@@ -96,14 +102,17 @@ class TestNewline {
         val underTest = NewlineCharParser()
 
         input = "a"
-        output = underTest.test(input, expectedErrorMessage = """
+        output = underTest.test(
+            input,
+            expectedErrorMessage = """
             |Parse error at 1:1 (NewlineCharParser)
             |
             |Expected '\n' or '\r\n', got 'a'
             |
             |1|a
             |>>^
-        """.trimMargin())
+        """.trimMargin()
+        )
 
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()

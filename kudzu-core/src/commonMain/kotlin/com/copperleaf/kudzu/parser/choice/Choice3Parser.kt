@@ -9,7 +9,7 @@ import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
 
 @ExperimentalStdlibApi
-class Choice3Parser<T1 : Node, T2 : Node, T3: Node>(
+class Choice3Parser<T1 : Node, T2 : Node, T3 : Node>(
     private val p1: Parser<T1>,
     private val p2: Parser<T2>,
     private val p3: Parser<T3>,
@@ -35,9 +35,9 @@ class Choice3Parser<T1 : Node, T2 : Node, T3: Node>(
         parser: Parser<T>,
         mapToOptionNode: (T, NodeContext) -> Choice3Node<T1, T2, T3>,
     ): ParserResult<Choice3Node<T1, T2, T3>>? {
-        return when(strategy) {
+        return when (strategy) {
             ChoiceStrategy.Predictive -> {
-                if(parser.predict(input)) {
+                if (parser.predict(input)) {
                     val parsedNode = parser.parse.callRecursive(input)
                     mapToOptionNode(parsedNode.first, NodeContext(input, parsedNode.second)) to parsedNode.second
                 } else {

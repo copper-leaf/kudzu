@@ -30,11 +30,11 @@ class NewlineCharParser : Parser<NewlineNode> {
 
         val (char1, remaining1) = input.nextChar()
 
-        if(char1 == '\n') {
+        if (char1 == '\n') {
             // just a single \n
             NewlineNode(NodeContext(input, remaining1)) to remaining1
-        } else if(char1 == '\r') {
-            if(remaining1.isEmpty()) {
+        } else if (char1 == '\r') {
+            if (remaining1.isEmpty()) {
                 throw ParserException(
                     """\r must be followed by \n""",
                     this@NewlineCharParser,
@@ -45,7 +45,7 @@ class NewlineCharParser : Parser<NewlineNode> {
             // we have \r, expect the next is \n
             val (char2, remaining2) = remaining1.nextChar()
 
-            if(char2 == '\n') {
+            if (char2 == '\n') {
                 NewlineNode(NodeContext(input, remaining2)) to remaining2
             } else {
                 throw ParserException(
@@ -62,5 +62,4 @@ class NewlineCharParser : Parser<NewlineNode> {
             )
         }
     }
-
 }

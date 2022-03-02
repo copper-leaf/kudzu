@@ -20,5 +20,6 @@ import com.copperleaf.kudzu.KudzuPlatform
 class AnyTokenParser : BaseTextParser(
     isValidChar = { _, char -> KudzuPlatform.isLetterOrDigit(char) },
     isValidText = { it.isNotEmpty() },
-    allowEmptyInput = false
+    allowEmptyInput = false,
+    invalidTextErrorMessage = { "Expected a token, got '$it'" },
 )

@@ -70,14 +70,17 @@ class TestEndOfInput {
         )
 
         input = "asdf "
-        output = underTest.test(input, expectedErrorMessage = """
+        output = underTest.test(
+            input,
+            expectedErrorMessage = """
             |Parse error at 1:5 (EndOfInputParser)
             |
             |Expected end of input, but still had input remaining
             |
             |1|asdf 
             |>>>>>>^
-        """.trimMargin())
+        """.trimMargin()
+        )
 
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()

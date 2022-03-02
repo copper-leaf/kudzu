@@ -33,5 +33,4 @@ class EndOfInputParser : Parser<EndOfInputNode> {
             )
         }
     }
-
 }

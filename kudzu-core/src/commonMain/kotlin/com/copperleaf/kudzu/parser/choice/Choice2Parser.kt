@@ -33,9 +33,9 @@ class Choice2Parser<T1 : Node, T2 : Node>(
         parser: Parser<T>,
         mapToOptionNode: (T, NodeContext) -> Choice2Node<T1, T2>,
     ): ParserResult<Choice2Node<T1, T2>>? {
-        return when(strategy) {
+        return when (strategy) {
             ChoiceStrategy.Predictive -> {
-                if(parser.predict(input)) {
+                if (parser.predict(input)) {
                     val parsedNode = parser.parse.callRecursive(input)
                     mapToOptionNode(parsedNode.first, NodeContext(input, parsedNode.second)) to parsedNode.second
                 } else {

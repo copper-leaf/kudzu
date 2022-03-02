@@ -18,5 +18,6 @@ package com.copperleaf.kudzu.parser.text
 class AnyTextParser : BaseTextParser(
     isValidChar = { _, char -> !char.isWhitespace() },
     isValidText = { it.isNotEmpty() },
-    allowEmptyInput = false
+    allowEmptyInput = false,
+    invalidTextErrorMessage = { "Expected non-whitespace text, got '$it'" },
 )
