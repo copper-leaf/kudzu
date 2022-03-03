@@ -10,6 +10,7 @@ import com.copperleaf.kudzu.node.sequence.Sequence6Node
 import com.copperleaf.kudzu.node.sequence.Sequence7Node
 import com.copperleaf.kudzu.node.sequence.Sequence8Node
 import com.copperleaf.kudzu.node.sequence.Sequence9Node
+import com.copperleaf.kudzu.node.sequence.SequenceNNode
 import com.copperleaf.kudzu.parser.Parser
 
 @ExperimentalStdlibApi
@@ -163,5 +164,23 @@ inline fun <
         p7,
         p8,
         p9,
+    )
+}
+
+@ExperimentalStdlibApi
+inline fun SequenceParser(
+    vararg parsers: Parser<*>,
+): Parser<SequenceNNode> {
+    return SequenceNParser(
+        *parsers
+    )
+}
+
+@ExperimentalStdlibApi
+inline fun SequenceParser(
+    parsers: Collection<Parser<*>>,
+): Parser<SequenceNNode> {
+    return SequenceNParser(
+        *parsers.toTypedArray()
     )
 }

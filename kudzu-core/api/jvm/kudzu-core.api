@@ -295,8 +295,9 @@ public final class com/copperleaf/kudzu/node/choice/Choice9Node$Option9 : com/co
 }
 
 public final class com/copperleaf/kudzu/node/choice/ChoiceNNode : com/copperleaf/kudzu/node/NonTerminalNode {
-	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun <init> (Lcom/copperleaf/kudzu/node/Node;ILcom/copperleaf/kudzu/node/NodeContext;)V
 	public fun getChildren ()Ljava/util/List;
+	public final fun getChoiceIndex ()I
 	public final fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
@@ -741,6 +742,7 @@ public final class com/copperleaf/kudzu/parser/choice/ExactChoiceParserKt {
 	public static final fun ExactChoiceParser (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)Lcom/copperleaf/kudzu/parser/Parser;
 	public static final fun ExactChoiceParser (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)Lcom/copperleaf/kudzu/parser/Parser;
 	public static final fun ExactChoiceParser (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)Lcom/copperleaf/kudzu/parser/Parser;
+	public static final fun ExactChoiceParser (Ljava/util/Collection;)Lcom/copperleaf/kudzu/parser/Parser;
 	public static final fun ExactChoiceParser ([Lcom/copperleaf/kudzu/parser/Parser;)Lcom/copperleaf/kudzu/parser/Parser;
 }
 
@@ -753,6 +755,7 @@ public final class com/copperleaf/kudzu/parser/choice/PredictiveChoiceParserKt {
 	public static final fun PredictiveChoiceParser (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)Lcom/copperleaf/kudzu/parser/Parser;
 	public static final fun PredictiveChoiceParser (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)Lcom/copperleaf/kudzu/parser/Parser;
 	public static final fun PredictiveChoiceParser (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)Lcom/copperleaf/kudzu/parser/Parser;
+	public static final fun PredictiveChoiceParser (Ljava/util/Collection;)Lcom/copperleaf/kudzu/parser/Parser;
 	public static final fun PredictiveChoiceParser ([Lcom/copperleaf/kudzu/parser/Parser;)Lcom/copperleaf/kudzu/parser/Parser;
 }
 
@@ -1025,6 +1028,8 @@ public final class com/copperleaf/kudzu/parser/sequence/SequenceParserKt {
 	public static final fun SequenceParser (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)Lcom/copperleaf/kudzu/parser/Parser;
 	public static final fun SequenceParser (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)Lcom/copperleaf/kudzu/parser/Parser;
 	public static final fun SequenceParser (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)Lcom/copperleaf/kudzu/parser/Parser;
+	public static final fun SequenceParser (Ljava/util/Collection;)Lcom/copperleaf/kudzu/parser/Parser;
+	public static final fun SequenceParser ([Lcom/copperleaf/kudzu/parser/Parser;)Lcom/copperleaf/kudzu/parser/Parser;
 }
 
 public final class com/copperleaf/kudzu/parser/tag/SimpleTagParser : com/copperleaf/kudzu/parser/Parser {

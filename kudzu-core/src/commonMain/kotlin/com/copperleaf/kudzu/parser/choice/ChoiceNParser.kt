@@ -31,6 +31,7 @@ class ChoiceNParser(
     }
 
     override val parse = DeepRecursiveFunction<ParserContext, ParserResult<ChoiceNNode>> { input ->
+        var index = 0
         for (parser in parsers) {
             when (strategy) {
                 ChoiceStrategy.Predictive -> {
@@ -38,6 +39,7 @@ class ChoiceNParser(
                         val next = parser.parse.callRecursive(input)
                         return@DeepRecursiveFunction ChoiceNNode(
                             next.first,
+                            index,
                             NodeContext(input, next.second)
                         ) to next.second
                     }
@@ -47,11 +49,14 @@ class ChoiceNParser(
                     if (next != null) {
                         return@DeepRecursiveFunction ChoiceNNode(
                             next.first,
+                            index,
                             NodeContext(input, next.second)
                         ) to next.second
                     }
                 }
             }
+
+            index++
         }
 
         throw ParserException(

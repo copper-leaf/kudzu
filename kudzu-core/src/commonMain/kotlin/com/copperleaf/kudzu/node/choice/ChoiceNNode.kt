@@ -14,6 +14,7 @@ import com.copperleaf.kudzu.parser.named.NamedParser
  */
 class ChoiceNNode(
     val node: Node,
+    val choiceIndex: Int,
     context: NodeContext
 ) : NonTerminalNode(context) {
     override val children: List<Node> = listOf(node)

@@ -346,4 +346,62 @@ class TestChoice {
             expectThat(underTest.predict(ParserContext.fromString(this))).isTrue()
         }
     }
+
+    @Test
+    fun testPredictiveChoiceNParser() {
+        val underTest = PredictiveChoiceParser(
+            listOf(
+                SequenceParser(LiteralTokenParser("aa"), LiteralTokenParser("aa")),
+                SequenceParser(LiteralTokenParser("aa"), LiteralTokenParser("bb")),
+                SequenceParser(LiteralTokenParser("bb"), LiteralTokenParser("bb")),
+                SequenceParser(LiteralTokenParser("cc"), LiteralTokenParser("cc")),
+            )
+        )
+
+        "aaaa".run {
+            expectThat(underTest.test(this)).parsedCorrectly().node()!!.choiceIndex.isEqualTo(0)
+            expectThat(underTest.predict(ParserContext.fromString(this))).isTrue()
+        }
+        "aabb".run {
+            expectThat(underTest.test(this)).parsedIncorrectly()
+            expectThat(underTest.predict(ParserContext.fromString(this))).isTrue()
+        }
+        "bbbb".run {
+            expectThat(underTest.test(this)).parsedCorrectly().node()!!.choiceIndex.isEqualTo(2)
+            expectThat(underTest.predict(ParserContext.fromString(this))).isTrue()
+        }
+        "cccc".run {
+            expectThat(underTest.test(this)).parsedCorrectly().node()!!.choiceIndex.isEqualTo(3)
+            expectThat(underTest.predict(ParserContext.fromString(this))).isTrue()
+        }
+    }
+
+    @Test
+    fun testExactChoiceNParser() {
+        val underTest = ExactChoiceParser(
+            listOf(
+                SequenceParser(LiteralTokenParser("aa"), LiteralTokenParser("aa")),
+                SequenceParser(LiteralTokenParser("aa"), LiteralTokenParser("bb")),
+                SequenceParser(LiteralTokenParser("bb"), LiteralTokenParser("bb")),
+                SequenceParser(LiteralTokenParser("cc"), LiteralTokenParser("cc")),
+            )
+        )
+
+        "aaaa".run {
+            expectThat(underTest.test(this)).parsedCorrectly().node()!!.choiceIndex.isEqualTo(0)
+            expectThat(underTest.predict(ParserContext.fromString(this))).isTrue()
+        }
+        "aabb".run {
+            expectThat(underTest.test(this)).parsedCorrectly().node()!!.choiceIndex.isEqualTo(1)
+            expectThat(underTest.predict(ParserContext.fromString(this))).isTrue()
+        }
+        "bbbb".run {
+            expectThat(underTest.test(this)).parsedCorrectly().node()!!.choiceIndex.isEqualTo(2)
+            expectThat(underTest.predict(ParserContext.fromString(this))).isTrue()
+        }
+        "cccc".run {
+            expectThat(underTest.test(this)).parsedCorrectly().node()!!.choiceIndex.isEqualTo(3)
+            expectThat(underTest.predict(ParserContext.fromString(this))).isTrue()
+        }
+    }
 }

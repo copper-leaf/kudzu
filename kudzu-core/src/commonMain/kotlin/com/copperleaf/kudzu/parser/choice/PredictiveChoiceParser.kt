@@ -185,4 +185,14 @@ inline fun PredictiveChoiceParser(
         strategy = ChoiceStrategy.Predictive
     )
 }
+
+@ExperimentalStdlibApi
+inline fun PredictiveChoiceParser(
+    parsers: Collection<Parser<*>>,
+): Parser<ChoiceNNode> {
+    return ChoiceNParser(
+        *parsers.toTypedArray(),
+        strategy = ChoiceStrategy.Predictive
+    )
+}
 /* ktlint-enable max-line-length */

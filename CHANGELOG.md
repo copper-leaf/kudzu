@@ -1,3 +1,7 @@
+## 3.1.0 - 2022-03-03
+
+- Adds `choiceIndex` property to ChoiceNNode
+
 ## 3.0.0 - 2022-03-02
 
 - Updates to kotlin 1.6.10

@@ -184,3 +184,13 @@ inline fun ExactChoiceParser(
         strategy = ChoiceStrategy.Exact
     )
 }
+
+@ExperimentalStdlibApi
+inline fun ExactChoiceParser(
+    parsers: Collection<Parser<*>>,
+): Parser<ChoiceNNode> {
+    return ChoiceNParser(
+        *parsers.toTypedArray(),
+        strategy = ChoiceStrategy.Exact
+    )
+}
