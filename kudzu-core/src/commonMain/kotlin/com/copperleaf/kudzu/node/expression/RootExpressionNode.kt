@@ -9,7 +9,6 @@ import com.copperleaf.kudzu.node.NodeContext
  * @see [InfixOperatorNode]
  * @see [InfixrOperatorNode]
  */
-@ExperimentalStdlibApi
 class RootExpressionNode(
     val expressionNode: Node,
     context: NodeContext

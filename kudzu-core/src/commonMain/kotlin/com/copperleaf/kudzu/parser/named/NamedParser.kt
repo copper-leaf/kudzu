@@ -18,7 +18,6 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - [parser] fails to parse
  */
-@ExperimentalStdlibApi
 class NamedParser<T : Node>(
     val parser: Parser<T>,
     val name: String,

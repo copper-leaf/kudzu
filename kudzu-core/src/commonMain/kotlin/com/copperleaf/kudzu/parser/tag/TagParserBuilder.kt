@@ -10,7 +10,6 @@ import com.copperleaf.kudzu.parser.many.ManyParser
 import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.text.ScanParser
 
-@ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
 object TagParserBuilder {
 

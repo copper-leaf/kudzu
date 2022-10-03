@@ -16,7 +16,6 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - any of its parsers fails to parse
  */
-@ExperimentalStdlibApi
 class SequenceNParser(
     private val parsers: List<Parser<*>>,
 ) : Parser<SequenceNNode> {

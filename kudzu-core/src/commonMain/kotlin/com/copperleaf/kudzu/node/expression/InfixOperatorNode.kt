@@ -9,7 +9,6 @@ import com.copperleaf.kudzu.parser.expression.InfixOperatorParser
  * left-to-right using [operationNodes] for each subsequent operator and operand. The result of one
  * [BinaryOperationNode] becomes the left operand for the next.
  */
-@ExperimentalStdlibApi
 class InfixOperatorNode(
     val leftOperand: Node,
     val operationNodes: List<BinaryOperationNode>,

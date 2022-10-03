@@ -17,7 +17,6 @@ import com.copperleaf.kudzu.parser.tag.TagParser
  * end of the tag, since scanning continues until `closingParser` predicts true, and then expects `closingParser` to
  * parse to completion.
  */
-@ExperimentalStdlibApi
 class NoopParser : Parser<Node> {
     override fun predict(input: ParserContext): Boolean {
         return true

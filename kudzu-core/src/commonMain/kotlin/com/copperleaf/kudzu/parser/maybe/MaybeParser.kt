@@ -16,7 +16,6 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - its parser fails to parse
  */
-@ExperimentalStdlibApi
 class MaybeParser<T : Node>(
     val parser: Parser<T>,
 ) : Parser<MaybeNode<T>> {

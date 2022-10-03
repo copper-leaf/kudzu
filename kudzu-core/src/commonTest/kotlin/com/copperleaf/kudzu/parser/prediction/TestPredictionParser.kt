@@ -13,7 +13,6 @@ import com.copperleaf.kudzu.parser.text.AnyTokenParser
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
-@OptIn(ExperimentalStdlibApi::class)
 class TestPredictionParser {
 
     private val parser = SequenceParser(

@@ -12,7 +12,6 @@ import com.copperleaf.kudzu.test
 import kotlin.random.Random
 import kotlin.test.Test
 
-@OptIn(ExperimentalStdlibApi::class)
 class TestLiteralValues {
 
     private val startNumberValue = -100

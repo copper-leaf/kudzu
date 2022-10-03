@@ -13,7 +13,6 @@ import com.copperleaf.kudzu.node.choice.Choice9Node
 import com.copperleaf.kudzu.node.choice.ChoiceNNode
 import com.copperleaf.kudzu.parser.Parser
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node> ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -25,7 +24,6 @@ inline fun <T1 : Node, T2 : Node> ExactChoiceParser(
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node> ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -39,7 +37,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node> ExactChoiceParser(
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -55,7 +52,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> ExactChoiceParser(
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -73,7 +69,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> ExactChoicePa
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -93,7 +88,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> Ex
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node> ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -115,7 +109,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node, T8 : Node> ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -139,7 +132,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <
     T1 : Node,
     T2 : Node,
@@ -175,7 +167,6 @@ inline fun <
     )
 }
 
-@ExperimentalStdlibApi
 inline fun ExactChoiceParser(
     vararg parsers: Parser<*>,
 ): Parser<ChoiceNNode> {
@@ -185,7 +176,6 @@ inline fun ExactChoiceParser(
     )
 }
 
-@ExperimentalStdlibApi
 inline fun ExactChoiceParser(
     parsers: Collection<Parser<*>>,
 ): Parser<ChoiceNNode> {

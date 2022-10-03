@@ -16,7 +16,6 @@ import com.copperleaf.kudzu.KudzuPlatform
  * Parsing fails when:
  *   - no input was consumed
  */
-@ExperimentalStdlibApi
 class AnyTokenParser : BaseTextParser(
     isValidChar = { _, char -> KudzuPlatform.isLetterOrDigit(char) },
     isValidText = { it.isNotEmpty() },

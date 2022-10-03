@@ -12,7 +12,6 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
 /**
  * A simple, non-necessarily-recursive tag parser. It matches a sequence of "open tag", "content", "close tag".
  */
-@ExperimentalStdlibApi
 
 class SimpleTagParser<Opening : Node, Content : Node, Closing : Node>(
     val name: String,

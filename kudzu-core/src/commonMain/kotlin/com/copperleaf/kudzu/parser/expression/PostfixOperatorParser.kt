@@ -13,7 +13,6 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
 /**
  * The parser for a level of combined [Operator.Postfix] operators of the same precedence.
  */
-@ExperimentalStdlibApi
 class PostfixOperatorParser(
     private val operator: Parser<ChoiceNNode>,
     private val operand: Parser<Node>

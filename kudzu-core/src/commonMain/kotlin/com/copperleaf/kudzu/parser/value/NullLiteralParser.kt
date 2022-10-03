@@ -8,7 +8,6 @@ import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.parser.mapped.MappedParser
 import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 
-@ExperimentalStdlibApi
 class NullLiteralParser : Parser<ValueNode<Nothing?>> {
     private val parser by lazy {
         MappedParser(

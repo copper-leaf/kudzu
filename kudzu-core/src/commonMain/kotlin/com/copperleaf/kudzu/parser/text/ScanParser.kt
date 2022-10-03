@@ -27,7 +27,6 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - its parser fails to parse
  */
-@ExperimentalStdlibApi
 class ScanParser(
     private val stoppingCondition: Parser<*>,
 ) : Parser<TextNode> {

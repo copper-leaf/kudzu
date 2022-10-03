@@ -8,7 +8,6 @@ import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
 
-@ExperimentalStdlibApi
 abstract class BaseManyParser<T : Node>(
     private val parser: Parser<T>,
     private val shouldStopParsingAtNodeCount: (Int) -> Boolean,

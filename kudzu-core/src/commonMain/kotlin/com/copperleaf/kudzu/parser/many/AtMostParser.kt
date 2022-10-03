@@ -18,7 +18,6 @@ import com.copperleaf.kudzu.parser.Parser
  * Parsing fails when:
  *   - its parser fails to parse
  */
-@ExperimentalStdlibApi
 class AtMostParser<T : Node>(
     parser: Parser<T>,
     private val maxSize: Int,

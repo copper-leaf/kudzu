@@ -12,7 +12,6 @@ import com.copperleaf.kudzu.parser.ParserResult
  * sequence. Do not create this parser directly, use the [SequenceParser] factory functions, which will select thr right
  * Seqeuence parser and type parameters for you.
  */
-@ExperimentalStdlibApi
 class Sequence2Parser<T1 : Node, T2 : Node>(
     private val p1: Parser<T1>,
     private val p2: Parser<T2>,

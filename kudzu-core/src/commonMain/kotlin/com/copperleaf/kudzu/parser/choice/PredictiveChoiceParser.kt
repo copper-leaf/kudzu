@@ -14,7 +14,6 @@ import com.copperleaf.kudzu.node.choice.ChoiceNNode
 import com.copperleaf.kudzu.parser.Parser
 
 /* ktlint-disable max-line-length */
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -26,7 +25,6 @@ inline fun <T1 : Node, T2 : Node> PredictiveChoiceParser(
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -40,7 +38,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node> PredictiveChoiceParser(
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -56,7 +53,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> PredictiveChoiceParser(
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -74,7 +70,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> PredictiveCho
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -94,7 +89,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> Pr
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -116,7 +110,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node, T8 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -140,7 +133,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <
     T1 : Node,
     T2 : Node,
@@ -176,7 +168,6 @@ inline fun <
     )
 }
 
-@ExperimentalStdlibApi
 inline fun PredictiveChoiceParser(
     vararg parsers: Parser<*>,
 ): Parser<ChoiceNNode> {
@@ -186,7 +177,6 @@ inline fun PredictiveChoiceParser(
     )
 }
 
-@ExperimentalStdlibApi
 inline fun PredictiveChoiceParser(
     parsers: Collection<Parser<*>>,
 ): Parser<ChoiceNNode> {

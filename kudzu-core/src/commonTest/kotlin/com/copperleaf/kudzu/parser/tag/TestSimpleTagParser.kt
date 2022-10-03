@@ -27,7 +27,6 @@ import com.copperleaf.kudzu.parser.value.AnyLiteralParser
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
-@ExperimentalStdlibApi
 class TestSimpleTagParser {
 
     private fun <T : Node> Parser<T>.asTagNameParser(name: String): Parser<TagNameNode<T>> {

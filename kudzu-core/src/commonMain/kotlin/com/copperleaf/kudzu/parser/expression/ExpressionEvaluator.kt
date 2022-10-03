@@ -5,7 +5,6 @@ import com.copperleaf.kudzu.node.Node
 /**
  * Evaluates the parse-tree created by [ExpressionParser].
  */
-@ExperimentalStdlibApi
 interface ExpressionEvaluator<T : Any> {
 
     /**

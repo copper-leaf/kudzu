@@ -17,7 +17,6 @@ import com.copperleaf.kudzu.parser.value.IntLiteralParser
 import kotlin.math.pow
 import kotlin.test.Test
 
-@ExperimentalStdlibApi
 @Suppress("UNUSED_VARIABLE", "UNUSED_DESTRUCTURED_PARAMETER_ENTRY")
 class ReadmeTests {
 

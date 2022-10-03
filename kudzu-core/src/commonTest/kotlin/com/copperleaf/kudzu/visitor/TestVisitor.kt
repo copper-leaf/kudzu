@@ -16,7 +16,6 @@ import com.copperleaf.kudzu.test
 import com.copperleaf.kudzu.visit
 import kotlin.test.Test
 
-@ExperimentalStdlibApi
 class TestVisitor {
 
     data class VisitedNode(

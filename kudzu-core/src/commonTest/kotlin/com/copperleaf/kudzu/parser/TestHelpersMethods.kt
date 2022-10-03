@@ -12,7 +12,6 @@ import com.copperleaf.kudzu.isTrue
 import com.copperleaf.kudzu.parser.chars.AnyCharParser
 import kotlin.test.Test
 
-@OptIn(ExperimentalStdlibApi::class)
 class TestHelpersMethods {
 
     @Test

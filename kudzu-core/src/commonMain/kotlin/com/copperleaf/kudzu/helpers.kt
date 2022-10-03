@@ -11,7 +11,6 @@ import com.copperleaf.kudzu.visitor.VisitorImpl
 /**
  * Used by a Parser to verify that the input is not empty when it expects to be able to consume a character.
  */
-@ExperimentalStdlibApi
 fun Parser<*>.checkNotEmpty(input: ParserContext, expected: (() -> String)? = null) {
     if (input.isEmpty()) {
         val expectedValue = expected?.invoke()
@@ -29,7 +28,6 @@ fun Parser<*>.checkNotEmpty(input: ParserContext, expected: (() -> String)? = nu
  *
  * @see [Visitor]
  */
-@ExperimentalStdlibApi
 fun Node.visit(vararg callbacks: Visitor.Callback) {
     VisitorImpl(*callbacks).visit(this)
 }
@@ -41,7 +39,6 @@ fun Node.visit(vararg callbacks: Visitor.Callback) {
  *
  * @see [Visitor]
  */
-@ExperimentalStdlibApi
 fun Node.visit(reversed: Boolean = false, callback: (Node) -> Unit) {
     val visitorCallback = if (reversed) {
         object : Visitor.Callback {
@@ -60,10 +57,8 @@ fun Node.visit(reversed: Boolean = false, callback: (Node) -> Unit) {
     visit(visitorCallback)
 }
 
-@ExperimentalStdlibApi
 typealias RemapperFn = ParserContext.(Parser<*>, ParserException) -> ParserException
 
-@ExperimentalStdlibApi
 suspend inline fun <
     BaseParser : Node,
     ChildParser : Node

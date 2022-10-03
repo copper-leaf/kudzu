@@ -19,7 +19,6 @@ import com.copperleaf.kudzu.parser.ParserResult
  *   - the next input character is neither \r nor \n
  *   - the \r is not followed by \n
  */
-@ExperimentalStdlibApi
 class NewlineCharParser : Parser<NewlineNode> {
     override fun predict(input: ParserContext): Boolean {
         return input.validateNextChar { it == '\r' || it == '\n' }

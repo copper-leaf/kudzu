@@ -11,7 +11,6 @@ import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 
-@ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
 object ExpressionParserBuilder {
     fun <T : Any> checkOperatorsAreValid(

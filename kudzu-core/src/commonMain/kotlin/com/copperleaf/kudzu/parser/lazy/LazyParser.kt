@@ -18,7 +18,6 @@ import com.copperleaf.kudzu.parser.ParserContext
  * Parsing fails when:
  *   - its parser fails to parse
  */
-@ExperimentalStdlibApi
 class LazyParser<T : Node> : Parser<T> {
 
     private lateinit var parser: Parser<T>

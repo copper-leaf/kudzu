@@ -9,7 +9,6 @@ import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 import com.copperleaf.kudzu.parser.mapped.MappedParser
 import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 
-@ExperimentalStdlibApi
 class BooleanLiteralParser : Parser<ValueNode<Boolean>> {
     private val parser by lazy {
         MappedParser(

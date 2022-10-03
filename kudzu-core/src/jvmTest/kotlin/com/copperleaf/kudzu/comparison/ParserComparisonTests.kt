@@ -31,7 +31,6 @@ import me.alllex.parsus.parser.Parser as ParsusParser
 import me.alllex.parsus.parser.leftAssociative as parsusLeftAssociative
 import me.alllex.parsus.parser.parser as parsusParserFn
 
-@OptIn(ExperimentalStdlibApi::class)
 @Suppress("UNUSED_VARIABLE")
 class ParserComparisonTests {
 

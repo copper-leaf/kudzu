@@ -23,7 +23,6 @@ import com.copperleaf.kudzu.parser.text.OptionalWhitespaceParser
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
-@OptIn(ExperimentalStdlibApi::class)
 class TestMapped {
 
     @Test

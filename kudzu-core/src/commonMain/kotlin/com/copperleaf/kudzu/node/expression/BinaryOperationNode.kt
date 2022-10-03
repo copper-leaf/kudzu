@@ -9,7 +9,6 @@ import com.copperleaf.kudzu.node.NodeContext
  * @see [InfixOperatorNode]
  * @see [InfixrOperatorNode]
  */
-@ExperimentalStdlibApi
 class BinaryOperationNode(
     val operator: Node,
     val operand: Node,

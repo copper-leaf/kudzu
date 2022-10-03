@@ -16,7 +16,6 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - none of the provided parsers are able to parse successfully
  */
-@ExperimentalStdlibApi
 class ChoiceNParser(
     private val parsers: List<Parser<*>>,
     private val strategy: ChoiceStrategy = ChoiceStrategy.Predictive,

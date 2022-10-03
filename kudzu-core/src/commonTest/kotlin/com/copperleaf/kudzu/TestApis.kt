@@ -1,4 +1,3 @@
-@file:OptIn(ExperimentalStdlibApi::class)
 
 package com.copperleaf.kudzu
 
@@ -173,7 +172,6 @@ fun NonTerminalNode.withChildren(expectedChildrenCount: Int): NonTerminalNode {
     return this
 }
 
-@ExperimentalStdlibApi
 fun <NodeType : Node> Parser<NodeType>.test(
     input: String,
     skipWhitespace: Boolean = false,
@@ -183,7 +181,6 @@ fun <NodeType : Node> Parser<NodeType>.test(
     return test(ParserContext.fromString(input, skipWhitespace), logErrors, expectedErrorMessage)
 }
 
-@ExperimentalStdlibApi
 fun <NodeType : Node> Parser<NodeType>.test(
     input: ParserContext,
     logErrors: Boolean = false,

@@ -9,7 +9,6 @@ import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
 
 /* ktlint-disable max-line-length */
-@ExperimentalStdlibApi
 class Choice4Parser<T1 : Node, T2 : Node, T3 : Node, T4 : Node>(
     private val p1: Parser<T1>,
     private val p2: Parser<T2>,

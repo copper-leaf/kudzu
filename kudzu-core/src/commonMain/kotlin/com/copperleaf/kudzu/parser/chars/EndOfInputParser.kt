@@ -16,7 +16,6 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - There is more input to consume
  */
-@ExperimentalStdlibApi
 class EndOfInputParser : Parser<EndOfInputNode> {
     override fun predict(input: ParserContext): Boolean {
         return input.isEmpty()

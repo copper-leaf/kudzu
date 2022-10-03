@@ -28,7 +28,6 @@ import com.copperleaf.kudzu.parser.value.AnyLiteralParser
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
-@ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
 class TestGenericHtmlParser {
 
