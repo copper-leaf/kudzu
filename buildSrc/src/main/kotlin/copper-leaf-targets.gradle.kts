@@ -1,20 +1,39 @@
+@file:Suppress("UNUSED_VARIABLE")
+
 plugins {
-    `copper-leaf-android`
-    `copper-leaf-targets`
-    `copper-leaf-base`
-    `copper-leaf-version`
-    `copper-leaf-lint`
-    `copper-leaf-publish`
-}
-
-description = "A monadic (I think...) recursive-descent parser written in Kotlin"
-
-repositories {
-    maven(url = "https://jitpack.io")
+    kotlin("multiplatform")
 }
 
 kotlin {
+    explicitApi()
+
+    // targets
+    jvm { }
+    android {
+        publishAllLibraryVariants()
+    }
+    js(BOTH) {
+        browser {
+            testTask {
+                enabled = false
+            }
+        }
+    }
+    nativeTargetGroup(
+        "ios",
+        iosArm32(),
+        iosArm64(),
+        iosX64(),
+        iosSimulatorArm64(),
+    )
+
+    // sourcesets
     sourceSets {
+        all {
+            languageSettings.apply {
+            }
+        }
+
         // Common Sourcesets
         val commonMain by getting {
             dependencies {
@@ -27,38 +46,31 @@ kotlin {
             }
         }
 
-        // plain JVM Sourcesets
         val jvmMain by getting {
             dependencies {
             }
         }
         val jvmTest by getting {
-            dependsOn(commonTest)
             dependencies {
                 implementation(kotlin("test-junit"))
-
-                implementation("com.github.alllex:parsus:v0.1.2")
-                implementation("com.github.h0tk3y.betterParse:better-parse:0.4.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
             }
         }
 
         // Android JVM Sourcesets
         val androidMain by getting {
-            dependsOn(jvmMain)
             dependencies {
             }
         }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("io.mockk:mockk:1.11.0")
             }
         }
 
         // JS Sourcesets
         val jsMain by getting {
-            dependencies {
-            }
+            dependencies { }
         }
         val jsTest by getting {
             dependencies {
@@ -73,5 +85,20 @@ kotlin {
         val iosTest by getting {
             dependencies { }
         }
+    }
+}
+
+tasks.withType<JavaCompile> {
+    sourceCompatibility = Config.javaVersion
+    targetCompatibility = Config.javaVersion
+}
+tasks.withType<Test> {
+    testLogging {
+        showStandardStreams = true
+    }
+}
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = Config.javaVersion
     }
 }

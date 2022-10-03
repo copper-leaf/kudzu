@@ -1,3 +1,29 @@
+## 4.0.0 - 2022-10-03
+
+- Updates to Kotlin 1.7.20, and removes `@ExperimentalStdlibApi` now that `DeepRecursiveFunction` is now stable
+- Make it possible to process choice nodes with type safety. Thanks to [@ephemient](https://github.com/ephemient) for the contribution!
+
+Instead of requiring casting to access
+
+```kotlin
+MappedParser(ChoiceParser(FooParser(), BarParser())) { node ->
+    when (node) {
+        is Choice2Node.Option1 -> (node.node as FooNode).foo
+        is Choice2Node.Option2 -> (node.node as BarNode).bar
+    }
+}
+```
+we can rely on the compiler to check
+
+```kotlin
+MappedParser(ChoiceParser(FooParser(), BarParser())) { node ->
+    when (node) {
+        is Choice2Node.Option1 -> node.node.foo
+        is Choice2Node.Option2 -> node.node.bar
+    }
+}
+```
+
 ## 3.1.0 - 2022-03-03
 
 - Adds `choiceIndex` property to ChoiceNNode
