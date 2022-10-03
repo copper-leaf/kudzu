@@ -15,7 +15,6 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
 /**
  * The parser for a level of combined [Operator.Infixr] operators of the same precedence.
  */
-@ExperimentalStdlibApi
 
 class InfixrOperatorParser(
     private val operator: Parser<ChoiceNNode>,

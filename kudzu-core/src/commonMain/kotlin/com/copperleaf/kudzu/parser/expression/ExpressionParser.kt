@@ -26,7 +26,6 @@ import com.copperleaf.kudzu.parser.lazy.LazyParser
  * same way, but has many fewer AST nodes, and the only ones that remain would actually represent the smallest set of
  * real operations in the expression and the literal values used as their operands.
  */
-@ExperimentalStdlibApi
 
 class ExpressionParser<T : Any>(
     private val termParser: (Parser<RootExpressionNode>) -> Parser<ValueNode<T>>,

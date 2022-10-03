@@ -14,7 +14,6 @@ package com.copperleaf.kudzu.parser.text
  * Parsing fails when:
  *   - no input was consumed
  */
-@ExperimentalStdlibApi
 class AnyTextParser : BaseTextParser(
     isValidChar = { _, char -> !char.isWhitespace() },
     isValidText = { it.isNotEmpty() },

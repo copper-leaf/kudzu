@@ -16,7 +16,6 @@ import com.copperleaf.kudzu.test
 import kotlin.math.pow
 import kotlin.test.Test
 
-@OptIn(ExperimentalStdlibApi::class)
 class TestExpression {
 
     class IntAsDoubleParser(

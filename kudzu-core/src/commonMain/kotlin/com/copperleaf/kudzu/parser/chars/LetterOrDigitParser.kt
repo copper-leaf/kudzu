@@ -13,7 +13,6 @@ import com.copperleaf.kudzu.KudzuPlatform
  *   - there is no more input
  *   - the escape character is used without input remaining to escape
  */
-@ExperimentalStdlibApi
 class LetterOrDigitParser : BaseCharParser(
     isValidChar = { KudzuPlatform.isLetterOrDigit(it) },
     validationFailedMessage = { "must be a letter or digit" }

@@ -13,7 +13,6 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Convert a Node from a parser into an arbitrary value, wrapped in [ValueNode]. The result does not have to be another
  * Node. The the mapped result should be another node, consider using [FlatMappedParser] instead.
  */
-@ExperimentalStdlibApi
 class MappedParser<ParserNodeType : Node, T>(
     val parser: Parser<ParserNodeType>,
     val remapErrors: RemapperFn = { _, e -> e },

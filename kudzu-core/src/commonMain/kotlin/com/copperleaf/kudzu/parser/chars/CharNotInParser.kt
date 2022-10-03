@@ -11,7 +11,6 @@ package com.copperleaf.kudzu.parser.chars
  *   - there is no more input
  *   - the escape character is used without input remaining to escape
  */
-@ExperimentalStdlibApi
 class CharNotInParser(
     private val chars: List<Char>,
 ) : BaseCharParser(

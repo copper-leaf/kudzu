@@ -26,7 +26,6 @@ import com.copperleaf.kudzu.test
 import com.copperleaf.kudzu.withChildren
 import kotlin.test.Test
 
-@OptIn(ExperimentalStdlibApi::class)
 class TestChoice {
 
     @Test

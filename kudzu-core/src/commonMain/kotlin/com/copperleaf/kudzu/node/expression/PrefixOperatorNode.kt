@@ -9,7 +9,6 @@ import com.copperleaf.kudzu.parser.expression.PrefixOperatorParser
  * left-to-right using [operatorNodes] for each subsequent operator. The result of one operation becomes the operand for
  * the next.
  */
-@ExperimentalStdlibApi
 class PrefixOperatorNode(
     val operatorNodes: List<Node>,
     val operand: Node,

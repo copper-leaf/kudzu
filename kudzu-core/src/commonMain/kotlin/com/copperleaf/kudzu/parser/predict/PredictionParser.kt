@@ -25,7 +25,6 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - [parser] fails to parse
  */
-@ExperimentalStdlibApi
 class PredictionParser<T : Node>(
     val parser: Parser<T>
 ) : Parser<T> {

@@ -13,7 +13,6 @@ import com.copperleaf.kudzu.node.sequence.Sequence9Node
 import com.copperleaf.kudzu.node.sequence.SequenceNNode
 import com.copperleaf.kudzu.parser.Parser
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node> SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -24,7 +23,6 @@ inline fun <T1 : Node, T2 : Node> SequenceParser(
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node> SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -37,7 +35,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node> SequenceParser(
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -52,7 +49,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> SequenceParser(
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -69,7 +65,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> SequenceParse
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -88,7 +83,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> Se
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node> SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -109,7 +103,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node, T8 : Node> SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -132,7 +125,6 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7
     )
 }
 
-@ExperimentalStdlibApi
 inline fun <
     T1 : Node,
     T2 : Node,
@@ -167,7 +159,6 @@ inline fun <
     )
 }
 
-@ExperimentalStdlibApi
 inline fun SequenceParser(
     vararg parsers: Parser<*>,
 ): Parser<SequenceNNode> {
@@ -176,7 +167,6 @@ inline fun SequenceParser(
     )
 }
 
-@ExperimentalStdlibApi
 inline fun SequenceParser(
     parsers: Collection<Parser<*>>,
 ): Parser<SequenceNNode> {

@@ -9,7 +9,6 @@ import com.copperleaf.kudzu.parser.text.LiteralTokenParser
  * [ExpressionEvaluator]. All operators must have unique names to ensure the parser result maps back to the proper
  * applyFn.
  */
-@ExperimentalStdlibApi
 sealed class Operator<T : Any>(
     val name: String,
     val parser: Parser<*>,
@@ -19,7 +18,6 @@ sealed class Operator<T : Any>(
 
     abstract fun expandAliases(): List<Operator<T>>
 
-    @ExperimentalStdlibApi
     abstract class UnaryOperator<T : Any>(
         name: String,
         parser: Parser<*>,
@@ -29,7 +27,6 @@ sealed class Operator<T : Any>(
         abstract val applyFn: (T) -> T
     }
 
-    @ExperimentalStdlibApi
     abstract class BinaryOperator<T : Any>(
         name: String,
         parser: Parser<*>,
@@ -39,7 +36,6 @@ sealed class Operator<T : Any>(
         abstract val applyFn: (T, T) -> T
     }
 
-    @ExperimentalStdlibApi
     class Prefix<T : Any>(
         op: String,
         precedence: Int,
@@ -59,7 +55,6 @@ sealed class Operator<T : Any>(
         }
     }
 
-    @ExperimentalStdlibApi
     class Postfix<T : Any>(
         op: String,
         precedence: Int,
@@ -79,7 +74,6 @@ sealed class Operator<T : Any>(
         }
     }
 
-    @ExperimentalStdlibApi
     class Infixr<T : Any>(
         op: String,
         precedence: Int,
@@ -99,7 +93,6 @@ sealed class Operator<T : Any>(
         }
     }
 
-    @ExperimentalStdlibApi
     class Infix<T : Any>(
         op: String,
         precedence: Int,

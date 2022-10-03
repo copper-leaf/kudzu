@@ -17,7 +17,6 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
  * Consume a token that is a valid, generic identifier. An identifier is a letter or underscore followed by zero or more letter,
  * digit, or underscore characters.
  */
-@ExperimentalStdlibApi
 class IdentifierTokenParser : Parser<TextNode> {
     private val parser: Parser<TextNode> by lazy {
         FlatMappedParser(

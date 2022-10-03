@@ -8,7 +8,6 @@ import com.copperleaf.kudzu.node.NonTerminalNode
  * A Node representing a generic non-terminal node in an Expression. Other expression nodes must extend this to support
  * simplifying the resulting expression AST.
  */
-@ExperimentalStdlibApi
 abstract class ExpressionNode(
     context: NodeContext
 ) : NonTerminalNode(context) {

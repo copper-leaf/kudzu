@@ -17,7 +17,6 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
  *
  * SeparatedByParser ::= parser (separator parser)*
  */
-@ExperimentalStdlibApi
 
 class SeparatedByParser<T : Node>(
     term: Parser<T>,

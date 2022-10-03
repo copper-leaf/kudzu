@@ -8,7 +8,6 @@ import com.copperleaf.kudzu.parser.expression.InfixrOperatorParser
  * A Node parsed from [InfixrOperatorParser]. The start [leftOperand] has binary operations applied recursively from
  * left-to-right using [operation] for the next operator and operand.
  */
-@ExperimentalStdlibApi
 class InfixrOperatorNode(
     val leftOperand: Node,
     val operation: BinaryOperationNode?,

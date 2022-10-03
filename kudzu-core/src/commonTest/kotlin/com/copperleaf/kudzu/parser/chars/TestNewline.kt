@@ -12,7 +12,6 @@ import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
-@OptIn(ExperimentalStdlibApi::class)
 class TestNewline {
 
     @Test

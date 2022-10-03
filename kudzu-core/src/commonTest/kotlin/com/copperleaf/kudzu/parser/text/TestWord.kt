@@ -16,7 +16,6 @@ import com.copperleaf.kudzu.remainingText
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
-@OptIn(ExperimentalStdlibApi::class)
 class TestWord {
 
     @Test

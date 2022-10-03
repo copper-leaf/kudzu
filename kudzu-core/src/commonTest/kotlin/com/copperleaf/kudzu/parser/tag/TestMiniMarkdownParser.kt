@@ -12,7 +12,6 @@ import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
-@ExperimentalStdlibApi
 class TestMiniMarkdownParser {
 
     private fun <T : Node> Parser<T>.asTagNameParser(name: String): Parser<TagNameNode<T>> {

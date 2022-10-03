@@ -13,7 +13,6 @@ import com.copperleaf.kudzu.parser.many.ManyParser
 import com.copperleaf.kudzu.parser.mapped.MappedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 
-@ExperimentalStdlibApi
 class StringLiteralParser(private val delimiter: Char = '"') : Parser<ValueNode<String>> {
     private val parser by lazy {
         MappedParser(

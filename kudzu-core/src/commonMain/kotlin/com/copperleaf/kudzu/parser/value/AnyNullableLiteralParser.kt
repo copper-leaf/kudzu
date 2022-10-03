@@ -7,7 +7,6 @@ import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 
-@ExperimentalStdlibApi
 @Suppress("UNCHECKED_CAST")
 class AnyNullableLiteralParser : Parser<ValueNode<Any?>> {
     private val parser by lazy {

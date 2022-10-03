@@ -13,7 +13,6 @@ import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 import com.copperleaf.kudzu.parser.mapped.MappedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 
-@ExperimentalStdlibApi
 class CharLiteralParser(private val delimiter: Char = '\'') : Parser<ValueNode<Char>> {
     private val parser by lazy {
         MappedParser(

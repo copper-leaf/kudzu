@@ -12,7 +12,6 @@ import com.copperleaf.kudzu.parser.mapped.MappedParser
 import com.copperleaf.kudzu.parser.maybe.MaybeParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 
-@ExperimentalStdlibApi
 class DoubleLiteralParser : Parser<ValueNode<Double>> {
     private val parser by lazy {
         MappedParser(

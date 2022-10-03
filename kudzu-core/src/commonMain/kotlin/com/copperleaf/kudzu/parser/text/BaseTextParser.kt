@@ -8,7 +8,6 @@ import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
 
-@ExperimentalStdlibApi
 abstract class BaseTextParser(
     val isValidChar: (Int, Char) -> Boolean,
     val isValidText: (String) -> Boolean,

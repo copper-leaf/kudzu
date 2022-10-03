@@ -13,7 +13,6 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
 import com.copperleaf.kudzu.test
 import kotlin.test.Test
 
-@OptIn(ExperimentalStdlibApi::class)
 class TestScan {
 
     @Test

@@ -12,7 +12,6 @@ import com.copperleaf.kudzu.parser.tag.TagParserBuilder.checkTagsAreValid
  * is scanned until some kind of "opening tag" is encountered, the scanning process continues recursively, and then a
  * "closing tag" ends the recursive parsing.
  */
-@ExperimentalStdlibApi
 class TagParser(
     private val tags: List<TagBuilder<*, *>>,
     private val allowSameTagRecursion: Boolean = false

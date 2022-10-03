@@ -20,7 +20,6 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
  *   - there is no more input
  *   - the escape character is used without input remaining to escape
  */
-@ExperimentalStdlibApi
 class EscapedCharParser : Parser<CharNode> {
     private val parser by lazy {
         val normalEscapeChar = FlatMappedParser(

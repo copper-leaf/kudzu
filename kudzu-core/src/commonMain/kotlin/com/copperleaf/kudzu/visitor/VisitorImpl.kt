@@ -3,7 +3,6 @@ package com.copperleaf.kudzu.visitor
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.NonTerminalNode
 
-@ExperimentalStdlibApi
 internal class VisitorImpl(
     private val callbacks: List<Visitor.Callback>
 ) : Visitor {

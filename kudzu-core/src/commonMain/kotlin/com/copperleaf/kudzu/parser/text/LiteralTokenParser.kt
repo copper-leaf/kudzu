@@ -26,7 +26,6 @@ import com.copperleaf.kudzu.parser.choice.PredictiveChoiceParser
  *   - there is no more input remaining
  *   - the next character does not match the corresponding character of the expected string
  */
-@ExperimentalStdlibApi
 class LiteralTokenParser(
     val expected: String
 ) : Parser<TextNode> {

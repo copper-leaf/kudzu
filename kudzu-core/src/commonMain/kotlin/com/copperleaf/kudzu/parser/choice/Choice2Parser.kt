@@ -8,7 +8,6 @@ import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
 
-@ExperimentalStdlibApi
 class Choice2Parser<T1 : Node, T2 : Node>(
     private val p1: Parser<T1>,
     private val p2: Parser<T2>,
