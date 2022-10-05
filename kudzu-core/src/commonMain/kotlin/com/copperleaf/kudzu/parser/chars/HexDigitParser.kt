@@ -11,7 +11,7 @@ package com.copperleaf.kudzu.parser.chars
  *   - there is no more input
  *   - the escape character is used without input remaining to escape
  */
-class HexDigitParser : BaseCharParser(
+public class HexDigitParser : BaseCharParser(
     isValidChar = { it in (('0'..'9') + ('a'..'f') + ('A'..'F')) },
     validationFailedMessage = { "must be a letter or digit" }
 )

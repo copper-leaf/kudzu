@@ -4,18 +4,18 @@ import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.NonTerminalNode
 import com.copperleaf.kudzu.node.TerminalNode
 
-fun Node.printAst(currentIndent: Int): String {
+public fun Node.printAst(currentIndent: Int): String {
     return when (this) {
         is TerminalNode -> printTerminalNodeAst(currentIndent)
         is NonTerminalNode -> printNonTerminalNodeAst(currentIndent)
     }
 }
 
-fun TerminalNode.printTerminalNodeAst(currentIndent: Int): String {
+internal fun TerminalNode.printTerminalNodeAst(currentIndent: Int): String {
     return "${indent(currentIndent)}($astNodeName: '$text')"
 }
 
-fun NonTerminalNode.printNonTerminalNodeAst(currentIndent: Int): String {
+internal fun NonTerminalNode.printNonTerminalNodeAst(currentIndent: Int): String {
     val childrenPrinted = if (children.isNotEmpty()) {
         children
             .map { it.printAst(currentIndent + 2) }
@@ -30,6 +30,6 @@ fun NonTerminalNode.printNonTerminalNodeAst(currentIndent: Int): String {
         "${indent(currentIndent)})"
 }
 
-fun indent(currentIndent: Int): String {
+internal fun indent(currentIndent: Int): String {
     return (0 until currentIndent).map { " " }.joinToString(separator = "")
 }

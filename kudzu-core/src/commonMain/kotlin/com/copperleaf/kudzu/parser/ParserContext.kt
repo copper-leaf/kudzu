@@ -15,20 +15,20 @@ package com.copperleaf.kudzu.parser
  * The default implementation of [ParserContextImpl] operates entirely in-memory and is completely immutable, to avoid
  * these kinds of issues, but may not be suitable for larger inputs.
  */
-interface ParserContext {
+public interface ParserContext {
 
-    val sourcePosition: SourcePosition
+    public val sourcePosition: SourcePosition
 
-    fun isEmpty(): Boolean
+    public fun isEmpty(): Boolean
 
-    fun nextChar(): Pair<Char, ParserContext>
+    public fun nextChar(): Pair<Char, ParserContext>
 
-    fun validateNextChar(fn: (Char) -> Boolean): Boolean
+    public fun validateNextChar(fn: (Char) -> Boolean): Boolean
 
-    fun getSurroundingText(position: SourcePosition): String
+    public fun getSurroundingText(position: SourcePosition): String
 
-    companion object {
-        fun fromString(input: String, skipWhitespace: Boolean = false): ParserContext {
+    public companion object {
+        public fun fromString(input: String, skipWhitespace: Boolean = false): ParserContext {
             return ParserContextImpl(input, skipWhitespace = skipWhitespace)
         }
     }

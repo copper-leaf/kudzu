@@ -66,232 +66,276 @@ public abstract class com/copperleaf/kudzu/node/choice/Choice2Node : com/copperl
 	public synthetic fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getAstNodeName ()Ljava/lang/String;
 	public fun getChildren ()Ljava/util/List;
-	public final fun getNode ()Lcom/copperleaf/kudzu/node/Node;
+	public abstract fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice2Node$Option1 : com/copperleaf/kudzu/node/choice/Choice2Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice2Node$Option2 : com/copperleaf/kudzu/node/choice/Choice2Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public abstract class com/copperleaf/kudzu/node/choice/Choice3Node : com/copperleaf/kudzu/node/NonTerminalNode {
 	public synthetic fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getAstNodeName ()Ljava/lang/String;
 	public fun getChildren ()Ljava/util/List;
-	public final fun getNode ()Lcom/copperleaf/kudzu/node/Node;
+	public abstract fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice3Node$Option1 : com/copperleaf/kudzu/node/choice/Choice3Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice3Node$Option2 : com/copperleaf/kudzu/node/choice/Choice3Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice3Node$Option3 : com/copperleaf/kudzu/node/choice/Choice3Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public abstract class com/copperleaf/kudzu/node/choice/Choice4Node : com/copperleaf/kudzu/node/NonTerminalNode {
 	public synthetic fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getAstNodeName ()Ljava/lang/String;
 	public fun getChildren ()Ljava/util/List;
-	public final fun getNode ()Lcom/copperleaf/kudzu/node/Node;
+	public abstract fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice4Node$Option1 : com/copperleaf/kudzu/node/choice/Choice4Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice4Node$Option2 : com/copperleaf/kudzu/node/choice/Choice4Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice4Node$Option3 : com/copperleaf/kudzu/node/choice/Choice4Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice4Node$Option4 : com/copperleaf/kudzu/node/choice/Choice4Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public abstract class com/copperleaf/kudzu/node/choice/Choice5Node : com/copperleaf/kudzu/node/NonTerminalNode {
 	public synthetic fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getAstNodeName ()Ljava/lang/String;
 	public fun getChildren ()Ljava/util/List;
-	public final fun getNode ()Lcom/copperleaf/kudzu/node/Node;
+	public abstract fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice5Node$Option1 : com/copperleaf/kudzu/node/choice/Choice5Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice5Node$Option2 : com/copperleaf/kudzu/node/choice/Choice5Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice5Node$Option3 : com/copperleaf/kudzu/node/choice/Choice5Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice5Node$Option4 : com/copperleaf/kudzu/node/choice/Choice5Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice5Node$Option5 : com/copperleaf/kudzu/node/choice/Choice5Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public abstract class com/copperleaf/kudzu/node/choice/Choice6Node : com/copperleaf/kudzu/node/NonTerminalNode {
 	public synthetic fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getAstNodeName ()Ljava/lang/String;
 	public fun getChildren ()Ljava/util/List;
-	public final fun getNode ()Lcom/copperleaf/kudzu/node/Node;
+	public abstract fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice6Node$Option1 : com/copperleaf/kudzu/node/choice/Choice6Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice6Node$Option2 : com/copperleaf/kudzu/node/choice/Choice6Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice6Node$Option3 : com/copperleaf/kudzu/node/choice/Choice6Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice6Node$Option4 : com/copperleaf/kudzu/node/choice/Choice6Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice6Node$Option5 : com/copperleaf/kudzu/node/choice/Choice6Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice6Node$Option6 : com/copperleaf/kudzu/node/choice/Choice6Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public abstract class com/copperleaf/kudzu/node/choice/Choice7Node : com/copperleaf/kudzu/node/NonTerminalNode {
 	public synthetic fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getAstNodeName ()Ljava/lang/String;
 	public fun getChildren ()Ljava/util/List;
-	public final fun getNode ()Lcom/copperleaf/kudzu/node/Node;
+	public abstract fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice7Node$Option1 : com/copperleaf/kudzu/node/choice/Choice7Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice7Node$Option2 : com/copperleaf/kudzu/node/choice/Choice7Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice7Node$Option3 : com/copperleaf/kudzu/node/choice/Choice7Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice7Node$Option4 : com/copperleaf/kudzu/node/choice/Choice7Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice7Node$Option5 : com/copperleaf/kudzu/node/choice/Choice7Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice7Node$Option6 : com/copperleaf/kudzu/node/choice/Choice7Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice7Node$Option7 : com/copperleaf/kudzu/node/choice/Choice7Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public abstract class com/copperleaf/kudzu/node/choice/Choice8Node : com/copperleaf/kudzu/node/NonTerminalNode {
 	public synthetic fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getAstNodeName ()Ljava/lang/String;
 	public fun getChildren ()Ljava/util/List;
-	public final fun getNode ()Lcom/copperleaf/kudzu/node/Node;
+	public abstract fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice8Node$Option1 : com/copperleaf/kudzu/node/choice/Choice8Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice8Node$Option2 : com/copperleaf/kudzu/node/choice/Choice8Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice8Node$Option3 : com/copperleaf/kudzu/node/choice/Choice8Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice8Node$Option4 : com/copperleaf/kudzu/node/choice/Choice8Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice8Node$Option5 : com/copperleaf/kudzu/node/choice/Choice8Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice8Node$Option6 : com/copperleaf/kudzu/node/choice/Choice8Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice8Node$Option7 : com/copperleaf/kudzu/node/choice/Choice8Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice8Node$Option8 : com/copperleaf/kudzu/node/choice/Choice8Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public abstract class com/copperleaf/kudzu/node/choice/Choice9Node : com/copperleaf/kudzu/node/NonTerminalNode {
 	public synthetic fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getAstNodeName ()Ljava/lang/String;
 	public fun getChildren ()Ljava/util/List;
-	public final fun getNode ()Lcom/copperleaf/kudzu/node/Node;
+	public abstract fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice9Node$Option1 : com/copperleaf/kudzu/node/choice/Choice9Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice9Node$Option2 : com/copperleaf/kudzu/node/choice/Choice9Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice9Node$Option3 : com/copperleaf/kudzu/node/choice/Choice9Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice9Node$Option4 : com/copperleaf/kudzu/node/choice/Choice9Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice9Node$Option5 : com/copperleaf/kudzu/node/choice/Choice9Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice9Node$Option6 : com/copperleaf/kudzu/node/choice/Choice9Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice9Node$Option7 : com/copperleaf/kudzu/node/choice/Choice9Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice9Node$Option8 : com/copperleaf/kudzu/node/choice/Choice9Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/Choice9Node$Option9 : com/copperleaf/kudzu/node/choice/Choice9Node {
 	public fun <init> (Lcom/copperleaf/kudzu/node/Node;Lcom/copperleaf/kudzu/node/NodeContext;)V
+	public fun getNode ()Lcom/copperleaf/kudzu/node/Node;
 }
 
 public final class com/copperleaf/kudzu/node/choice/ChoiceNNode : com/copperleaf/kudzu/node/NonTerminalNode {
@@ -556,6 +600,10 @@ public final class com/copperleaf/kudzu/node/text/TextNode : com/copperleaf/kudz
 	public fun getText ()Ljava/lang/String;
 }
 
+public final class com/copperleaf/kudzu/parser/ParseFunctionKt {
+	public static final fun runParser (Lkotlin/jvm/functions/Function3;)Lkotlin/DeepRecursiveFunction;
+}
+
 public abstract interface class com/copperleaf/kudzu/parser/Parser {
 	public abstract fun getParse ()Lkotlin/DeepRecursiveFunction;
 	public abstract fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
@@ -607,7 +655,7 @@ public final class com/copperleaf/kudzu/parser/chars/AnyCharParser : com/copperl
 
 public abstract class com/copperleaf/kudzu/parser/chars/BaseCharParser : com/copperleaf/kudzu/parser/Parser {
 	public fun <init> (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)V
-	public final fun getParse ()Lkotlin/DeepRecursiveFunction;
+	public fun getParse ()Lkotlin/DeepRecursiveFunction;
 	public final fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
@@ -633,10 +681,8 @@ public final class com/copperleaf/kudzu/parser/chars/EndOfInputParser : com/copp
 	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
-public final class com/copperleaf/kudzu/parser/chars/EscapedCharParser : com/copperleaf/kudzu/parser/Parser {
+public final class com/copperleaf/kudzu/parser/chars/EscapedCharParser : com/copperleaf/kudzu/parser/wrapped/WrappedParser {
 	public fun <init> ()V
-	public fun getParse ()Lkotlin/DeepRecursiveFunction;
-	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
 public final class com/copperleaf/kudzu/parser/chars/HexDigitParser : com/copperleaf/kudzu/parser/chars/BaseCharParser {
@@ -763,37 +809,27 @@ public abstract interface class com/copperleaf/kudzu/parser/expression/Expressio
 	public abstract fun getEvaluate ()Lkotlin/DeepRecursiveFunction;
 }
 
-public final class com/copperleaf/kudzu/parser/expression/ExpressionParser : com/copperleaf/kudzu/parser/Parser {
+public final class com/copperleaf/kudzu/parser/expression/ExpressionParser : com/copperleaf/kudzu/parser/wrapped/WrappedParser {
 	public fun <init> (Lkotlin/jvm/functions/Function1;Ljava/util/List;ZZ)V
 	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;Ljava/util/List;ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lkotlin/jvm/functions/Function1;[Lcom/copperleaf/kudzu/parser/expression/Operator;ZZ)V
 	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;[Lcom/copperleaf/kudzu/parser/expression/Operator;ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getEvaluator ()Lcom/copperleaf/kudzu/parser/expression/ExpressionEvaluator;
-	public fun getParse ()Lkotlin/DeepRecursiveFunction;
-	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
 public final class com/copperleaf/kudzu/parser/expression/ExpressionParserBuilder {
 	public static final field INSTANCE Lcom/copperleaf/kudzu/parser/expression/ExpressionParserBuilder;
-	public final fun checkOperatorsAreValid (Ljava/util/List;)V
-	public final fun createExpressionParser (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Ljava/util/List;ZZ)Lcom/copperleaf/kudzu/parser/Parser;
 	public final fun createParserLevel (Lcom/copperleaf/kudzu/parser/Parser;Ljava/util/List;)Lcom/copperleaf/kudzu/parser/Parser;
-	public final fun createRootTermParser (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;Z)Lcom/copperleaf/kudzu/parser/Parser;
-	public static synthetic fun createRootTermParser$default (Lcom/copperleaf/kudzu/parser/expression/ExpressionParserBuilder;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;ZILjava/lang/Object;)Lcom/copperleaf/kudzu/parser/Parser;
 }
 
-public final class com/copperleaf/kudzu/parser/expression/InfixOperatorParser : com/copperleaf/kudzu/parser/Parser {
+public final class com/copperleaf/kudzu/parser/expression/InfixOperatorParser : com/copperleaf/kudzu/parser/wrapped/WrappedParser {
 	public fun <init> (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)V
 	public final fun getOperand ()Lcom/copperleaf/kudzu/parser/Parser;
 	public final fun getOperator ()Lcom/copperleaf/kudzu/parser/Parser;
-	public fun getParse ()Lkotlin/DeepRecursiveFunction;
-	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
-public final class com/copperleaf/kudzu/parser/expression/InfixrOperatorParser : com/copperleaf/kudzu/parser/Parser {
+public final class com/copperleaf/kudzu/parser/expression/InfixrOperatorParser : com/copperleaf/kudzu/parser/wrapped/WrappedParser {
 	public fun <init> (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)V
-	public fun getParse ()Lkotlin/DeepRecursiveFunction;
-	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
 public abstract class com/copperleaf/kudzu/parser/expression/Operator : java/lang/Comparable {
@@ -860,16 +896,12 @@ public abstract class com/copperleaf/kudzu/parser/expression/Operator$UnaryOpera
 	public abstract fun getApplyFn ()Lkotlin/jvm/functions/Function1;
 }
 
-public final class com/copperleaf/kudzu/parser/expression/PostfixOperatorParser : com/copperleaf/kudzu/parser/Parser {
+public final class com/copperleaf/kudzu/parser/expression/PostfixOperatorParser : com/copperleaf/kudzu/parser/wrapped/WrappedParser {
 	public fun <init> (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)V
-	public fun getParse ()Lkotlin/DeepRecursiveFunction;
-	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
-public final class com/copperleaf/kudzu/parser/expression/PrefixOperatorParser : com/copperleaf/kudzu/parser/Parser {
+public final class com/copperleaf/kudzu/parser/expression/PrefixOperatorParser : com/copperleaf/kudzu/parser/wrapped/WrappedParser {
 	public fun <init> (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)V
-	public fun getParse ()Lkotlin/DeepRecursiveFunction;
-	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
 public final class com/copperleaf/kudzu/parser/lazy/LazyParser : com/copperleaf/kudzu/parser/Parser {
@@ -901,10 +933,8 @@ public final class com/copperleaf/kudzu/parser/many/ManyParser : com/copperleaf/
 	public fun <init> (Lcom/copperleaf/kudzu/parser/Parser;)V
 }
 
-public final class com/copperleaf/kudzu/parser/many/SeparatedByParser : com/copperleaf/kudzu/parser/Parser {
+public final class com/copperleaf/kudzu/parser/many/SeparatedByParser : com/copperleaf/kudzu/parser/wrapped/WrappedParser {
 	public fun <init> (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/Parser;)V
-	public fun getParse ()Lkotlin/DeepRecursiveFunction;
-	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
 public final class com/copperleaf/kudzu/parser/many/TimesParser : com/copperleaf/kudzu/parser/many/BaseManyParser {
@@ -960,7 +990,6 @@ public final class com/copperleaf/kudzu/parser/noop/NoopParser : com/copperleaf/
 public final class com/copperleaf/kudzu/parser/predict/PredictionParser : com/copperleaf/kudzu/parser/Parser {
 	public fun <init> (Lcom/copperleaf/kudzu/parser/Parser;)V
 	public fun getParse ()Lkotlin/DeepRecursiveFunction;
-	public final fun getParser ()Lcom/copperleaf/kudzu/parser/Parser;
 	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
@@ -1056,10 +1085,6 @@ public final class com/copperleaf/kudzu/parser/tag/TagParser : com/copperleaf/ku
 	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
-public final class com/copperleaf/kudzu/parser/tag/TagParserBuilder {
-	public static final field INSTANCE Lcom/copperleaf/kudzu/parser/tag/TagParserBuilder;
-}
-
 public final class com/copperleaf/kudzu/parser/text/AnyTextParser : com/copperleaf/kudzu/parser/text/BaseTextParser {
 	public fun <init> ()V
 }
@@ -1078,10 +1103,8 @@ public abstract class com/copperleaf/kudzu/parser/text/BaseTextParser : com/copp
 	public final fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
-public final class com/copperleaf/kudzu/parser/text/IdentifierTokenParser : com/copperleaf/kudzu/parser/Parser {
+public final class com/copperleaf/kudzu/parser/text/IdentifierTokenParser : com/copperleaf/kudzu/parser/wrapped/WrappedParser {
 	public fun <init> ()V
-	public fun getParse ()Lkotlin/DeepRecursiveFunction;
-	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
 public final class com/copperleaf/kudzu/parser/text/LiteralTokenParser : com/copperleaf/kudzu/parser/Parser {
@@ -1105,16 +1128,12 @@ public final class com/copperleaf/kudzu/parser/text/ScanParser : com/copperleaf/
 	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
-public final class com/copperleaf/kudzu/parser/value/AnyLiteralParser : com/copperleaf/kudzu/parser/Parser {
+public final class com/copperleaf/kudzu/parser/value/AnyLiteralParser : com/copperleaf/kudzu/parser/wrapped/WrappedParser {
 	public fun <init> ()V
-	public fun getParse ()Lkotlin/DeepRecursiveFunction;
-	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
-public final class com/copperleaf/kudzu/parser/value/AnyNullableLiteralParser : com/copperleaf/kudzu/parser/Parser {
+public final class com/copperleaf/kudzu/parser/value/AnyNullableLiteralParser : com/copperleaf/kudzu/parser/wrapped/WrappedParser {
 	public fun <init> ()V
-	public fun getParse ()Lkotlin/DeepRecursiveFunction;
-	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
 public final class com/copperleaf/kudzu/parser/value/BooleanLiteralParser : com/copperleaf/kudzu/parser/Parser {
@@ -1157,11 +1176,15 @@ public final class com/copperleaf/kudzu/parser/value/StringLiteralParser : com/c
 	public fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
 }
 
+public class com/copperleaf/kudzu/parser/wrapped/WrappedParser : com/copperleaf/kudzu/parser/Parser {
+	public fun <init> (Lcom/copperleaf/kudzu/parser/Parser;)V
+	public fun <init> (Lkotlin/jvm/functions/Function0;)V
+	public final fun getParse ()Lkotlin/DeepRecursiveFunction;
+	public final fun predict (Lcom/copperleaf/kudzu/parser/ParserContext;)Z
+}
+
 public final class com/copperleaf/kudzu/util/PrintAstKt {
-	public static final fun indent (I)Ljava/lang/String;
 	public static final fun printAst (Lcom/copperleaf/kudzu/node/Node;I)Ljava/lang/String;
-	public static final fun printNonTerminalNodeAst (Lcom/copperleaf/kudzu/node/NonTerminalNode;I)Ljava/lang/String;
-	public static final fun printTerminalNodeAst (Lcom/copperleaf/kudzu/node/TerminalNode;I)Ljava/lang/String;
 }
 
 public abstract interface class com/copperleaf/kudzu/visitor/Visitor {

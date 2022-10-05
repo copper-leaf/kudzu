@@ -9,8 +9,8 @@ import com.copperleaf.kudzu.parser.Parser
  * is scanned until some kind of "opening tag" is encountered, the scanning process continues recursively, and then a
  * "closing tag" ends the recursive parsing.
  */
-class TagBuilder<Opening : Node, Closing : Node>(
-    val name: String,
-    val openingParser: Parser<TagNameNode<Opening>>,
-    val closingParser: Parser<TagNameNode<Closing>>
+public class TagBuilder<Opening : Node, Closing : Node>(
+    public val name: String,
+    public val openingParser: Parser<TagNameNode<Opening>>,
+    public val closingParser: Parser<TagNameNode<Closing>>
 )

@@ -7,7 +7,7 @@ import com.copperleaf.kudzu.parser.chars.NewlineCharParser
 /**
  * A Node parsed from a [NewlineCharParser], indicating a platform-independent newline.
  */
-class NewlineNode(
+public class NewlineNode(
     context: NodeContext
 ) : TerminalNode(context) {
     override val text: String = "\\n"

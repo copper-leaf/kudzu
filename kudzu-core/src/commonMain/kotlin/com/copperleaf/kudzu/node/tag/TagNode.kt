@@ -7,10 +7,10 @@ import com.copperleaf.kudzu.node.NonTerminalNode
 /**
  * A sequence of characters parsed from a variety of parsers, containing text parsed directly from the input.
  */
-class TagNode<Opening : Node, Content : Node, Closing : Node>(
-    val opening: TagNameNode<Opening>,
-    val content: Content,
-    val closing: TagNameNode<Closing>,
+public class TagNode<Opening : Node, Content : Node, Closing : Node>(
+    public val opening: TagNameNode<Opening>,
+    public val content: Content,
+    public val closing: TagNameNode<Closing>,
     context: NodeContext
 ) : NonTerminalNode(context) {
     override val children: List<Node> = listOf(opening, content, closing)

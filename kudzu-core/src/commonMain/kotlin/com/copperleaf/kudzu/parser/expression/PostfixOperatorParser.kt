@@ -4,8 +4,7 @@ import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.choice.ChoiceNNode
 import com.copperleaf.kudzu.node.expression.PostfixOperatorNode
 import com.copperleaf.kudzu.parser.Parser
-import com.copperleaf.kudzu.parser.ParserContext
-import com.copperleaf.kudzu.parser.ParserResult
+import com.copperleaf.kudzu.parser.wrapped.WrappedParser
 import com.copperleaf.kudzu.parser.many.ManyParser
 import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
@@ -13,33 +12,24 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
 /**
  * The parser for a level of combined [Operator.Postfix] operators of the same precedence.
  */
-class PostfixOperatorParser(
+public class PostfixOperatorParser(
     private val operator: Parser<ChoiceNNode>,
     private val operand: Parser<Node>
-) : Parser<PostfixOperatorNode> {
-
-    private val parser: Parser<PostfixOperatorNode> by lazy {
-        val impl = SequenceParser(
+) : WrappedParser<PostfixOperatorNode>({
+    FlatMappedParser(
+        SequenceParser(
             operand,
             ManyParser(operator),
         )
+    ) { (nodeContext, operandNode, manyOperatorsNode) ->
+        val operatorNodes = manyOperatorsNode
+            .nodeList
+            .map { it.node }
 
-        FlatMappedParser(impl) { (nodeContext, operandNode, manyOperatorsNode) ->
-            val operatorNodes = manyOperatorsNode
-                .nodeList
-                .map { it.node }
-
-            PostfixOperatorNode(
-                operandNode,
-                operatorNodes,
-                nodeContext
-            )
-        }
+        PostfixOperatorNode(
+            operandNode,
+            operatorNodes,
+            nodeContext
+        )
     }
-
-    override fun predict(input: ParserContext): Boolean {
-        return parser.predict(input)
-    }
-
-    override val parse: DeepRecursiveFunction<ParserContext, ParserResult<PostfixOperatorNode>> = parser.parse
-}
+})

@@ -9,13 +9,13 @@ import com.copperleaf.kudzu.node.NodeContext
  * @see [InfixOperatorNode]
  * @see [InfixrOperatorNode]
  */
-class RootExpressionNode(
-    val expressionNode: Node,
+public class RootExpressionNode(
+    public val expressionNode: Node,
     context: NodeContext
 ) : ExpressionNode(context) {
     override val children: List<Node> = listOf(expressionNode)
 
-    override val simplify = DeepRecursiveFunction<Node, Node> {
+    override val simplify: DeepRecursiveFunction<Node, Node> = DeepRecursiveFunction<Node, Node> {
         RootExpressionNode(
             simplifyChild(expressionNode),
             context

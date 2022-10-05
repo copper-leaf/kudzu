@@ -6,7 +6,7 @@ import com.copperleaf.kudzu.node.TerminalNode
 /**
  * A sequence of characters parsed from a variety of parsers, containing text parsed directly from the input.
  */
-class TextNode(
+public class TextNode(
     override val text: String,
     context: NodeContext
 ) : TerminalNode(context)

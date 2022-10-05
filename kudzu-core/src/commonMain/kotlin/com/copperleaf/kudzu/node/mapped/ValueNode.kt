@@ -9,8 +9,8 @@ import com.copperleaf.kudzu.parser.mapped.MappedParser
  * itself is considered to be a terminal node regardless of whether the original node was terminal or not, since it
  * expects an entire sub-tree to have been reduced to a single value.
  */
-class ValueNode<T>(
-    val value: T,
+public class ValueNode<T>(
+    public val value: T,
     context: NodeContext
 ) : TerminalNode(
     context

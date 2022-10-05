@@ -25,35 +25,35 @@ import com.copperleaf.kudzu.node.NonTerminalNode
  *   can be very deep and general recursion should not be used within a callback; that's the purpose of the Visitor.
  * - Parse trees are immutable structures. Visitation is a read-only process.
  */
-interface Visitor {
+public interface Visitor {
 
     /**
      * Visit this node and all its children nodes, recursively.
      */
-    fun visit(node: Node)
+    public fun visit(node: Node)
 
     /**
      * An interface for receiving callback info about the visitation of a parse tree.
      */
-    interface Callback {
+    public interface Callback {
         /**
          * Called when entering a Node in the parse-tree, before recursing to enter any of its children nodes.
          */
-        fun enter(node: Node) { }
+        public fun enter(node: Node) { }
 
         /**
          * Called when exiting a Node in the parse-tree, after recursing and exiting all of its children nodes.
          */
-        fun exit(node: Node) { }
+        public fun exit(node: Node) { }
 
         /**
          * Called before visitation has start, before any nodes in the parse-tree have been entered.
          */
-        fun onStart() { }
+        public fun onStart() { }
 
         /**
          * Called after visitation has completed, after all nodes in the parse-tree have been both entered and exited.
          */
-        fun onFinish() { }
+        public fun onFinish() { }
     }
 }

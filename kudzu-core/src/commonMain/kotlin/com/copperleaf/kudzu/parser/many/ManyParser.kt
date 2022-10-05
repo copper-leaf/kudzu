@@ -17,7 +17,7 @@ import com.copperleaf.kudzu.parser.Parser
  * Parsing fails when:
  *   - its parser fails to parse
  */
-class ManyParser<T : Node>(
+public class ManyParser<T : Node>(
     parser: Parser<T>,
 ) : BaseManyParser<T>(
     parser,

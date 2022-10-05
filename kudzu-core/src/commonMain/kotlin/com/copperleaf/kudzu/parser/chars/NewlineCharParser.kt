@@ -3,10 +3,11 @@ package com.copperleaf.kudzu.parser.chars
 import com.copperleaf.kudzu.checkNotEmpty
 import com.copperleaf.kudzu.node.NodeContext
 import com.copperleaf.kudzu.node.chars.NewlineNode
+import com.copperleaf.kudzu.parser.ParseFunction
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
-import com.copperleaf.kudzu.parser.ParserResult
+import com.copperleaf.kudzu.parser.runParser
 
 /**
  * Consumes a single newline character (\n) or the combination of newline and carriage return (\r\n).
@@ -19,12 +20,12 @@ import com.copperleaf.kudzu.parser.ParserResult
  *   - the next input character is neither \r nor \n
  *   - the \r is not followed by \n
  */
-class NewlineCharParser : Parser<NewlineNode> {
+public class NewlineCharParser : Parser<NewlineNode> {
     override fun predict(input: ParserContext): Boolean {
         return input.validateNextChar { it == '\r' || it == '\n' }
     }
 
-    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<NewlineNode>> { input ->
+    override val parse: ParseFunction<NewlineNode> = runParser { input ->
         checkNotEmpty(input)
 
         val (char1, remaining1) = input.nextChar()

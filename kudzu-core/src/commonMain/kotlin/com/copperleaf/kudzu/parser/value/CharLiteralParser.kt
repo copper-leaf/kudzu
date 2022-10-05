@@ -2,10 +2,10 @@ package com.copperleaf.kudzu.parser.value
 
 import com.copperleaf.kudzu.node.chars.CharNode
 import com.copperleaf.kudzu.node.mapped.ValueNode
+import com.copperleaf.kudzu.parser.ParseFunction
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
-import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.parser.chars.AnyCharParser
 import com.copperleaf.kudzu.parser.chars.CharInParser
 import com.copperleaf.kudzu.parser.chars.EscapedCharParser
@@ -13,7 +13,7 @@ import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 import com.copperleaf.kudzu.parser.mapped.MappedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 
-class CharLiteralParser(private val delimiter: Char = '\'') : Parser<ValueNode<Char>> {
+public class CharLiteralParser(private val delimiter: Char = '\'') : Parser<ValueNode<Char>> {
     private val parser by lazy {
         MappedParser(
             SequenceParser(
@@ -40,5 +40,5 @@ class CharLiteralParser(private val delimiter: Char = '\'') : Parser<ValueNode<C
         return parser.predict(input)
     }
 
-    override val parse: DeepRecursiveFunction<ParserContext, ParserResult<ValueNode<Char>>> = parser.parse
+    override val parse: ParseFunction<ValueNode<Char>> = parser.parse
 }

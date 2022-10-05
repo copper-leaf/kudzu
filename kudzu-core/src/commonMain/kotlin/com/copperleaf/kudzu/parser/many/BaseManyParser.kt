@@ -3,12 +3,14 @@ package com.copperleaf.kudzu.parser.many
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.NodeContext
 import com.copperleaf.kudzu.node.many.ManyNode
+import com.copperleaf.kudzu.parser.ParseFunction
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
+import com.copperleaf.kudzu.parser.runParser
 
-abstract class BaseManyParser<T : Node>(
+public abstract class BaseManyParser<T : Node>(
     private val parser: Parser<T>,
     private val shouldStopParsingAtNodeCount: (Int) -> Boolean,
     private val shouldStopParsingForNext: (ParserContext) -> Boolean,
@@ -19,7 +21,7 @@ abstract class BaseManyParser<T : Node>(
         return parser.predict(input)
     }
 
-    final override val parse = DeepRecursiveFunction<ParserContext, ParserResult<ManyNode<T>>> { input ->
+    final override val parse: ParseFunction<ManyNode<T>> = runParser { input ->
         val nodeList = mutableListOf<T>()
 
         var remaining = input

@@ -17,7 +17,7 @@ import com.copperleaf.kudzu.parser.Parser
  *   - its parser fails to parse
  *   - its parser could not parse at least `minSize` number of times.
  */
-class BetweenTimesParser<T : Node>(
+public class BetweenTimesParser<T : Node>(
     parser: Parser<T>,
     private val minSize: Int,
     private val maxSize: Int,

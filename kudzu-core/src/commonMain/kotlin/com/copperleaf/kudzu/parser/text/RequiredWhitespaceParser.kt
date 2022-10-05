@@ -14,7 +14,7 @@ package com.copperleaf.kudzu.parser.text
  * Parsing fails when:
  *   - there is no more input remaining
  */
-class RequiredWhitespaceParser : BaseTextParser(
+public class RequiredWhitespaceParser : BaseTextParser(
     isValidChar = { _, char -> char.isWhitespace() },
     isValidText = { it.isNotEmpty() },
     invalidTextErrorMessage = { "Required whitespace not found" },

@@ -1,6 +1,6 @@
 package com.copperleaf.kudzu.parser
 
-data class SourcePosition(
+public data class SourcePosition(
     val lineNumber: Int = 1,
     val lineColumn: Int = 1
 ) : Comparable<SourcePosition> {
@@ -12,13 +12,13 @@ data class SourcePosition(
         return compareValuesBy(this, other, { it.lineNumber }, { it.lineColumn })
     }
 
-    fun incrementColumn(): SourcePosition {
+    public fun incrementColumn(): SourcePosition {
         return this.copy(
             lineColumn = lineColumn + 1
         )
     }
 
-    fun incrementRow(): SourcePosition {
+    public fun incrementRow(): SourcePosition {
         return this.copy(
             lineNumber = lineNumber + 1,
             lineColumn = 1

@@ -3,16 +3,17 @@ package com.copperleaf.kudzu.parser.text
 import com.copperleaf.kudzu.checkNotEmpty
 import com.copperleaf.kudzu.node.NodeContext
 import com.copperleaf.kudzu.node.text.TextNode
+import com.copperleaf.kudzu.parser.ParseFunction
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
-import com.copperleaf.kudzu.parser.ParserResult
+import com.copperleaf.kudzu.parser.runParser
 
-abstract class BaseTextParser(
-    val isValidChar: (Int, Char) -> Boolean,
-    val isValidText: (String) -> Boolean,
-    val invalidTextErrorMessage: (String) -> String,
-    val allowEmptyInput: Boolean
+public abstract class BaseTextParser(
+    public val isValidChar: (Int, Char) -> Boolean,
+    public val isValidText: (String) -> Boolean,
+    public val invalidTextErrorMessage: (String) -> String,
+    public val allowEmptyInput: Boolean
 ) : Parser<TextNode> {
 
     final override fun predict(input: ParserContext): Boolean {
@@ -23,7 +24,7 @@ abstract class BaseTextParser(
         }
     }
 
-    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<TextNode>> { input ->
+    override val parse: ParseFunction<TextNode> = runParser { input ->
         if (!allowEmptyInput) {
             checkNotEmpty(input)
         }

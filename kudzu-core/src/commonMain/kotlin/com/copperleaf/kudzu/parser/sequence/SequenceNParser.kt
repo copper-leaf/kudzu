@@ -3,9 +3,11 @@ package com.copperleaf.kudzu.parser.sequence
 import com.copperleaf.kudzu.node.Node
 import com.copperleaf.kudzu.node.NodeContext
 import com.copperleaf.kudzu.node.sequence.SequenceNNode
+import com.copperleaf.kudzu.parser.ParseFunction
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
+import com.copperleaf.kudzu.parser.runParser
 
 /**
  * Consume a sequence of parsers in order. Each parser in the sequence must parse successfully.
@@ -16,16 +18,16 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - any of its parsers fails to parse
  */
-class SequenceNParser(
+public class SequenceNParser(
     private val parsers: List<Parser<*>>,
 ) : Parser<SequenceNNode> {
-    constructor(vararg parsers: Parser<*>) : this(parsers.toList())
+    public constructor(vararg parsers: Parser<*>) : this(parsers.toList())
 
     override fun predict(input: ParserContext): Boolean {
         return parsers.first().predict(input)
     }
 
-    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<SequenceNNode>> { input ->
+    override val parse: ParseFunction<SequenceNNode> = runParser { input ->
         val nodeList = mutableListOf<Node>()
 
         var remaining = input

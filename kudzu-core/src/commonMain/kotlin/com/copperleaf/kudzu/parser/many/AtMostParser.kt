@@ -18,7 +18,7 @@ import com.copperleaf.kudzu.parser.Parser
  * Parsing fails when:
  *   - its parser fails to parse
  */
-class AtMostParser<T : Node>(
+public class AtMostParser<T : Node>(
     parser: Parser<T>,
     private val maxSize: Int,
 ) : BaseManyParser<T>(

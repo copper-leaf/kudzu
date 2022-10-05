@@ -12,8 +12,8 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
 import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 
 @Suppress("UNCHECKED_CAST")
-object ExpressionParserBuilder {
-    fun <T : Any> checkOperatorsAreValid(
+public object ExpressionParserBuilder {
+    private fun <T : Any> checkOperatorsAreValid(
         operators: List<Operator<T>>
     ) {
         val unaryOperators = operators.filterIsInstance<Operator.UnaryOperator<T>>()
@@ -22,7 +22,7 @@ object ExpressionParserBuilder {
         check(binaryOperators.map { it.name }.distinct().size == binaryOperators.size) { "Operators must be unique" }
     }
 
-    fun <T : Any> createRootTermParser(
+    private fun <T : Any> createRootTermParser(
         expressionParser: Parser<*>,
         termParser: Parser<ValueNode<T>>,
         parenthesizedTerm: Boolean = true
@@ -53,7 +53,7 @@ object ExpressionParserBuilder {
         }
     }
 
-    fun <T : Any> createParserLevel(operand: Parser<Node>, operators: List<Operator<T>>): Parser<Node> {
+    public fun <T : Any> createParserLevel(operand: Parser<Node>, operators: List<Operator<T>>): Parser<Node> {
         val actualOperatorParserForLevel = ExactChoiceParser(*operators.map { it.parser }.toTypedArray())
 
         val operatorParserLevelParser: Parser<*> = when (operators.first()) {
@@ -67,7 +67,7 @@ object ExpressionParserBuilder {
         return operatorParserLevelParser as Parser<Node>
     }
 
-    fun <T : Any> createExpressionParser(
+    internal fun <T : Any> createExpressionParser(
         expressionParser: Parser<*>,
         termParser: Parser<ValueNode<T>>,
         operators: List<Operator<T>>,

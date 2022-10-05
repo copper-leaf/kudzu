@@ -9,34 +9,34 @@ import com.copperleaf.kudzu.parser.text.LiteralTokenParser
  * [ExpressionEvaluator]. All operators must have unique names to ensure the parser result maps back to the proper
  * applyFn.
  */
-sealed class Operator<T : Any>(
-    val name: String,
-    val parser: Parser<*>,
-    val precedence: Precedence,
-    val aliases: List<String>
+public sealed class Operator<T : Any>(
+    public val name: String,
+    public val parser: Parser<*>,
+    public val precedence: Precedence,
+    public val aliases: List<String>
 ) : Comparable<Operator<T>> {
 
-    abstract fun expandAliases(): List<Operator<T>>
+    public abstract fun expandAliases(): List<Operator<T>>
 
-    abstract class UnaryOperator<T : Any>(
+    public abstract class UnaryOperator<T : Any>(
         name: String,
         parser: Parser<*>,
         precedence: Precedence,
         aliases: List<String>
     ) : Operator<T>(name, parser, precedence, aliases) {
-        abstract val applyFn: (T) -> T
+        public abstract val applyFn: (T) -> T
     }
 
-    abstract class BinaryOperator<T : Any>(
+    public abstract class BinaryOperator<T : Any>(
         name: String,
         parser: Parser<*>,
         precedence: Precedence,
         aliases: List<String>
     ) : Operator<T>(name, parser, precedence, aliases) {
-        abstract val applyFn: (T, T) -> T
+        public abstract val applyFn: (T, T) -> T
     }
 
-    class Prefix<T : Any>(
+    public class Prefix<T : Any>(
         op: String,
         precedence: Int,
         aliases: List<String> = emptyList(),
@@ -55,7 +55,7 @@ sealed class Operator<T : Any>(
         }
     }
 
-    class Postfix<T : Any>(
+    public class Postfix<T : Any>(
         op: String,
         precedence: Int,
         aliases: List<String> = emptyList(),
@@ -74,7 +74,7 @@ sealed class Operator<T : Any>(
         }
     }
 
-    class Infixr<T : Any>(
+    public class Infixr<T : Any>(
         op: String,
         precedence: Int,
         aliases: List<String> = emptyList(),
@@ -93,7 +93,7 @@ sealed class Operator<T : Any>(
         }
     }
 
-    class Infix<T : Any>(
+    public class Infix<T : Any>(
         op: String,
         precedence: Int,
         aliases: List<String> = emptyList(),
@@ -116,7 +116,7 @@ sealed class Operator<T : Any>(
         return compareValuesBy(this, other) { it.precedence }
     }
 
-    data class Precedence(
+    public data class Precedence(
         val precedence: Int,
         val associativity: Int
     ) : Comparable<Precedence> {

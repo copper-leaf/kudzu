@@ -29,7 +29,7 @@ import com.copperleaf.kudzu.node.Node
  * successfully as well, or else it will fail in a way that your parser cannot/should not try to handle. It is simply
  * failed syntax that should be bubbled back up to the user to correct.
  */
-interface Parser<NodeType : Node> {
-    fun predict(input: ParserContext): Boolean
-    val parse: DeepRecursiveFunction<ParserContext, ParserResult<NodeType>>
+public interface Parser<NodeType : Node> {
+    public fun predict(input: ParserContext): Boolean
+    public val parse: ParseFunction<NodeType>
 }

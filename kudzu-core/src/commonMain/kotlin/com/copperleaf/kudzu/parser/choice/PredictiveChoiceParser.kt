@@ -14,7 +14,7 @@ import com.copperleaf.kudzu.node.choice.ChoiceNNode
 import com.copperleaf.kudzu.parser.Parser
 
 /* ktlint-disable max-line-length */
-inline fun <T1 : Node, T2 : Node> PredictiveChoiceParser(
+public inline fun <T1 : Node, T2 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
 ): Parser<Choice2Node<T1, T2>> {
@@ -25,7 +25,7 @@ inline fun <T1 : Node, T2 : Node> PredictiveChoiceParser(
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node> PredictiveChoiceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -38,7 +38,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node> PredictiveChoiceParser(
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> PredictiveChoiceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -53,7 +53,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> PredictiveChoiceParser(
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> PredictiveChoiceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -70,7 +70,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> PredictiveCho
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> PredictiveChoiceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -89,7 +89,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> Pr
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node> PredictiveChoiceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -110,7 +110,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node, T8 : Node> PredictiveChoiceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node, T8 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -133,7 +133,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7
     )
 }
 
-inline fun <
+public inline fun <
     T1 : Node,
     T2 : Node,
     T3 : Node,
@@ -168,7 +168,7 @@ inline fun <
     )
 }
 
-inline fun PredictiveChoiceParser(
+public inline fun PredictiveChoiceParser(
     vararg parsers: Parser<*>,
 ): Parser<ChoiceNNode> {
     return ChoiceNParser(
@@ -177,7 +177,7 @@ inline fun PredictiveChoiceParser(
     )
 }
 
-inline fun PredictiveChoiceParser(
+public inline fun PredictiveChoiceParser(
     parsers: Collection<Parser<*>>,
 ): Parser<ChoiceNNode> {
     return ChoiceNParser(

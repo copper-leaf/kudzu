@@ -1,10 +1,10 @@
 package com.copperleaf.kudzu.parser.predict
 
 import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.parser.ParseFunction
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
-import com.copperleaf.kudzu.parser.ParserResult
 
 /**
  * A Parser that runs another parser during _prediction_. If the [parser.parse] succeeds in parsing, then the [predict]
@@ -25,8 +25,8 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - [parser] fails to parse
  */
-class PredictionParser<T : Node>(
-    val parser: Parser<T>
+public class PredictionParser<T : Node>(
+    private val parser: Parser<T>
 ) : Parser<T> {
 
     override fun predict(input: ParserContext): Boolean {
@@ -40,5 +40,5 @@ class PredictionParser<T : Node>(
         }
     }
 
-    override val parse: DeepRecursiveFunction<ParserContext, ParserResult<T>> = parser.parse
+    override val parse: ParseFunction<T> = parser.parse
 }

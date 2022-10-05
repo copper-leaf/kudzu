@@ -13,9 +13,9 @@ import com.copperleaf.kudzu.visitor.Visitor
  * @see [Visitor]
  * @see [MappedParser]
  */
-class NamedNode<T : Node>(
-    val node: T,
-    val name: String
+public class NamedNode<T : Node>(
+    public val node: T,
+    public val name: String
 ) : NonTerminalNode(node.context) {
     override val children: List<Node> = listOf(node)
 

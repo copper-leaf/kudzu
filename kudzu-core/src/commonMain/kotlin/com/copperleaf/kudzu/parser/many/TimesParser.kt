@@ -17,7 +17,7 @@ import com.copperleaf.kudzu.parser.Parser
  *   - its parser fails to parse
  *   - there is no more input remaining
  */
-class TimesParser<T : Node>(
+public class TimesParser<T : Node>(
     parser: Parser<T>,
     private val times: Int,
 ) : BaseManyParser<T>(

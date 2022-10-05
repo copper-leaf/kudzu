@@ -3,8 +3,7 @@ package com.copperleaf.kudzu.parser.expression
 import com.copperleaf.kudzu.node.expression.RootExpressionNode
 import com.copperleaf.kudzu.node.mapped.ValueNode
 import com.copperleaf.kudzu.parser.Parser
-import com.copperleaf.kudzu.parser.ParserContext
-import com.copperleaf.kudzu.parser.ParserResult
+import com.copperleaf.kudzu.parser.wrapped.WrappedParser
 import com.copperleaf.kudzu.parser.lazy.LazyParser
 
 /**
@@ -27,36 +26,30 @@ import com.copperleaf.kudzu.parser.lazy.LazyParser
  * real operations in the expression and the literal values used as their operands.
  */
 
-class ExpressionParser<T : Any>(
+public class ExpressionParser<T : Any>(
     private val termParser: (Parser<RootExpressionNode>) -> Parser<ValueNode<T>>,
     private val operators: List<Operator<T>>,
     private val parenthesizedTerm: Boolean = true,
     private val simplifyAst: Boolean = true
-) : Parser<RootExpressionNode> {
-    constructor(
+) : WrappedParser<RootExpressionNode>(
+    LazyParser<RootExpressionNode>().also {
+        it uses ExpressionParserBuilder.createExpressionParser(
+            it,
+            termParser(it),
+            operators,
+            parenthesizedTerm,
+            simplifyAst
+        )
+    }
+) {
+    public constructor(
         termParser: (Parser<RootExpressionNode>) -> Parser<ValueNode<T>>,
         vararg operators: Operator<T>,
         parenthesizedTerm: Boolean = true,
         simplifyAst: Boolean = true
     ) : this(termParser, operators.toList(), parenthesizedTerm, simplifyAst)
 
-    private val parser: Parser<RootExpressionNode> by lazy {
-        LazyParser<RootExpressionNode>().also {
-            it uses ExpressionParserBuilder.createExpressionParser(
-                it,
-                termParser(it),
-                operators,
-                parenthesizedTerm,
-                simplifyAst
-            )
-        }
-    }
-
-    val evaluator: ExpressionEvaluator<T> by lazy {
+    public val evaluator: ExpressionEvaluator<T> by lazy {
         ExpressionEvaluatorImpl(operators)
     }
-
-    override fun predict(input: ParserContext): Boolean = parser.predict(input)
-
-    override val parse: DeepRecursiveFunction<ParserContext, ParserResult<RootExpressionNode>> = parser.parse
 }

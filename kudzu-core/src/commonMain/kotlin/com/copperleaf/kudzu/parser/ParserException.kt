@@ -3,10 +3,10 @@ package com.copperleaf.kudzu.parser
 /**
  * Indicates an unrecoverable error was encountered during parsing.
  */
-class ParserException(
-    val actualMessage: String,
-    val parser: Parser<*>,
-    val input: ParserContext
+public class ParserException(
+    public val actualMessage: String,
+    public val parser: Parser<*>,
+    public val input: ParserContext
 ) : Exception(
     """
     |Parse error at ${input.sourcePosition} (${parser::class.simpleName})

@@ -11,12 +11,12 @@ package com.copperleaf.kudzu.parser.chars
  *   - there is no more input
  *   - the escape character is used without input remaining to escape
  */
-class CharInParser(
+public class CharInParser(
     private val chars: List<Char>,
 ) : BaseCharParser(
     isValidChar = { it in chars },
     validationFailedMessage = { "not in [${chars.joinToString()}]" }
 ) {
-    constructor(vararg chars: Char) : this(chars.toList())
-    constructor(chars: CharRange) : this(chars.toList())
+    public constructor(vararg chars: Char) : this(chars.toList())
+    public constructor(chars: CharRange) : this(chars.toList())
 }

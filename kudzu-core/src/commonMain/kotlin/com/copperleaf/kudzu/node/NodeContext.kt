@@ -10,11 +10,11 @@ import com.copperleaf.kudzu.parser.SourcePosition
  * range of the parent node completely encapsulates the ranges of all its children nodes which will fall somewhere in
  * the parent's range.
  */
-data class NodeContext(
+public data class NodeContext(
     val startPosition: SourcePosition,
     val endPosition: SourcePosition
 ) {
-    constructor(
+    public constructor(
         startContext: ParserContext,
         endContext: ParserContext
     ) : this(startContext.sourcePosition, endContext.sourcePosition)

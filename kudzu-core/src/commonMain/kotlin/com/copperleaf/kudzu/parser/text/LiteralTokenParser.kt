@@ -3,11 +3,12 @@ package com.copperleaf.kudzu.parser.text
 import com.copperleaf.kudzu.checkNotEmpty
 import com.copperleaf.kudzu.node.NodeContext
 import com.copperleaf.kudzu.node.text.TextNode
+import com.copperleaf.kudzu.parser.ParseFunction
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
-import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.parser.choice.PredictiveChoiceParser
+import com.copperleaf.kudzu.parser.runParser
 
 /**
  * Consume a specific sequence of characters of the input. Prediction will attempt to consume the entire token, which
@@ -26,8 +27,8 @@ import com.copperleaf.kudzu.parser.choice.PredictiveChoiceParser
  *   - there is no more input remaining
  *   - the next character does not match the corresponding character of the expected string
  */
-class LiteralTokenParser(
-    val expected: String
+public class LiteralTokenParser(
+    public val expected: String
 ) : Parser<TextNode> {
 
     override fun predict(input: ParserContext): Boolean {
@@ -37,7 +38,7 @@ class LiteralTokenParser(
         return true
     }
 
-    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<TextNode>> { input ->
+    override val parse: ParseFunction<TextNode> = runParser { input ->
         checkNotEmpty(input) { expected }
 
         val result = doParse(input)

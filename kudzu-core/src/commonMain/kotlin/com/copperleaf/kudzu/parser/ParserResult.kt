@@ -1,3 +1,3 @@
 package com.copperleaf.kudzu.parser
 
-typealias ParserResult<T> = Pair<T, ParserContext>
+public typealias ParserResult<T> = Pair<T, ParserContext>

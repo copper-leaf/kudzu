@@ -18,7 +18,7 @@ import com.copperleaf.kudzu.parser.Parser
  * Parsing fails when:
  *   - its parser fails to parse
  */
-class UntilParser<T : Node>(
+public class UntilParser<T : Node>(
     parser: Parser<T>,
     private val stoppingCondition: Parser<*>,
 ) : BaseManyParser<T>(

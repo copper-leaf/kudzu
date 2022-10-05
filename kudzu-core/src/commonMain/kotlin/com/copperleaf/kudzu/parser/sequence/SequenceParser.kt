@@ -1,4 +1,5 @@
 @file:Suppress("FunctionName", "NOTHING_TO_INLINE")
+
 package com.copperleaf.kudzu.parser.sequence
 
 import com.copperleaf.kudzu.node.Node
@@ -13,7 +14,7 @@ import com.copperleaf.kudzu.node.sequence.Sequence9Node
 import com.copperleaf.kudzu.node.sequence.SequenceNNode
 import com.copperleaf.kudzu.parser.Parser
 
-inline fun <T1 : Node, T2 : Node> SequenceParser(
+public inline fun <T1 : Node, T2 : Node> SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
 ): Parser<Sequence2Node<T1, T2>> {
@@ -23,7 +24,7 @@ inline fun <T1 : Node, T2 : Node> SequenceParser(
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node> SequenceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node> SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -35,7 +36,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node> SequenceParser(
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> SequenceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -49,7 +50,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> SequenceParser(
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> SequenceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -65,7 +66,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> SequenceParse
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> SequenceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -83,7 +84,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> Se
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node> SequenceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node> SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -103,7 +104,16 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node, T8 : Node> SequenceParser(
+public inline fun <
+    T1 : Node,
+    T2 : Node,
+    T3 : Node,
+    T4 : Node,
+    T5 : Node,
+    T6 : Node,
+    T7 : Node,
+    T8 : Node
+    > SequenceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -125,7 +135,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7
     )
 }
 
-inline fun <
+public inline fun <
     T1 : Node,
     T2 : Node,
     T3 : Node,
@@ -159,7 +169,7 @@ inline fun <
     )
 }
 
-inline fun SequenceParser(
+public inline fun SequenceParser(
     vararg parsers: Parser<*>,
 ): Parser<SequenceNNode> {
     return SequenceNParser(
@@ -167,7 +177,7 @@ inline fun SequenceParser(
     )
 }
 
-inline fun SequenceParser(
+public inline fun SequenceParser(
     parsers: Collection<Parser<*>>,
 ): Parser<SequenceNNode> {
     return SequenceNParser(

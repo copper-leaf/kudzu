@@ -3,10 +3,11 @@ package com.copperleaf.kudzu.parser.text
 import com.copperleaf.kudzu.checkNotEmpty
 import com.copperleaf.kudzu.node.NodeContext
 import com.copperleaf.kudzu.node.text.TextNode
+import com.copperleaf.kudzu.parser.ParseFunction
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
-import com.copperleaf.kudzu.parser.ParserResult
+import com.copperleaf.kudzu.parser.runParser
 
 /**
  * Consume characters from the input until its parser predicts true. It requires that at least 1 character be able to be
@@ -27,7 +28,7 @@ import com.copperleaf.kudzu.parser.ParserResult
  * Parsing fails when:
  *   - its parser fails to parse
  */
-class ScanParser(
+public class ScanParser(
     private val stoppingCondition: Parser<*>,
 ) : Parser<TextNode> {
 
@@ -35,7 +36,7 @@ class ScanParser(
         return !input.isEmpty() && !stoppingCondition.predict(input)
     }
 
-    override val parse = DeepRecursiveFunction<ParserContext, ParserResult<TextNode>> { input ->
+    override val parse: ParseFunction<TextNode> = runParser { input ->
         checkNotEmpty(input)
 
         var remaining = input

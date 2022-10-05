@@ -11,7 +11,7 @@ import com.copperleaf.kudzu.visitor.VisitorImpl
 /**
  * Used by a Parser to verify that the input is not empty when it expects to be able to consume a character.
  */
-fun Parser<*>.checkNotEmpty(input: ParserContext, expected: (() -> String)? = null) {
+public fun Parser<*>.checkNotEmpty(input: ParserContext, expected: (() -> String)? = null) {
     if (input.isEmpty()) {
         val expectedValue = expected?.invoke()
         val message = if (expectedValue != null) {
@@ -28,7 +28,7 @@ fun Parser<*>.checkNotEmpty(input: ParserContext, expected: (() -> String)? = nu
  *
  * @see [Visitor]
  */
-fun Node.visit(vararg callbacks: Visitor.Callback) {
+public fun Node.visit(vararg callbacks: Visitor.Callback) {
     VisitorImpl(*callbacks).visit(this)
 }
 
@@ -39,7 +39,7 @@ fun Node.visit(vararg callbacks: Visitor.Callback) {
  *
  * @see [Visitor]
  */
-fun Node.visit(reversed: Boolean = false, callback: (Node) -> Unit) {
+public fun Node.visit(reversed: Boolean = false, callback: (Node) -> Unit) {
     val visitorCallback = if (reversed) {
         object : Visitor.Callback {
             override fun exit(node: Node) {
@@ -57,9 +57,9 @@ fun Node.visit(reversed: Boolean = false, callback: (Node) -> Unit) {
     visit(visitorCallback)
 }
 
-typealias RemapperFn = ParserContext.(Parser<*>, ParserException) -> ParserException
+public typealias RemapperFn = ParserContext.(Parser<*>, ParserException) -> ParserException
 
-suspend inline fun <
+public suspend inline fun <
     BaseParser : Node,
     ChildParser : Node
     > DeepRecursiveScope<ParserContext, ParserResult<BaseParser>>.parseWithRemappedErrors(

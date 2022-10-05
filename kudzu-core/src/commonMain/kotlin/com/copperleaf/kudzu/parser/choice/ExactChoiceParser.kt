@@ -13,7 +13,7 @@ import com.copperleaf.kudzu.node.choice.Choice9Node
 import com.copperleaf.kudzu.node.choice.ChoiceNNode
 import com.copperleaf.kudzu.parser.Parser
 
-inline fun <T1 : Node, T2 : Node> ExactChoiceParser(
+public inline fun <T1 : Node, T2 : Node> ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
 ): Parser<Choice2Node<T1, T2>> {
@@ -24,7 +24,7 @@ inline fun <T1 : Node, T2 : Node> ExactChoiceParser(
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node> ExactChoiceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node> ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -37,7 +37,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node> ExactChoiceParser(
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> ExactChoiceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -52,7 +52,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node> ExactChoiceParser(
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> ExactChoiceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -69,7 +69,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node> ExactChoicePa
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> ExactChoiceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -88,7 +88,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node> Ex
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node> ExactChoiceParser(
+public inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node> ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -109,7 +109,16 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7
     )
 }
 
-inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7 : Node, T8 : Node> ExactChoiceParser(
+public inline fun <
+    T1 : Node,
+    T2 : Node,
+    T3 : Node,
+    T4 : Node,
+    T5 : Node,
+    T6 : Node,
+    T7 : Node,
+    T8 : Node
+    > ExactChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
     p3: Parser<T3>,
@@ -132,7 +141,7 @@ inline fun <T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : Node, T6 : Node, T7
     )
 }
 
-inline fun <
+public inline fun <
     T1 : Node,
     T2 : Node,
     T3 : Node,
@@ -167,7 +176,7 @@ inline fun <
     )
 }
 
-inline fun ExactChoiceParser(
+public inline fun ExactChoiceParser(
     vararg parsers: Parser<*>,
 ): Parser<ChoiceNNode> {
     return ChoiceNParser(
@@ -176,7 +185,7 @@ inline fun ExactChoiceParser(
     )
 }
 
-inline fun ExactChoiceParser(
+public inline fun ExactChoiceParser(
     parsers: Collection<Parser<*>>,
 ): Parser<ChoiceNNode> {
     return ChoiceNParser(

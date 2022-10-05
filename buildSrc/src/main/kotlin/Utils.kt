@@ -529,5 +529,6 @@ fun KotlinMultiplatformExtension.nativeTargetGroup(
             }
         }
     }
+
     return targets
 }

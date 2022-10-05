@@ -1,6 +1,7 @@
 package com.copperleaf.kudzu.parser.lazy
 
 import com.copperleaf.kudzu.node.Node
+import com.copperleaf.kudzu.parser.ParseFunction
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 
@@ -18,16 +19,16 @@ import com.copperleaf.kudzu.parser.ParserContext
  * Parsing fails when:
  *   - its parser fails to parse
  */
-class LazyParser<T : Node> : Parser<T> {
+public class LazyParser<T : Node> : Parser<T> {
 
     private lateinit var parser: Parser<T>
 
     @Suppress("UNCHECKED_CAST")
-    infix fun <U : T> uses(parser: Parser<U>) {
+    public infix fun <U : T> uses(parser: Parser<U>) {
         this.parser = parser as Parser<T>
     }
 
     override fun predict(input: ParserContext): Boolean = parser.predict(input)
 
-    override val parse get() = parser.parse
+    override val parse: ParseFunction<T> get() = parser.parse
 }

@@ -9,14 +9,14 @@ import com.copperleaf.kudzu.parser.expression.PostfixOperatorParser
  * left-to-right using [operatorNodes] for each subsequent operator. The result of one operation becomes the operand for
  * the next.
  */
-class PostfixOperatorNode(
-    val operand: Node,
-    val operatorNodes: List<Node>,
+public class PostfixOperatorNode(
+    public val operand: Node,
+    public val operatorNodes: List<Node>,
     context: NodeContext
 ) : ExpressionNode(context) {
     override val children: List<Node> = listOf(operand) + operatorNodes
 
-    override val simplify = DeepRecursiveFunction<Node, Node> {
+    override val simplify: DeepRecursiveFunction<Node, Node> = DeepRecursiveFunction<Node, Node> {
         if (operatorNodes.isEmpty()) {
             simplifyChild(operand)
         } else {

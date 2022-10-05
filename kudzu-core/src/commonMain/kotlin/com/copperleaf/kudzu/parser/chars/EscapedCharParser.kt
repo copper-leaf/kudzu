@@ -1,9 +1,7 @@
 package com.copperleaf.kudzu.parser.chars
 
 import com.copperleaf.kudzu.node.chars.CharNode
-import com.copperleaf.kudzu.parser.Parser
-import com.copperleaf.kudzu.parser.ParserContext
-import com.copperleaf.kudzu.parser.ParserResult
+import com.copperleaf.kudzu.parser.wrapped.WrappedParser
 import com.copperleaf.kudzu.parser.choice.ExactChoiceParser
 import com.copperleaf.kudzu.parser.many.TimesParser
 import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
@@ -20,9 +18,18 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
  *   - there is no more input
  *   - the escape character is used without input remaining to escape
  */
-class EscapedCharParser : Parser<CharNode> {
-    private val parser by lazy {
-        val normalEscapeChar = FlatMappedParser(
+public class EscapedCharParser : WrappedParser<CharNode>(
+    FlatMappedParser(
+        ExactChoiceParser(
+            normalEscapeChar,
+            unicodeEscapeChar
+        )
+    ) {
+        it.node as CharNode
+    }
+) {
+    private companion object {
+        private val normalEscapeChar = FlatMappedParser(
             SequenceParser(
                 CharInParser('\\'),
                 CharInParser('\\', 'r', 'n', 't', '\'', '"'),
@@ -41,7 +48,7 @@ class EscapedCharParser : Parser<CharNode> {
             CharNode(escapedChar, nodeContext)
         }
 
-        val unicodeEscapeChar = FlatMappedParser(
+        private val unicodeEscapeChar = FlatMappedParser(
             SequenceParser(
                 CharInParser('\\'),
                 CharInParser('u'),
@@ -56,20 +63,5 @@ class EscapedCharParser : Parser<CharNode> {
 
             CharNode(unicodeChar, nodeContext)
         }
-
-        FlatMappedParser(
-            ExactChoiceParser(
-                normalEscapeChar,
-                unicodeEscapeChar
-            )
-        ) {
-            it.node as CharNode
-        }
     }
-
-    override fun predict(input: ParserContext): Boolean {
-        return parser.predict(input)
-    }
-
-    override val parse: DeepRecursiveFunction<ParserContext, ParserResult<CharNode>> get() = parser.parse
 }

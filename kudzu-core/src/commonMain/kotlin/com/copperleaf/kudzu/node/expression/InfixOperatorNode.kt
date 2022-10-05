@@ -9,14 +9,14 @@ import com.copperleaf.kudzu.parser.expression.InfixOperatorParser
  * left-to-right using [operationNodes] for each subsequent operator and operand. The result of one
  * [BinaryOperationNode] becomes the left operand for the next.
  */
-class InfixOperatorNode(
-    val leftOperand: Node,
-    val operationNodes: List<BinaryOperationNode>,
+public class InfixOperatorNode(
+    public val leftOperand: Node,
+    public val operationNodes: List<BinaryOperationNode>,
     context: NodeContext
 ) : ExpressionNode(context) {
     override val children: List<Node> = listOf(leftOperand) + operationNodes
 
-    override val simplify = DeepRecursiveFunction<Node, Node> {
+    override val simplify: DeepRecursiveFunction<Node, Node> = DeepRecursiveFunction<Node, Node> {
         if (operationNodes.isEmpty()) {
             simplifyChild(leftOperand)
         } else {

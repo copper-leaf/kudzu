@@ -10,7 +10,6 @@ import com.copperleaf.kudzu.test
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-
 class TestErrorMessages {
 
     @Test

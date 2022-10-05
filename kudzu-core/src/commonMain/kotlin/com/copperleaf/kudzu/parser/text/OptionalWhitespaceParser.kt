@@ -13,7 +13,7 @@ package com.copperleaf.kudzu.parser.text
  * Parsing fails when:
  *   - never
  */
-class OptionalWhitespaceParser : BaseTextParser(
+public class OptionalWhitespaceParser : BaseTextParser(
     isValidChar = { _, char -> char.isWhitespace() },
     isValidText = { true },
     invalidTextErrorMessage = { "" },

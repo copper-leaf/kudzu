@@ -8,14 +8,14 @@ import com.copperleaf.kudzu.parser.expression.InfixrOperatorParser
  * A Node parsed from [InfixrOperatorParser]. The start [leftOperand] has binary operations applied recursively from
  * left-to-right using [operation] for the next operator and operand.
  */
-class InfixrOperatorNode(
-    val leftOperand: Node,
-    val operation: BinaryOperationNode?,
+public class InfixrOperatorNode(
+    public val leftOperand: Node,
+    public val operation: BinaryOperationNode?,
     context: NodeContext
 ) : ExpressionNode(context) {
     override val children: List<Node> = listOfNotNull(leftOperand, operation)
 
-    override val simplify = DeepRecursiveFunction<Node, Node> {
+    override val simplify: DeepRecursiveFunction<Node, Node> = DeepRecursiveFunction<Node, Node> {
         if (operation != null) {
             InfixrOperatorNode(
                 simplifyChild(leftOperand),
