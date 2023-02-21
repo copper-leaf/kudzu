@@ -87,30 +87,33 @@ internal data class ParserContextImpl(
 // getSurroundingText
 // ---------------------------------------------------------------------------------------------------------------------
 
-    private var surroundingPipe = '|'
-    private var surroundingRightArrow = '>'
-    private var surroundingUpArrow = '^'
+    companion object {
+        private const val surroundingPipe = '|'
+        private const val surroundingRightArrow = '>'
+        private const val surroundingUpArrow = '^'
+    }
 
     override fun getSurroundingText(position: SourcePosition): String {
         val lines = this.input.lines()
         check((position.lineNumber - 1) in lines.indices)
 
         return buildString {
-            val lineIndices = when {
+            val lineIndices: Iterable<Int> = when {
                 position.lineNumber == 1 -> {
-                    listOf(1, 2, 3)
+                    1..3
                 }
                 position.lineNumber == lines.size -> {
                     lines.indices.toList().takeLast(3).map { it + 1 }
                 }
                 else -> {
-                    ((position.lineNumber - 1)..(position.lineNumber + 1)).toList()
+                    (position.lineNumber - 1)..(position.lineNumber + 1)
                 }
             }
 
             val lineNumberColumnWidth = lineIndices.maxOrNull().toString().length
 
             lineIndices
+                .asSequence()
                 .filter { (it - 1) in lines.indices }
                 .forEach {
                     appendContentLine(it, lineNumberColumnWidth, lines)
@@ -118,7 +121,8 @@ internal data class ParserContextImpl(
                         appendPointerLine(position.lineColumn, lineNumberColumnWidth)
                     }
                 }
-        }.removeSuffix("\n")
+            removeSuffix('\n')
+        }
     }
 
     private fun StringBuilder.appendContentLine(
@@ -128,17 +132,22 @@ internal data class ParserContextImpl(
     ) {
         append(lineNumber.toString().padStart(columnWidth))
         append(surroundingPipe)
-        append(lines[lineNumber - 1])
-        appendLine()
+        appendLine(lines[lineNumber - 1])
     }
 
     private fun StringBuilder.appendPointerLine(
         lineWidth: Int,
         columnWidth: Int,
     ) {
-        append(CharArray(lineWidth + columnWidth) { surroundingRightArrow })
-        append(surroundingUpArrow)
-        appendLine()
+        repeat(lineWidth + columnWidth) { append(surroundingRightArrow) }
+        appendLine(surroundingUpArrow)
+    }
+
+    private fun StringBuilder.removeSuffix(suffix: Char): StringBuilder {
+        if (endsWith(suffix)) {
+            deleteAt(lastIndex)
+        }
+        return this
     }
 
     override fun toString(): String {
