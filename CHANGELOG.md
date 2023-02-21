@@ -1,3 +1,7 @@
+## 4.0.1 - 2023-02-21
+
+- Performance improvements related to ParserException. Thanks for [@kilink](https://github.com/kilink) for the contribution!
+
 ## 4.0.0 - 2022-10-03
 
 - Updates to Kotlin 1.7.20, and removes `@ExperimentalStdlibApi` now that `DeepRecursiveFunction` is now stable

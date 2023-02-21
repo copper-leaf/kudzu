@@ -634,6 +634,7 @@ public final class com/copperleaf/kudzu/parser/ParserException : java/lang/Excep
 	public fun <init> (Ljava/lang/String;Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/ParserContext;)V
 	public final fun getActualMessage ()Ljava/lang/String;
 	public final fun getInput ()Lcom/copperleaf/kudzu/parser/ParserContext;
+	public fun getMessage ()Ljava/lang/String;
 	public final fun getParser ()Lcom/copperleaf/kudzu/parser/Parser;
 }
 
