@@ -14,6 +14,6 @@ public class ParserException(
     |
     |$actualMessage
     |
-    ${input.getSurroundingText(input.sourcePosition).lines().joinToString(separator = "\n") { "|$it" }}
+    ${input.getSurroundingText(input.sourcePosition).lineSequence().joinToString(separator = "\n") { "|$it" }}
     """.trimMargin()
 }
