@@ -47,11 +47,13 @@ public abstract class BaseTextParser(
 
         val token = tokenBuilder.toString()
 
-        if (!isValidText(token)) throw ParserException(
-            invalidTextErrorMessage(token),
-            this@BaseTextParser,
-            input
-        )
+        if (!isValidText(token)) {
+            throw ParserException(
+                invalidTextErrorMessage(token),
+                this@BaseTextParser,
+                input
+            )
+        }
 
         TextNode(token, NodeContext(input, remaining)) to remaining
     }

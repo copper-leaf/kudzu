@@ -313,7 +313,7 @@ class TestGenericHtmlParser {
                     |  )
                     |  (TextNode: ' after tag')
                     |)
-                """.trimMargin()
+                    """.trimMargin()
                 )
                 .node()
                 .isNotNull()
@@ -387,13 +387,13 @@ class TestGenericHtmlParser {
                     this,
                     logErrors = false,
                     expectedErrorMessage = """
-                        |Parse error at 1:12 (SimpleTagParser)
-                        |
-                        |Mismatched closing tag: Expected tag name to be 'a', got 'b'
-                        |
-                        |1|before tag <a one="two" three=4 five=6.7 eight=true>hello world</b> after tag
-                        |>>>>>>>>>>>>>^
-                        """.trimMargin()
+                    |Parse error at 1:12 (SimpleTagParser)
+                    |
+                    |Mismatched closing tag: Expected tag name to be 'a', got 'b'
+                    |
+                    |1|before tag <a one="two" three=4 five=6.7 eight=true>hello world</b> after tag
+                    |>>>>>>>>>>>>>^
+                    """.trimMargin()
                 )
             ).parsedIncorrectly()
         }

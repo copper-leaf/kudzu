@@ -1,3 +1,7 @@
+## 5.0.0 - 2023-04-03
+
+- Updates to Kotlin 1.8.20
+
 ## 4.0.1 - 2023-02-21
 
 - Performance improvements related to ParserException. Thanks for [@kilink](https://github.com/kilink) for the contribution!

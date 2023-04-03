@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalTime::class)
+
 package com.copperleaf.kudzu.performance
 
 import kotlin.math.sqrt
@@ -58,7 +59,7 @@ private class Histogram(
             |Mean test duration: $mean
             |Test duration spread: [$fastestRun, $median, $slowestRun]
             |standard deviation: $stdDeviationDuration
-        """.trimMargin()
+            """.trimMargin()
         )
     }
 }

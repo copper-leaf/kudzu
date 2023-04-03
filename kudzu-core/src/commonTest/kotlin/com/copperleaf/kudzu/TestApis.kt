@@ -14,10 +14,11 @@ fun <T : Node> ParserResult<T>?.parsedCorrectly(
     expected: String? = null,
     allowRemaining: Boolean = false
 ): ParserResult<T> {
-    if (this == null) error(
-        "Subject cannot be null"
-    )
-    else {
+    if (this == null) {
+        error(
+            "Subject cannot be null"
+        )
+    } else {
         if (expected != null) {
             assertEquals(
                 expected = expected.trimIndent().trim(),
@@ -147,15 +148,21 @@ fun Boolean.isTrue() {
 }
 
 fun Node?.isTerminal(): TerminalNode {
-    if (this == null) error("Subject must be non-null. Actual: $this")
-    else if (this !is TerminalNode) error("Subject must be be an instance of TerminalNode. Actual: $this")
+    if (this == null) {
+        error("Subject must be non-null. Actual: $this")
+    } else if (this !is TerminalNode) {
+        error("Subject must be be an instance of TerminalNode. Actual: $this")
+    }
 
     return this
 }
 
 fun Node?.isNonTerminal(): NonTerminalNode {
-    if (this == null) error("Subject must be non-null. Actual: $this")
-    else if (this !is NonTerminalNode) error("Subject must be be an instance of NonTerminalNode. Actual: $this")
+    if (this == null) {
+        error("Subject must be non-null. Actual: $this")
+    } else if (this !is NonTerminalNode) {
+        error("Subject must be be an instance of NonTerminalNode. Actual: $this")
+    }
 
     return this
 }

@@ -63,7 +63,7 @@ class TestNewline {
             |1|
             |>>^
             |2|
-        """.trimMargin()
+            """.trimMargin()
         )
 
         expectThat(output).parsedIncorrectly()
@@ -87,7 +87,7 @@ class TestNewline {
             |1|
             |>>^
             |2|a
-        """.trimMargin()
+            """.trimMargin()
         )
 
         expectThat(output).parsedIncorrectly()
@@ -110,7 +110,7 @@ class TestNewline {
             |
             |1|a
             |>>^
-        """.trimMargin()
+            """.trimMargin()
         )
 
         expectThat(output).parsedIncorrectly()

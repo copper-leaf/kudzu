@@ -281,15 +281,15 @@ class TestErrorMessages {
         underTest.test(
             input,
             expectedErrorMessage = """
-                |Parse error at 9:6 (IntLiteralParser)
-                |
-                |Expected integer literal
-                |
-                | 8|eight,8
-                | 9|nine,
-                |>>>>>>>>^
-                |10|ten,10
-                """.trimMargin()
+            |Parse error at 9:6 (IntLiteralParser)
+            |
+            |Expected integer literal
+            |
+            | 8|eight,8
+            | 9|nine,
+            |>>>>>>>>^
+            |10|ten,10
+            """.trimMargin()
         )
     }
 }

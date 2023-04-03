@@ -1,7 +1,5 @@
 @file:Suppress("UNUSED_VARIABLE")
 
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetWithSimulatorTests
-
 plugins {
     kotlin("multiplatform")
 }
@@ -64,7 +62,7 @@ kotlin {
             dependencies {
             }
         }
-        val androidTest by getting {
+        val androidUnitTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
             }

@@ -22,11 +22,13 @@ public abstract class BaseCharParser(
 
         val (nextChar, remaining) = input.nextChar()
 
-        if (!isValidChar(nextChar)) throw ParserException(
-            "char '$nextChar' ${validationFailedMessage(nextChar)}",
-            this@BaseCharParser,
-            input
-        )
+        if (!isValidChar(nextChar)) {
+            throw ParserException(
+                "char '$nextChar' ${validationFailedMessage(nextChar)}",
+                this@BaseCharParser,
+                input
+            )
+        }
 
         CharNode(nextChar, NodeContext(input, remaining)) to remaining
     }

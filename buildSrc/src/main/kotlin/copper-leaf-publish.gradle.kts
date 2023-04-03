@@ -38,12 +38,6 @@ publishing {
         }
     }
 
-    publications {
-        create("mavenKotlin", MavenPublication::class.java) {
-            from(components.getByName("kotlin"))
-        }
-    }
-
     // Configure all publications
     publications.withType<MavenPublication> {
 
@@ -83,4 +77,21 @@ signing {
         publishConfiguration.signingPassword
     )
     sign(publishing.publications)
+}
+
+afterEvaluate {
+    tasks.withType(AbstractPublishToMaven::class) {
+        val publishTask = this
+        tasks.withType(Sign::class) {
+            val signingTask = this
+            publishTask.mustRunAfter(signingTask)
+        }
+    }
+
+    tasks.getByName("compileTestKotlinIosSimulatorArm64") {
+        mustRunAfter(tasks.getByName("signIosSimulatorArm64Publication"))
+    }
+    tasks.getByName("compileTestKotlinIosX64") {
+        mustRunAfter(tasks.getByName("signIosX64Publication"))
+    }
 }

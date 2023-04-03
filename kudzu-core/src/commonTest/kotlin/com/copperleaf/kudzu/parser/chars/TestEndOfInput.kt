@@ -44,16 +44,16 @@ class TestEndOfInput {
         input = "asdf"
         output = underTest.test(input)
         expected = """
-            |(Sequence2Node:
-            |  (ManyNode:
-            |    (CharNode: 'a')
-            |    (CharNode: 's')
-            |    (CharNode: 'd')
-            |    (CharNode: 'f')
-            |  )
-            |  (EndOfInputNode: 'EOF')
-            |)
-            |""".trimMargin()
+        |(Sequence2Node:
+        |  (ManyNode:
+        |    (CharNode: 'a')
+        |    (CharNode: 's')
+        |    (CharNode: 'd')
+        |    (CharNode: 'f')
+        |  )
+        |  (EndOfInputNode: 'EOF')
+        |)
+        """.trimMargin()
 
         expectThat(output).parsedCorrectly(expected)
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
@@ -78,7 +78,7 @@ class TestEndOfInput {
             |
             |1|asdf 
             |>>>>>>^
-        """.trimMargin()
+            """.trimMargin()
         )
 
         expectThat(output).parsedIncorrectly()

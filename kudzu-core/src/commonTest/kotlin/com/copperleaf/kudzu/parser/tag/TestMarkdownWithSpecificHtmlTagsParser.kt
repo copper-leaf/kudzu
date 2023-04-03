@@ -175,7 +175,7 @@ class TestMarkdownWithSpecificHtmlTagsParser {
                     |    )
                     |  )
                     |)
-                """.trimMargin()
+                    """.trimMargin()
                 )
                 .node()
         }

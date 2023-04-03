@@ -18,14 +18,6 @@ android {
             isMinifyEnabled = false
         }
     }
-    sourceSets {
-        getByName("main") {
-            setRoot("src/androidMain")
-        }
-        getByName("androidTest") {
-            setRoot("src/androidTest")
-        }
-    }
     testOptions {
         unitTests {
             isIncludeAndroidResources = true

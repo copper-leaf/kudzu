@@ -40,11 +40,13 @@ public abstract class BaseManyParser<T : Node>(
             }
         }
 
-        if (!isValidNodeCount(nodeList.size)) throw ParserException(
-            invalidNodeCountMessage(nodeList.size),
-            this@BaseManyParser,
-            input
-        )
+        if (!isValidNodeCount(nodeList.size)) {
+            throw ParserException(
+                invalidNodeCountMessage(nodeList.size),
+                this@BaseManyParser,
+                input
+            )
+        }
 
         ManyNode(nodeList, NodeContext(input, remaining)) to remaining
     }

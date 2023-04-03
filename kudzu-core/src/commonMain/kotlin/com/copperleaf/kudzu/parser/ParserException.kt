@@ -10,10 +10,10 @@ public class ParserException(
 ) : Exception() {
     override val message: String
         get() = """
-    |Parse error at ${input.sourcePosition} (${parser::class.simpleName})
-    |
-    |$actualMessage
-    |
-    ${input.getSurroundingText(input.sourcePosition).lineSequence().joinToString(separator = "\n") { "|$it" }}
-    """.trimMargin()
+        |Parse error at ${input.sourcePosition} (${parser::class.simpleName})
+        |
+        |$actualMessage
+        |
+        ${input.getSurroundingText(input.sourcePosition).lineSequence().joinToString(separator = "\n") { "|$it" }}
+        """.trimMargin()
 }

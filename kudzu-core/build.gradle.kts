@@ -13,6 +13,10 @@ repositories {
     maven(url = "https://jitpack.io")
 }
 
+android {
+    namespace = "com.copperleaf.kudzu"
+}
+
 kotlin {
     sourceSets {
         // Common Sourcesets
@@ -37,8 +41,8 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-junit"))
 
-                implementation("com.github.alllex:parsus:v0.1.2")
-                implementation("com.github.h0tk3y.betterParse:better-parse:0.4.2")
+                implementation("me.alllex.parsus:parsus-jvm:0.4.0")
+                implementation("com.github.h0tk3y.betterParse:better-parse:0.4.4")
             }
         }
 
@@ -48,10 +52,9 @@ kotlin {
             dependencies {
             }
         }
-        val androidTest by getting {
+        val androidUnitTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("io.mockk:mockk:1.11.0")
             }
         }
 

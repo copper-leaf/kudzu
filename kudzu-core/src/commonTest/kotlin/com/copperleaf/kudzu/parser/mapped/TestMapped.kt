@@ -78,7 +78,6 @@ class TestMapped {
     }
 
     @Test
-
     fun testMappedParser2() {
         val nodeValue1Parser = MappedParser(
             AnyTokenParser()

@@ -1,4 +1,5 @@
 @file:Suppress("FunctionName", "NOTHING_TO_INLINE")
+
 package com.copperleaf.kudzu.parser.choice
 
 import com.copperleaf.kudzu.node.Node
