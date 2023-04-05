@@ -13,17 +13,12 @@ import com.copperleaf.kudzu.parser.value.BooleanLiteralParser
 import com.copperleaf.kudzu.parser.value.DoubleLiteralParser
 import com.copperleaf.kudzu.parser.value.IntLiteralParser
 import com.copperleaf.kudzu.test
+import io.kotest.core.spec.style.StringSpec
 import kotlin.math.pow
-import kotlin.test.Test
 
-class TestExpression {
+class TestExpression : StringSpec({
 
-    class IntAsDoubleParser(
-        private val parser: Parser<ValueNode<Double>> = MappedParser(IntLiteralParser()) { it.value.toDouble() }
-    ) : Parser<ValueNode<Double>> by parser
-
-    @Test
-    fun testDoubleExpressionParser() {
+    "testDoubleExpressionParser" {
         val parser = ExpressionParser<Double>(
             termParser = { IntAsDoubleParser() },
 
@@ -98,8 +93,7 @@ class TestExpression {
         }
     }
 
-    @Test
-    fun testBooleanExpressionParser() {
+    "testBooleanExpressionParser" {
         val parser = ExpressionParser<Boolean>(
             termParser = { BooleanLiteralParser() },
 
@@ -149,8 +143,7 @@ class TestExpression {
 // Parentheses support
 // ---------------------------------------------------------------------------------------------------------------------
 
-    @Test
-    fun testParenthesizedExpression() {
+    "testParenthesizedExpression" {
         val parser = ExpressionParser<Double>(
             termParser = { IntAsDoubleParser() },
             parenthesizedTerm = true,
@@ -188,8 +181,7 @@ class TestExpression {
         }
     }
 
-    @Test
-    fun testNonParenthesizedExpression() {
+    "testNonParenthesizedExpression" {
         val parser = ExpressionParser<Double>(
             termParser = { IntAsDoubleParser() },
             parenthesizedTerm = false,
@@ -234,8 +226,7 @@ class TestExpression {
 // AST simplification support
 // ---------------------------------------------------------------------------------------------------------------------
 
-    @Test
-    fun testSimplifiedExpression() {
+    "testSimplifiedExpression" {
         val parser = ExpressionParser<Double>(
             termParser = { DoubleLiteralParser() },
             parenthesizedTerm = true,
@@ -276,8 +267,7 @@ class TestExpression {
             )
     }
 
-    @Test
-    fun testNonSimplifiedExpression() {
+    "testNonSimplifiedExpression" {
         val parser = ExpressionParser<Double>(
             termParser = { DoubleLiteralParser() },
             parenthesizedTerm = true,
@@ -343,8 +333,7 @@ class TestExpression {
 // Operator alias support
 // ---------------------------------------------------------------------------------------------------------------------
 
-    @Test
-    fun testOperatorAliases() {
+    "testOperatorAliases" {
         val parser = ExpressionParser<Double>(
             termParser = { IntAsDoubleParser() },
 
@@ -380,4 +369,8 @@ class TestExpression {
                 }
         }
     }
-}
+})
+
+class IntAsDoubleParser(
+    private val parser: Parser<ValueNode<Double>> = MappedParser(IntLiteralParser()) { it.value.toDouble() }
+) : Parser<ValueNode<Double>> by parser

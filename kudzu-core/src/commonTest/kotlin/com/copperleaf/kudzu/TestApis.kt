@@ -8,7 +8,7 @@ import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
-import kotlin.test.assertEquals
+import io.kotest.matchers.shouldBe
 
 fun <T : Node> ParserResult<T>?.parsedCorrectly(
     expected: String? = null,
@@ -20,11 +20,7 @@ fun <T : Node> ParserResult<T>?.parsedCorrectly(
         )
     } else {
         if (expected != null) {
-            assertEquals(
-                expected = expected.trimIndent().trim(),
-                actual = first.toString(),
-                message = "Output AST should be $expected, got $first"
-            )
+            expected.trimIndent().trim() shouldBe first.toString()
         }
         if (!allowRemaining) {
             when (second.isEmpty()) {
@@ -108,7 +104,7 @@ fun <T> List<T>.containsExactly(vararg items: T): List<T> {
 }
 
 fun <T> List<T>.hasSize(size: Int): List<T> {
-    assertEquals(size, this.size)
+    size shouldBe this.size
 
     return this
 }
@@ -118,7 +114,7 @@ fun <T, U> T.get(block: T.() -> U): U {
 }
 
 fun <T> T.isEqualTo(other: Any?): T {
-    assertEquals(other, this)
+    other shouldBe this
 
     return this
 }
@@ -136,7 +132,7 @@ fun <T> T.isSameInstanceAs(other: Any?): T {
 }
 
 fun Boolean.isFalse() {
-    assertEquals(false, this)
+    this shouldBe false
 }
 
 fun <T> T?.isNotNull(): T {
@@ -144,7 +140,7 @@ fun <T> T?.isNotNull(): T {
 }
 
 fun Boolean.isTrue() {
-    assertEquals(true, this)
+    this shouldBe true
 }
 
 fun Node?.isTerminal(): TerminalNode {
@@ -197,7 +193,7 @@ fun <NodeType : Node> Parser<NodeType>.test(
         parse(input)
     } catch (e: ParserException) {
         if (expectedErrorMessage != null) {
-            assertEquals(expectedErrorMessage, e.message)
+            e.message shouldBe expectedErrorMessage
         }
         if (logErrors) {
             e.printStackTrace()

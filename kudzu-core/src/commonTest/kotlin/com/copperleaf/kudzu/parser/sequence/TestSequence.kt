@@ -15,12 +15,11 @@ import com.copperleaf.kudzu.parser.chars.WhitespaceCharParser
 import com.copperleaf.kudzu.parser.many.AtLeastParser
 import com.copperleaf.kudzu.test
 import com.copperleaf.kudzu.withChildren
-import kotlin.test.Test
+import io.kotest.core.spec.style.StringSpec
 
-class TestSequence {
+class TestSequence : StringSpec({
 
-    @Test
-    fun testSequenceOfCharParser() {
+    "testSequenceOfCharParser" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -49,8 +48,7 @@ class TestSequence {
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    @Test
-    fun testSequenceOfManysParser() {
+    "testSequenceOfManysParser" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -85,8 +83,7 @@ class TestSequence {
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    @Test
-    fun testSequenceOfManysParserSkippingWhitespace() {
+    "testSequenceOfManysParserSkippingWhitespace" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -134,8 +131,7 @@ class TestSequence {
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    @Test
-    fun testSequenceCannotGetNext() {
+    "testSequenceCannotGetNext" {
         var input: String
         var output: ParserResult<Node>?
         val underTest = SequenceNParser(
@@ -151,8 +147,7 @@ class TestSequence {
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    @Test
-    fun testNamedSequenceNode() {
+    "testNamedSequenceNode" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -176,4 +171,4 @@ class TestSequence {
         expectThat(output).parsedCorrectly(expected)
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
-}
+})

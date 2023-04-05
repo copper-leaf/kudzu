@@ -3,16 +3,13 @@ package com.copperleaf.kudzu.performance
 import com.copperleaf.kudzu.expectThat
 import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parser.expression.ExpressionParser
+import com.copperleaf.kudzu.parser.expression.IntAsDoubleParser
 import com.copperleaf.kudzu.parser.expression.Operator
-import com.copperleaf.kudzu.parser.expression.TestExpression
 import com.copperleaf.kudzu.test
+import io.kotest.core.spec.style.StringSpec
 import kotlin.math.pow
-import kotlin.test.Test
 
-class KudzuPerformanceTests {
-
-    val enabled = false
-
+class KudzuPerformanceTests : StringSpec({
     val simpleExpression = run {
         "1 - 2 * (3 + 4 / 5 ^ 6 * (7 - 8)) * 9"
     }
@@ -37,13 +34,11 @@ class KudzuPerformanceTests {
     Test duration spread: [5.68s, 6.43s, 7.70s]
     standard deviation: 662ms
      */
-    @Test // this test takes a long time, so only run it as-needed and not part of normal development cycles
-    fun runPerformanceTestOnSimpleExpression() {
-        if (!enabled) return
-
+    // this test takes a long time, so only run it as-needed and not part of normal development cycles
+    "runPerformanceTestOnSimpleExpression".config(enabled = false) {
         performanceTest(10_000, 1000) {
             val parser = ExpressionParser<Double>(
-                termParser = { TestExpression.IntAsDoubleParser() },
+                termParser = { IntAsDoubleParser() },
 
                 operators = listOf(
                     Operator.Infix(op = "+", 40) { l, r -> l + r },
@@ -65,7 +60,7 @@ class KudzuPerformanceTests {
 
         performanceTest(10, 5) {
             val parser = ExpressionParser<Double>(
-                termParser = { TestExpression.IntAsDoubleParser() },
+                termParser = { IntAsDoubleParser() },
                 simplifyAst = false,
 
                 operators = listOf(
@@ -84,4 +79,4 @@ class KudzuPerformanceTests {
             ).parsedCorrectly()
         }
     }
-}
+})

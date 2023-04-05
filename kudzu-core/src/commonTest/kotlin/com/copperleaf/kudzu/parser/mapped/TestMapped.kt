@@ -21,12 +21,11 @@ import com.copperleaf.kudzu.parser.text.AnyTokenParser
 import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.parser.text.OptionalWhitespaceParser
 import com.copperleaf.kudzu.test
-import kotlin.test.Test
+import io.kotest.core.spec.style.StringSpec
 
-class TestMapped {
+class TestMapped : StringSpec({
 
-    @Test
-    fun testMappedParser1() {
+    "testMappedParser1" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -50,35 +49,7 @@ class TestMapped {
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    // asdf, 123, (Type1-A)
-    data class SomeComplexModel(
-        val node1Value: String,
-        val node2Value: Int,
-        val node3Value: SomeComplexModelType,
-    )
-
-    // A
-    // B
-    enum class SomeComplexModelEnum {
-        A, B
-    }
-
-    // (Type1-A)
-    // (Type1-B)
-    // (Type2-A)
-    // (Type2-B)
-    sealed class SomeComplexModelType {
-        data class Type1(
-            val enumValue: SomeComplexModelEnum
-        ) : SomeComplexModelType()
-
-        data class Type2(
-            val enumValue: SomeComplexModelEnum
-        ) : SomeComplexModelType()
-    }
-
-    @Test
-    fun testMappedParser2() {
+    "testMappedParser2" {
         val nodeValue1Parser = MappedParser(
             AnyTokenParser()
         ) { tokenNode ->
@@ -157,8 +128,7 @@ class TestMapped {
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    @Test
-    fun testFlatMappedParser1() {
+    "testFlatMappedParser1" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -186,8 +156,7 @@ class TestMapped {
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    @Test
-    fun testFlatMappedParser2() {
+    "testFlatMappedParser2" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -211,4 +180,31 @@ class TestMapped {
             }
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
+})
+
+// asdf, 123, (Type1-A)
+data class SomeComplexModel(
+    val node1Value: String,
+    val node2Value: Int,
+    val node3Value: SomeComplexModelType,
+)
+
+// A
+// B
+enum class SomeComplexModelEnum {
+    A, B
+}
+
+// (Type1-A)
+// (Type1-B)
+// (Type2-A)
+// (Type2-B)
+sealed class SomeComplexModelType {
+    data class Type1(
+        val enumValue: SomeComplexModelEnum
+    ) : SomeComplexModelType()
+
+    data class Type2(
+        val enumValue: SomeComplexModelEnum
+    ) : SomeComplexModelType()
 }

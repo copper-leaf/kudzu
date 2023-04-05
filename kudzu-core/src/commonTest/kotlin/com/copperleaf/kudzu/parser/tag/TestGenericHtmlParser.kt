@@ -26,10 +26,10 @@ import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.parser.text.RequiredWhitespaceParser
 import com.copperleaf.kudzu.parser.value.AnyLiteralParser
 import com.copperleaf.kudzu.test
-import kotlin.test.Test
+import io.kotest.core.spec.style.StringSpec
 
 @Suppress("UNCHECKED_CAST")
-class TestGenericHtmlParser {
+class TestGenericHtmlParser : StringSpec({
 
     val htmlAttr: Parser<ValueNode<Pair<String, Any>>> = MappedParser(
         SequenceParser(
@@ -41,8 +41,7 @@ class TestGenericHtmlParser {
         key.text to value.value
     }
 
-    @Test
-    fun testHtmlAttr() {
+    "testHtmlAttr" {
         "one=\"two\"".run {
             expectThat(htmlAttr.predict(ParserContext.fromString(this))).isTrue()
             expectThat(htmlAttr.test(this))
@@ -94,8 +93,7 @@ class TestGenericHtmlParser {
         it.nodeList.map { it.value }.toMap()
     }
 
-    @Test
-    fun testHtmlAttrList() {
+    "testHtmlAttrList" {
         "one=\"two\" three=4".run {
             expectThat(htmlAttrList.predict(ParserContext.fromString(this))).isTrue()
             expectThat(htmlAttrList.test(this))
@@ -165,8 +163,7 @@ class TestGenericHtmlParser {
         TagNameNode(tagName.text, contentNode, nodeContext)
     }
 
-    @Test
-    fun testHtmlTagOpen() {
+    "testHtmlTagOpen" {
         "<a one=\"two\" three=4 five=6.7 eight=true>".run {
             expectThat(openTag.predict(ParserContext.fromString(this))).isTrue()
             expectThat(openTag.test(this))
@@ -217,8 +214,7 @@ class TestGenericHtmlParser {
         TagNameNode(tagName.text, it, nodeContext)
     }
 
-    @Test
-    fun testHtmlTagClose() {
+    "testHtmlTagClose" {
         "</a>".run {
             expectThat(closeTag.predict(ParserContext.fromString(this))).isTrue()
             expectThat(closeTag.test(this))
@@ -252,8 +248,7 @@ class TestGenericHtmlParser {
         allowSameTagRecursion = true
     )
 
-    @Test
-    fun testHtmlTagParser() {
+    "testHtmlTagParser" {
         (
             "before tag " +
                 "<a one=\"two\" three=4 five=6.7 eight=true>" +
@@ -372,8 +367,7 @@ class TestGenericHtmlParser {
         }
     }
 
-    @Test
-    fun testMismatchedOpenAndCloseTags() {
+    "testMismatchedOpenAndCloseTags" {
         (
             "before tag " +
                 "<a one=\"two\" three=4 five=6.7 eight=true>" +
@@ -398,4 +392,4 @@ class TestGenericHtmlParser {
             ).parsedIncorrectly()
         }
     }
-}
+})

@@ -7,12 +7,11 @@ import com.copperleaf.kudzu.node
 import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.test
-import kotlin.test.Test
+import io.kotest.core.spec.style.StringSpec
 
-class TestIdentifier {
+class TestIdentifier : StringSpec({
 
-    @Test
-    fun testIdentifierTokenParser() {
+    "testIdentifierTokenParser" {
         val parser = IdentifierTokenParser()
 
         val inputs = listOf(
@@ -49,4 +48,4 @@ class TestIdentifier {
             }
         }
     }
-}
+})

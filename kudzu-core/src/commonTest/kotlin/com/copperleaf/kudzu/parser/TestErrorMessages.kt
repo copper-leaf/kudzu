@@ -7,13 +7,12 @@ import com.copperleaf.kudzu.parser.text.AnyTokenParser
 import com.copperleaf.kudzu.parser.text.RequiredWhitespaceParser
 import com.copperleaf.kudzu.parser.value.IntLiteralParser
 import com.copperleaf.kudzu.test
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
-class TestErrorMessages {
+class TestErrorMessages : StringSpec({
 
-    @Test
-    fun testSurroundingText1Line() {
+    "testSurroundingText1Line" {
         val input = ParserContext.fromString("one two three")
 
         assertEquals(
@@ -36,8 +35,7 @@ class TestErrorMessages {
         )
     }
 
-    @Test
-    fun testSurroundingText2Lines() {
+    "testSurroundingText2Lines" {
         val input = ParserContext.fromString(
             """
             |one two three
@@ -87,8 +85,7 @@ class TestErrorMessages {
         )
     }
 
-    @Test
-    fun testSurroundingTextMultipleLines() {
+    "testSurroundingTextMultipleLines" {
         val input = ParserContext.fromString(
             """
             |one two three
@@ -220,8 +217,7 @@ class TestErrorMessages {
         )
     }
 
-    @Test
-    fun testSurroundingTextMoreThan10Lines() {
+    "testSurroundingTextMoreThan10Lines" {
         val input = ParserContext.fromString(
             """
             |one
@@ -252,8 +248,7 @@ class TestErrorMessages {
         )
     }
 
-    @Test
-    fun testActualExceptionMessageManyLines() {
+    "testActualExceptionMessageManyLines" {
         val input = ParserContext.fromString(
             """
             |one,1
@@ -292,4 +287,8 @@ class TestErrorMessages {
             """.trimMargin()
         )
     }
+})
+
+private fun assertEquals(a: Any, b: Any) {
+    a shouldBe b
 }

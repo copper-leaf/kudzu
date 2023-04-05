@@ -25,18 +25,17 @@ import com.copperleaf.kudzu.parser.text.RequiredWhitespaceParser
 import com.copperleaf.kudzu.parser.text.ScanParser
 import com.copperleaf.kudzu.parser.value.AnyLiteralParser
 import com.copperleaf.kudzu.test
-import kotlin.test.Test
+import io.kotest.core.spec.style.StringSpec
 
-class TestSimpleTagParser {
+class TestSimpleTagParser : StringSpec({
 
-    private fun <T : Node> Parser<T>.asTagNameParser(name: String): Parser<TagNameNode<T>> {
+    fun <T : Node> Parser<T>.asTagNameParser(name: String): Parser<TagNameNode<T>> {
         return FlatMappedParser(this) {
             TagNameNode(name, it, it.context)
         }
     }
 
-    @Test
-    fun testTrivialTag() {
+    "testTrivialTag" {
         val underTest = SimpleTagParser(
             "anchor",
             LiteralTokenParser("<a>").asTagNameParser("a"),
@@ -78,7 +77,7 @@ class TestSimpleTagParser {
 // Tag parser
 // ---------------------------------------------------------------------------------------------------------------------
 
-    private val keyValueParser: Parser<ValueNode<Pair<String, Any>>> = MappedParser(
+    val keyValueParser: Parser<ValueNode<Pair<String, Any>>> = MappedParser(
         SequenceParser(
             AnyTokenParser(),
             CharInParser('='),
@@ -88,7 +87,7 @@ class TestSimpleTagParser {
         key.text to value.value
     }
 
-    private val paramsListParser: Parser<ValueNode<Map<String, Any>>> = MappedParser(
+    val paramsListParser: Parser<ValueNode<Map<String, Any>>> = MappedParser(
         SequenceParser(
             RequiredWhitespaceParser(),
             SeparatedByParser(
@@ -105,7 +104,7 @@ class TestSimpleTagParser {
         manyPairs.toMap()
     }
 
-    private val openingTag: Parser<ValueNode<Map<String, Any>>> = MappedParser(
+    val openingTag: Parser<ValueNode<Map<String, Any>>> = MappedParser(
         SequenceParser(
             LiteralTokenParser("<a"),
             MaybeParser(
@@ -117,15 +116,14 @@ class TestSimpleTagParser {
         maybeNode.node?.value ?: emptyMap()
     }
 
-    private val nonTrivialTagParser = SimpleTagParser(
+    val nonTrivialTagParser = SimpleTagParser(
         "anchor",
         openingTag.asTagNameParser("a"),
         ScanParser(LiteralTokenParser("</a>")),
         LiteralTokenParser("</a>").asTagNameParser("a")
     )
 
-    @Test
-    fun testKeyValueParser() {
+    "testKeyValueParser" {
         "one=\"two\"".run {
             expectThat(keyValueParser.predict(ParserContext.fromString(this))).isTrue()
             expectThat(keyValueParser.test(this))
@@ -148,8 +146,7 @@ class TestSimpleTagParser {
         }
     }
 
-    @Test
-    fun testParamsListParser() {
+    "testParamsListParser" {
         " one=\"two\"".run {
             expectThat(paramsListParser.predict(ParserContext.fromString(this))).isTrue()
             expectThat(paramsListParser.test(this))
@@ -183,8 +180,7 @@ class TestSimpleTagParser {
         }
     }
 
-    @Test
-    fun testOpeningTag() {
+    "testOpeningTag" {
         "<a>".run {
             expectThat(openingTag.predict(ParserContext.fromString(this))).isTrue()
             expectThat(openingTag.test(this))
@@ -219,8 +215,7 @@ class TestSimpleTagParser {
         }
     }
 
-    @Test
-    fun testFullSimpleTag() {
+    "testFullSimpleTag" {
         "<a> </a>".run {
             expectThat(nonTrivialTagParser.predict(ParserContext.fromString(this))).isTrue()
             expectThat(nonTrivialTagParser.test(this))
@@ -251,4 +246,4 @@ class TestSimpleTagParser {
                 }
         }
     }
-}
+})

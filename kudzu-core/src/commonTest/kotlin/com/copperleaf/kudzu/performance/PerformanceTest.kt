@@ -23,6 +23,7 @@ fun performanceTest(
     histogram.print()
 }
 
+@OptIn(ExperimentalTime::class)
 private class Histogram(
     val iterations: Int,
     val warmups: Int,

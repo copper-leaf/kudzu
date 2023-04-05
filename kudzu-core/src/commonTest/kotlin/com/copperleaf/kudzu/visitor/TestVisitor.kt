@@ -14,21 +14,18 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
 import com.copperleaf.kudzu.parser.text.RequiredWhitespaceParser
 import com.copperleaf.kudzu.test
 import com.copperleaf.kudzu.visit
-import kotlin.test.Test
+import io.kotest.core.spec.style.StringSpec
 
-class TestVisitor {
-
-    data class VisitedNode(
-        val name: String,
-        val context: NodeContext,
-    ) {
-        override fun toString(): String {
-            return "($name: ${context.startPosition} to ${context.endPosition})"
-        }
+data class VisitedNode(
+    val name: String,
+    val context: NodeContext,
+) {
+    override fun toString(): String {
+        return "($name: ${context.startPosition} to ${context.endPosition})"
     }
-
-    @Test
-    fun testVisitorOnEnter() {
+}
+class TestVisitor : StringSpec({
+    "testVisitorOnEnter" {
         val underTest = SequenceParser(
             MaybeParser(
                 ManyParser(LetterParser()),
@@ -79,8 +76,7 @@ class TestVisitor {
             }
     }
 
-    @Test
-    fun testVisitorOnExit() {
+    "testVisitorOnExit" {
         val underTest = SequenceParser(
             MaybeParser(
                 ManyParser(LetterParser()),
@@ -130,4 +126,4 @@ class TestVisitor {
                     )
             }
     }
-}
+})

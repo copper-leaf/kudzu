@@ -10,12 +10,11 @@ import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.test
-import kotlin.test.Test
+import io.kotest.core.spec.style.StringSpec
 
-class TestNewline {
+class TestNewline : StringSpec({
 
-    @Test
-    fun testNewlineParserValid_unixStyle() {
+    "testNewlineParserValid_unixStyle" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -30,8 +29,7 @@ class TestNewline {
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    @Test
-    fun testNewlineParserValid_windowsStyle() {
+    "testNewlineParserValid_windowsStyle" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -46,8 +44,7 @@ class TestNewline {
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    @Test
-    fun testNewlineParserFails_crOnly() {
+    "testNewlineParserFails_crOnly" {
         var input: String
         var output: ParserResult<Node>?
         val underTest = NewlineCharParser()
@@ -70,8 +67,7 @@ class TestNewline {
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    @Test
-    fun testNewlineParserFails_crNotFollowedByLf() {
+    "testNewlineParserFails_crNotFollowedByLf" {
         var input: String
         var output: ParserResult<Node>?
         val underTest = NewlineCharParser()
@@ -94,8 +90,7 @@ class TestNewline {
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    @Test
-    fun testNewlineParserFails_notCrOrLf() {
+    "testNewlineParserFails_notCrOrLf" {
         var input: String
         var output: ParserResult<Node>?
         val underTest = NewlineCharParser()
@@ -116,4 +111,4 @@ class TestNewline {
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
-}
+})

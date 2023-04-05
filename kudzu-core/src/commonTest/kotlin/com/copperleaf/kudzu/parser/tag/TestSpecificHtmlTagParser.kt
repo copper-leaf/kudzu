@@ -10,9 +10,9 @@ import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.test
-import kotlin.test.Test
+import io.kotest.core.spec.style.StringSpec
 
-class TestSpecificHtmlTagParser {
+class TestSpecificHtmlTagParser : StringSpec({
 
     val tags = listOf(
         TagBuilder(
@@ -42,14 +42,7 @@ class TestSpecificHtmlTagParser {
         )
     )
 
-    private fun <T : Node> Parser<T>.asTagNameParser(name: String): Parser<TagNameNode<T>> {
-        return FlatMappedParser(this) {
-            TagNameNode(name, it, it.context)
-        }
-    }
-
-    @Test
-    fun testTagParserPredict() {
+    "testTagParserPredict" {
         val underTest = TagParser(
             tags
         )
@@ -74,8 +67,7 @@ class TestSpecificHtmlTagParser {
         }
     }
 
-    @Test
-    fun testTagParserParse() {
+    "testTagParserParse" {
         val underTest = TagParser(
             tags
         )
@@ -104,5 +96,11 @@ class TestSpecificHtmlTagParser {
             expectThat(underTest.predict(ParserContext.fromString(this))).isTrue()
             expectThat(underTest.test(this, logErrors = true)).parsedCorrectly()
         }
+    }
+})
+
+fun <T : Node> Parser<T>.asTagNameParser(name: String): Parser<TagNameNode<T>> {
+    return FlatMappedParser(this) {
+        TagNameNode(name, it, it.context)
     }
 }

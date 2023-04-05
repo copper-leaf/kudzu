@@ -14,12 +14,11 @@ import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.remainingText
 import com.copperleaf.kudzu.test
-import kotlin.test.Test
+import io.kotest.core.spec.style.StringSpec
 
-class TestWord {
+class TestWord : StringSpec({
 
-    @Test
-    fun testLiteralTokenParser() {
+    "testLiteralTokenParser" {
         val underTest = LiteralTokenParser("kotlin")
 
         expectThat(underTest.test("kotlin"))
@@ -60,8 +59,7 @@ class TestWord {
         expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
-    @Test
-    fun testAnyTokenParser() {
+    "testAnyTokenParser" {
         var input: String
         var output: ParserResult<Node>?
         val underTest = AnyTokenParser()
@@ -114,4 +112,4 @@ class TestWord {
         expectThat(underTest.test("")).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
-}
+})

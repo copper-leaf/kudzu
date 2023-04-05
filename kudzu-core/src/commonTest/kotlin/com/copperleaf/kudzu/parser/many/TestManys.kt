@@ -21,12 +21,11 @@ import com.copperleaf.kudzu.parser.chars.LetterParser
 import com.copperleaf.kudzu.parser.text.AnyTokenParser
 import com.copperleaf.kudzu.test
 import com.copperleaf.kudzu.withChildren
-import kotlin.test.Test
+import io.kotest.core.spec.style.StringSpec
 
-class TestManys {
+class TestManys : StringSpec({
 
-    @Test
-    fun testManyCharParser() {
+    "testManyCharParser" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -59,8 +58,7 @@ class TestManys {
         expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
-    @Test
-    fun testAtLeastCharParser() {
+    "testAtLeastCharParser" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -88,8 +86,7 @@ class TestManys {
         expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
-    @Test
-    fun testAtMostCharParser() {
+    "testAtMostCharParser" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -127,8 +124,7 @@ class TestManys {
         expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
-    @Test
-    fun testManyDigitsParser() {
+    "testManyDigitsParser" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -161,8 +157,7 @@ class TestManys {
         expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
-    @Test
-    fun testAtLeastDigitsParser() {
+    "testAtLeastDigitsParser" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -195,8 +190,7 @@ class TestManys {
         expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
-    @Test
-    fun testAtMostDigitsParser() {
+    "testAtMostDigitsParser" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -229,8 +223,7 @@ class TestManys {
         expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
-    @Test
-    fun testTimesParser() {
+    "testTimesParser" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -263,8 +256,7 @@ class TestManys {
         expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
-    @Test
-    fun testBetweenTimesParser() {
+    "testBetweenTimesParser" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -312,8 +304,7 @@ class TestManys {
         expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
-    @Test
-    fun testUntilParser() {
+    "testUntilParser" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -336,8 +327,7 @@ class TestManys {
         expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
-    @Test
-    fun testNamedManyNode() {
+    "testNamedManyNode" {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -362,8 +352,7 @@ class TestManys {
         expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
 
-    @Test
-    fun testSeparatedByParser() {
+    "testSeparatedByParser" {
         val underTest = SeparatedByParser(
             term = AnyTokenParser(),
             separator = CharInParser(','),
@@ -378,4 +367,4 @@ class TestManys {
                 nodeList.map { it.text }.containsExactly("asdf", "1234", "asd123")
             }
     }
-}
+})

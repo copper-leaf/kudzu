@@ -11,14 +11,13 @@ import com.copperleaf.kudzu.node.sequence.Sequence9Node
 import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parser.chars.DigitParser
 import com.copperleaf.kudzu.test
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 import kotlin.reflect.KClass
-import kotlin.test.Test
-import kotlin.test.assertEquals
 
-class TestFixedSequences {
+class TestFixedSequences : StringSpec({
 
-    @Test
-    fun testSequence2Parser() {
+    "testSequence2Parser" {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -26,19 +25,18 @@ class TestFixedSequences {
             .parsedCorrectly()
             .first
             .also {
-                assertEquals(Sequence2Node::class as KClass<*>, it::class)
+                Sequence2Node::class as KClass<*> shouldBe it::class
             }
             .also { (c, n1, n2) ->
-                assertEquals("1:1", c.startPosition.toString())
-                assertEquals("1:3", c.endPosition.toString())
+                "1:1" shouldBe c.startPosition.toString()
+                "1:3" shouldBe c.endPosition.toString()
 
-                assertEquals('1', n1.char)
-                assertEquals('2', n2.char)
+                '1' shouldBe n1.char
+                '2' shouldBe n2.char
             }
     }
 
-    @Test
-    fun testSequence3Parser() {
+    "testSequence3Parser" {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -47,20 +45,19 @@ class TestFixedSequences {
             .parsedCorrectly()
             .first
             .also {
-                assertEquals(Sequence3Node::class as KClass<*>, it::class)
+                Sequence3Node::class as KClass<*> shouldBe it::class
             }
             .also { (c, n1, n2, n3) ->
-                assertEquals("1:1", c.startPosition.toString())
-                assertEquals("1:4", c.endPosition.toString())
+                "1:1" shouldBe c.startPosition.toString()
+                "1:4" shouldBe c.endPosition.toString()
 
-                assertEquals('1', n1.char)
-                assertEquals('2', n2.char)
-                assertEquals('3', n3.char)
+                '1' shouldBe n1.char
+                '2' shouldBe n2.char
+                '3' shouldBe n3.char
             }
     }
 
-    @Test
-    fun testSequence4Parser() {
+    "testSequence4Parser" {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -70,21 +67,20 @@ class TestFixedSequences {
             .parsedCorrectly()
             .first
             .also {
-                assertEquals(Sequence4Node::class as KClass<*>, it::class)
+                Sequence4Node::class as KClass<*> shouldBe it::class
             }
             .also { (c, n1, n2, n3, n4) ->
-                assertEquals("1:1", c.startPosition.toString())
-                assertEquals("1:5", c.endPosition.toString())
+                "1:1" shouldBe c.startPosition.toString()
+                "1:5" shouldBe c.endPosition.toString()
 
-                assertEquals('1', n1.char)
-                assertEquals('2', n2.char)
-                assertEquals('3', n3.char)
-                assertEquals('4', n4.char)
+                '1' shouldBe n1.char
+                '2' shouldBe n2.char
+                '3' shouldBe n3.char
+                '4' shouldBe n4.char
             }
     }
 
-    @Test
-    fun testSequence5Parser() {
+    "testSequence5Parser" {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -95,22 +91,21 @@ class TestFixedSequences {
             .parsedCorrectly()
             .first
             .also {
-                assertEquals(Sequence5Node::class as KClass<*>, it::class)
+                Sequence5Node::class as KClass<*> shouldBe it::class
             }
             .also { (c, n1, n2, n3, n4, n5) ->
-                assertEquals("1:1", c.startPosition.toString())
-                assertEquals("1:6", c.endPosition.toString())
+                "1:1" shouldBe c.startPosition.toString()
+                "1:6" shouldBe c.endPosition.toString()
 
-                assertEquals('1', n1.char)
-                assertEquals('2', n2.char)
-                assertEquals('3', n3.char)
-                assertEquals('4', n4.char)
-                assertEquals('5', n5.char)
+                '1' shouldBe n1.char
+                '2' shouldBe n2.char
+                '3' shouldBe n3.char
+                '4' shouldBe n4.char
+                '5' shouldBe n5.char
             }
     }
 
-    @Test
-    fun testSequence6Parser() {
+    "testSequence6Parser" {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -122,23 +117,22 @@ class TestFixedSequences {
             .parsedCorrectly()
             .first
             .also {
-                assertEquals(Sequence6Node::class as KClass<*>, it::class)
+                Sequence6Node::class as KClass<*> shouldBe it::class
             }
             .also { (c, n1, n2, n3, n4, n5, n6) ->
-                assertEquals("1:1", c.startPosition.toString())
-                assertEquals("1:7", c.endPosition.toString())
+                "1:1" shouldBe c.startPosition.toString()
+                "1:7" shouldBe c.endPosition.toString()
 
-                assertEquals('1', n1.char)
-                assertEquals('2', n2.char)
-                assertEquals('3', n3.char)
-                assertEquals('4', n4.char)
-                assertEquals('5', n5.char)
-                assertEquals('6', n6.char)
+                '1' shouldBe n1.char
+                '2' shouldBe n2.char
+                '3' shouldBe n3.char
+                '4' shouldBe n4.char
+                '5' shouldBe n5.char
+                '6' shouldBe n6.char
             }
     }
 
-    @Test
-    fun testSequence7Parser() {
+    "testSequence7Parser" {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -151,24 +145,23 @@ class TestFixedSequences {
             .parsedCorrectly()
             .first
             .also {
-                assertEquals(Sequence7Node::class as KClass<*>, it::class)
+                Sequence7Node::class as KClass<*> shouldBe it::class
             }
             .also { (c, n1, n2, n3, n4, n5, n6, n7) ->
-                assertEquals("1:1", c.startPosition.toString())
-                assertEquals("1:8", c.endPosition.toString())
+                "1:1" shouldBe c.startPosition.toString()
+                "1:8" shouldBe c.endPosition.toString()
 
-                assertEquals('1', n1.char)
-                assertEquals('2', n2.char)
-                assertEquals('3', n3.char)
-                assertEquals('4', n4.char)
-                assertEquals('5', n5.char)
-                assertEquals('6', n6.char)
-                assertEquals('7', n7.char)
+                '1' shouldBe n1.char
+                '2' shouldBe n2.char
+                '3' shouldBe n3.char
+                '4' shouldBe n4.char
+                '5' shouldBe n5.char
+                '6' shouldBe n6.char
+                '7' shouldBe n7.char
             }
     }
 
-    @Test
-    fun testSequence8Parser() {
+    "testSequence8Parser" {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -182,25 +175,24 @@ class TestFixedSequences {
             .parsedCorrectly()
             .first
             .also {
-                assertEquals(Sequence8Node::class as KClass<*>, it::class)
+                Sequence8Node::class as KClass<*> shouldBe it::class
             }
             .also { (c, n1, n2, n3, n4, n5, n6, n7, n8) ->
-                assertEquals("1:1", c.startPosition.toString())
-                assertEquals("1:9", c.endPosition.toString())
+                "1:1" shouldBe c.startPosition.toString()
+                "1:9" shouldBe c.endPosition.toString()
 
-                assertEquals('1', n1.char)
-                assertEquals('2', n2.char)
-                assertEquals('3', n3.char)
-                assertEquals('4', n4.char)
-                assertEquals('5', n5.char)
-                assertEquals('6', n6.char)
-                assertEquals('7', n7.char)
-                assertEquals('8', n8.char)
+                '1' shouldBe n1.char
+                '2' shouldBe n2.char
+                '3' shouldBe n3.char
+                '4' shouldBe n4.char
+                '5' shouldBe n5.char
+                '6' shouldBe n6.char
+                '7' shouldBe n7.char
+                '8' shouldBe n8.char
             }
     }
 
-    @Test
-    fun testSequence9Parser() {
+    "testSequence9Parser" {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -215,21 +207,21 @@ class TestFixedSequences {
             .parsedCorrectly()
             .first
             .also {
-                assertEquals(Sequence9Node::class, it::class as KClass<*>)
+                Sequence9Node::class shouldBe it::class as KClass<*>
             }
             .also { (c, n1, n2, n3, n4, n5, n6, n7, n8, n9) ->
-                assertEquals("1:1", c.startPosition.toString())
-                assertEquals("1:10", c.endPosition.toString())
+                "1:1" shouldBe c.startPosition.toString()
+                "1:10" shouldBe c.endPosition.toString()
 
-                assertEquals('1', n1.char)
-                assertEquals('2', n2.char)
-                assertEquals('3', n3.char)
-                assertEquals('4', n4.char)
-                assertEquals('5', n5.char)
-                assertEquals('6', n6.char)
-                assertEquals('7', n7.char)
-                assertEquals('8', n8.char)
-                assertEquals('9', n9.char)
+                '1' shouldBe n1.char
+                '2' shouldBe n2.char
+                '3' shouldBe n3.char
+                '4' shouldBe n4.char
+                '5' shouldBe n5.char
+                '6' shouldBe n6.char
+                '7' shouldBe n7.char
+                '8' shouldBe n8.char
+                '9' shouldBe n9.char
             }
     }
-}
+})

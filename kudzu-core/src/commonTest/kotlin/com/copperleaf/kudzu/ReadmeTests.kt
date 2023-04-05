@@ -14,14 +14,12 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
 import com.copperleaf.kudzu.parser.text.IdentifierTokenParser
 import com.copperleaf.kudzu.parser.text.ScanParser
 import com.copperleaf.kudzu.parser.value.IntLiteralParser
+import io.kotest.core.spec.style.StringSpec
 import kotlin.math.pow
-import kotlin.test.Test
 
 @Suppress("UNUSED_VARIABLE", "UNUSED_DESTRUCTURED_PARAMETER_ENTRY")
-class ReadmeTests {
-
-    @Test
-    fun test1() {
+class ReadmeTests : StringSpec({
+    "test1" {
         val intLiteralParser = MappedParser(
             SequenceParser(
                 MaybeParser(
@@ -39,8 +37,7 @@ class ReadmeTests {
         expectThat(parsedValue).isEqualTo(-123)
     }
 
-    @Test
-    fun test2() {
+    "test2" {
         val variableMap = mapOf(
             "asdf" to 1,
             "qwerty" to 2,
@@ -72,8 +69,7 @@ class ReadmeTests {
         expectThat(node.text).isEqualTo("the value of 1 is 1, but 2 is 2")
     }
 
-    @Test
-    fun test3() {
+    "test3" {
         val expressionParser = ExpressionParser<Int>(
             termParser = { IntLiteralParser() },
 
@@ -95,4 +91,4 @@ class ReadmeTests {
         val value = expressionParser.evaluator.evaluate(node)
         expectThat(value).isEqualTo(16)
     }
-}
+})
