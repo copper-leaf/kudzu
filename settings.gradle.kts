@@ -1,21 +1,24 @@
-pluginManagement {
-    resolutionStrategy {
-        eachPlugin {
-            when (requested.id.id) {
-                "binary-compatibility-validator" -> useModule("org.jetbrains.kotlinx:binary-compatibility-validator:${requested.version}")
-            }
-        }
-    }
+rootProject.name = "kudzu"
 
+pluginManagement {
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven(url = "https://kotlin.bintray.com/kotlinx")
     }
 }
 
-rootProject.name = "kudzu"
+val conventionDir = "./../gradle-convention-plugins"
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("libs") {
+            from(files("$conventionDir/gradle/conventionLibs.versions.toml"))
+        }
+    }
+}
+
+includeBuild(conventionDir)
 
 include(":kudzu-core")
 include(":docs")

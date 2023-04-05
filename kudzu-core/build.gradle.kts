@@ -1,16 +1,9 @@
 plugins {
-    `copper-leaf-android`
-    `copper-leaf-targets`
-    `copper-leaf-base`
-    `copper-leaf-version`
-    `copper-leaf-lint`
-    `copper-leaf-publish`
-}
-
-description = "A monadic (I think...) recursive-descent parser written in Kotlin"
-
-repositories {
-    maven(url = "https://jitpack.io")
+    id("copper-leaf-base")
+    id("copper-leaf-android")
+    id("copper-leaf-targets")
+    id("copper-leaf-lint")
+    id("copper-leaf-publish")
 }
 
 android {
@@ -21,52 +14,37 @@ kotlin {
     sourceSets {
         // Common Sourcesets
         val commonMain by getting {
-            dependencies {
-            }
+            dependencies { }
         }
         val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
+            dependencies { }
         }
 
         // plain JVM Sourcesets
         val jvmMain by getting {
-            dependencies {
-            }
+            dependencies { }
         }
         val jvmTest by getting {
-            dependsOn(commonTest)
             dependencies {
-                implementation(kotlin("test-junit"))
-
-                implementation("me.alllex.parsus:parsus-jvm:0.4.0")
-                implementation("com.github.h0tk3y.betterParse:better-parse:0.4.4")
+                implementation(libs.parsus)
+                implementation(libs.betterParse)
             }
         }
 
         // Android JVM Sourcesets
         val androidMain by getting {
-            dependsOn(jvmMain)
-            dependencies {
-            }
+            dependencies { }
         }
         val androidUnitTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-            }
+            dependencies { }
         }
 
         // JS Sourcesets
         val jsMain by getting {
-            dependencies {
-            }
+            dependencies { }
         }
         val jsTest by getting {
-            dependencies {
-                implementation(kotlin("test-js"))
-            }
+            dependencies { }
         }
 
         // iOS Sourcesets
