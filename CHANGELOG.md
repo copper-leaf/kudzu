@@ -2,7 +2,7 @@
 
 - Updates to Kotlin 1.8.20
 - Drops support for deprecated KMPP targets:
-  - JS IR
+  - JS Legacy
   - iosArm32
 
 ## 4.0.1 - 2023-02-21
