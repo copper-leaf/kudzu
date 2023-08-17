@@ -776,6 +776,7 @@ public final class com/copperleaf/kudzu/parser/choice/ChoiceNParser : com/copper
 public final class com/copperleaf/kudzu/parser/choice/ChoiceStrategy : java/lang/Enum {
 	public static final field Exact Lcom/copperleaf/kudzu/parser/choice/ChoiceStrategy;
 	public static final field Predictive Lcom/copperleaf/kudzu/parser/choice/ChoiceStrategy;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lcom/copperleaf/kudzu/parser/choice/ChoiceStrategy;
 	public static fun values ()[Lcom/copperleaf/kudzu/parser/choice/ChoiceStrategy;
 }
