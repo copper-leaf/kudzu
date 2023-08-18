@@ -1,10 +1,3 @@
-public final class com/copperleaf/kudzu/BuildConfig {
-	public static final field BUILD_TYPE Ljava/lang/String;
-	public static final field DEBUG Z
-	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
-	public fun <init> ()V
-}
-
 public final class com/copperleaf/kudzu/HelpersKt {
 	public static final fun checkNotEmpty (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/ParserContext;Lkotlin/jvm/functions/Function0;)V
 	public static synthetic fun checkNotEmpty$default (Lcom/copperleaf/kudzu/parser/Parser;Lcom/copperleaf/kudzu/parser/ParserContext;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
