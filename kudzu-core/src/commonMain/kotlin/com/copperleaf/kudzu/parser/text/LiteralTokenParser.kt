@@ -30,7 +30,6 @@ import com.copperleaf.kudzu.parser.runParser
 public class LiteralTokenParser(
     public val expected: String
 ) : Parser<TextNode> {
-
     override fun predict(input: ParserContext): Boolean {
         if (input.isEmpty()) return false
         if (doParse(input).first == null) return false

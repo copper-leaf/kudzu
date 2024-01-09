@@ -11,7 +11,7 @@ jobs:
   testOnAll:
     strategy:
       matrix:
-        java: [11, 16]
+        java: [11, 17]
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
     name: 'Test on ${{ matrix.os }} JDK ${{ matrix.java }}'
     runs-on: '${{ matrix.os }}'

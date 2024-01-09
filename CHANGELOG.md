@@ -1,3 +1,7 @@
+## 5.2.0 - 2024-01-25
+
+- Updates to Kotlin 1.9.22
+
 ## 5.1.0 - 2023-08-17
 
 - Updates to Kotlin 1.9.0

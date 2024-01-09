@@ -12,7 +12,6 @@ import com.copperleaf.kudzu.parser.text.ScanParser
 
 @Suppress("UNCHECKED_CAST")
 internal object TagParserBuilder {
-
     @Suppress("UNUSED_PARAMETER")
     internal fun checkTagsAreValid(
         tags: List<TagBuilder<*, *>>

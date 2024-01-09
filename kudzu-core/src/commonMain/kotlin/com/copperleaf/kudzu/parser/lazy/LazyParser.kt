@@ -20,7 +20,6 @@ import com.copperleaf.kudzu.parser.ParserContext
  *   - its parser fails to parse
  */
 public class LazyParser<T : Node> : Parser<T> {
-
     private lateinit var parser: Parser<T>
 
     @Suppress("UNCHECKED_CAST")

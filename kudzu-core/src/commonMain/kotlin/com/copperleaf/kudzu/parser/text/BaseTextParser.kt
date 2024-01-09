@@ -15,7 +15,6 @@ public abstract class BaseTextParser(
     public val invalidTextErrorMessage: (String) -> String,
     public val allowEmptyInput: Boolean
 ) : Parser<TextNode> {
-
     final override fun predict(input: ParserContext): Boolean {
         return if (input.isEmpty()) {
             allowEmptyInput

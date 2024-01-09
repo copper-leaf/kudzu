@@ -192,7 +192,8 @@ data class SomeComplexModel(
 // A
 // B
 enum class SomeComplexModelEnum {
-    A, B
+    A,
+    B,
 }
 
 // (Type1-A)

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.js.translate.context.Namer.kotlin
+
 plugins {
     id("copper-leaf-base")
     id("copper-leaf-android-library")
@@ -26,10 +28,7 @@ kotlin {
             dependencies { }
         }
         val jvmTest by getting {
-            dependencies {
-                implementation(libs.parsus)
-                implementation(libs.betterParse)
-            }
+            dependencies { }
         }
 
         // Android JVM Sourcesets

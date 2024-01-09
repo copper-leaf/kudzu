@@ -16,7 +16,6 @@ public class TagParser(
     private val tags: List<TagBuilder<*, *>>,
     private val allowSameTagRecursion: Boolean = false
 ) : Parser<ManyNode<Node>> {
-
     private val parser: Parser<ManyNode<Node>> by lazy {
         checkTagsAreValid(tags)
         TagParserBuilder.createTagScanningParser(tags, allowSameTagRecursion)

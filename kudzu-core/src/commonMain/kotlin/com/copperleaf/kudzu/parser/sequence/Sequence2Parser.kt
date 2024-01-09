@@ -17,7 +17,6 @@ public class Sequence2Parser<T1 : Node, T2 : Node>(
     private val p1: Parser<T1>,
     private val p2: Parser<T2>,
 ) : Parser<Sequence2Node<T1, T2>> {
-
     override fun predict(input: ParserContext): Boolean {
         return p1.predict(input)
     }

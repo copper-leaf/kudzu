@@ -31,7 +31,6 @@ import com.copperleaf.kudzu.parser.runParser
 public class ScanParser(
     private val stoppingCondition: Parser<*>,
 ) : Parser<TextNode> {
-
     override fun predict(input: ParserContext): Boolean {
         return !input.isEmpty() && !stoppingCondition.predict(input)
     }

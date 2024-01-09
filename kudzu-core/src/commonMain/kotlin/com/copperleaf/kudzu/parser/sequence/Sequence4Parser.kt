@@ -19,7 +19,6 @@ public class Sequence4Parser<T1 : Node, T2 : Node, T3 : Node, T4 : Node>(
     private val p3: Parser<T3>,
     private val p4: Parser<T4>,
 ) : Parser<Sequence4Node<T1, T2, T3, T4>> {
-
     override fun predict(input: ParserContext): Boolean {
         return p1.predict(input)
     }

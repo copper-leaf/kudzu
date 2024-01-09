@@ -20,7 +20,6 @@ public class SimpleTagParser<Opening : Node, Content : Node, Closing : Node>(
     public val contentParser: Parser<Content>,
     public val closingParser: Parser<TagNameNode<Closing>>,
 ) : Parser<TagNode<Opening, Content, Closing>> {
-
     private val parser: Parser<TagNode<Opening, Content, Closing>> by lazy {
         FlatMappedParser(
             SequenceParser(

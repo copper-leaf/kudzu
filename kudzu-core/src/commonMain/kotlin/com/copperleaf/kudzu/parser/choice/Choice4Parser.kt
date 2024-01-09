@@ -8,7 +8,6 @@ import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.runParser
 
-/* ktlint-disable max-line-length */
 public class Choice4Parser<T1 : Node, T2 : Node, T3 : Node, T4 : Node>(
     private val p1: Parser<T1>,
     private val p2: Parser<T2>,
@@ -32,4 +31,3 @@ public class Choice4Parser<T1 : Node, T2 : Node, T3 : Node, T4 : Node>(
             )
     }
 }
-/* ktlint-enable max-line-length */

@@ -160,7 +160,7 @@ or a number follows:
 ```kotlin
 val wordParser = ManyParser(LetterParser())
 val numberParser = ManyParser(DigitParser())
-val tokenParser = ChoiceParser(
+val tokenParser = PredictiveChoiceParser(
         wordParser, 
         numberParser
 )
@@ -171,7 +171,7 @@ val statement = ManyParser(
     )
 )
 
-val output = statement.parse("one two 1234 asdf 56 qwerty 7890")
+val output = statement.parse(ParserContext.fromString("one two 1234 asdf 56 qwerty 7890"))
 ```
 
 This simple grammar will match an input string like `one two 1234 asdf 56 qwerty 7890`, and demonstrates how complex

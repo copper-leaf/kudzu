@@ -24,7 +24,6 @@ public class NamedParser<T : Node>(
     public val name: String,
     private val remapErrors: RemapperFn = { _, e -> e },
 ) : Parser<NamedNode<T>> {
-
     override fun predict(input: ParserContext): Boolean = parser.predict(input)
 
     override val parse: ParseFunction<NamedNode<T>> = runParser { input ->

@@ -26,7 +26,6 @@ import com.copperleaf.kudzu.node.NonTerminalNode
  * - Parse trees are immutable structures. Visitation is a read-only process.
  */
 public interface Visitor {
-
     /**
      * Visit this node and all its children nodes, recursively.
      */

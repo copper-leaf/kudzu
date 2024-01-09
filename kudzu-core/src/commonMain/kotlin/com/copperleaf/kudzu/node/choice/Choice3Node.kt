@@ -16,10 +16,12 @@ public sealed class Choice3Node<T1 : Node, T2 : Node, T3 : Node>(
         override val node: T1,
         context: NodeContext
     ) : Choice3Node<T1, T2, T3>(node, context)
+
     public class Option2<T1 : Node, T2 : Node, T3 : Node>(
         override val node: T2,
         context: NodeContext
     ) : Choice3Node<T1, T2, T3>(node, context)
+
     public class Option3<T1 : Node, T2 : Node, T3 : Node>(
         override val node: T3,
         context: NodeContext

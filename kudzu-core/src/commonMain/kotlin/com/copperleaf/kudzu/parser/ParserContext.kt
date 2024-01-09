@@ -16,7 +16,6 @@ package com.copperleaf.kudzu.parser
  * these kinds of issues, but may not be suitable for larger inputs.
  */
 public interface ParserContext {
-
     public val sourcePosition: SourcePosition
 
     public fun isEmpty(): Boolean

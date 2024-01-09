@@ -8,7 +8,8 @@ import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 
 public enum class ChoiceStrategy {
-    Predictive, Exact
+    Predictive,
+    Exact
 }
 
 internal suspend fun <InputT : Node, OutputT : Node> ParseScope<OutputT>.checkParser(

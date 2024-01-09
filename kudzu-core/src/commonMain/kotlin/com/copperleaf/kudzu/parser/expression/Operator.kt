@@ -15,7 +15,6 @@ public sealed class Operator<T : Any>(
     public val precedence: Precedence,
     public val aliases: List<String>
 ) : Comparable<Operator<T>> {
-
     public abstract fun expandAliases(): List<Operator<T>>
 
     public abstract class UnaryOperator<T : Any>(

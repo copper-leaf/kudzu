@@ -9,7 +9,6 @@ internal data class ParserContextImpl(
     private val skipWhitespace: Boolean = false,
     override val sourcePosition: SourcePosition = SourcePosition()
 ) : ParserContext {
-
     override fun isEmpty(): Boolean {
         if (skipWhitespace) {
             var idx = index

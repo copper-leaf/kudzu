@@ -20,7 +20,6 @@ public class Sequence5Parser<T1 : Node, T2 : Node, T3 : Node, T4 : Node, T5 : No
     private val p4: Parser<T4>,
     private val p5: Parser<T5>,
 ) : Parser<Sequence5Node<T1, T2, T3, T4, T5>> {
-
     override fun predict(input: ParserContext): Boolean {
         return p1.predict(input)
     }

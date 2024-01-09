@@ -21,19 +21,6 @@ class KudzuPerformanceTests : StringSpec({
         "$expresssionStart 1 + 1 $expresssionEnd"
     }
 
-    /*
-    Last run data:
-
-    Total duration of 10000 runs: 1.13s
-    Mean test duration: 113us
-    Test duration spread: [77.9us, 81.6us, 5.42ms]
-    standard deviation: 123us
-
-    Total duration of 10 runs: 64.3s
-    Mean test duration: 6.43s
-    Test duration spread: [5.68s, 6.43s, 7.70s]
-    standard deviation: 662ms
-     */
     // this test takes a long time, so only run it as-needed and not part of normal development cycles
     "runPerformanceTestOnSimpleExpression".config(enabled = false) {
         performanceTest(10_000, 1000) {

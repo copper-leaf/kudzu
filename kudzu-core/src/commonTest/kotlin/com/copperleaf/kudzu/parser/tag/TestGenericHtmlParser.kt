@@ -250,29 +250,29 @@ class TestGenericHtmlParser : StringSpec({
 
     "testHtmlTagParser" {
         (
-            "before tag " +
-                "<a one=\"two\" three=4 five=6.7 eight=true>" +
-                "hello world" +
-                "</a> " +
-                "after tag"
-            ).run {
-            expectThat(tagParser.predict(ParserContext.fromString(this))).isTrue()
-            expectThat(tagParser.test(this, logErrors = true))
-                .parsedCorrectly()
-        }
+                "before tag " +
+                        "<a one=\"two\" three=4 five=6.7 eight=true>" +
+                        "hello world" +
+                        "</a> " +
+                        "after tag"
+                ).run {
+                expectThat(tagParser.predict(ParserContext.fromString(this))).isTrue()
+                expectThat(tagParser.test(this, logErrors = true))
+                    .parsedCorrectly()
+            }
         (
-            "before tag " +
-                "<a one=\"two\" three=4 five=6.7 eight=true>" +
-                "goodbye" +
-                " <b one=2>cruel</b>" +
-                " world" +
-                "</a> " +
-                "after tag"
-            ).run {
-            expectThat(tagParser.predict(ParserContext.fromString(this))).isTrue()
-            expectThat(tagParser.test(this))
-                .parsedCorrectly(
-                    """
+                "before tag " +
+                        "<a one=\"two\" three=4 five=6.7 eight=true>" +
+                        "goodbye" +
+                        " <b one=2>cruel</b>" +
+                        " world" +
+                        "</a> " +
+                        "after tag"
+                ).run {
+                expectThat(tagParser.predict(ParserContext.fromString(this))).isTrue()
+                expectThat(tagParser.test(this))
+                    .parsedCorrectly(
+                        """
                     |(ManyNode:
                     |  (TextNode: 'before tag ')
                     |  (TagNode:
@@ -309,78 +309,78 @@ class TestGenericHtmlParser : StringSpec({
                     |  (TextNode: ' after tag')
                     |)
                     """.trimMargin()
-                )
-                .node()
-                .isNotNull()
-                .apply {
-                    (this.nodeList[0] as? TextNode)
-                        .isNotNull()
-                        .text
-                        .isEqualTo("before tag ")
+                    )
+                    .node()
+                    .isNotNull()
+                    .apply {
+                        (this.nodeList[0] as? TextNode)
+                            .isNotNull()
+                            .text
+                            .isEqualTo("before tag ")
 
-                    (this.nodeList[1] as? TagNode<*, *, *>)
-                        .isNotNull()
-                        .also { tagNode ->
-                            (tagNode.opening as? TagNameNode<ValueNode<Map<String, Any>>>)
-                                .isNotNull()
-                                .apply {
-                                    tagName.isEqualTo("a")
-                                    wrapped.value.isEqualTo(
-                                        mapOf(
-                                            "one" to "two",
-                                            "three" to 4,
-                                            "five" to 6.7,
-                                            "eight" to true
+                        (this.nodeList[1] as? TagNode<*, *, *>)
+                            .isNotNull()
+                            .also { tagNode ->
+                                (tagNode.opening as? TagNameNode<ValueNode<Map<String, Any>>>)
+                                    .isNotNull()
+                                    .apply {
+                                        tagName.isEqualTo("a")
+                                        wrapped.value.isEqualTo(
+                                            mapOf(
+                                                "one" to "two",
+                                                "three" to 4,
+                                                "five" to 6.7,
+                                                "eight" to true
+                                            )
                                         )
-                                    )
-                                }
-                            (tagNode.content as? ManyNode<Node>)
-                                .isNotNull()
-                                .nodeList
-                                .also { contentNodes ->
-                                    (contentNodes[0] as? TextNode)
-                                        .isNotNull()
-                                        .text
-                                        .isEqualTo("goodbye ")
-                                    (contentNodes[1] as? TagNode<*, *, *>)
-                                        .isNotNull()
-                                        .also { innerTag ->
-                                            (innerTag.opening as? TagNameNode<ValueNode<Map<String, Any>>>)
-                                                .isNotNull()
-                                                .apply {
-                                                    tagName.isEqualTo("b")
-                                                    wrapped.value.isEqualTo(mapOf("one" to 2))
-                                                }
-                                        }
-                                    (contentNodes[2] as? TextNode)
-                                        .isNotNull()
-                                        .text
-                                        .isEqualTo(" world")
-                                }
-                        }
+                                    }
+                                (tagNode.content as? ManyNode<Node>)
+                                    .isNotNull()
+                                    .nodeList
+                                    .also { contentNodes ->
+                                        (contentNodes[0] as? TextNode)
+                                            .isNotNull()
+                                            .text
+                                            .isEqualTo("goodbye ")
+                                        (contentNodes[1] as? TagNode<*, *, *>)
+                                            .isNotNull()
+                                            .also { innerTag ->
+                                                (innerTag.opening as? TagNameNode<ValueNode<Map<String, Any>>>)
+                                                    .isNotNull()
+                                                    .apply {
+                                                        tagName.isEqualTo("b")
+                                                        wrapped.value.isEqualTo(mapOf("one" to 2))
+                                                    }
+                                            }
+                                        (contentNodes[2] as? TextNode)
+                                            .isNotNull()
+                                            .text
+                                            .isEqualTo(" world")
+                                    }
+                            }
 
-                    (this.nodeList[2] as? TextNode)
-                        .isNotNull()
-                        .text
-                        .isEqualTo(" after tag")
-                }
-        }
+                        (this.nodeList[2] as? TextNode)
+                            .isNotNull()
+                            .text
+                            .isEqualTo(" after tag")
+                    }
+            }
     }
 
     "testMismatchedOpenAndCloseTags" {
         (
-            "before tag " +
-                "<a one=\"two\" three=4 five=6.7 eight=true>" +
-                "hello world" +
-                "</b> " +
-                "after tag"
-            ).run {
-            expectThat(tagParser.predict(ParserContext.fromString(this))).isTrue()
-            expectThat(
-                tagParser.test(
-                    this,
-                    logErrors = false,
-                    expectedErrorMessage = """
+                "before tag " +
+                        "<a one=\"two\" three=4 five=6.7 eight=true>" +
+                        "hello world" +
+                        "</b> " +
+                        "after tag"
+                ).run {
+                expectThat(tagParser.predict(ParserContext.fromString(this))).isTrue()
+                expectThat(
+                    tagParser.test(
+                        this,
+                        logErrors = false,
+                        expectedErrorMessage = """
                     |Parse error at 1:12 (SimpleTagParser)
                     |
                     |Mismatched closing tag: Expected tag name to be 'a', got 'b'
@@ -388,8 +388,8 @@ class TestGenericHtmlParser : StringSpec({
                     |1|before tag <a one="two" three=4 five=6.7 eight=true>hello world</b> after tag
                     |>>>>>>>>>>>>>^
                     """.trimMargin()
-                )
-            ).parsedIncorrectly()
-        }
+                    )
+                ).parsedIncorrectly()
+            }
     }
 })

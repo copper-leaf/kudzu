@@ -14,7 +14,6 @@ import com.copperleaf.kudzu.node.choice.Choice9Node
 import com.copperleaf.kudzu.node.choice.ChoiceNNode
 import com.copperleaf.kudzu.parser.Parser
 
-/* ktlint-disable max-line-length */
 public inline fun <T1 : Node, T2 : Node> PredictiveChoiceParser(
     p1: Parser<T1>,
     p2: Parser<T2>,
@@ -186,4 +185,3 @@ public inline fun PredictiveChoiceParser(
         strategy = ChoiceStrategy.Predictive
     )
 }
-/* ktlint-enable max-line-length */

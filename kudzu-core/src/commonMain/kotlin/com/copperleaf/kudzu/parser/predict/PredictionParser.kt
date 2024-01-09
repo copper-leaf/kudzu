@@ -28,7 +28,6 @@ import com.copperleaf.kudzu.parser.ParserException
 public class PredictionParser<T : Node>(
     private val parser: Parser<T>
 ) : Parser<T> {
-
     override fun predict(input: ParserContext): Boolean {
         if (!parser.predict(input)) return false
 

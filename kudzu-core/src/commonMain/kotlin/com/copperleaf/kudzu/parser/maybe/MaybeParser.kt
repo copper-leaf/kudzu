@@ -20,7 +20,6 @@ import com.copperleaf.kudzu.parser.runParser
 public class MaybeParser<T : Node>(
     public val parser: Parser<T>,
 ) : Parser<MaybeNode<T>> {
-
     override fun predict(input: ParserContext): Boolean {
         return true
     }
