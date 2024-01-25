@@ -38,11 +38,12 @@ Notable features:
 # Supported Platforms/Features
 
 | Platform |
-| -------- |
+|----------|
 | Android  |
 | JVM      |
 | iOS      |
 | JS       |
+| WasmJs   |
 
 # Installation
 
