@@ -48,6 +48,14 @@ kotlin {
             dependencies { }
         }
 
+        // WASM Sourcesets
+        val wasmJsMain by getting {
+            dependencies { }
+        }
+        val wasmJsTest by getting {
+            dependencies { }
+        }
+
         // iOS Sourcesets
         val iosMain by getting {
             dependencies { }
