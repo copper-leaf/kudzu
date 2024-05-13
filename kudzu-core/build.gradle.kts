@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.js.translate.context.Namer.kotlin
-
 plugins {
     id("copper-leaf-base")
     id("copper-leaf-android-library")
@@ -52,6 +50,14 @@ kotlin {
             dependencies { }
         }
         val iosTest by getting {
+            dependencies { }
+        }
+
+        // WASM JS Sourcesets
+        val wasmJsMain by getting {
+            dependencies { }
+        }
+        val wasmJsTest by getting {
             dependencies { }
         }
     }
