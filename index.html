@@ -1,0 +1,941 @@
+
+
+<!DOCTYPE html>
+<html class="">
+<head>
+
+
+
+
+
+
+<meta charset="utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+<meta name="generator" content="Orchid 0.21.1"/>
+<link rel="icon" href="https://copper-leaf.github.io/kudzu/favicon.ico">
+
+
+<meta name="robots" content="index, follow">
+
+
+
+<title>Home</title>
+
+
+<meta name="description" content="A monadic (I think...) recursive-descent parser combinator written in Kotlin">
+
+
+
+
+
+<!-- start:inject styles -->
+<link rel="stylesheet" type="text/css" href="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/css/bulma.css"  />
+<link rel="stylesheet" type="text/css" href="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/css/extraCss.css"  />
+<link rel="stylesheet" type="text/css" href="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/css/bulma-tooltip.css"  />
+<link rel="stylesheet" type="text/css" href="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/css/bulma-accordion.min.css"  />
+<link rel="stylesheet" type="text/css" href="https://copper-leaf.github.io/kudzu/assets/css/orchidSearch.css"  />
+<link rel="stylesheet" type="text/css" href="https://copper-leaf.github.io/kudzu/PrismJS/prism-themes/master/themes/prism-duotone-light.css"  />
+<!-- end:inject styles -->
+
+
+
+<script>
+    window.site = {"orchidVersion":"0.21.1","baseUrl":"https://copper-leaf.github.io/kudzu","environment":"prod","version":"5.3.0"};
+</script>
+
+
+    <!-- start:inject meta-components [head] -->
+    
+    <!-- end:inject meta-components [head] -->
+
+
+
+    <!-- start:inject meta-components [head] -->
+    
+
+        
+            
+        
+
+        
+            
+        
+            
+        
+    
+    <!-- end:inject meta-components [head] -->
+
+
+
+
+
+
+
+</head>
+<body class="">
+
+
+
+
+
+    <!-- start:inject meta-components [bodyStart] -->
+    
+    <!-- end:inject meta-components [bodyStart] -->
+
+
+
+    <!-- start:inject meta-components [bodyStart] -->
+    
+
+        
+            
+        
+
+        
+    
+    <!-- end:inject meta-components [bodyStart] -->
+
+
+
+
+
+<div class="columns is-marginless is-desktop">
+
+  <div class="column is-one-third-desktop is-one-quarter-widescreen is-one-fifth-fullhd is-paddingless column-main-left is-hidden-mobile is-hidden-touch">
+  
+
+
+    
+
+
+<section class="hero is-primary is-bold is-fullheight">
+
+
+<!-- Hero header: will stick at the top -->
+<div class="hero-head" style="padding: 0 1.5rem">
+  <a href="https://copper-leaf.github.io/kudzu"><img src="https://copper-leaf.github.io/kudzu/assets/svg/orchid/logo_top_dark.svg" style="padding: 40px 40px 0 40px;"></a>
+  <p class="subtitle is-4 has-text-centered">A monadic (I think...) recursive-descent parser combinator written in Kotlin</p>
+
+  <div class="columns is-mobile has-text-centered">
+  
+
+
+  
+
+
+  </div>
+</div>
+
+
+
+
+<!-- Hero content: will be in the middle -->
+<div class="hero-body">
+  <div class="container sidebar-menu">
+    <details class="is-hidden-desktop">
+      <summary>
+        Menu
+      </summary>
+      <div id="mobile-sidebar-menu"></div>
+    </details>
+    <div class="is-hidden-touch">
+      <aside class="menu" id="responsive-menu-content">
+      
+  
+  
+    <ul class="menu-list">
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu 309301028 -->
+  <!-- menuItem.page=https://copper-leaf.github.io/kudzu 48143526 -->
+  <a href="https://copper-leaf.github.io/kudzu" class="">
+  
+  Home
+  </a>
+</li>
+
+</ul>
+  
+
+  
+  
+    <ul class="menu-list">
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu 309301028 -->
+  <!-- menuItem.page=https://copper-leaf.github.io/kudzu/changelog 1906635841 -->
+  <a href="https://copper-leaf.github.io/kudzu/changelog" class="">
+  
+  Changelog
+  </a>
+</li>
+
+</ul>
+  
+
+  
+  
+    <ul class="menu-list">
+
+</ul>
+  
+
+
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function copyElem(fromId, toId) {
+    var fromElementContent = document.getElementById(fromId);
+    var toElementContent = document.getElementById(toId);
+    toElementContent.outerHTML = fromElementContent.outerHTML;
+  }
+
+  document.addEventListener("DOMContentLoaded", function (event) {
+    copyElem('responsive-menu-content', 'mobile-sidebar-menu');
+  });
+</script>
+
+
+</section>
+
+  </div>
+  <div class="column is-one-third-desktop is-one-quarter-widescreen is-one-fifth-fullhd is-paddingless column-main-left is-hidden-desktop">
+  
+
+
+    
+
+
+<section class="hero is-primary is-bold ">
+
+
+<!-- Hero header: will stick at the top -->
+<div class="hero-head" style="padding: 0 1.5rem">
+  <a href="https://copper-leaf.github.io/kudzu"><img src="https://copper-leaf.github.io/kudzu/assets/svg/orchid/logo_top_dark.svg" style="padding: 40px 40px 0 40px;"></a>
+  <p class="subtitle is-4 has-text-centered">A monadic (I think...) recursive-descent parser combinator written in Kotlin</p>
+
+  <div class="columns is-mobile has-text-centered">
+  
+
+
+  
+
+
+  </div>
+</div>
+
+
+
+
+<!-- Hero content: will be in the middle -->
+<div class="hero-body">
+  <div class="container sidebar-menu">
+    <details class="is-hidden-desktop">
+      <summary>
+        Menu
+      </summary>
+      <div id="mobile-sidebar-menu"></div>
+    </details>
+    <div class="is-hidden-touch">
+      <aside class="menu" id="responsive-menu-content">
+      
+  
+  
+    <ul class="menu-list">
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu 309301028 -->
+  <!-- menuItem.page=https://copper-leaf.github.io/kudzu 48143526 -->
+  <a href="https://copper-leaf.github.io/kudzu" class="">
+  
+  Home
+  </a>
+</li>
+
+</ul>
+  
+
+  
+  
+    <ul class="menu-list">
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu 309301028 -->
+  <!-- menuItem.page=https://copper-leaf.github.io/kudzu/changelog 1906635841 -->
+  <a href="https://copper-leaf.github.io/kudzu/changelog" class="">
+  
+  Changelog
+  </a>
+</li>
+
+</ul>
+  
+
+  
+  
+    <ul class="menu-list">
+
+</ul>
+  
+
+
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function copyElem(fromId, toId) {
+    var fromElementContent = document.getElementById(fromId);
+    var toElementContent = document.getElementById(toId);
+    toElementContent.outerHTML = fromElementContent.outerHTML;
+  }
+
+  document.addEventListener("DOMContentLoaded", function (event) {
+    copyElem('responsive-menu-content', 'mobile-sidebar-menu');
+  });
+</script>
+
+
+</section>
+
+  </div>
+
+  <div class="column is-two-thirds-desktop is-three-quarters-widescreen is-four-fifths-fullhd is-paddingless column-main-right">
+  
+
+<nav
+  class="navbar is-white border-bottom"
+  role="navigation"
+  aria-label="main navigation"
+>
+  <div class="container">
+    <div class="navbar-brand is-marginless">
+
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMain">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div class="navbar-menu is-marginless" id="navbarMain">
+      <div class="navbar-start">
+      
+<div class="navbar-item">
+  <form id="search-input" data-orchid-search>
+    <div class="field is-marginless" id="search">
+      <div class="control has-icons-left input-control">
+        <input class="input" type="text" name="query" placeholder="Search Kudzu">
+
+        <span class="icon is-small is-left">
+          <i class="fas fa-search"></i>
+        </span>
+
+        <div id="search-progress" data-orchid-search-progress style="display: none;">
+          <div class="loader">Loading...</div>
+        </div>
+      </div>
+    </div>
+    <div id="search-results" data-orchid-search-results style="display: none;">
+      <div class="carat"></div>
+      <b>
+        Search Results
+        <i class="fa fa-times" aria-hidden="true" onclick="$('[data-orchid-search-results]').hide()"></i>
+      </b>
+      <ul></ul>
+    </div>
+  </form>
+</div>
+
+      
+
+  
+  
+    
+
+<a class="navbar-item " href="https://github.com/orchidhq/Orchid">
+Orchid
+</a>
+
+
+  
+
+  
+  
+    
+<div class="navbar-item has-dropdown is-hoverable">
+
+
+<a class="navbar-item " href="">
+Copper Leaf
+</a>
+
+
+  <div class="navbar-dropdown">
+  
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/common">
+Common
+</a>
+
+
+    
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/clog">
+Clog
+</a>
+
+
+    
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/kudzu">
+Kudzu
+</a>
+
+
+    
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/trellis">
+Trellis
+</a>
+
+
+    
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/thistle">
+Thistle
+</a>
+
+
+    
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/kodiak">
+Kodiak
+</a>
+
+
+    
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/krow">
+Krow
+</a>
+
+
+    
+  </div>
+</div>
+
+  
+
+
+      </div>
+
+      <div class="navbar-end">
+      
+
+<div class="navbar-item social-item">
+  <a class="icon" href="https://github.com/copper-leaf" title="Copper Leaf Home">
+    <i class="fas fa-home"></i>
+  </a>
+</div>
+
+<div class="navbar-item social-item">
+  <a class="icon" href="https://github.com/copper-leaf/kudzu" title="Github">
+    <i class="fab fa-github"></i>
+  </a>
+</div>
+
+<div class="navbar-item social-item">
+  <a class="icon" href="https://twitter.com/OrchidSSG" title="Twitter">
+    <i class="fab fa-twitter"></i>
+  </a>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+    <div class="textured container" style="width: 100%;">
+    
+    
+
+    
+    
+      <article style="position: relative; margin-top: 60px; margin-bottom: 60px;" role="main">
+      
+      
+        <div class="box">
+        
+
+<div class="columns">
+  <div class="column is-three-quarters-desktop">
+  
+    <!-- start:inject components -->
+    
+        
+            
+                
+                    
+                        <div class="content is-medium-tablet is-large-fullhd">
+<h1 id="kudzu"><a href="#kudzu" id="kudzu" class="anchor"></a>Kudzu</h1>
+<hr />
+<blockquote>
+<p>A monadic (I think...) recursive-descent parser combinator written in Kotlin</p>
+</blockquote>
+<p><img src="https://img.shields.io/github/v/release/copper-leaf/kudzu" alt="GitHub release (latest by date)" />
+<img src="https://img.shields.io/maven-central/v/io.github.copper-leaf/kudzu-core" alt="Maven Central" />
+<img src="https://img.shields.io/badge/Kotlin-1.8.20-orange" alt="Kotlin Version" /></p>
+<p>Kudzu is a recursive-descent parser written in Kotlin, inspired by <a href="https://github.com/haskell/parsec">Parsec</a>, with the
+goal of immutability, simplicity, testability, and multiplatform usability. It's designed to be a simple starting place
+for writing smaller parsers to evaluate relatively simple grammars for other Copper-Leaf libraries, but flexible enough
+to be used for larger languages.</p>
+<h2 id="installation"><a href="#installation" id="installation" class="anchor"></a>Installation</h2>
+<pre><code class="language-kotlin">repositories {
+    mavenCentral()
+}
+
+// for plain JVM or Android projects
+dependencies {
+    implementation(&quot;io.github.copper-leaf:kudzu-core:5.3.0&quot;)
+}
+
+// for multiplatform projects
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(&quot;io.github.copper-leaf:kudzu-core:5.3.0&quot;)
+            }
+        }
+    }
+}
+</code></pre>
+<h2 id="basic-usage"><a href="#basic-usage" id="basic-usage" class="anchor"></a>Basic Usage</h2>
+<p>See tests for example usage of every included parser. A basic example of parsing and evaluating in several different
+formats follows:</p>
+<h3 id="combine-several-small-parsers-into-a-single-larger-one"><a href="#combine-several-small-parsers-into-a-single-larger-one" id="combine-several-small-parsers-into-a-single-larger-one" class="anchor"></a>Combine several small parsers into a single larger one</h3>
+<pre><code class="language-kotlin">val intLiteralParser = MappedParser(
+    SequenceParser(
+        MaybeParser(
+            CharInParser('-')
+        ),
+        AtLeastParser(
+            DigitParser(),
+            minSize = 1
+        )
+    )
+) { it.text.toInt() }
+
+val (node, remainingText) = intLiteralParser.parse(ParserContext.fromString(&quot;-123&quot;))
+val parsedValue: Int = node.value
+expectThat(parsedValue).isEqualTo(-123)
+</code></pre>
+<h3 id="find-and-replace-structured-sequences-within-unstructured-text"><a href="#find-and-replace-structured-sequences-within-unstructured-text" id="find-and-replace-structured-sequences-within-unstructured-text" class="anchor"></a>Find-and-replace structured sequences within unstructured text</h3>
+<pre><code class="language-kotlin">val variableMap = mapOf(
+    &quot;asdf&quot; to 1,
+    &quot;qwerty&quot; to 2,
+)
+
+val patternToReplace = MappedParser(
+    SequenceParser(
+        CharInParser('#'),
+        CharInParser('{'),
+        IdentifierTokenParser(),
+        CharInParser('}'),
+    )
+) {
+    val (_, _, identifier, _) = it.children
+    variableMap[identifier.text]
+}
+
+val findAndReplaceParser = ManyParser(
+    PredictiveChoiceParser(
+        patternToReplace,
+        ScanParser(patternToReplace),
+    )
+)
+
+val (node, remainingText) = findAndReplaceParser.parse(ParserContext.fromString(&quot;the value of #{asdf} is 1, but #{qwerty} is 2&quot;))
+expectThat(node.text).isEqualTo(&quot;the value of 1 is 1, but 2 is 2&quot;)
+</code></pre>
+<h3 id="construct-and-evaluate-expressions-with-custom-operators"><a href="#construct-and-evaluate-expressions-with-custom-operators" id="construct-and-evaluate-expressions-with-custom-operators" class="anchor"></a>Construct and evaluate expressions with custom operators</h3>
+<pre><code class="language-kotlin">val expressionParser = ExpressionParser&lt;Int&gt;(
+    termParser = { IntLiteralParser() },
+
+    Operator.Infix(op = &quot;+&quot;, 40) { l, r -&gt; l + r },
+    Operator.Infix(op = &quot;-&quot;, 40) { l, r -&gt; l - r },
+    Operator.Infix(op = &quot;*&quot;, 60) { l, r -&gt; l * r },
+    Operator.Infix(op = &quot;/&quot;, 60) { l, r -&gt; l / r },
+
+    Operator.Prefix(op = &quot;-&quot;, 80) { r -&gt; -r },
+    Operator.Infixr(op = &quot;^&quot;, 70) { l, r -&gt; l.toDouble().pow(r).toInt() },
+)
+
+val (node, remainingText) = expressionParser.parse(ParserContext.fromString(&quot;2 ^ ((4 - 2) * 2)&quot;, skipWhitespace = true))
+val value = expressionParser.evaluator.evaluate(node)
+expectThat(value).isEqualTo(16)
+</code></pre>
+<h2 id="implementation-details"><a href="#implementation-details" id="implementation-details" class="anchor"></a>Implementation Details</h2>
+<p>In Kudzu, a Parser is a class that extends <code>Parser</code> and implements 2 methods: <code>predict</code>, and <code>parse</code>. <code>predict</code> is a
+method that checks if the parser is capable of consuming the next character, and <code>parse</code> actually implements the parsing
+logic, and returns a <code>Node</code>.</p>
+<p>There are 2 types of nodes, <code>TerminalNode</code> and <code>NonTerminalNode</code>. A <code>TerminalNode</code> typically holds onto the raw text
+that was parsed from the input, while a <code>NonTerminalNode</code> holds onto other nodes. In this manner, non-terminal nodes
+comprise the inner nodes of the parse tree, while terminal nodes comprise the leaves of the parse tree.</p>
+<p>Unlike some other parsing libraries, Kudzu does not impose any restrictions on the type of node that a parser produces
+to keep type parameters to a minimum and code readability to a maximum. Instead of evaluating a parse tree by working
+with specific subclasses, evaluation is done simply by knowledge of whether a node is a terminal or non-terminal node,
+and the name of the node. There are APIs to aid in navigating the parse tree and finding specific nodes based on their
+type or their name.</p>
+<p>The APIs are designed that each step is kept very isolated, so that the code for one step can be easily swapped out or
+reused as-needed, allowing great flexibility, while keeping the code for each phase clean and easy to understand. The
+general process of parsing and evaluating text with Kudzu is as follows:</p>
+<pre><code>1) String
+2) ParserContext
+3) Parser.parse(ParserContext) -&gt; Pair&lt;Node, ParserContext&gt;
+4) Node.visit([Visitor]) -&gt; Unit
+</code></pre>
+<ol>
+<li>The String text that is to be parsed.</li>
+<li>Provides sole API for parsers to consume individual characters. Tracks source position.</li>
+<li>Each grammar has a single root rule, which is defined as a simple instance of <code>Parser</code>. The result is a single root
+Node and a ParserContext representing the text that remains unconsumed. A successful parse is expected to return an
+empty ParserContext. This root parser will recursively call the same method on other parser objects, each one
+building more nodes in the full tree and advancing the position in the ParserContext.</li>
+<li>The Node can be visited by any number of Visitor objects, which recognize and evaluate distinct nodes in the parse
+tree.</li>
+</ol>
+<h3 id="building-parsers"><a href="#building-parsers" id="building-parsers" class="anchor"></a>Building Parsers</h3>
+<p>While you can create custom Parser subclasses which implement your parsing logic, it is typically better to use the
+built-in parser primitives provided by Kudzu. A basic example of building a Parser which recognizes either a full word
+or a number follows:</p>
+<pre><code class="language-kotlin">val wordParser = ManyParser(LetterParser())
+val numberParser = ManyParser(DigitParser())
+val tokenParser = PredictiveChoiceParser(
+        wordParser, 
+        numberParser
+)
+val statement = ManyParser(
+    SequenceParser(
+        tokenParser, 
+        OptionalWhitespaceParser()
+    )
+)
+
+val output = statement.parse(ParserContext.fromString(&quot;one two 1234 asdf 56 qwerty 7890&quot;))
+</code></pre>
+<p>This simple grammar will match an input string like <code>one two 1234 asdf 56 qwerty 7890</code>, and demonstrates how complex
+parsers can be built from smaller ones, and introduces several of the important built-in parses available. Below is a
+description of some of these parser types (browse source for all available parsers)</p>
+<ul>
+<li><code>LetterParser</code>: Consumes a single letter from the input, as recognized by Kotlin's <code>char.isLetter()</code></li>
+<li><code>DigitParser</code>: Consumes a single digit from the input, as recognized by Kotlin's <code>char.isDigit()</code></li>
+<li><code>ManyParser</code>: Takes another Parser and repeatedly consumed input from that parser, for as long as that parser is able
+to. Since it is itself a <code>Parser</code>, and it takes a <code>Parser</code> as an input, the full grammar is now recursively-defined,
+and uses a predictive* approach to determining if the next iteration of its parser can continue. You can pass any
+other Parser to this, not just character-type parsers, and so arbitrarily-complex sub-grammars can be repeated as
+needed. You'll notice that we gave the parser a <code>name</code>. This name is attached to the nodes it produces, so that when
+we evaluate the parse tree, we can look for nodes named <code>word</code> or <code>number</code>, and take different actions accordingly.</li>
+<li><code>PredictiveChoiceParser</code>: Takes a list of sub-parsers, and predicatively* picks one to continue parsing with.</li>
+<li><code>SequenceParser</code>: Takes a list of sub-parsers, and executes each one a single time in order.</li>
+<li><code>OptionalWhitespaceParser</code>: Consumes and throws away whitespace if it exists. As the whitespace is optional, and input
+such as <code>two1234</code> would still match and be parsed correctly.</li>
+<li><code>LazyParser</code>: Some grammars have production rules that themselves are recursive, such as <code>A := B A</code>. The <code>LazyParser</code>
+acts as a placeholder, simply delegating to another parser. The recursive rules must be built using these lazy
+types, since we need a concrete instance to pass to another parsers. This lazy parser allows us to create the parser
+reference, passing it around to the parsers that need it, and at a later point fill in the details of the parser as
+needed.</li>
+</ul>
+<ul>
+<li>A predictive grammar tests if the parser can be used by first calling its <code>predict</code> method. This method is expected to
+check if it is able to consume the next character, and if it cannot consume the next character, then the entire parser
+cannot continue. For <code>many</code>-type parsers, this predictability is used to determine when to stop iterating. For
+<code>choice</code>-type parsers, this determines which sub-production is chosen: the first sub-parser for which <code>predict</code> returns
+true will be used, and other rules will not be tested. This is to improve performance and prevent infinite recursion.</li>
+</ul>
+<h3 id="evaluating-parse-trees"><a href="#evaluating-parse-trees" id="evaluating-parse-trees" class="anchor"></a>Evaluating Parse Trees</h3>
+<p>Once the full parser has been built, and text parsed into an AST, we can now evaluate it. Evaluating an AST consists of
+a <code>Visitor.Callback</code>, or a simple lambda callback. A basic example, using a fictional grammar, follows:</p>
+<pre><code class="language-kotlin">val parser = constructParser()
+
+val (node, _) = parser.parse(input)
+
+// simple visiting, such as finding all nodes of a particular type and not caring about the structure
+node.visit { node -&gt; 
+    // do something with each node as it is entered in the tree
+}
+
+// alternatively, visit with a full set of callbacks to also introspect the parse-tree's structure
+node.visit(object : Visitor.Callback {
+    var depth: Int = 0
+    override fun enter(node: Node) {
+        depth++
+    }
+    override fun exit(node: Node) {
+        depth--
+    }
+    override fun onStart() { }
+    override fun onFinish() { }
+})
+</code></pre>
+
+</div>
+
+                    
+                
+            
+        
+    
+    <!-- end:inject components -->
+
+
+  </div>
+  
+    <div class="column is-one-quarter is-hidden-touch">
+      <div class="sticky-menu" style="position: sticky; top: 30px;">
+  
+  
+    
+<p class="menu-label">In This Page</p>
+  
+
+  
+  
+    <ul class="menu-list">
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu 309301028 -->
+  <!-- menuItem.page=  -->
+  <a href="#installation" class="">
+  
+  Installation
+  </a>
+</li>
+
+</ul>
+  
+
+  
+  
+    
+<ul class="menu-list">
+
+  
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu 309301028 -->
+  <!-- menuItem.page=  -->
+  <a href="#basic-usage" class="">
+  
+  Basic Usage
+  </a>
+</li>
+
+
+
+  <li>
+    <ul>
+    
+      
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu 309301028 -->
+  <!-- menuItem.page=  -->
+  <a href="#combine-several-small-parsers-into-a-single-larger-one" class="">
+  
+  Combine several small parsers into a single larger one
+  </a>
+</li>
+
+
+    
+      
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu 309301028 -->
+  <!-- menuItem.page=  -->
+  <a href="#find-and-replace-structured-sequences-within-unstructured-text" class="">
+  
+  Find-and-replace structured sequences within unstructured text
+  </a>
+</li>
+
+
+    
+      
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu 309301028 -->
+  <!-- menuItem.page=  -->
+  <a href="#construct-and-evaluate-expressions-with-custom-operators" class="">
+  
+  Construct and evaluate expressions with custom operators
+  </a>
+</li>
+
+
+    
+    </ul>
+  </li>
+</ul>
+
+  
+
+  
+  
+    
+<ul class="menu-list">
+
+  
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu 309301028 -->
+  <!-- menuItem.page=  -->
+  <a href="#implementation-details" class="">
+  
+  Implementation Details
+  </a>
+</li>
+
+
+
+  <li>
+    <ul>
+    
+      
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu 309301028 -->
+  <!-- menuItem.page=  -->
+  <a href="#building-parsers" class="">
+  
+  Building Parsers
+  </a>
+</li>
+
+
+    
+      
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu 309301028 -->
+  <!-- menuItem.page=  -->
+  <a href="#evaluating-parse-trees" class="">
+  
+  Evaluating Parse Trees
+  </a>
+</li>
+
+
+    
+    </ul>
+  </li>
+</ul>
+
+  
+
+</div>
+    </div>
+  
+</div>
+
+        </div>
+      
+      
+      </article>
+    
+      <div class="grow"></div>
+      <div class="page-footer">
+      
+        <nav class="pagination is-rounded footer-pagination" role="navigation" aria-label="pagination">
+
+  <a class="pagination-previous" disabled>
+    <span class="inner">
+      <span class="icon"><i class="fas fa-chevron-left"></i></span>
+      Previous
+    </span>
+  </a>
+
+
+
+  <a class="pagination-next" disabled>
+    <span class="inner">
+      Next
+      <span class="icon"><i class="fas fa-chevron-right"></i></span>
+    </span>
+  </a>
+
+</nav>
+
+<footer class="footer border-top">
+  <div class="content is-small">
+  <p>
+  Site proudly built with <a href="https://orchid.run/">Orchid</a>.<br>
+</p>
+
+  </div>
+</footer>
+
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+    <!-- start:inject meta-components [bodyEnd] -->
+    
+    <!-- end:inject meta-components [bodyEnd] -->
+
+
+
+    <!-- start:inject meta-components [bodyEnd] -->
+    
+
+        
+            
+        
+
+        
+    
+    <!-- end:inject meta-components [bodyEnd] -->
+
+
+
+
+<!-- start:inject scripts -->
+<script defer data-search-pseudo-elements="true" src="https://copper-leaf.github.io/kudzu/Copper/53c18f11/releases/v5.4.0/js/all.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/js/bulma.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/js/bulma-accordion.min.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/js/bulma-tabs.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/lunr/lunr.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/assets/js/orchidSearch.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/ajax/libs/prism/1.17.1/prism.min.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/ajax/libs/prism/1.17.1/components/prism-kotlin.min.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/ajax/libs/prism/1.17.1/components/prism-java.min.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/ajax/libs/prism/1.17.1/components/prism-groovy.min.js"></script>
+<!-- end:inject scripts -->
+
+
+</body>
+</html>

@@ -1,0 +1,904 @@
+
+
+<!DOCTYPE html>
+<html class="">
+<head>
+
+
+
+
+
+
+<meta charset="utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+<meta name="generator" content="Orchid 0.21.1"/>
+<link rel="icon" href="https://copper-leaf.github.io/kudzu/favicon.ico">
+
+
+<meta name="robots" content="index, follow">
+
+
+
+<title>Changelog</title>
+
+
+<meta name="description" content="A monadic (I think...) recursive-descent parser combinator written in Kotlin">
+
+
+
+
+
+<!-- start:inject styles -->
+<link rel="stylesheet" type="text/css" href="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/css/bulma.css"  />
+<link rel="stylesheet" type="text/css" href="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/css/extraCss.css"  />
+<link rel="stylesheet" type="text/css" href="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/css/bulma-tooltip.css"  />
+<link rel="stylesheet" type="text/css" href="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/css/bulma-accordion.min.css"  />
+<link rel="stylesheet" type="text/css" href="https://copper-leaf.github.io/kudzu/assets/css/orchidSearch.css"  />
+<link rel="stylesheet" type="text/css" href="https://copper-leaf.github.io/kudzu/PrismJS/prism-themes/master/themes/prism-duotone-light.css"  />
+<!-- end:inject styles -->
+
+
+
+<script>
+    window.site = {"orchidVersion":"0.21.1","baseUrl":"https://copper-leaf.github.io/kudzu","environment":"prod","version":"5.3.0"};
+</script>
+
+
+    <!-- start:inject meta-components [head] -->
+    
+    <!-- end:inject meta-components [head] -->
+
+
+
+    <!-- start:inject meta-components [head] -->
+    
+
+        
+            
+        
+
+        
+            
+        
+            
+        
+    
+    <!-- end:inject meta-components [head] -->
+
+
+
+
+
+
+
+</head>
+<body class="">
+
+
+
+
+
+    <!-- start:inject meta-components [bodyStart] -->
+    
+    <!-- end:inject meta-components [bodyStart] -->
+
+
+
+    <!-- start:inject meta-components [bodyStart] -->
+    
+
+        
+            
+        
+
+        
+    
+    <!-- end:inject meta-components [bodyStart] -->
+
+
+
+
+
+<div class="columns is-marginless is-desktop">
+
+  <div class="column is-one-third-desktop is-one-quarter-widescreen is-one-fifth-fullhd is-paddingless column-main-left is-hidden-mobile is-hidden-touch">
+  
+
+
+    
+
+
+<section class="hero is-primary is-bold is-fullheight">
+
+
+<!-- Hero header: will stick at the top -->
+<div class="hero-head" style="padding: 0 1.5rem">
+  <a href="https://copper-leaf.github.io/kudzu"><img src="https://copper-leaf.github.io/kudzu/assets/svg/orchid/logo_top_dark.svg" style="padding: 40px 40px 0 40px;"></a>
+  <p class="subtitle is-4 has-text-centered">A monadic (I think...) recursive-descent parser combinator written in Kotlin</p>
+
+  <div class="columns is-mobile has-text-centered">
+  
+
+
+  
+
+
+  </div>
+</div>
+
+
+
+
+<!-- Hero content: will be in the middle -->
+<div class="hero-body">
+  <div class="container sidebar-menu">
+    <details class="is-hidden-desktop">
+      <summary>
+        Menu
+      </summary>
+      <div id="mobile-sidebar-menu"></div>
+    </details>
+    <div class="is-hidden-touch">
+      <aside class="menu" id="responsive-menu-content">
+      
+  
+  
+    <ul class="menu-list">
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu/changelog 1906635841 -->
+  <!-- menuItem.page=https://copper-leaf.github.io/kudzu 48143526 -->
+  <a href="https://copper-leaf.github.io/kudzu" class="">
+  
+  Home
+  </a>
+</li>
+
+</ul>
+  
+
+  
+  
+    <ul class="menu-list">
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu/changelog 1906635841 -->
+  <!-- menuItem.page=https://copper-leaf.github.io/kudzu/changelog 1906635841 -->
+  <a href="https://copper-leaf.github.io/kudzu/changelog" class="is-active">
+  
+  Changelog
+  </a>
+</li>
+
+</ul>
+  
+
+  
+  
+    <ul class="menu-list">
+
+</ul>
+  
+
+
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function copyElem(fromId, toId) {
+    var fromElementContent = document.getElementById(fromId);
+    var toElementContent = document.getElementById(toId);
+    toElementContent.outerHTML = fromElementContent.outerHTML;
+  }
+
+  document.addEventListener("DOMContentLoaded", function (event) {
+    copyElem('responsive-menu-content', 'mobile-sidebar-menu');
+  });
+</script>
+
+
+</section>
+
+  </div>
+  <div class="column is-one-third-desktop is-one-quarter-widescreen is-one-fifth-fullhd is-paddingless column-main-left is-hidden-desktop">
+  
+
+
+    
+
+
+<section class="hero is-primary is-bold ">
+
+
+<!-- Hero header: will stick at the top -->
+<div class="hero-head" style="padding: 0 1.5rem">
+  <a href="https://copper-leaf.github.io/kudzu"><img src="https://copper-leaf.github.io/kudzu/assets/svg/orchid/logo_top_dark.svg" style="padding: 40px 40px 0 40px;"></a>
+  <p class="subtitle is-4 has-text-centered">A monadic (I think...) recursive-descent parser combinator written in Kotlin</p>
+
+  <div class="columns is-mobile has-text-centered">
+  
+
+
+  
+
+
+  </div>
+</div>
+
+
+
+
+<!-- Hero content: will be in the middle -->
+<div class="hero-body">
+  <div class="container sidebar-menu">
+    <details class="is-hidden-desktop">
+      <summary>
+        Menu
+      </summary>
+      <div id="mobile-sidebar-menu"></div>
+    </details>
+    <div class="is-hidden-touch">
+      <aside class="menu" id="responsive-menu-content">
+      
+  
+  
+    <ul class="menu-list">
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu/changelog 1906635841 -->
+  <!-- menuItem.page=https://copper-leaf.github.io/kudzu 48143526 -->
+  <a href="https://copper-leaf.github.io/kudzu" class="">
+  
+  Home
+  </a>
+</li>
+
+</ul>
+  
+
+  
+  
+    <ul class="menu-list">
+
+<li>
+  <!-- page=https://copper-leaf.github.io/kudzu/changelog 1906635841 -->
+  <!-- menuItem.page=https://copper-leaf.github.io/kudzu/changelog 1906635841 -->
+  <a href="https://copper-leaf.github.io/kudzu/changelog" class="is-active">
+  
+  Changelog
+  </a>
+</li>
+
+</ul>
+  
+
+  
+  
+    <ul class="menu-list">
+
+</ul>
+  
+
+
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function copyElem(fromId, toId) {
+    var fromElementContent = document.getElementById(fromId);
+    var toElementContent = document.getElementById(toId);
+    toElementContent.outerHTML = fromElementContent.outerHTML;
+  }
+
+  document.addEventListener("DOMContentLoaded", function (event) {
+    copyElem('responsive-menu-content', 'mobile-sidebar-menu');
+  });
+</script>
+
+
+</section>
+
+  </div>
+
+  <div class="column is-two-thirds-desktop is-three-quarters-widescreen is-four-fifths-fullhd is-paddingless column-main-right">
+  
+
+<nav
+  class="navbar is-white border-bottom"
+  role="navigation"
+  aria-label="main navigation"
+>
+  <div class="container">
+    <div class="navbar-brand is-marginless">
+
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMain">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div class="navbar-menu is-marginless" id="navbarMain">
+      <div class="navbar-start">
+      
+<div class="navbar-item">
+  <form id="search-input" data-orchid-search>
+    <div class="field is-marginless" id="search">
+      <div class="control has-icons-left input-control">
+        <input class="input" type="text" name="query" placeholder="Search Kudzu">
+
+        <span class="icon is-small is-left">
+          <i class="fas fa-search"></i>
+        </span>
+
+        <div id="search-progress" data-orchid-search-progress style="display: none;">
+          <div class="loader">Loading...</div>
+        </div>
+      </div>
+    </div>
+    <div id="search-results" data-orchid-search-results style="display: none;">
+      <div class="carat"></div>
+      <b>
+        Search Results
+        <i class="fa fa-times" aria-hidden="true" onclick="$('[data-orchid-search-results]').hide()"></i>
+      </b>
+      <ul></ul>
+    </div>
+  </form>
+</div>
+
+      
+
+  
+  
+    
+
+<a class="navbar-item " href="https://github.com/orchidhq/Orchid">
+Orchid
+</a>
+
+
+  
+
+  
+  
+    
+<div class="navbar-item has-dropdown is-hoverable">
+
+
+<a class="navbar-item " href="">
+Copper Leaf
+</a>
+
+
+  <div class="navbar-dropdown">
+  
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/common">
+Common
+</a>
+
+
+    
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/clog">
+Clog
+</a>
+
+
+    
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/kudzu">
+Kudzu
+</a>
+
+
+    
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/trellis">
+Trellis
+</a>
+
+
+    
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/thistle">
+Thistle
+</a>
+
+
+    
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/kodiak">
+Kodiak
+</a>
+
+
+    
+      
+
+<a class="navbar-item " href="https://github.com/copper-leaf/krow">
+Krow
+</a>
+
+
+    
+  </div>
+</div>
+
+  
+
+
+      </div>
+
+      <div class="navbar-end">
+      
+
+<div class="navbar-item social-item">
+  <a class="icon" href="https://github.com/copper-leaf" title="Copper Leaf Home">
+    <i class="fas fa-home"></i>
+  </a>
+</div>
+
+<div class="navbar-item social-item">
+  <a class="icon" href="https://github.com/copper-leaf/kudzu" title="Github">
+    <i class="fab fa-github"></i>
+  </a>
+</div>
+
+<div class="navbar-item social-item">
+  <a class="icon" href="https://twitter.com/OrchidSSG" title="Twitter">
+    <i class="fab fa-twitter"></i>
+  </a>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+    <div class="textured container" style="width: 100%;">
+    
+    
+
+    
+    
+      <article style="position: relative; margin-top: 60px; margin-bottom: 60px;" role="main">
+      
+      
+        <div class="box">
+        
+
+<div class="columns">
+  <div class="column is-three-quarters-desktop">
+  
+    <!-- start:inject components -->
+    
+        
+            
+                
+                    
+                        <div class="component component-changelog component-order-0">
+                            
+
+
+<section class="accordions" id="changelog">
+
+  <article class="accordion is-active">
+    <div class="accordion-header toggle">
+      <p>5.3.0 - 2024-05-13</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Enables wasmJs target</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>5.2.0 - 2024-01-25</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Updates to Kotlin 1.9.22</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>5.1.0 - 2023-08-17</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Updates to Kotlin 1.9.0</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>5.0.0 - 2023-04-06</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Updates to Kotlin 1.8.20</li>
+<li>Drops support for deprecated KMPP targets:
+<ul>
+<li>JS Legacy</li>
+<li>iosArm32</li>
+</ul>
+</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>4.0.1 - 2023-02-21</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Performance improvements related to ParserException. Thanks for <a href="https://github.com/kilink">@kilink</a> for the contribution!</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>4.0.0 - 2022-10-03</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Updates to Kotlin 1.7.20, and removes <code>@ExperimentalStdlibApi</code> now that <code>DeepRecursiveFunction</code> is now stable</li>
+<li>Make it possible to process choice nodes with type safety. Thanks to <a href="https://github.com/ephemient">@ephemient</a> for the contribution!</li>
+</ul>
+<p>Instead of requiring casting to access</p>
+<pre><code class="language-kotlin">MappedParser(ChoiceParser(FooParser(), BarParser())) { node -&gt;
+    when (node) {
+        is Choice2Node.Option1 -&gt; (node.node as FooNode).foo
+        is Choice2Node.Option2 -&gt; (node.node as BarNode).bar
+    }
+}
+</code></pre>
+<p>we can rely on the compiler to check</p>
+<pre><code class="language-kotlin">MappedParser(ChoiceParser(FooParser(), BarParser())) { node -&gt;
+    when (node) {
+        is Choice2Node.Option1 -&gt; node.node.foo
+        is Choice2Node.Option2 -&gt; node.node.bar
+    }
+}
+</code></pre>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>3.1.0 - 2022-03-03</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Adds <code>choiceIndex</code> property to ChoiceNNode</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>3.0.0 - 2022-03-02</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Updates to kotlin 1.6.10</li>
+<li>Implements strongly-typed Choice parsers in the same manner as Sequence parsers (supports 2-9 choices)</li>
+<li>don't check for empty with many parser. Let the sub-parser make that determination</li>
+<li>Improve error messages</li>
+<li>Wrap expressions in RootExpressionNode</li>
+<li>Adds newline and EOF parsers</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>2.6.0 - 2021-07-15</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Adds a bunch of Sequence parsers for fixed lengths to preserve strong generic typing. <code>SequenceParser</code> is now a
+factory function instead of a constructor, returning the appropriate sequence parser for the number of &quot;varargs&quot;.</li>
+<li>Validate that the start and end tags match in <code>TagParser</code></li>
+<li>Enables hierarchical sourcesets</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>2.5.0 - 2021-05-12</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Adds <code>NoopParser</code> for implementing self-closing tags with the <code>TagParser</code></li>
+<li>Adds <code>AnyTextParser</code>, which is like <code>AnyTextParser</code>, but parses any non-whitespace characters</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>2.4.0 - 2021-05-05</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Introduces new <code>TagParser</code> for parsing recursive, inline, tag-based markup. This is suitable for parsing things like
+HTML spans or the inline formats of Markdown.
+<ul>
+<li>Features:
+<ul>
+<li>Fully custom opening and closing tags</li>
+<li>Allows tags to contain the same start and end tags (such as for Markdown)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>PredictionParser</code> allows more tailored prediction, which can be useful for things like simpler tag parsers that push
+open/close tag matching into the evaluation phase instead of enforcing it during parsing.</li>
+<li>The implementation of <code>ScanParser</code> has been tweaked such that it requires at least 1 character able to be parsed. This '
+also means that it no longer always predicts true, but delegated prediction to its stopping condition: only if its
+stopping condition predicts false does <code>ScanParser</code> predict true.</li>
+<li>The implementation of <code>LiteralTokenParser</code> has been tweaked such that it requires the entire expected token to match
+in order to predict true, instead of predicting only based on the next character.</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>2.3.0 - 2021-04-26</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Adds support for operator aliases in <code>ExpressionParser</code></li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>2.2.0 - 2021-04-26</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Adds <code>SeparatedbyParser</code> for more easily parsing lists of items separated by an ignored value (like commas)</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>2.1.0 - 2021-04-23</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Adds parsers for hexidecimal characters, standard escaped characters, escaped unicode sequences, generic identifiers</li>
+<li>Adds parsers for literal values: int, double, boolean, char, string, null</li>
+<li>improvements to expression parser: parentheses, AST simplification, implemented with DeepRecursiveFunction</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>2.0.0 - 2021-04-21</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Major cleanup of internal implementation and public APIs. The general structure/usage of the library remains mostly
+the same, but there are some notable differences in implementation and in the public API:
+<ul>
+<li>All Parsers classes have been moved into subpackages of <code>com.copperleaf.kudzu.parser</code> to better encapsulate their
+parsing function/behavior.</li>
+<li>All Node classes have been moved to the  to <code>com.copperleaf.kudzu.node</code> package, each in sub-packages that match the
+Parser package that produces them.</li>
+<li>The Visitor API has been rewritten and moved to the <code>com.copperleaf.kudzu.visitor</code> package.</li>
+<li>The Expression API has been rewritten to greatly reduce the boilerplate needed for implementation. In particular, it
+no longer evaluates expressions within the Visitor API, but manually implements expression evaluation on its own
+with a custom <code>ExpressionEvaluator</code>. Operators also manually implement their own evaluation function, instead of
+having that separated into a separate <code>EvaluableOperator</code> as before. These operators create the operator lookup
+table, and the whole expression and its operators parse/evaluate on a particular type parameter.</li>
+<li>Parsers no longer have a <code>name</code> property for themselves. To name a particular node, use the <code>NamedParser</code> to wrap
+and annotate it.</li>
+<li>Parsing and Visitation are now implemented using Kotlin's <code>DeepRecursiveFunction</code> utility, which helps avoid
+StackOverflow errors and gives us more readable stacktraces.</li>
+<li>Several abstract classes have been converted into interfaces, and several other classes were split into and
+interface with default, concrete implementations managed internally to the library.</li>
+</ul>
+</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>1.0.0 - 2021-04-10</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Release as MPP library to MavenCentral</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="accordion ">
+    <div class="accordion-header toggle">
+      <p>0.1.0 - 2019-03-04</p>
+    </div>
+    <div class="accordion-body">
+      <div class="accordion-content content is-medium-tablet is-large-fullhd">
+      <ul>
+<li>Initial release</li>
+</ul>
+      </div>
+    </div>
+  </article>
+
+</section>
+
+
+
+                        </div>
+                    
+                
+            
+        
+    
+    <!-- end:inject components -->
+
+
+  </div>
+  
+    <div class="column is-one-quarter is-hidden-touch">
+      <div class="sticky-menu" style="position: sticky; top: 30px;">
+  
+  
+    
+<p class="menu-label">In This Page</p>
+  
+
+</div>
+    </div>
+  
+</div>
+
+        </div>
+      
+      
+      </article>
+    
+      <div class="grow"></div>
+      <div class="page-footer">
+      
+        <nav class="pagination is-rounded footer-pagination" role="navigation" aria-label="pagination">
+
+  <a class="pagination-previous" disabled>
+    <span class="inner">
+      <span class="icon"><i class="fas fa-chevron-left"></i></span>
+      Previous
+    </span>
+  </a>
+
+
+
+  <a class="pagination-next" disabled>
+    <span class="inner">
+      Next
+      <span class="icon"><i class="fas fa-chevron-right"></i></span>
+    </span>
+  </a>
+
+</nav>
+
+<footer class="footer border-top">
+  <div class="content is-small">
+  <p>
+  Site proudly built with <a href="https://orchid.run/">Orchid</a>.<br>
+</p>
+
+  </div>
+</footer>
+
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+    <!-- start:inject meta-components [bodyEnd] -->
+    
+    <!-- end:inject meta-components [bodyEnd] -->
+
+
+
+    <!-- start:inject meta-components [bodyEnd] -->
+    
+
+        
+            
+        
+
+        
+    
+    <!-- end:inject meta-components [bodyEnd] -->
+
+
+
+
+<!-- start:inject scripts -->
+<script defer data-search-pseudo-elements="true" src="https://copper-leaf.github.io/kudzu/Copper/53c18f11/releases/v5.4.0/js/all.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/js/bulma.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/js/bulma-accordion.min.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/Copper/53c18f11/assets/js/bulma-tabs.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/lunr/lunr.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/assets/js/orchidSearch.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/ajax/libs/prism/1.17.1/prism.min.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/ajax/libs/prism/1.17.1/components/prism-kotlin.min.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/ajax/libs/prism/1.17.1/components/prism-java.min.js"></script>
+<script  src="https://copper-leaf.github.io/kudzu/ajax/libs/prism/1.17.1/components/prism-groovy.min.js"></script>
+<!-- end:inject scripts -->
+
+
+</body>
+</html>
