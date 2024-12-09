@@ -10,11 +10,12 @@ import com.copperleaf.kudzu.isFalse
 import com.copperleaf.kudzu.isSuccess
 import com.copperleaf.kudzu.isTrue
 import com.copperleaf.kudzu.parser.chars.AnyCharParser
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestHelpersMethods : StringSpec({
+class TestHelpersMethods {
 
-    "testIsEmpty" {
+    @Test
+    fun testIsEmpty() {
         val underTest = ParserContext.fromString("")
 
         expectThat(underTest.isEmpty()).isTrue()
@@ -34,7 +35,8 @@ class TestHelpersMethods : StringSpec({
             )
     }
 
-    "testIsNotEmpty" {
+    @Test
+    fun testIsNotEmpty() {
         val underTest = ParserContext.fromString("2 + 3")
 
         expectThat(underTest.isEmpty()).isFalse()
@@ -44,4 +46,4 @@ class TestHelpersMethods : StringSpec({
 
         AnyCharParser().checkNotEmpty(underTest)
     }
-})
+}

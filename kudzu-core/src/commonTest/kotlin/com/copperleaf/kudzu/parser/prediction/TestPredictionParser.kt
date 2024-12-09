@@ -11,9 +11,9 @@ import com.copperleaf.kudzu.parser.predict.PredictionParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 import com.copperleaf.kudzu.parser.text.AnyTokenParser
 import com.copperleaf.kudzu.test
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestPredictionParser : StringSpec({
+class TestPredictionParser {
 
     val parser = SequenceParser(
         CharInParser('<'),
@@ -23,7 +23,8 @@ class TestPredictionParser : StringSpec({
 
     val predictionParser = PredictionParser(parser)
 
-    "testWithoutPrediction" {
+    @Test
+    fun testWithoutPrediction() {
         "<a>".run {
             expectThat(parser.predict(ParserContext.fromString(this))).isTrue()
             expectThat(parser.test(this)).parsedCorrectly()
@@ -38,7 +39,8 @@ class TestPredictionParser : StringSpec({
         }
     }
 
-    "testWithPrediction" {
+    @Test
+    fun testWithPrediction() {
         "<a>".run {
             expectThat(predictionParser.predict(ParserContext.fromString(this))).isTrue()
             expectThat(predictionParser.test(this)).parsedCorrectly()
@@ -52,4 +54,4 @@ class TestPredictionParser : StringSpec({
             expectThat(predictionParser.test(this)).parsedIncorrectly()
         }
     }
-})
+}

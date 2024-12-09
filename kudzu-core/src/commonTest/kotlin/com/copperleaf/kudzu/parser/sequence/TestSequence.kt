@@ -15,11 +15,12 @@ import com.copperleaf.kudzu.parser.chars.WhitespaceCharParser
 import com.copperleaf.kudzu.parser.many.AtLeastParser
 import com.copperleaf.kudzu.test
 import com.copperleaf.kudzu.withChildren
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestSequence : StringSpec({
+class TestSequence {
 
-    "testSequenceOfCharParser" {
+    @Test
+    fun testSequenceOfCharParser() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -48,7 +49,8 @@ class TestSequence : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testSequenceOfManysParser" {
+    @Test
+    fun testSequenceOfManysParser() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -83,7 +85,8 @@ class TestSequence : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testSequenceOfManysParserSkippingWhitespace" {
+    @Test
+    fun testSequenceOfManysParserSkippingWhitespace() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -131,7 +134,8 @@ class TestSequence : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testSequenceCannotGetNext" {
+    @Test
+    fun testSequenceCannotGetNext() {
         var input: String
         var output: ParserResult<Node>?
         val underTest = SequenceNParser(
@@ -147,7 +151,8 @@ class TestSequence : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testNamedSequenceNode" {
+    @Test
+    fun testNamedSequenceNode() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -171,4 +176,4 @@ class TestSequence : StringSpec({
         expectThat(output).parsedCorrectly(expected)
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
-})
+}

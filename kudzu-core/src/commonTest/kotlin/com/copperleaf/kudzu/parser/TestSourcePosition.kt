@@ -15,9 +15,9 @@ import com.copperleaf.kudzu.parser.sequence.SequenceParser
 import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.test
 import com.copperleaf.kudzu.withChildren
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestSourcePosition : StringSpec({
+class TestSourcePosition {
 
     val testText = """
         |one two
@@ -34,10 +34,11 @@ class TestSourcePosition : StringSpec({
         |
     """.trimMargin().trim()
 
-    "testSourcePositionIncludeWhitespace" {
-        var input: String
-        var output: ParserResult<Node>?
-        var expected: String
+    @Test
+    fun testSourcePositionIncludeWhitespace() {
+        val input: String
+        val output: ParserResult<Node>?
+        val expected: String
         val underTest = SequenceParser(
             LiteralTokenParser("one"),
             WhitespaceCharParser(),
@@ -61,18 +62,19 @@ class TestSourcePosition : StringSpec({
 
         expectThat(output!!.first.context.toString())
             .isEqualTo("NodeContext(1:1 to 2:4)")
-        expectThat((output!!.first as NonTerminalNode).children[0].context.toString())
+        expectThat((output.first as NonTerminalNode).children[0].context.toString())
             .isEqualTo("NodeContext(1:1 to 1:4)")
-        expectThat((output!!.first as NonTerminalNode).children[1].context.toString())
+        expectThat((output.first as NonTerminalNode).children[1].context.toString())
             .isEqualTo("NodeContext(1:4 to 2:1)")
-        expectThat((output!!.first as NonTerminalNode).children[2].context.toString())
+        expectThat((output.first as NonTerminalNode).children[2].context.toString())
             .isEqualTo("NodeContext(2:1 to 2:4)")
     }
 
-    "testSourcePositionSkipWhitespace" {
-        var input: String
-        var output: ParserResult<Node>?
-        var expected: String
+    @Test
+    fun testSourcePositionSkipWhitespace() {
+        val input: String
+        val output: ParserResult<Node>?
+        val expected: String
         val underTest = SequenceParser(
             LiteralTokenParser("one"),
             LiteralTokenParser("two")
@@ -93,16 +95,17 @@ class TestSourcePosition : StringSpec({
 
         expectThat(output!!.first.context.toString())
             .isEqualTo("NodeContext(1:1 to 2:4)")
-        expectThat((output!!.first as NonTerminalNode).children[0].context.toString())
+        expectThat((output.first as NonTerminalNode).children[0].context.toString())
             .isEqualTo("NodeContext(1:1 to 1:4)")
-        expectThat((output!!.first as NonTerminalNode).children[1].context.toString())
+        expectThat((output.first as NonTerminalNode).children[1].context.toString())
             .isEqualTo("NodeContext(1:4 to 2:4)")
     }
 
-    "testSourcePositionFromResourcesFile" {
-        var input: String
-        var output: ParserResult<Node>?
-        var expected: String
+    @Test
+    fun testSourcePositionFromResourcesFile() {
+        val input: String
+        val output: ParserResult<Node>?
+        val expected: String
         val underTest = ManyParser(
             PredictiveChoiceParser(
                 LiteralTokenParser("one"),
@@ -147,25 +150,25 @@ class TestSourcePosition : StringSpec({
 
         expectThat(output!!.first.context.toString())
             .isEqualTo("NodeContext(1:1 to 10:6)")
-        expectThat((output!!.first as NonTerminalNode).children)
+        expectThat((output.first as NonTerminalNode).children)
             .hasSize(9)
-        expectThat((output!!.first as NonTerminalNode).children[0].context.toString())
+        expectThat((output.first as NonTerminalNode).children[0].context.toString())
             .isEqualTo("NodeContext(1:1 to 1:4)")
-        expectThat((output!!.first as NonTerminalNode).children[1].context.toString())
+        expectThat((output.first as NonTerminalNode).children[1].context.toString())
             .isEqualTo("NodeContext(1:4 to 1:8)")
-        expectThat((output!!.first as NonTerminalNode).children[2].context.toString())
+        expectThat((output.first as NonTerminalNode).children[2].context.toString())
             .isEqualTo("NodeContext(1:8 to 3:4)")
-        expectThat((output!!.first as NonTerminalNode).children[3].context.toString())
+        expectThat((output.first as NonTerminalNode).children[3].context.toString())
             .isEqualTo("NodeContext(3:4 to 5:4)")
-        expectThat((output!!.first as NonTerminalNode).children[4].context.toString())
+        expectThat((output.first as NonTerminalNode).children[4].context.toString())
             .isEqualTo("NodeContext(5:4 to 6:4)")
-        expectThat((output!!.first as NonTerminalNode).children[5].context.toString())
+        expectThat((output.first as NonTerminalNode).children[5].context.toString())
             .isEqualTo("NodeContext(6:4 to 7:4)")
-        expectThat((output!!.first as NonTerminalNode).children[6].context.toString())
+        expectThat((output.first as NonTerminalNode).children[6].context.toString())
             .isEqualTo("NodeContext(7:4 to 7:8)")
-        expectThat((output!!.first as NonTerminalNode).children[7].context.toString())
+        expectThat((output.first as NonTerminalNode).children[7].context.toString())
             .isEqualTo("NodeContext(7:8 to 8:5)")
-        expectThat((output!!.first as NonTerminalNode).children[8].context.toString())
+        expectThat((output.first as NonTerminalNode).children[8].context.toString())
             .isEqualTo("NodeContext(8:5 to 10:6)")
     }
-})
+}

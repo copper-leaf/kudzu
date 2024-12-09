@@ -25,9 +25,9 @@ import com.copperleaf.kudzu.parser.text.RequiredWhitespaceParser
 import com.copperleaf.kudzu.parser.text.ScanParser
 import com.copperleaf.kudzu.parser.value.AnyLiteralParser
 import com.copperleaf.kudzu.test
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestSimpleTagParser : StringSpec({
+class TestSimpleTagParser {
 
     fun <T : Node> Parser<T>.asTagNameParser(name: String): Parser<TagNameNode<T>> {
         return FlatMappedParser(this) {
@@ -35,7 +35,8 @@ class TestSimpleTagParser : StringSpec({
         }
     }
 
-    "testTrivialTag" {
+    @Test
+    fun testTrivialTag() {
         val underTest = SimpleTagParser(
             "anchor",
             LiteralTokenParser("<a>").asTagNameParser("a"),
@@ -123,7 +124,8 @@ class TestSimpleTagParser : StringSpec({
         LiteralTokenParser("</a>").asTagNameParser("a")
     )
 
-    "testKeyValueParser" {
+    @Test
+    fun testKeyValueParser() {
         "one=\"two\"".run {
             expectThat(keyValueParser.predict(ParserContext.fromString(this))).isTrue()
             expectThat(keyValueParser.test(this))
@@ -146,7 +148,8 @@ class TestSimpleTagParser : StringSpec({
         }
     }
 
-    "testParamsListParser" {
+    @Test
+    fun testParamsListParser() {
         " one=\"two\"".run {
             expectThat(paramsListParser.predict(ParserContext.fromString(this))).isTrue()
             expectThat(paramsListParser.test(this))
@@ -180,7 +183,8 @@ class TestSimpleTagParser : StringSpec({
         }
     }
 
-    "testOpeningTag" {
+    @Test
+    fun testOpeningTag() {
         "<a>".run {
             expectThat(openingTag.predict(ParserContext.fromString(this))).isTrue()
             expectThat(openingTag.test(this))
@@ -215,7 +219,8 @@ class TestSimpleTagParser : StringSpec({
         }
     }
 
-    "testFullSimpleTag" {
+    @Test
+    fun testFullSimpleTag() {
         "<a> </a>".run {
             expectThat(nonTrivialTagParser.predict(ParserContext.fromString(this))).isTrue()
             expectThat(nonTrivialTagParser.test(this))
@@ -246,4 +251,4 @@ class TestSimpleTagParser : StringSpec({
                 }
         }
     }
-})
+}

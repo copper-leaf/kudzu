@@ -11,11 +11,12 @@ import com.copperleaf.kudzu.parser.many.ManyParser
 import com.copperleaf.kudzu.parser.named.NamedParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 import com.copperleaf.kudzu.test
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestScan : StringSpec({
+class TestScan {
 
-    "testBasicScan" {
+    @Test
+    fun testBasicScan() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -29,7 +30,8 @@ class TestScan : StringSpec({
         expectThat(output).parsedCorrectly(expected, allowRemaining = true)
     }
 
-    "testScanThenConsume" {
+    @Test
+    fun testScanThenConsume() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -50,7 +52,8 @@ class TestScan : StringSpec({
         expectThat(output).parsedCorrectly(expected)
     }
 
-    "testManyScanThenConsume" {
+    @Test
+    fun testManyScanThenConsume() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -79,7 +82,8 @@ class TestScan : StringSpec({
         expectThat(output).parsedCorrectly(expected)
     }
 
-    "testClogScanner" {
+    @Test
+    fun testClogScanner() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -180,4 +184,4 @@ class TestScan : StringSpec({
         output = underTest.test(input)
         expectThat(output).parsedCorrectly()
     }
-})
+}

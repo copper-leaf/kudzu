@@ -11,11 +11,12 @@ import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.parser.many.ManyParser
 import com.copperleaf.kudzu.parser.sequence.SequenceParser
 import com.copperleaf.kudzu.test
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestEndOfInput : StringSpec({
+class TestEndOfInput {
 
-    "testEndOfInputParser_blankInput" {
+    @Test
+    fun testEndOfInputParser_blankInput() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -30,7 +31,8 @@ class TestEndOfInput : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testEndOfInputParser_consumedFullSequence" {
+    @Test
+    fun testEndOfInputParser_consumedFullSequence() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -57,7 +59,8 @@ class TestEndOfInput : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testEndOfInputParserFails_inputRemaining" {
+    @Test
+    fun testEndOfInputParserFails_inputRemaining() {
         var input: String
         var output: ParserResult<Node>?
         val underTest = SequenceParser(
@@ -81,4 +84,4 @@ class TestEndOfInput : StringSpec({
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
-})
+}

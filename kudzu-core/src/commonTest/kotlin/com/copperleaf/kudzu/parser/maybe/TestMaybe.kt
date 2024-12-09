@@ -11,11 +11,12 @@ import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.parser.chars.DigitParser
 import com.copperleaf.kudzu.test
 import com.copperleaf.kudzu.withChildren
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestMaybe : StringSpec({
+class TestMaybe {
 
-    "testMaybeOfCharParsers" {
+    @Test
+    fun testMaybeOfCharParsers() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -51,7 +52,8 @@ class TestMaybe : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testNamedMaybeNode" {
+    @Test
+    fun testNamedMaybeNode() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -77,4 +79,4 @@ class TestMaybe : StringSpec({
         """
         expectThat(output).parsedCorrectly(expected, true)
     }
-})
+}

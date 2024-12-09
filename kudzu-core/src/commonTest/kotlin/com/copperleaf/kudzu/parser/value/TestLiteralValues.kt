@@ -9,15 +9,16 @@ import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.test
-import io.kotest.core.spec.style.StringSpec
 import kotlin.random.Random
+import kotlin.test.Test
 
-class TestLiteralValues : StringSpec({
+class TestLiteralValues {
 
     val startNumberValue = -100
     val endNumberValue = 100
 
-    "testNullLiteralParser" {
+    @Test
+    fun testNullLiteralParser() {
         val nullTests = listOf(
             "null" to { null },
             "NULL" to null,
@@ -28,7 +29,8 @@ class TestLiteralValues : StringSpec({
         AnyNullableLiteralParser().runTests(nullTests)
     }
 
-    "testBooleanLiteralParser" {
+    @Test
+    fun testBooleanLiteralParser() {
         val booleanTests = listOf(
             "true" to { true },
             "false" to { false },
@@ -41,7 +43,8 @@ class TestLiteralValues : StringSpec({
         AnyNullableLiteralParser().runTests(booleanTests)
     }
 
-    "testDoubleLiteralParser" {
+    @Test
+    fun testDoubleLiteralParser() {
         val doubleTests = sequence {
             val random = Random(1)
 
@@ -71,7 +74,8 @@ class TestLiteralValues : StringSpec({
         AnyNullableLiteralParser().runTests(doubleTests)
     }
 
-    "testIntLiteralParser" {
+    @Test
+    fun testIntLiteralParser() {
         val intTests = (startNumberValue..endNumberValue).map { "$it" to { it } }
 
         IntLiteralParser().runTests(intTests)
@@ -79,7 +83,8 @@ class TestLiteralValues : StringSpec({
         AnyNullableLiteralParser().runTests(intTests)
     }
 
-    "testStringLiteralParser" {
+    @Test
+    fun testStringLiteralParser() {
         val stringTests = listOf(
             """  "a"      """ to { "a" },
             """  "0123asdf"      """ to { "0123asdf" },
@@ -98,7 +103,8 @@ class TestLiteralValues : StringSpec({
         AnyNullableLiteralParser().runTests(stringTests)
     }
 
-    "testCharLiteralParser" {
+    @Test
+    fun testCharLiteralParser() {
         val charTests = listOf(
             """  '0'       """ to { '0' },
             """  '1'       """ to { '1' },
@@ -136,7 +142,7 @@ class TestLiteralValues : StringSpec({
         AnyLiteralParser().runTests(charTests)
         AnyNullableLiteralParser().runTests(charTests)
     }
-})
+}
 
 private fun <T> Parser<ValueNode<T>>.runTests(
     tests: List<Pair<String, (() -> T?)?>>,

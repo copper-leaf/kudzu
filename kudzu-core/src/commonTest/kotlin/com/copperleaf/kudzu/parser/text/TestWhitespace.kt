@@ -13,11 +13,12 @@ import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.test
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestWhitespace : StringSpec({
+class TestWhitespace {
 
-    "testOptionalWhitespaceParser" {
+    @Test
+    fun testOptionalWhitespaceParser() {
         var input: String
         var output: ParserResult<Node>?
         val underTest = OptionalWhitespaceParser()
@@ -66,7 +67,8 @@ class TestWhitespace : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(""))).isTrue()
     }
 
-    "testRequiredWhitespaceParser" {
+    @Test
+    fun testRequiredWhitespaceParser() {
         var input: String
         var output: ParserResult<Node>?
         val underTest = RequiredWhitespaceParser()
@@ -109,4 +111,4 @@ class TestWhitespace : StringSpec({
         expectThat(underTest.test("")).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(""))).isFalse()
     }
-})
+}

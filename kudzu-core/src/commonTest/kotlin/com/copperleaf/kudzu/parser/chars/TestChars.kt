@@ -12,11 +12,12 @@ import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.test
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestChars : StringSpec({
+class TestChars {
 
-    "testCharParser" {
+    @Test
+    fun testCharParser() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -31,7 +32,8 @@ class TestChars : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testEscapedAnyCharParser" {
+    @Test
+    fun testEscapedAnyCharParser() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -52,7 +54,8 @@ class TestChars : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testCharInParser" {
+    @Test
+    fun testCharInParser() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -78,7 +81,8 @@ class TestChars : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
 
-    "testEscapedCharInParser" {
+    @Test
+    fun testEscapedCharInParser() {
         var input: String
         var output: ParserResult<Node>?
         val underTest = CharInParser('a', 'b')
@@ -114,7 +118,8 @@ class TestChars : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
 
-    "testCharNotInParser" {
+    @Test
+    fun testCharNotInParser() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -137,7 +142,8 @@ class TestChars : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testEscapedCharNotInParser" {
+    @Test
+    fun testEscapedCharNotInParser() {
         var input: String
         var output: ParserResult<Node>?
         val underTest = CharNotInParser('a', 'b')
@@ -178,7 +184,8 @@ class TestChars : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testWhitespaceParser" {
+    @Test
+    fun testWhitespaceParser() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -208,7 +215,8 @@ class TestChars : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
 
-    "testDigitParser" {
+    @Test
+    fun testDigitParser() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -232,7 +240,8 @@ class TestChars : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
 
-    "testLetterParser" {
+    @Test
+    fun testLetterParser() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -256,7 +265,8 @@ class TestChars : StringSpec({
         expectThat(underTest.predict(com.copperleaf.kudzu.parser.ParserContext.fromString(input))).isFalse()
     }
 
-    "testNamedCharNode" {
+    @Test
+    fun testNamedCharNode() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -270,7 +280,8 @@ class TestChars : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testHexDigitParser" {
+    @Test
+    fun testHexDigitParser() {
         val underTest = HexDigitParser()
 
         listOf(
@@ -307,7 +318,8 @@ class TestChars : StringSpec({
         }
     }
 
-    "testEscapedCharParser" {
+    @Test
+    fun testEscapedCharParser() {
         val underTest = EscapedCharParser()
 
         listOf(
@@ -329,4 +341,4 @@ class TestChars : StringSpec({
                 }
         }
     }
-})
+}

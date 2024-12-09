@@ -24,11 +24,12 @@ import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.parser.text.ScanParser
 import com.copperleaf.kudzu.test
 import com.copperleaf.kudzu.withChildren
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestChoice : StringSpec({
+class TestChoice {
 
-    "testChoiceOfCharParsers" {
+    @Test
+    fun testChoiceOfCharParsers() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -71,7 +72,8 @@ class TestChoice : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
 
-    "testManyMultiCharChoice" {
+    @Test
+    fun testManyMultiCharChoice() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -116,7 +118,8 @@ class TestChoice : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testNamedChoiceNode" {
+    @Test
+    fun testNamedChoiceNode() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -146,7 +149,8 @@ class TestChoice : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testExactChoiceParser" {
+    @Test
+    fun testExactChoiceParser() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -219,7 +223,8 @@ class TestChoice : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
 
-    "testPredictiveChoiceWithAmbiguousLiteralTokenParsers" {
+    @Test
+    fun testPredictiveChoiceWithAmbiguousLiteralTokenParsers() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -292,7 +297,8 @@ class TestChoice : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
 
-    "testPredictiveChoiceWithSequenceParsersThatStartWithAmbiguousLiteralToken" {
+    @Test
+    fun testPredictiveChoiceWithSequenceParsersThatStartWithAmbiguousLiteralToken() {
         val makeTagParser: (String) -> Parser<*> = {
             val openTag = LiteralTokenParser("<$it>")
             val closeTag = LiteralTokenParser("</$it>")
@@ -340,7 +346,8 @@ class TestChoice : StringSpec({
         }
     }
 
-    "testPredictiveChoiceNParser" {
+    @Test
+    fun testPredictiveChoiceNParser() {
         val underTest = PredictiveChoiceParser(
             listOf(
                 SequenceParser(LiteralTokenParser("aa"), LiteralTokenParser("aa")),
@@ -368,7 +375,8 @@ class TestChoice : StringSpec({
         }
     }
 
-    "testExactChoiceNParser" {
+    @Test
+    fun testExactChoiceNParser() {
         val underTest = ExactChoiceParser(
             listOf(
                 SequenceParser(LiteralTokenParser("aa"), LiteralTokenParser("aa")),
@@ -395,4 +403,4 @@ class TestChoice : StringSpec({
             expectThat(underTest.predict(ParserContext.fromString(this))).isTrue()
         }
     }
-})
+}

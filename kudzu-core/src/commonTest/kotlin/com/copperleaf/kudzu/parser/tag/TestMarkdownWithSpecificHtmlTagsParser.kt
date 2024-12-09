@@ -11,9 +11,9 @@ import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.mapped.FlatMappedParser
 import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.test
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestMarkdownWithSpecificHtmlTagsParser : StringSpec({
+class TestMarkdownWithSpecificHtmlTagsParser {
 
     fun <T : Node> Parser<T>.asTagNameParser(name: String): Parser<TagNameNode<T>> {
         return FlatMappedParser(this) {
@@ -21,7 +21,8 @@ class TestMarkdownWithSpecificHtmlTagsParser : StringSpec({
         }
     }
 
-    "testFullMiniMarkdownTagParser" {
+    @Test
+    fun testFullMiniMarkdownTagParser() {
         val underTest = TagParser(
             listOf(
                 TagBuilder(
@@ -179,4 +180,4 @@ class TestMarkdownWithSpecificHtmlTagsParser : StringSpec({
                 .node()
         }
     }
-})
+}

@@ -10,11 +10,12 @@ import com.copperleaf.kudzu.parsedIncorrectly
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserResult
 import com.copperleaf.kudzu.test
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestNewline : StringSpec({
+class TestNewline {
 
-    "testNewlineParserValid_unixStyle" {
+    @Test
+    fun testNewlineParserValid_unixStyle() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -29,7 +30,8 @@ class TestNewline : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testNewlineParserValid_windowsStyle" {
+    @Test
+    fun testNewlineParserValid_windowsStyle() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -44,7 +46,8 @@ class TestNewline : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testNewlineParserFails_crOnly" {
+    @Test
+    fun testNewlineParserFails_crOnly() {
         var input: String
         var output: ParserResult<Node>?
         val underTest = NewlineCharParser()
@@ -67,7 +70,8 @@ class TestNewline : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testNewlineParserFails_crNotFollowedByLf" {
+    @Test
+    fun testNewlineParserFails_crNotFollowedByLf() {
         var input: String
         var output: ParserResult<Node>?
         val underTest = NewlineCharParser()
@@ -90,7 +94,8 @@ class TestNewline : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testNewlineParserFails_notCrOrLf" {
+    @Test
+    fun testNewlineParserFails_notCrOrLf() {
         var input: String
         var output: ParserResult<Node>?
         val underTest = NewlineCharParser()
@@ -111,4 +116,4 @@ class TestNewline : StringSpec({
         expectThat(output).parsedIncorrectly()
         expectThat(underTest.predict(ParserContext.fromString(input))).isFalse()
     }
-})
+}

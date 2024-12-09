@@ -8,7 +8,7 @@ import com.copperleaf.kudzu.parser.Parser
 import com.copperleaf.kudzu.parser.ParserContext
 import com.copperleaf.kudzu.parser.ParserException
 import com.copperleaf.kudzu.parser.ParserResult
-import io.kotest.matchers.shouldBe
+import kotlin.test.assertEquals
 
 fun <T : Node> ParserResult<T>?.parsedCorrectly(
     expected: String? = null,
@@ -115,6 +115,15 @@ fun <T, U> T.get(block: T.() -> U): U {
 
 fun <T> T.isEqualTo(other: Any?): T {
     other shouldBe this
+
+    return this
+}
+
+infix fun <T> T.shouldBe(other: Any?): T {
+    assertEquals(
+        expected = other,
+        actual = this,
+    )
 
     return this
 }

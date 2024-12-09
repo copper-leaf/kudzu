@@ -21,11 +21,12 @@ import com.copperleaf.kudzu.parser.text.AnyTokenParser
 import com.copperleaf.kudzu.parser.text.LiteralTokenParser
 import com.copperleaf.kudzu.parser.text.OptionalWhitespaceParser
 import com.copperleaf.kudzu.test
-import io.kotest.core.spec.style.StringSpec
+import kotlin.test.Test
 
-class TestMapped : StringSpec({
+class TestMapped {
 
-    "testMappedParser1" {
+    @Test
+    fun testMappedParser1() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -49,7 +50,8 @@ class TestMapped : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testMappedParser2" {
+    @Test
+    fun testMappedParser2() {
         val nodeValue1Parser = MappedParser(
             AnyTokenParser()
         ) { tokenNode ->
@@ -128,7 +130,8 @@ class TestMapped : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testFlatMappedParser1" {
+    @Test
+    fun testFlatMappedParser1() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -156,7 +159,8 @@ class TestMapped : StringSpec({
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
 
-    "testFlatMappedParser2" {
+    @Test
+    fun testFlatMappedParser2() {
         var input: String
         var output: ParserResult<Node>?
         var expected: String
@@ -180,7 +184,7 @@ class TestMapped : StringSpec({
             }
         expectThat(underTest.predict(ParserContext.fromString(input))).isTrue()
     }
-})
+}
 
 // asdf, 123, (Type1-A)
 data class SomeComplexModel(

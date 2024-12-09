@@ -10,14 +10,15 @@ import com.copperleaf.kudzu.node.sequence.Sequence8Node
 import com.copperleaf.kudzu.node.sequence.Sequence9Node
 import com.copperleaf.kudzu.parsedCorrectly
 import com.copperleaf.kudzu.parser.chars.DigitParser
+import com.copperleaf.kudzu.shouldBe
 import com.copperleaf.kudzu.test
-import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
 import kotlin.reflect.KClass
+import kotlin.test.Test
 
-class TestFixedSequences : StringSpec({
+class TestFixedSequences {
 
-    "testSequence2Parser" {
+    @Test
+    fun testSequence2Parser() {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -36,7 +37,7 @@ class TestFixedSequences : StringSpec({
             }
     }
 
-    "testSequence3Parser" {
+    @Test fun testSequence3Parser() {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -57,7 +58,7 @@ class TestFixedSequences : StringSpec({
             }
     }
 
-    "testSequence4Parser" {
+    @Test fun testSequence4Parser() {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -80,7 +81,7 @@ class TestFixedSequences : StringSpec({
             }
     }
 
-    "testSequence5Parser" {
+    @Test fun testSequence5Parser() {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -105,7 +106,7 @@ class TestFixedSequences : StringSpec({
             }
     }
 
-    "testSequence6Parser" {
+    @Test fun testSequence6Parser() {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -132,7 +133,7 @@ class TestFixedSequences : StringSpec({
             }
     }
 
-    "testSequence7Parser" {
+    @Test fun testSequence7Parser() {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -161,7 +162,7 @@ class TestFixedSequences : StringSpec({
             }
     }
 
-    "testSequence8Parser" {
+    @Test fun testSequence8Parser() {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -192,7 +193,7 @@ class TestFixedSequences : StringSpec({
             }
     }
 
-    "testSequence9Parser" {
+    @Test fun testSequence9Parser() {
         SequenceParser(
             DigitParser(),
             DigitParser(),
@@ -224,4 +225,4 @@ class TestFixedSequences : StringSpec({
                 '9' shouldBe n9.char
             }
     }
-})
+}
