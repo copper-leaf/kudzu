@@ -1,5 +1,4 @@
-# On pushes to main, run tests on all supported platforms. If all tests pass, then publish release artifacts and
-# update Orchid documentation site.
+# On pushes to main, run tests on all supported platforms, then release artifacts to MavenCentral
 
 name: 'Push to `main` (Create Release)'
 
@@ -59,7 +58,7 @@ jobs:
         run: './gradlew openSonatypeStagingRepository --stacktrace -Prelease -PorchidEnvironment=prod'
       - name: 'Publish Artifacts'
         run: './gradlew publishAllPublicationsToMavenCentralRepository --stacktrace -Prelease -PorchidEnvironment=prod'
-      - name: 'Publish Documentation'
-        run: './gradlew :docs:publish --stacktrace -Prelease -PorchidEnvironment=prod'
+      - name: 'Build Documentation'
+        run: './gradlew :docs:mkdocsBuild --stacktrace -Prelease'
       - name: 'Close Sonatype Staging Repository'
         run: './gradlew closeSonatypeStagingRepository --stacktrace -Prelease -PorchidEnvironment=prod'

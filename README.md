@@ -38,11 +38,12 @@ Notable features:
 # Supported Platforms/Features
 
 | Platform |
-| -------- |
+|----------|
 | Android  |
 | JVM      |
 | iOS      |
 | JS       |
+| WasmJS   |
 
 # Installation
 
@@ -53,7 +54,7 @@ repositories {
 
 // for plain JVM or Android projects
 dependencies {
-    implementation("io.github.copper-leaf:kudzu-core:{{site.version}}")
+    implementation("io.github.copper-leaf:kudzu-core:{{gradle.version}}")
 }
 
 // for multiplatform projects
@@ -61,7 +62,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("io.github.copper-leaf:kudzu-core:{{site.version}}")
+                implementation("io.github.copper-leaf:kudzu-core:{{gradle.version}}")
             }
         }
     }
