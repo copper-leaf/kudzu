@@ -1,3 +1,7 @@
+## 6.0.0 - 2025-02-08
+
+- Updates to Kotlin 2.1.0
+
 ## 5.3.0 - 2024-05-13
 
 - Enables wasmJs target
