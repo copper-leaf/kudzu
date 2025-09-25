@@ -1194,10 +1194,10 @@ public abstract interface class com/copperleaf/kudzu/visitor/Visitor {
 }
 
 public abstract interface class com/copperleaf/kudzu/visitor/Visitor$Callback {
-	public abstract fun enter (Lcom/copperleaf/kudzu/node/Node;)V
-	public abstract fun exit (Lcom/copperleaf/kudzu/node/Node;)V
-	public abstract fun onFinish ()V
-	public abstract fun onStart ()V
+	public fun enter (Lcom/copperleaf/kudzu/node/Node;)V
+	public fun exit (Lcom/copperleaf/kudzu/node/Node;)V
+	public fun onFinish ()V
+	public fun onStart ()V
 }
 
 public final class com/copperleaf/kudzu/visitor/Visitor$Callback$DefaultImpls {
