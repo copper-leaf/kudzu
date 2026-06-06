@@ -1,3 +1,7 @@
+## 6.1.0 - 2026-06-06
+
+Lazily construct text in ValueNode Thanks to [@patrickgold](https://github.com/patrickgold) for the contribution!
+
 ## 6.0.0 - 2025-02-08
 
 - Updates to Kotlin 2.1.0
