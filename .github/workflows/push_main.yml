@@ -16,7 +16,7 @@ jobs:
     name: 'Test on ${{ matrix.os }} JDK ${{ matrix.java }}'
     runs-on: '${{ matrix.os }}'
     steps:
-      - uses: 'actions/checkout@v4'
+      - uses: 'actions/checkout@v6'
         with:
           submodules: 'recursive'
       - run: 'git fetch --prune --unshallow --tags'
@@ -44,7 +44,7 @@ jobs:
       JB_CHAIN: '${{ secrets.JB_CHAIN }}'
       JB_PASSPHRASE: '${{ secrets.JB_PASSPHRASE }}'
     steps:
-      - uses: 'actions/checkout@v4'
+      - uses: 'actions/checkout@v6'
         with:
           submodules: 'recursive'
       - run: 'git fetch --prune --unshallow --tags'
