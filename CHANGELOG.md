@@ -1,4 +1,12 @@
+## 6.1.2 - 2026-06-08
+
+Fix issue during publishing of 6.1.1, which was accidentally compiled against JDK 21. This version reverts that change
+and is recompiled against JDK 17.
+
 ## 6.1.1 - 2026-06-06
+
+> DON'T USE THIS VERSION. 6.1.1 was accidentally compiled against JDK 21, making this version silently incompatible
+> with the previous build target of JDK 17. Version 6.1.2 has fixed that issue and is back to JDK 17 compilation target.
 
 Lazily construct text in ValueNode Thanks to [@patrickgold](https://github.com/patrickgold) for the contribution!
 
